@@ -4,10 +4,14 @@ import { StyleSheet, View, TextInput, Text } from "react-native";
 
 
 const EditText = ({ meta: { touched, error, warning }, input: { onChange, ...input }, ...rest}) => {
+
   return (
     <View style = {styles.view}>
+     
+
       {touched && ((error && <Text style={{ color: 'red', ...styles.errorText }}>{error}</Text>) ||
                 (warning && <Text style={{ color: 'orange', ...styles.errorText }}>{warning}</Text>))}
+      
       <TextInput
         style={styles.roundedField}
         onChangeText={onChange} {...input} {...rest}

@@ -1,6 +1,6 @@
 import Actions from './Login.actions';
 const LoginReducer = (users = [], action) => {
-    console.log("LoginReducer.js", "OK");
+    //console.log("LoginReducer.js", "OK");
     switch (action.type) {
       case Actions.LOGIN_SUCCEEDED:
       case Actions.LOGIN_WITH_GITHUB_SUCCEEDED:

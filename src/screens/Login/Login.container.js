@@ -3,7 +3,7 @@ import { LoginScreen } from "./Login.screens";
 import actions from "./Login.actions"
 import { Field, reduxForm } from "redux-form";
 const mapDispatchToProps = (dispatch) => {
-  console.log("dispatch", dispatch);
+  //console.log("dispatch", dispatch);
   return {
     onSubmitForm: ({ username, email, password, toggleCheckBox }) => {
       // console.log("onSubmitForm is called");
@@ -16,7 +16,7 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 const mapStateToProps = (state) => {
-  console.log("in map state To Prop", "YES");
+  //console.log("in map state To Prop", "YES");
   return {
     user: state.LoginReducer,
   };

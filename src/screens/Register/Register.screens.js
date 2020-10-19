@@ -42,6 +42,9 @@ const RegisterScreen = ({handleSubmit, onSubmit, user, navigation}) => {
     );
     navigation.navigate("Login");
   }
+  else if (user.success === false){
+    alert(user.message);
+  }
   return (
     <View style={styles.authorizeLayout}>
       <Text style={styles.signUpText}>Sign up</Text>

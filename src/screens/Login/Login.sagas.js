@@ -5,11 +5,11 @@ import { storage } from "../../helpers/asyncStorage";
 
 function* login(action) {
     try {
-      //console.log("login.saga.js beginning");
+      console.log("login.saga.js params", action.user);
       const res = yield loginFromAPI(action.user);
-      //console.log("login.saga,js res: ", res);
+      console.log("login.saga,js res: ", res);
       if (res.status === 201) {
-        console.log(res.data)
+        //console.log(res.data)
         if (action.user.toggleCheckBox) {
 
             const { token } = res.data;
@@ -31,7 +31,7 @@ function* login(action) {
     try {
       //console.log("login.saga.js beginning");
       const { accessToken } = yield getGithubTokenAsync();
-      console.log("login.sagas.js:", accessToken);
+      //console.log("login.sagas.js:", accessToken);
       const res = yield loginWithGithubFromAPI(accessToken);
       //console.log("login.saga,js res: ", res);
       if (res.status === 201) {

@@ -9,7 +9,7 @@ import { Icon } from 'react-native-elements';
 
 import LoginContainer from '../screens/Login/Login.container';
 import RegisterContainer from '../screens/Register/Register.container';
-import Home from '../screens/Home/Home.screens';
+import Home from '../screens/Home/Home.container';
 const Stack = createStackNavigator();
 
 

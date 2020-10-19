@@ -7,21 +7,31 @@ export default class Home extends Component {
     super(props);
     this.state = {
       search : '',
-      url : `https://api.dev.doramatching.tk/posts?page=1&limit=2&order=DESC`,
-      page: 1,
-      limit : 2,
-      order: 'DESC',
-      blogs: [],
-      isRetrieved : false,
+      url : `posts?page=1&limit=2&order=DESC`,
+      
+      // page: 1,
+      // limit : 2,
+      // order: 'DESC',
+      // //blogs: [],
+      // isRetrieved : false,
     };
-  }
-
-  componentWillMount(){
-    const { url } = this.state
-    this.props.onFetchBlogs({ url });
+    // console.log("in here");
+   
     
-      this.setState({blogs : [...this.state.blogs,  ...this.props.blogs.items ]});
   }
+  
+  componentWillMount(){
+    if (!this.props.blogs.links || !this.props.blogs.links.first){
+          console.log("in componentWillMount");
+          const { url } = this.state;
+          this.props.onFetchBlogs({ url  });
+    }
+    
+    //this.setState({blogs : [...this.state.blogs,  ...this.props.blogs.items ]});
+  }
+    
+    //
+  
   
 
   updateSearch = (search) => {
@@ -30,24 +40,24 @@ export default class Home extends Component {
 
   retrieveMore = () => {
     const { links } = this.props.blogs;
-    console.log("retrieveMore", links.next);
-    if (links.next !== "" ){
-      console.log("retrieveMore", "is inside if");
+    //console.log("retrieveMore : link =", links);
+    //this.setState({retrievedUrl: ""});
+    // console.log("retrieveMore", links.next);
+    if ( links.next !== ""  ){
+      
+       //console.log("retrieveMore");
         this.props.onFetchBlogs({ url : links.next});
         //this.setState({isRetrieved : true});
         
-        console.log("retrieveMore");
+        // console.log("retrieveMore");
         //this.setState({blogs : [...this.state.blogs, ...this.props.blogs.items]});
-    }
-    
+    } 
   };
 
   render() {
+    
     const { search } = this.state;
-    // if (this.state.isRetrieved) {
-    //   this.setState({blogs : [...this.state.blogs, ...this.props.blogs.items]});
-    //   this.setState({isRetrieved : false});
-    // }
+    
     return (
       <View
        
@@ -61,7 +71,7 @@ export default class Home extends Component {
       />
       <FlatList
         style={{backgroundColor : "#C4C4C4", marginBottom: 80,}}
-        data={this.state.blogs}
+        data={this.props.blogItems}
         keyExtractor={(item) => item.id}
         renderItem={({ item, index }) => <ListItemBlog {...item} />}
         onEndReached={this.retrieveMore}

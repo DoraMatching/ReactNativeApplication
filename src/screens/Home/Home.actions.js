@@ -3,6 +3,7 @@ const Actions = {
     GET_BLOG_SUCCEEDED: "GET_BLOG_SUCCEEDED",
     GET_BLOG_FAILED: "GET_BLOG_FAILED",
     getBlogsAction : (params) => {
+      // console.log("in getBlogsAction");
         return {
           type: Actions.GET_BLOG,
           params,

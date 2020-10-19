@@ -1,7 +1,7 @@
 import request from "../helpers/request";
 
 const getBlogsFromAPI = ({url}) => {
-    console.log("blogs.api.js params: ", params);
+    // console.log("blogs.api.js params: ", url);
      return request.get(url)
         . then(res => {
           return res;

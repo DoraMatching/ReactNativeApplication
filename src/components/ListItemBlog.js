@@ -21,7 +21,7 @@ export default class ListItemBlog extends Component {
   
   render() {
     var imgSrc = this.state.isLiked ? likedIcon : unlikedIcon;
-    console.log("blogItemComponent: Image", this.props.featuredImage);
+    //console.log("blogItemComponent: Image", this.props.featuredImage);
 
     //const moment = require('moment'); 
     //require('moment/locale/vi'); //for import moment local language file during the application build

@@ -4,12 +4,14 @@ import actions from "./Home.actions";
 const mapStateToProps = (state) => {
     return {
         blogs : state.BlogReducer ,
+        blogItems : !state.BlogItemReducer ? [] : state.BlogItemReducer,
     }
    
 };
 const mapDispatchToProps = (dispatch) => {
     return {
         onFetchBlogs : (params) => {
+            // console.log("in onFetchBlogs");
             dispatch(actions.getBlogsAction(params))
         },
     }

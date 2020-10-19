@@ -4,10 +4,12 @@ import actions from "./Home.actions";
 
 function* fetchBlogs(action){
     try {
+        // console.log("in watchFetchBlogs saga");
+        // console.log("in watchFetchBlogs saga", action.params);
         const res = yield getBlogsFromAPI(action.params);
-        console.log("Blog.saga.js", res);
+        // console.log("Blog.saga.js", res);
         if (res.status === 200) {
-            console.log("Blog.saga.js",res.data)
+            // console.log("Blog.saga.js",res.data)
             
             yield put({ type: actions.GET_BLOG_SUCCEEDED, data: res.data });
           } else {
@@ -20,6 +22,7 @@ function* fetchBlogs(action){
 }
 
 function* watchFetchBlogs(){
+    // console.log("in watchFetchBlogs");
     yield takeLatest(actions.GET_BLOG, fetchBlogs);
 }
 

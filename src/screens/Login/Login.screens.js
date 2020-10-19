@@ -37,9 +37,9 @@ export const LoginScreen = (props) => {
     }
   };
   const { handleSubmit } = props;
-  console.log("login.screen.js: props.user = ",props.user);
+  //console.log("login.screen.js: props.user = ",props.user);
   if (props.user && props.user.success === true) {
-    console.log("login", props.user);
+   // console.log("login", props.user);
     navigation.navigate("Home");
     // alert("Sign in successfully");
   } else if (props.user.success === false) alert(props.user.message);

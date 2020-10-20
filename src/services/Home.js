@@ -10,6 +10,16 @@ const getBlogsFromAPI = ({url}) => {
         });
     };
   
+const getQuestionsFromAPI = ({url}) => {
+      return request.get(url)
+      . then(res => {
+        return res;
+      }).catch(error => {
+        return error.response.data;
+      });
+    };
+
     export {
         getBlogsFromAPI,
+        getQuestionsFromAPI,
     }

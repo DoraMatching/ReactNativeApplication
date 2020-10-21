@@ -6,6 +6,8 @@ import {
   TextInput,
   Text,
   TouchableOpacity,
+  TouchableWithoutFeedback,
+  KeyboardAvoidingView
 } from "react-native";
 import CheckBox from "@react-native-community/checkbox";
 import { GitHubSocialButton } from "react-native-social-buttons";
@@ -17,9 +19,6 @@ export const LoginScreen = (props) => {
   const { navigation } = props;
   const submit = (values) => {
     const { usernameOrEmail, password } = values;
-    /*console.log("Usernameoremail", usernameOrEmail);
-    console.log("Password", password);
-    console.log("submit", values);*/
     if (/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(usernameOrEmail)) {
       props.onSubmitForm({
         username: null,
@@ -37,11 +36,8 @@ export const LoginScreen = (props) => {
     }
   };
   const { handleSubmit } = props;
-  //console.log("login.screen.js: props.user = ",props.user);
   if (props.user && props.user.success === true) {
-   // console.log("login", props.user);
     navigation.navigate("Home");
-    // alert("Sign in successfully");
   } else if (props.user.success === false) alert(props.user.message);
   return (
     <View style={styles.authorizeLayout}>

@@ -12,9 +12,7 @@ export default class Home extends Component {
       urlQuestion : `questions?page=1&limit=3&order=DESC`,
      
     };
-    // console.log("in here");
-   
-    
+ 
   }
   
   componentWillMount(){
@@ -26,10 +24,6 @@ export default class Home extends Component {
           }
     }
     
-    //this.setState({blogs : [...this.state.blogs,  ...this.props.blogs.items ]});
-  
-    
-    //
   
   
 

@@ -7,6 +7,9 @@ import {
   Text,
   TouchableOpacity,
   Alert,
+  TouchableWithoutFeedback,
+  KeyboardAvoidingView,
+  Keyboard
 } from "react-native";
 import EditText from "../../components/EditText";
 
@@ -46,66 +49,74 @@ const RegisterScreen = ({handleSubmit, onSubmit, user, navigation}) => {
     alert(user.message);
   }
   return (
-    <View style={styles.authorizeLayout}>
+    <KeyboardAvoidingView behavior='padding' style={styles.authorizeLayout}>
+    <TouchableWithoutFeedback  
+                          onPress={Keyboard.dismiss}>
+    <View >
       <Text style={styles.signUpText}>Sign up</Text>
-      <Field
-        name={"username"}
-        props={{
-          placeholder: "Username",
-        }}
-        component={EditText}
-        validate = {required}
-      />
-      <Field
-        name={"email"}
-        props={{
-          placeholder: "Email",
-          keyboardType: "email-address",
-        }}
-        component={EditText}
-        validate = {isValidEmail}
-      />
-      <Field
-        name={"phoneNumber"}
-        props={{
-          placeholder: "Phone number",
-          keyboardType: "phone-pad",
-        }}
-        component={EditText}
-        name="Phone number"
-      />
-      <Field
-        name={"password"}
-        props={{
-          placeholder: "Password",
-          secureTextEntry: true,
-        }}
-        component={EditText}
-        validate = {required}
-      />
-      <Field
-        name={"confirmPassword"}
-        props={{
-          placeholder: "Confirm password",
-          secureTextEntry: true,
-        }}
-        component={EditText}
-      />
-      <TouchableOpacity
-        style={{
-          alignItems: "center",
-          justifyContent: "center",
-          backgroundColor: "blueviolet",
-          height: 45,
-          borderRadius: 5,
-          marginTop: 30,
-        }}
-        onPress={handleSubmit(submit)}
-      >
-        <Text style={styles.buttonText}>Sign up</Text>
-      </TouchableOpacity>
-      
+     
+            
+              <Field
+                name={"username"}
+                props={{
+                  placeholder: "Username",
+                }}
+                component={EditText}
+                validate = {required}
+              />
+              <Field
+                name={"email"}
+                props={{
+                  placeholder: "Email",
+                  keyboardType: "email-address",
+                }}
+                component={EditText}
+                validate = {isValidEmail}
+              />
+              <Field
+                name={"phoneNumber"}
+                props={{
+                  placeholder: "Phone number",
+                  keyboardType: "phone-pad",
+                }}
+                component={EditText}
+                name="Phone number"
+              />
+              <Field
+                name={"password"}
+                props={{
+                  placeholder: "Password",
+                  secureTextEntry: true,
+                }}
+                component={EditText}
+                validate = {required}
+              />
+              <Field
+                name={"confirmPassword"}
+                props={{
+                  placeholder: "Confirm password",
+                  secureTextEntry: true,
+                }}
+                component={EditText}
+              />
+              <TouchableOpacity
+                style={{
+                  alignItems: "center",
+                  justifyContent: "center",
+                  backgroundColor: "blueviolet",
+                  height: 45,
+                  borderRadius: 5,
+                  marginTop: 30,
+                }}
+                onPress={handleSubmit(submit)}
+              >
+                <Text style={styles.buttonText}>Sign up</Text>
+              </TouchableOpacity>
+              
+          
     </View>
+    </TouchableWithoutFeedback>
+      </KeyboardAvoidingView>
   );
 };
 const styles = StyleSheet.create({

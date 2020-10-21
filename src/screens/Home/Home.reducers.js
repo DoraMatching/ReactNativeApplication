@@ -1,4 +1,5 @@
 import Actions from './Home.actions';
+import actions from 'redux-form/lib/actions';
 const BlogReducer = (blogs = {}, action) => {
   // console.log("in BlogReducer");
     switch (action.type) {
@@ -15,7 +16,7 @@ const BlogReducer = (blogs = {}, action) => {
     }
   };
 
-const BlogItemReducer = (blogItems , action) => {
+const BlogItemReducer = (blogItems = [] , action) => {
   // console.log("in BlogReducer");
     switch (action.type) {
       
@@ -31,7 +32,7 @@ const BlogItemReducer = (blogItems , action) => {
     }
   };
   
-  const QuestionReducer = (questions, action) => {
+  const QuestionReducer = (questions = {}, action) => {
     // console.log("in BlogReducer");
       switch (action.type) {
         
@@ -63,19 +64,38 @@ const BlogItemReducer = (blogItems , action) => {
       }
     };
 
-  const HomeReducer = (data = [], action) => {
-    let blogs = [], questions = [];
-      switch (action.type) {
+  const HomeReducer = (data = null, action) => {
+    switch (action.type) {
+        
+      case Actions.GET_BLOG_QUESTION_SUCCEEDED:
+        //console.log("in HomeReducer SUCCEEDED", action.data);
+        return action.data;
 
-        case Actions.GET_QUESTION_SUCCEEDED:
-          blogs = action.data.items;
-          break;
-
-        case Actions.GET_BLOG_SUCCEEDED:
-          questions = action.data.items;    
-          break;
+      case Actions.GET_BLOG_QUESTION_FAILED:
+        //console.log("in HomeReducer FAILED", action.error);
+        return data;
+    
+      default:
+        return data;
       }
-      return [...data, ...shuffleData({blogs, questions})]
+  }
+
+  const HomeItemReducer = (dataItem = [], action) => {
+    switch (action.type) {
+        
+      case Actions.GET_BLOG_QUESTION_SUCCEEDED:
+        
+        const shuffledData = shuffleData({blogs : action.data.blogs.items, questions: action.data.questions.items});
+        //console.log("in HomeItemReducer GET_BLOG_SUCCEEDED", shuffledData);
+        return [...dataItem, ...shuffledData];
+
+      case Actions.GET_BLOG_QUESTION_FAILED:
+        // console.log("in BlogReducer GET_BLOG_FAILED");
+        return dataItem;
+    
+      default:
+        return dataItem;
+      }
   }
    
   const shuffleData = (data) => {
@@ -98,4 +118,5 @@ const BlogItemReducer = (blogItems , action) => {
     QuestionReducer,
     QuestionItemReducer,
     HomeReducer,
+    HomeItemReducer,
   };

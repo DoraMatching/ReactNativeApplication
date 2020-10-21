@@ -18,22 +18,26 @@ shuffleData = (data) => {
 
 const mapStateToProps = (state) => {
     return {
-        blogs : state.BlogReducer ,
-        blogItems : !state.BlogItemReducer ? [] : state.BlogItemReducer,
-        questions: state.QuestionReducer,
-        questionItems : !state.QuestionItemReducer ? [] : state.QuestionItemReducer,
-        data : [...shuffleData({Blogs : !state.BlogReducer.items ? [] : state.BlogReducer.items, Questions: !state.QuestionReducer.items ? [] : state.QuestionReducer.items})],
+        // blogs : state.BlogReducer ,
+        // blogItems : !state.BlogItemReducer ? [] : state.BlogItemReducer,
+        // questions: state.QuestionReducer,
+        // questionItems : !state.QuestionItemReducer ? [] : state.QuestionItemReducer,
+        data : state.HomeReducer,
+        dataItem : !state.HomeItemReducer ? [] : state.HomeItemReducer,
     }
    
 };
 const mapDispatchToProps = (dispatch) => {
     return {
-        onFetchBlogs : (params) => {
-            // console.log("in onFetchBlogs");
-            dispatch(actions.getBlogsAction(params))
-        },
-        onFetchQuestions : (params) => {
-            dispatch(actions.getQuestionsAction(params))
+        // onFetchBlogs : (params) => {
+        //     // console.log("in onFetchBlogs");
+        //     dispatch(actions.getBlogsAction(params))
+        // },
+        // onFetchQuestions : (params) => {
+        //     dispatch(actions.getQuestionsAction(params))
+        // },
+        onFetchBlogsQuestions : (params) => {
+            dispatch(actions.getBlogsQuestionsAction(params))
         }
     }
 };

@@ -1,10 +1,9 @@
-import axios from 'axios';
-import Config from 'react-native-config';
+import axios from "axios";
+import Config from "react-native-config";
 const BASE_URL = Config.BASE_URL;
 
 const request = axios.create({
-    baseURL: BASE_URL,
-    
-  }, console.log(BASE_URL));
-  
-  export default request;
+  baseURL: BASE_URL,
+});
+
+export default request;

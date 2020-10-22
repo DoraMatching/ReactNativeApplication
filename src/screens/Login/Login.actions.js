@@ -1,52 +1,50 @@
 const Actions = {
-    LOGIN_USER : "LOGIN_USER",
-    LOGIN_WITH_GITHUB: "LOGIN_WITH_GITHUB",
-    LOGIN_SUCCEEDED: "LOGIN_SUCCEEDED",
-    LOGIN_FAILED: "LOGIN_FAILED",
-    LOGIN_WITH_GITHUB_SUCCEEDED: "LOGIN_WITH_GITHUB_SUCCEEDED",
-    LOGIN_WITH_GITHUB_FAILED: "LOGIN_WITH_GITHUB_FAILED",
-    loginUserAction : (user) => {
-        // console.log("Login action", user);
-        return {
-          type: Actions.LOGIN_USER,
-          user,
-        };
-      },
-      
-    loginUserWithGitHubAction : () => {
-    // console.log("Login with GitHub action");
+  LOGIN_USER: "LOGIN_USER",
+  LOGIN_WITH_GITHUB: "LOGIN_WITH_GITHUB",
+  LOGIN_SUCCEEDED: "LOGIN_SUCCEEDED",
+  LOGIN_FAILED: "LOGIN_FAILED",
+  LOGIN_WITH_GITHUB_SUCCEEDED: "LOGIN_WITH_GITHUB_SUCCEEDED",
+  LOGIN_WITH_GITHUB_FAILED: "LOGIN_WITH_GITHUB_FAILED",
+  loginUserAction: (user) => {
     return {
-        type: Actions.LOGIN_WITH_GITHUB,
+      type: Actions.LOGIN_USER,
+      user,
     };
-    },
-    
-    loginSucessAction : (response) => {
+  },
+
+  loginUserWithGitHubAction: () => {
     return {
-        type: Actions.LOGIN_SUCCEEDED,
-        response,
+      type: Actions.LOGIN_WITH_GITHUB,
     };
-    },
-    
-    loginFailedAction : (error) => {
+  },
+
+  loginSucessAction: (response) => {
     return {
-        type: Actions.LOGIN_FAILED,
-        error,
+      type: Actions.LOGIN_SUCCEEDED,
+      response,
     };
-    },
-    
-    loginWithGitHubSucessAction : (response) => {
-        return {
-          type: Actions.LOGIN_WITH_GITHUB_SUCCEEDED,
-          response,
-        };
-      },
-      
-    loginWithGitHubFailedAction : (error) => {
-        return {
-          type: Actions.LOGIN_WITH_GITHUB_FAILED,
-          error,
-        };
-      }
+  },
+
+  loginFailedAction: (error) => {
+    return {
+      type: Actions.LOGIN_FAILED,
+      error,
+    };
+  },
+
+  loginWithGitHubSucessAction: (response) => {
+    return {
+      type: Actions.LOGIN_WITH_GITHUB_SUCCEEDED,
+      response,
+    };
+  },
+
+  loginWithGitHubFailedAction: (error) => {
+    return {
+      type: Actions.LOGIN_WITH_GITHUB_FAILED,
+      error,
+    };
+  },
 };
 
 export default Actions;

@@ -1,13 +1,8 @@
-import { all } from 'redux-saga/effects';
-
-import LoginSaga from '../screens/Login/Login.sagas';
-import RegisterSaga from '../screens/Register/Register.sagas';
-import HomeSaga from '../screens/Home/Home.sagas';
+import {all} from "redux-saga/effects";
+import HomeSaga from "../screens/Home/Home.sagas";
+import LoginSaga from "../screens/Login/Login.sagas";
+import RegisterSaga from "../screens/Register/Register.sagas";
 
 export default function* rootSaga() {
-  yield all([
-    LoginSaga(),
-    RegisterSaga(),
-    HomeSaga(),
-  ]);
+  yield all([LoginSaga(), RegisterSaga(), HomeSaga()]);
 }

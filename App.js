@@ -6,16 +6,7 @@
  * @flow strict-local
  */
 
-import React from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  StatusBar,
-} from 'react-native';
-
+import React from "react";
 // import {
 //   Header,
 //   LearnMoreLinks,
@@ -23,16 +14,13 @@ import {
 //   DebugInstructions,
 //   ReloadInstructions,
 // } from 'react-native/Libraries/NewAppScreen';
-
-import { Provider } from "react-redux";
-import MyRouters from "./src/routers/Routers";
-import saga from './src/store/sagas';
-import rootReducer from './src/store/reducers';
+import {Provider} from "react-redux";
 //Redux saga
-import {createStore, applyMiddleware} from 'redux';
+import {applyMiddleware, createStore} from "redux";
 import createSagaMiddleware from "redux-saga";
-
-import LoginContainer from './src/screens/Login/Login.container';
+import MyRouters from "./src/routers/Routers";
+import rootReducer from "./src/store/reducers";
+import saga from "./src/store/sagas";
 
 const sagaMiddleware = createSagaMiddleware();
 const store = createStore(rootReducer, applyMiddleware(sagaMiddleware));
@@ -40,13 +28,12 @@ sagaMiddleware.run(saga);
 
 const App = () => {
   return (
-    
     // <View>
     //   <Text>Hello World</Text>
     // </View>
-   
+
     <Provider store={store}>
-      <MyRouters></MyRouters>
+      <MyRouters />
     </Provider>
   );
 };

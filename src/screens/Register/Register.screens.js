@@ -1,37 +1,35 @@
-import React, { Component } from "react";
-import { Field, reduxForm } from "redux-form";
+import React from "react";
 import {
+  Keyboard,
+  KeyboardAvoidingView,
   StyleSheet,
-  View,
-  TextInput,
   Text,
   TouchableOpacity,
-  Alert,
   TouchableWithoutFeedback,
-  KeyboardAvoidingView,
-  Keyboard
+  View,
 } from "react-native";
+import {Field} from "redux-form";
 import EditText from "../../components/EditText";
 
 //Validation
-const required = value => {
+const required = (value) => {
   console.log("validate username", value);
-  return value ? undefined : 'The field is required';
-}
-const isValidEmail = value =>
-    value && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value) ? 'Invalid email address' : undefined;
-
-
+  return value ? undefined : "The field is required";
+};
+const isValidEmail = (value) =>
+  value && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)
+    ? "Invalid email address"
+    : undefined;
 
 const RegisterScreen = ({handleSubmit, onSubmit, user, navigation}) => {
-  const submit = values => {
-      console.log("register", values);
-      const {username, email, phoneNumber, password} = values;
-      const newUsername = username.toLowerCase();
-      onSubmit({username : newUsername, email, password});
+  const submit = (values) => {
+    console.log("register", values);
+    const {username, email, phoneNumber, password} = values;
+    const newUsername = username.toLowerCase();
+    onSubmit({username: newUsername, email, password});
   };
-  
-  if (user.success === true){
+
+  if (user.success === true) {
     alert(
       "Registration successful",
       [
@@ -39,88 +37,79 @@ const RegisterScreen = ({handleSubmit, onSubmit, user, navigation}) => {
           text: "Go back to Login screen",
           onPress: () => navigation.navigate("Login"),
         },
-        
       ],
-      { cancelable: false }
+      {cancelable: false},
     );
     navigation.navigate("Login");
-  }
-  else if (user.success === false){
+  } else if (user.success === false) {
     alert(user.message);
   }
   return (
-    <KeyboardAvoidingView behavior='padding' style={{flex : 1}}>
-    <TouchableWithoutFeedback
-                           
-                          onPress={Keyboard.dismiss}>
-    <View style={styles.authorizeLayout}>
-      <Text style={styles.signUpText}>Sign up</Text>
-     
-            <View style={{marginBottom: 20,}}>
-              <Field
-                name={"username"}
-                props={{
-                  placeholder: "Username",
-                  returnKeyType: 'next',
-                  autoCorrect: false,
-                }}
-                component={EditText}
-                validate = {required}
-              />
-              <Field
-                name={"email"}
-                props={{
-                  placeholder: "Email",
-                  keyboardType: "email-address",
-                  returnKeyType: 'next',
-                  autoCorrect: false,
-                }}
-                component={EditText}
-                validate = {isValidEmail}
-              />
-              
-              <Field
-                name={"password"}
-                props={{
-                  placeholder: "Password",
-                  secureTextEntry: true,
-                  returnKeyType: 'next',
-                  autoCorrect: false,
-                }}
-                component={EditText}
-                validate = {required}
-              />
-              <Field
-                name={"confirmPassword"}
-                props={{
-                  placeholder: "Confirm password",
-                  secureTextEntry: true,
-                  returnKeyType: 'go',
-                  autoCorrect: false,
-                }}
-                component={EditText}
-              />
-              <TouchableOpacity
-                style={{
-                  alignItems: "center",
-                  justifyContent: "center",
-                  backgroundColor: "blueviolet",
-                  height: 45,
-                  borderRadius: 5,
-                  marginTop: 20,
-                  
-                }}
-                onPress={handleSubmit(submit)}
-              >
-                <Text style={styles.buttonText}>Sign up</Text>
-              </TouchableOpacity>
-              </View>
-              
-              
-          
-    </View>
-    </TouchableWithoutFeedback>
-      </KeyboardAvoidingView>
+    <KeyboardAvoidingView behavior="padding" style={{flex: 1}}>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={styles.authorizeLayout}>
+          <Text style={styles.signUpText}>Sign up</Text>
+
+          <View style={{marginBottom: 20}}>
+            <Field
+              name={"username"}
+              props={{
+                placeholder: "Username",
+                returnKeyType: "next",
+                autoCorrect: false,
+              }}
+              component={EditText}
+              validate={required}
+            />
+            <Field
+              name={"email"}
+              props={{
+                placeholder: "Email",
+                keyboardType: "email-address",
+                returnKeyType: "next",
+                autoCorrect: false,
+              }}
+              component={EditText}
+              validate={isValidEmail}
+            />
+
+            <Field
+              name={"password"}
+              props={{
+                placeholder: "Password",
+                secureTextEntry: true,
+                returnKeyType: "next",
+                autoCorrect: false,
+              }}
+              component={EditText}
+              validate={required}
+            />
+            <Field
+              name={"confirmPassword"}
+              props={{
+                placeholder: "Confirm password",
+                secureTextEntry: true,
+                returnKeyType: "go",
+                autoCorrect: false,
+              }}
+              component={EditText}
+            />
+            <TouchableOpacity
+              style={{
+                alignItems: "center",
+                justifyContent: "center",
+                backgroundColor: "blueviolet",
+                height: 45,
+                borderRadius: 5,
+                marginTop: 20,
+              }}
+              onPress={handleSubmit(submit)}>
+              <Text style={styles.buttonText}>Sign up</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   );
 };
 const styles = StyleSheet.create({
@@ -132,7 +121,7 @@ const styles = StyleSheet.create({
   },
   signUpText: {
     fontSize: 36,
-    
+
     color: "blueviolet",
   },
   buttonText: {

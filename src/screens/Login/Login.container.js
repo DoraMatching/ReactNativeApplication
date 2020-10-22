@@ -1,13 +1,13 @@
-import { connect } from "react-redux";
-import { LoginScreen } from "./Login.screens";
-import actions from "./Login.actions"
-import { Field, reduxForm } from "redux-form";
+import {connect} from "react-redux";
+import {LoginScreen} from "./Login.screens";
+import actions from "./Login.actions";
+import {Field, reduxForm} from "redux-form";
 const mapDispatchToProps = (dispatch) => {
-  //console.log("dispatch", dispatch);
   return {
-    onSubmitForm: ({ username, email, password, toggleCheckBox }) => {
-      // console.log("onSubmitForm is called");
-      dispatch(actions.loginUserAction({ username, email, password, toggleCheckBox }));
+    onSubmitForm: ({username, email, password, toggleCheckBox}) => {
+      dispatch(
+        actions.loginUserAction({username, email, password, toggleCheckBox}),
+      );
     },
     onSubmitGithubForm: () => {
       dispatch(actions.loginUserWithGitHubAction());
@@ -16,7 +16,6 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 const mapStateToProps = (state) => {
-  //console.log("in map state To Prop", "YES");
   return {
     user: state.LoginReducer,
   };
@@ -28,7 +27,7 @@ const LoginForm = reduxForm({
 
 export const LoginContainer = connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(LoginForm);
 
 export default LoginContainer;

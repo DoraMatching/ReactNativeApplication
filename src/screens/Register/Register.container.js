@@ -1,20 +1,18 @@
-import { connect } from "react-redux";
-import { Field, reduxForm } from "redux-form";
-import actions from "./Register.actions"
+import {connect} from "react-redux";
+import {reduxForm} from "redux-form";
+import actions from "./Register.actions";
 import RegisterScreen from "./Register.screens";
 
-const validate = values => {
+const validate = (values) => {
   const errors = {};
-  
-  if (!values.confirmPassword ) {
-    errors.confirmPassword = 'The field is required' ;
+
+  if (!values.confirmPassword) {
+    errors.confirmPassword = "The field is required";
   } else if (values.confirmPassword !== values.password) {
-    errors.confirmPassword = 'Password mismatched' ;
+    errors.confirmPassword = "Password mismatched";
   }
 
-    return errors;
-
-
+  return errors;
 };
 
 const mapStateToProps = (state) => {
@@ -24,8 +22,8 @@ const mapStateToProps = (state) => {
 };
 const mapDispatchToProps = (dispatch) => {
   return {
-    onSubmit: ({ username, email, password }) => {
-      dispatch(actions.registerUserAction({ username, email, password }));
+    onSubmit: ({username, email, password}) => {
+      dispatch(actions.registerUserAction({username, email, password}));
     },
   };
 };
@@ -37,7 +35,7 @@ const RegisterForm = reduxForm({
 
 const RegisterContainer = connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(RegisterForm);
 
 export default RegisterContainer;

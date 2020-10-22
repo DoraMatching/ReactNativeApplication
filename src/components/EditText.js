@@ -15,6 +15,8 @@ const EditText = ({ meta: { touched, error, warning }, input: { onChange, ...inp
       <TextInput
         style={styles.roundedField}
         onChangeText={onChange} {...input} {...rest}
+        returnKeyType='next'
+        autoCorrect={false}
       ></TextInput>
       
     </View>
@@ -31,6 +33,7 @@ const styles = StyleSheet.create({
   },
   view: {
     flexDirection: 'column',
+    justifyContent: 'flex-end',
   },
   errorText: {
     marginBottom: 10,

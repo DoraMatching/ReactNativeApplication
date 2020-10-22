@@ -7,7 +7,8 @@ import {
   Text,
   TouchableOpacity,
   TouchableWithoutFeedback,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
+  Keyboard,
 } from "react-native";
 import CheckBox from "@react-native-community/checkbox";
 import { GitHubSocialButton } from "react-native-social-buttons";
@@ -40,6 +41,10 @@ export const LoginScreen = (props) => {
     navigation.navigate("Home");
   } else if (props.user.success === false) alert(props.user.message);
   return (
+    <KeyboardAvoidingView behavior='padding' style={{flex : 1}}>
+    <TouchableWithoutFeedback
+                           
+                          onPress={Keyboard.dismiss}>
     <View style={styles.authorizeLayout}>
       <Text style={styles.signInText}>Sign in</Text>
       <Field
@@ -134,6 +139,8 @@ export const LoginScreen = (props) => {
         </Text>
       </View>
     </View>
+    </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   );
 };
 const styles = StyleSheet.create({

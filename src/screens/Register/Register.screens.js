@@ -49,17 +49,20 @@ const RegisterScreen = ({handleSubmit, onSubmit, user, navigation}) => {
     alert(user.message);
   }
   return (
-    <KeyboardAvoidingView behavior='padding' style={styles.authorizeLayout}>
-    <TouchableWithoutFeedback  
+    <KeyboardAvoidingView behavior='padding' style={{flex : 1}}>
+    <TouchableWithoutFeedback
+                           
                           onPress={Keyboard.dismiss}>
-    <View >
+    <View style={styles.authorizeLayout}>
       <Text style={styles.signUpText}>Sign up</Text>
      
-            
+            <View style={{marginBottom: 20,}}>
               <Field
                 name={"username"}
                 props={{
                   placeholder: "Username",
+                  returnKeyType: 'next',
+                  autoCorrect: false,
                 }}
                 component={EditText}
                 validate = {required}
@@ -69,24 +72,20 @@ const RegisterScreen = ({handleSubmit, onSubmit, user, navigation}) => {
                 props={{
                   placeholder: "Email",
                   keyboardType: "email-address",
+                  returnKeyType: 'next',
+                  autoCorrect: false,
                 }}
                 component={EditText}
                 validate = {isValidEmail}
               />
-              <Field
-                name={"phoneNumber"}
-                props={{
-                  placeholder: "Phone number",
-                  keyboardType: "phone-pad",
-                }}
-                component={EditText}
-                name="Phone number"
-              />
+              
               <Field
                 name={"password"}
                 props={{
                   placeholder: "Password",
                   secureTextEntry: true,
+                  returnKeyType: 'next',
+                  autoCorrect: false,
                 }}
                 component={EditText}
                 validate = {required}
@@ -96,6 +95,8 @@ const RegisterScreen = ({handleSubmit, onSubmit, user, navigation}) => {
                 props={{
                   placeholder: "Confirm password",
                   secureTextEntry: true,
+                  returnKeyType: 'go',
+                  autoCorrect: false,
                 }}
                 component={EditText}
               />
@@ -106,12 +107,15 @@ const RegisterScreen = ({handleSubmit, onSubmit, user, navigation}) => {
                   backgroundColor: "blueviolet",
                   height: 45,
                   borderRadius: 5,
-                  marginTop: 30,
+                  marginTop: 20,
+                  
                 }}
                 onPress={handleSubmit(submit)}
               >
                 <Text style={styles.buttonText}>Sign up</Text>
               </TouchableOpacity>
+              </View>
+              
               
           
     </View>
@@ -122,16 +126,13 @@ const RegisterScreen = ({handleSubmit, onSubmit, user, navigation}) => {
 const styles = StyleSheet.create({
   authorizeLayout: {
     flex: 1,
-    flexDirection: "column",
-    marginTop: 40,
     marginLeft: 30,
     marginRight: 30,
-    justifyContent: "flex-start",
+    justifyContent: "space-around",
   },
   signUpText: {
     fontSize: 36,
-    marginBottom: 100,
-    marginTop: 40,
+    
     color: "blueviolet",
   },
   buttonText: {

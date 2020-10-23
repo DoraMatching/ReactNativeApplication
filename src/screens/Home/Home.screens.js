@@ -1,6 +1,6 @@
 import React, {Component} from "react";
-import {FlatList, StyleSheet, View} from "react-native";
-import {SearchBar} from "react-native-elements";
+import {FlatList, StyleSheet, View, StatusBar} from "react-native";
+import SearchBar from 'react-native-search-bar';
 import ListItemBlog from "../../components/ListItemBlog";
 import ListItemQuestion from "../../components/ListItemQuestion";
 import ListItemTrainer from "../../components/ListItemTrainer";
@@ -42,13 +42,13 @@ export default class Home extends Component {
 
     return (
       <View>
-        <SearchBar
-          platform={"android"}
-          containerStyle={{elevation: 2}}
+         <StatusBar backgroundColor="blueviolet"  />
+        {/* <SearchBar
+          ref="searchBar"
           placeholder="Search..."
           onChangeText={this.updateSearch}
-          value={search}
-        />
+          
+        /> */}
 
         <FlatList
           style={{backgroundColor: "#C4C4C4", marginBottom: 80}}

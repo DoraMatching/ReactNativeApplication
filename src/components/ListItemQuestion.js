@@ -48,9 +48,13 @@ export default class ListItemBlog extends Component {
           </View>
 
           <Text style={styles.descriptionText}>
-            {this.props.content}
+            {this.props.content.length > 200
+              ? this.props.content.substring(0, 200 - 3) + "..."
+              : this.props.content}
             <Text style={{...styles.authorLabel}}> asked by </Text>
-            <Text>{this.props.author ? this.props.author.name : "ABC"}</Text>
+            <Text style={{fontWeight: "bold"}}>
+              {this.props.author ? this.props.author.name : "ABC"}
+            </Text>
           </Text>
           <Svg
             width="100%"
@@ -136,6 +140,7 @@ const styles = StyleSheet.create({
     color: "#000",
   },
   authorLabel: {
-    fontWeight: "bold",
+    fontWeight: "200",
+    fontStyle: "italic",
   },
 });

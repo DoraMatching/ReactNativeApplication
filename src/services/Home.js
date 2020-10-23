@@ -1,7 +1,6 @@
 import request from "../helpers/request";
 
-const getBlogsFromAPI = ({url}) => {
-  // console.log("blogs.api.js params: ", url);
+const getDataFromAPI = ({url}) => {
   return request
     .get(url)
     .then((res) => {
@@ -12,15 +11,4 @@ const getBlogsFromAPI = ({url}) => {
     });
 };
 
-const getQuestionsFromAPI = ({url}) => {
-  return request
-    .get(url)
-    .then((res) => {
-      return res;
-    })
-    .catch((error) => {
-      return error.response.data;
-    });
-};
-
-export {getBlogsFromAPI, getQuestionsFromAPI};
+export {getDataFromAPI};

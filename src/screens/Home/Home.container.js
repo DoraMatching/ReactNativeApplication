@@ -4,14 +4,14 @@ import actions from "./Home.actions";
 
 const mapStateToProps = (state) => {
   return {
-    data: state.HomeReducer,
-    dataItem: !state.HomeItemReducer ? [] : state.HomeItemReducer,
+    data: state.HomeReducer ,
+    dataItem : !state.HomeItemReducer ? [] : state.HomeItemReducer,
   };
 };
 const mapDispatchToProps = (dispatch) => {
   return {
-    onFetchBlogsQuestions: (params) => {
-      dispatch(actions.getBlogsQuestionsAction(params));
+    onFetchData: (params) => {
+      dispatch(actions.getDataAction(params));
     },
   };
 };

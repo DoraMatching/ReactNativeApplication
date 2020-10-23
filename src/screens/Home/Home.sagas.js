@@ -1,88 +1,27 @@
 import {all, fork, put, takeLatest} from "redux-saga/effects";
-import {getBlogsFromAPI, getQuestionsFromAPI} from "../../services/Home";
+import {getDataFromAPI} from "../../services/Home";
 import actions from "./Home.actions";
 
-function* fetchBlogs(action) {
+function* fetchData(action) {
   try {
-    const res = yield getBlogsFromAPI(action.params);
+    const res = yield getDataFromAPI(action.params);
 
     if (res.status === 200) {
-      yield put({type: actions.GET_BLOG_SUCCEEDED, data: res.data});
+      console.log("home.saga.js: data", res.data);
+      yield put({type: actions.GET_DATA_SUCCEEDED, data: res.data});
     } else {
-      yield put({type: actions.GET_BLOG_FAILED, error: res.message});
+      yield put({type: actions.GET_DATA_FAILED, error: res.message});
     }
   } catch (error) {
-    yield put({type: actions.GET_BLOG_FAILED, error});
+    yield put({type: actions.GET_DATA_FAILED, error});
   }
 }
 
-function* fetchQuestions(action) {
-  try {
-    const res = yield getQuestionsFromAPI(action.params);
-
-    if (res.status === 200) {
-      yield put({type: actions.GET_QUESTION_SUCCEEDED, data: res.data});
-    } else {
-      yield put({type: actions.GET_QUESTION_FAILED, error: res.message});
-    }
-  } catch (error) {
-    yield put({type: actions.GET_QUESTION_FAILED, error});
-  }
-}
-
-function* fetchBlogsQuestions(action) {
-  try {
-    const {urlBlog, urlQuestion} = action.params;
-    let resQuestion = null,
-      resBlog = null;
-    let failed = 0;
-    const data = {
-      blogs: {items: [], links: {next: ""}},
-      questions: {items: [], links: {next: ""}},
-    };
-
-    if (urlBlog !== "") {
-      resBlog = yield getBlogsFromAPI({url: urlBlog});
-      if (resBlog.status === 200) {
-        data.blogs = resBlog.data;
-      } else {
-        failed++;
-      }
-    }
-    if (urlQuestion !== "") {
-      resQuestion = yield getQuestionsFromAPI({url: urlQuestion});
-      if (resQuestion.status === 200) {
-        data.questions = resQuestion.data;
-      } else {
-        failed++;
-      }
-    }
-
-    if (failed === 0) {
-      yield put({type: actions.GET_BLOG_QUESTION_SUCCEEDED, data: data});
-    } else {
-      yield put({
-        type: actions.GET_BLOG_QUESTION_FAILED,
-        error: "Please try again",
-      });
-    }
-  } catch (error) {
-    yield put({type: actions.GET_BLOG_QUESTION_FAILED, error});
-  }
-}
-
-function* watchFetchBlogs() {
-  yield takeLatest(actions.GET_BLOG, fetchBlogs);
-}
-
-function* watchFetchQuestions() {
-  yield takeLatest(actions.GET_QUESTION, fetchQuestions);
-}
-
-function* watchFetchBlogsQuestions() {
-  yield takeLatest(actions.GET_BLOG_QUESTION, fetchBlogsQuestions);
+function* watchFetchData() {
+  console.log("home.saga.js: data", "watchFetchData");
+  yield takeLatest(actions.GET_DATA, fetchData);
 }
 
 export default function* rootSaga() {
-  yield all([fork(watchFetchBlogsQuestions)]);
+  yield all([fork(watchFetchData)]);
 }

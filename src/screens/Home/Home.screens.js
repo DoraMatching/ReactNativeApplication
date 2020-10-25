@@ -1,9 +1,11 @@
 import React, {Component} from "react";
-import {FlatList, StyleSheet, View, StatusBar} from "react-native";
-import SearchBar from 'react-native-search-bar';
+import {FlatList, StyleSheet, View, StatusBar, TextInput} from "react-native";
+import SearchBar from "react-native-search-bar";
 import ListItemBlog from "../../components/ListItemBlog";
 import ListItemQuestion from "../../components/ListItemQuestion";
 import ListItemTrainer from "../../components/ListItemTrainer";
+import colors from "../../themes/color";
+import FinderIcon from "../../images/finder.svg";
 export default class Home extends Component {
   constructor(props) {
     super(props);
@@ -42,21 +44,39 @@ export default class Home extends Component {
 
     return (
       <View>
-         <StatusBar backgroundColor="blueviolet"  />
-        {/* <SearchBar
-          ref="searchBar"
-          placeholder="Search..."
-          onChangeText={this.updateSearch}
-          
-        /> */}
-
+        <StatusBar backgroundColor={colors.primary} />
+        <View style={styles.searchContainer}>
+        
+        <View style={styles.searchInput}>
+          <View  style={styles.searchIcon} >
+          <FinderIcon width={22} height={22}/>
+          </View>
+        
+                <TextInput 
+                  style={styles.inputText}
+                  placeholder={'I\'m looking for...'}
+                  placeholderTextColor={'#999'}
+                  underlineColorAndroid={'#fff'}
+                  autoCorrect={false}
+                 
+                  ref={(inputSearch) => {
+                    this.inputSearch = inputSearch;
+                  }}
+                />
+              </View>
+              </View>
+              
         <FlatList
           style={{backgroundColor: "#C4C4C4", marginBottom: 80}}
           data={this.props.dataItem}
           keyExtractor={(item) => item.id}
           renderItem={({item, index}) => {
-            if (item.type == "question") return <ListItemQuestion {...item} />;
-            if (item.type == "post") return <ListItemBlog {...item} />;
+            console.log("Flatlist", this.props.userID);
+            const userID = this.props.userID;
+            if (item.type == "question")
+              return <ListItemQuestion {...{userID, ...item}} />;
+            if (item.type == "post")
+              return <ListItemBlog {...{userID, ...item}} />;
             if (item.type == "user-list")
               return (
                 <FlatList
@@ -79,4 +99,34 @@ export default class Home extends Component {
   }
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  searchContainer: {
+    zIndex: 99,
+    backgroundColor: colors.primary,
+    width: '100%',
+    overflow: 'hidden',
+    paddingBottom: 15,
+    paddingTop: 20,
+  },
+  searchInput: {
+    display: 'flex',
+    backgroundColor: '#fff',
+    borderRadius: 3,
+    height: 45,
+    marginTop: 3,
+    marginLeft: 10,
+    marginRight: 10,
+  },
+  inputText: {
+    
+    marginTop: 9,
+    marginLeft: 43,
+    fontSize: 15,
+    color: '#999',
+  },
+  searchIcon: {
+    position: 'absolute',
+    left: 13,
+    top: 12,
+  },
+});

@@ -11,7 +11,7 @@ function* login(action) {
   try {
     // console.log('login.saga.js params', action.user);
     const res = yield loginFromAPI(action.user);
-    // console.log('login.saga,js res: ', res);
+    console.log('login.saga,js res: ', res);
     if (res.status === 201) {
       if (action.user.toggleCheckBox) {
         const {token} = res.data;

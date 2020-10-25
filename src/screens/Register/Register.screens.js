@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import {Field} from "redux-form";
 import EditText from "../../components/EditText";
+import colors from '../../themes/color';
 
 //Validation
 const required = (value) => {
@@ -98,7 +99,7 @@ const RegisterScreen = ({handleSubmit, onSubmit, user, navigation}) => {
               style={{
                 alignItems: "center",
                 justifyContent: "center",
-                backgroundColor: "blueviolet",
+                backgroundColor: colors.primary,
                 height: 45,
                 borderRadius: 5,
                 marginTop: 20,
@@ -106,6 +107,21 @@ const RegisterScreen = ({handleSubmit, onSubmit, user, navigation}) => {
               onPress={handleSubmit(submit)}>
               <Text style={styles.buttonText}>Sign up</Text>
             </TouchableOpacity>
+            <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "center",
+
+              marginTop: 30,
+            }}>
+            <Text>Already have an account ? </Text>
+            <Text
+              style={styles.signInText}
+              onPress={() => navigation.navigate("Login")}>
+              Sign in
+            </Text>
+          </View>
           </View>
         </View>
       </TouchableWithoutFeedback>
@@ -122,12 +138,15 @@ const styles = StyleSheet.create({
   signUpText: {
     fontSize: 36,
 
-    color: "blueviolet",
+    color: colors.primary,
   },
   buttonText: {
     fontWeight: "bold",
     fontSize: 18,
     color: "white",
+  },
+  signInText: {
+    color: colors.primary,
   },
 });
 

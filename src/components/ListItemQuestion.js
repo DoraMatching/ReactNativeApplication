@@ -5,6 +5,7 @@ import TimeAgo from "react-native-timeago";
 import likedIcon from "../images/LikedIcon.png";
 import unlikedIcon from "../images/UnlikedIcon.png";
 import TagListItem from "./ListItemTag";
+import MoreOptionIcon from '../images/moreOption.svg';
 
 export default class ListItemBlog extends Component {
   constructor(props) {
@@ -16,14 +17,17 @@ export default class ListItemBlog extends Component {
 
   render() {
     var imgSrc = this.state.isLiked ? likedIcon : unlikedIcon;
-
+    console.log("listItemQuestion: ", this.props.userID);
     return (
       <View>
         <View style={{...styles.container, ...styles.verticalLayout}}>
-          <View style={{...styles.horizontalLayout}}>
-            <Image
-              style={{width: 34, height: 34}}
-              source={require("../images/QuestionIcon.png")}
+          <View style={{...styles.horizontalLayout, justifyContent: 'space-between',}}>
+          <Image
+              style={{width: 45, height: 45, borderRadius: 1000}}
+              resizeMode="cover"
+              source={{
+                uri: this.props.author.avatarUrl,
+              }}
             />
             <View
               style={{
@@ -31,7 +35,7 @@ export default class ListItemBlog extends Component {
                 paddingStart: 10,
                 paddingEnd: 10,
               }}>
-              <Text style={{...styles.title}}>{this.props.title}</Text>
+              <Text style={{...styles.title}} numberOfLines={2}>{this.props.title}</Text>
               <TimeAgo time={this.props.updatedAt} style={{...styles.time}} />
 
               <View
@@ -44,6 +48,14 @@ export default class ListItemBlog extends Component {
                   return <TagListItem item={item} />;
                 })}
               </View>
+            </View>
+            <View>
+              <Image
+                style={{width: 18, height: 20}}
+                resizeMode="cover"
+                source={require("../images/QuestionIcon.png")}
+              />
+              {this.props.userID === this.props.author.id ? <MoreOptionIcon width={20} height={20} style={{marginTop: 5}} /> : <></>}
             </View>
           </View>
 
@@ -122,7 +134,8 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 14,
     color: "#000",
-    marginRight: 10,
+    marginRight: 0,
+    width : 300,
   },
   time: {
     fontSize: 11,

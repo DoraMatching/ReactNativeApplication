@@ -9,7 +9,7 @@ export default class BlogDetail extends Component {
         return (
             <View style={{justifyContent: 'center', alignItems: 'center', flex: 1,}}>
                 <Text> BlogDetail </Text>
-                <TestSvg  width="200" height="200" stroke={"blueviolet"} />
+                
             </View>
         )
     }

@@ -5,6 +5,7 @@ import TimeAgo from "react-native-timeago";
 import likedIcon from "../images/LikedIcon.png";
 import unlikedIcon from "../images/UnlikedIcon.png";
 import TagListItem from "./ListItemTag";
+import MoreOptionIcon from "../images/moreOption.svg";
 
 export default class ListItemBlog extends Component {
   constructor(props) {
@@ -20,10 +21,17 @@ export default class ListItemBlog extends Component {
     return (
       <View>
         <View style={{...styles.container, ...styles.verticalLayout}}>
-          <View style={{...styles.horizontalLayout}}>
+          <View
+            style={{
+              ...styles.horizontalLayout,
+              justifyContent: "space-between",
+            }}>
             <Image
-              style={{width: 34, height: 30}}
-              source={require("../images/BlogIcon.png")}
+              style={{width: 45, height: 45, borderRadius: 1000}}
+              resizeMode="cover"
+              source={{
+                uri: this.props.author.avatarUrl,
+              }}
             />
             <View
               style={{
@@ -31,7 +39,7 @@ export default class ListItemBlog extends Component {
                 paddingStart: 10,
                 paddingEnd: 10,
               }}>
-              <Text style={{...styles.title}}>{this.props.title}</Text>
+              <Text style={{...styles.title}} numberOfLines={2}>{this.props.title}</Text>
               <TimeAgo time={this.props.updatedAt} style={{...styles.time}} />
 
               <View
@@ -44,6 +52,14 @@ export default class ListItemBlog extends Component {
                   return <TagListItem item={item} />;
                 })}
               </View>
+            </View>
+            <View>
+              <Image
+                style={{width: 20, height: 20}}
+                resizeMode="cover"
+                source={require("../images/BlogIcon.png")}
+              />
+               {this.props.userID === this.props.author.id ? <MoreOptionIcon width={20} height={20} style={{marginTop: 5}} /> : <></>}
             </View>
           </View>
           <Image
@@ -129,7 +145,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 14,
     color: "#000",
-    marginRight: 10,
+    width: 310,
   },
   time: {
     fontSize: 11,

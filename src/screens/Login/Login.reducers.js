@@ -1,5 +1,5 @@
 import Actions from "./Login.actions";
-const LoginReducer = (users = [], action) => {
+const LoginReducer = (user = {success: null, message: null}, action) => {
   switch (action.type) {
     case Actions.LOGIN_SUCCEEDED:
     case Actions.LOGIN_WITH_GITHUB_SUCCEEDED:
@@ -10,7 +10,7 @@ const LoginReducer = (users = [], action) => {
       console.log("Login_failed in LoginReducer.js", action.error);
       return {success: false, message: action.error};
     default:
-      return {success: null, message: null};
+      return user;
   }
 };
 export default LoginReducer;

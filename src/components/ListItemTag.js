@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     padding: 3,
     marginEnd: 5,
 
-    backgroundColor: "#F0F2F5",
+    backgroundColor: "lavender",
     borderRadius: 4,
   },
   tagText: {

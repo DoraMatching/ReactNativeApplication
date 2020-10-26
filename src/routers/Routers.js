@@ -26,7 +26,19 @@ import CalendarIcon from '../images/calendar.svg';
 import colors from '../themes/color';
 
 const Stack = createStackNavigator();
+const Stack2= createStackNavigator();
 const Tab = createBottomTabNavigator();
+
+const blogRouters = ({params}) => (
+  <Stack2.Navigator
+      initialRouteName="BlogSearch"
+      screenOptions={{
+        headerShown: false,
+      }}>
+      <Stack2.Screen name="BlogDetail" component={BlogDetail} />
+      <Stack2.Screen name="BlogSearch" component={QuestionList} />
+    </Stack2.Navigator>
+);
 
 const tabRouters = () => (
   <Tab.Navigator
@@ -62,13 +74,15 @@ const tabRouters = () => (
       inactiveTintColor: "dimgray",
     }}>
     <Tab.Screen name="Home" component={Home} />
-    <Tab.Screen name="Blogs" component={BlogDetail} />
+    <Tab.Screen name="Blogs" component={blogRouters} />
     <Tab.Screen name="Schedule" component={Comment} />
     <Tab.Screen name="Questions" component={QuestionList} /> 
     <Tab.Screen name="Profile" component={Profile} />
   </Tab.Navigator>
   // </NavigationContainer>
 );
+
+
 
 const myRouters = ({params}) => (
   <NavigationContainer>

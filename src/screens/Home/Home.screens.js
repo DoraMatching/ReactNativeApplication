@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {FlatList, StyleSheet, View, StatusBar, TextInput} from "react-native";
+import {FlatList, StyleSheet, View, StatusBar, TextInput, TouchableOpacity} from "react-native";
 import SearchBar from "react-native-search-bar";
 import ListItemBlog from "../../components/ListItemBlog";
 import ListItemQuestion from "../../components/ListItemQuestion";
@@ -29,6 +29,15 @@ export default class Home extends Component {
     this.setState({search});
   };
 
+  navigateToDetail = (item, nestedNavigator, screen) => {
+    console.log("navigateToDetail is called");
+    this.props.navigation.navigate(
+      nestedNavigator, 
+      {screen: screen ,
+       params : item
+      });
+  }
+
   retrieveMore = () => {
     console.log("in RetrieveMore", this.props.data);
     console.log("retrieveMore is called");
@@ -41,7 +50,7 @@ export default class Home extends Component {
 
   render() {
     const {search} = this.state;
-
+    console.log("props navigate in Home", this.props.navigation);
     return (
       <View>
         <StatusBar backgroundColor={colors.primary} />
@@ -74,9 +83,16 @@ export default class Home extends Component {
             console.log("Flatlist", this.props.userID);
             const userID = this.props.userID;
             if (item.type == "question")
-              return <ListItemQuestion {...{userID, ...item}} />;
+              return (
+                <ListItemQuestion {...{userID, ...item}} />
+                
+              );
             if (item.type == "post")
-              return <ListItemBlog {...{userID, ...item}} />;
+              return (
+                <TouchableOpacity onPress={ () => this.navigateToDetail(item,"Blogs", "BlogDetail")}>
+                  <ListItemBlog {...{userID, ...item}} />
+                  </TouchableOpacity>
+              );
             if (item.type == "user-list")
               return (
                 <FlatList

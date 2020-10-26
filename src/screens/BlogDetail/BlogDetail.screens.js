@@ -22,12 +22,12 @@ export default class BlogDetail extends Component {
   }
   render() {
     var imgSrc = this.state.isLiked ? likedIcon : unlikedIcon;
+    const {author, comments, content, createdAt, featuredImage, subTitle, tags, title, updatedAt} = this.props.route.params;
     return (
       <ScrollView>
         <View style={{...styles.container}}>
           <Text style={{...styles.title}}>
-            UI Components và bước đầu hướng đến MicroViewControllers trong lập
-            trình iOS
+            {title}
           </Text>
           <View
             style={{
@@ -35,7 +35,7 @@ export default class BlogDetail extends Component {
               marginVertical: 5,
               flexWrap: "wrap",
             }}>
-            {[{name: "C#"}, {name: "Golang"}, {name: "Python"}].map((item) => {
+            {tags.map((item) => {
               return <TagListItem item={item} />;
             })}
           </View>
@@ -50,41 +50,26 @@ export default class BlogDetail extends Component {
               resizeMode="cover"
               source={{
                 uri:
-                  "https://i0.wp.com/365webresources.com/wp-content/uploads/2016/09/FREE-PROFILE-AVATARS.png",
+                  author.avatarUrl,
               }}
             />
             <Text style={{marginLeft: 10}}>
-              Written by <Text style={{...styles.author}}>Trần Văn A</Text> on{" "}
-              <Text>January, 10th, 2019</Text>
+              Written by <Text style={{...styles.author}}>{author.name}</Text> on{" "}
+              <Text>{createdAt}</Text>
             </Text>
           </View>
           <Text style={{...styles.description}}>
-            Diễn đàn voz không còn quá xa lạ với nhiều dev. Giao diện cổ của nó
-            khi dùng mobile thì ức chế lòi dom. Đợt làm lại next voz tưởng ngon
-            hơn, ai ngờ vứt cái phân trang đi, nhiều hôm vào đọc topic đang theo
-            dõi mà kéo mỏi cả tay.
+            {subTitle}
           </Text>
           <Image
             style={{width: "100%", height: 300, marginVertical: 5}}
             resizeMode="cover"
             source={{
-              uri: "https://scx2.b-cdn.net/gfx/news/hires/2019/2-nature.jpg",
+              uri: featuredImage,
             }}
           />
           <Text style={{...styles.content}}>
-            Khi bạn làm việc nhiều với Java, chắc hẳn bạn đã "chán ngấy" với
-            việc tạo ra các getters, setters hay các constructors với các params
-            khác nhau cho Model class. Điều này không chỉ làm cho mã nguồn của
-            class đó nhiều lên, gây rối khi ta muốn kiểm tra lại các
-            method/function chính của class đó, hoặc đơn giản chỉ là gây khó
-            chịu khi chúng ta phải làm đi làm lại công việc insert nhàm chán đó.
-            (với một người lười như tớ thì đây là một điều hết sức kinh khủng
-            ^^! ) Với một số lí do như trên và nhiều hơn thế nữa thì Lombok ra
-            đời giúp cho bạn loại bỏ bớt đi những đoạn mã nguồn tẻ nhạt đó chỉ
-            bằng những Anotations. Project Lombok là một thư viện java tự động
-            tích hợp vào Editor và Build tools, làm tăng tốc java cho bạn. Bằng
-            việc sử dụng các Anotations của Lombok, bạn đã có được đầy đủ tính
-            năng mà bạn cần!
+            {content}
           </Text>
           <TouchableOpacity
             style={{...styles.horizontalLayout, alignItems: 'flex-end', marginVertical: 5}}

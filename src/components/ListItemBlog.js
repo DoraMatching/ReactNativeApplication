@@ -40,7 +40,7 @@ export default class ListItemBlog extends Component {
                 paddingEnd: 10,
               }}>
               <Text style={{...styles.title}} numberOfLines={2}>{this.props.title}</Text>
-              <TimeAgo time={this.props.updatedAt} style={{...styles.time}} />
+              <TimeAgo time={this.props.createdAt} style={{...styles.time}} />
 
               <View
                 style={{

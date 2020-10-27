@@ -11,6 +11,7 @@ import QuestionList from '../screens/QuestionList/QuestionList.screens';
 import Profile from '../screens/Profile/Profile.screens';
 import Schedule from '../screens/Schedule/Schedule.screens';
 import Comment from '../components/Comment';
+import QuestionDetail from '../screens/QuestionDetail/QuestionDetail.screens';
 
 import HomeOutlineIcon from '../images/home-outline.svg';
 import HomeIcon from '../images/home.svg';
@@ -26,18 +27,28 @@ import CalendarIcon from '../images/calendar.svg';
 import colors from '../themes/color';
 
 const Stack = createStackNavigator();
-const Stack2= createStackNavigator();
 const Tab = createBottomTabNavigator();
 
+const homeRouters = () => (
+  <Stack.Navigator
+      initialRouteName="HomeScreen"
+      screenOptions={{
+        headerShown: false,
+      }}
+      >
+      <Stack.Screen name="BlogDetail" component={BlogDetail} />
+      <Stack.Screen name="HomeScreen" component={Home} />
+    </Stack.Navigator>
+);
 const blogRouters = ({params}) => (
-  <Stack2.Navigator
+  <Stack.Navigator
       initialRouteName="BlogSearch"
       screenOptions={{
         headerShown: false,
       }}>
-      <Stack2.Screen name="BlogDetail" component={BlogDetail} />
-      <Stack2.Screen name="BlogSearch" component={QuestionList} />
-    </Stack2.Navigator>
+      <Stack.Screen name="BlogDetail" component={BlogDetail} />
+      <Stack.Screen name="BlogSearch" component={QuestionList} />
+    </Stack.Navigator>
 );
 
 const tabRouters = () => (
@@ -72,11 +83,12 @@ const tabRouters = () => (
     tabBarOptions={{
       activeTintColor: colors.primary,
       inactiveTintColor: "dimgray",
-    }}>
-    <Tab.Screen name="Home" component={Home} />
+    }}
+    >
+    <Tab.Screen name="Home" component={homeRouters} />
     <Tab.Screen name="Blogs" component={blogRouters} />
     <Tab.Screen name="Schedule" component={Comment} />
-    <Tab.Screen name="Questions" component={QuestionList} /> 
+    <Tab.Screen name="Questions" component={QuestionDetail} /> 
     <Tab.Screen name="Profile" component={Profile} />
   </Tab.Navigator>
   // </NavigationContainer>
@@ -91,8 +103,8 @@ const myRouters = ({params}) => (
       screenOptions={{
         headerShown: false,
       }}>
-      <Stack.Screen name="Login" component={LoginContainer} />
-      <Stack.Screen name="Register" component={RegisterContainer} />
+      <Stack.Screen options={{headerShown: false}} name="Login" component={LoginContainer} />
+      <Stack.Screen options={{headerShown: false}} name="Register" component={RegisterContainer} />
       {/* <Stack.Screen name="Home" component={Home} /> */}
       <Stack.Screen name="Nav" component={tabRouters} />
     </Stack.Navigator>

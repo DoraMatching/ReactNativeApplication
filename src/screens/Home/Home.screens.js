@@ -89,7 +89,7 @@ export default class Home extends Component {
               );
             if (item.type == "post")
               return (
-                <TouchableOpacity onPress={ () => this.navigateToDetail(item,"Blogs", "BlogDetail")}>
+                <TouchableOpacity onPress={ () => this.navigateToDetail(item,"Home", "BlogDetail")}>
                   <ListItemBlog {...{userID, ...item}} />
                   </TouchableOpacity>
               );

@@ -97,6 +97,7 @@ const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 20,
     paddingVertical: 15,
+    backgroundColor: "white",
   },
   title: {
     fontWeight: "bold",

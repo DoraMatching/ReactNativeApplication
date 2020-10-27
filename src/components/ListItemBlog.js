@@ -148,10 +148,11 @@ const styles = StyleSheet.create({
     width: 310,
   },
   time: {
-    fontSize: 11,
-    fontWeight: "300",
+    fontSize: 12,
+    
     paddingEnd: 5,
     marginBottom: 5,
+    color: "#3d3d4e",
   },
   background: {
     flex: 1,

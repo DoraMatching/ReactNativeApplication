@@ -12,28 +12,31 @@ export default class ListItemBlogSearch extends Component {
       <View
         style={{
           ...styles.horizontalLayout,
-          marginHorizontal: 5,
-          
-          paddingRight: 15,
-          height: 91,
+          marginHorizontal: 10,
+          marginVertical: 5,
+          paddingVertical: 5,
+          paddingHorizontal: 5,
+          height: 110,
           ...styles.border,
           ...styles.borderColor,
-          borderRadius: 5,
-          
+          borderTopRightRadius: 5,
+          borderBottomRightRadius: 5,
+          elevation : 5,
         }}>
         <Image
-          style={{flex: 25, height: 90, ...styles.border}}
+          style={{flex: 25, height: 103, ...styles.border}}
           resizeMode="cover"
           source={{
             uri:
               "https://ane4bf-datap1.s3-eu-west-1.amazonaws.com/wmocms/s3fs-public/news/featured_media/featured-image-index.png",
           }}
         />
-        <View style={{marginLeft: 10, flexWrap: "wrap", flex: 75}}>
+        <View style={{marginHorizontal: 10, flexWrap: "wrap", flex: 75}}>
           <Text
             style={{
               ...styles.title,
               ...styles.borderColor,
+              marginTop: 10,
               width: "100%",
             }}
             numberOfLines={2}>
@@ -50,11 +53,7 @@ export default class ListItemBlogSearch extends Component {
               justifyContent: "flex-start",
               paddingTop: 5,
             }}>
-            <Image
-              style={{width:20, height: 20, marginEnd: 2}}
-              resizeMode="contain"
-              source={require("../images/tagIcon.png")}
-            />
+            
             <Text style={{color: "#3d3d4e", flex: 90, }} numberOfLines={1}>
               {[
                 {
@@ -77,7 +76,7 @@ export default class ListItemBlogSearch extends Component {
                 },
               ]
                 .map(({name}) => name)
-                .join(", ")}
+                .join(" \u2022 ")}
             </Text>
           </View>
 

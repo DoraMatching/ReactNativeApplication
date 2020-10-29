@@ -47,7 +47,7 @@ export default class Comment extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "lavender",
+    backgroundColor: "silver",
     borderRadius: 5,
     padding: 10,
     //marginHorizontal: 10,

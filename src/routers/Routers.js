@@ -12,6 +12,7 @@ import Profile from '../screens/Profile/Profile.screens';
 import Schedule from '../screens/Schedule/Schedule.screens';
 import Comment from '../components/Comment';
 import QuestionDetail from '../screens/QuestionDetail/QuestionDetail.screens';
+import ListItemBlogSearch from '../components/ListItemBlogSearch'
 
 import HomeOutlineIcon from '../images/home-outline.svg';
 import HomeIcon from '../images/home.svg';
@@ -87,7 +88,7 @@ const tabRouters = () => (
     >
     <Tab.Screen name="Home" component={homeRouters} />
     <Tab.Screen name="Blogs" component={blogRouters} />
-    <Tab.Screen name="Schedule" component={Comment} />
+    <Tab.Screen name="Schedule" component={ListItemBlogSearch} />
     <Tab.Screen name="Questions" component={QuestionDetail} /> 
     <Tab.Screen name="Profile" component={Profile} />
   </Tab.Navigator>

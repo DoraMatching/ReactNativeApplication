@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Image, StyleSheet} from "react-native";
+import {Image, StyleSheet, View} from "react-native";
 
 const width = 137;
 export default class CustomImage extends Component {
@@ -15,12 +15,14 @@ export default class CustomImage extends Component {
     //     return data;
     // }
     const bitmapImage = (
+      <View style={{...styles.border}}>
       <Image
-        style={{width: width, height: 118, ...styles.border}}
+        style={{width: width, height: 118}}
         source={{
           uri: imgUrl,
         }}
       />
+      </View>
     );
     // const vectorImage = (
     //   <SvgUri
@@ -78,16 +80,16 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 5,
     borderTopRightRadius: 5,
     borderColor: "rgba(0, 0, 0, .5)",
-    borderWidth: 0.75,
+    borderWidth: 1.5,
   },
   textContainer: {
     width: width,
     borderLeftColor: "rgba(0, 0, 0, .5)",
-    borderLeftWidth: 0.75,
+    borderLeftWidth: 1.5,
     borderRightColor: "rgba(0, 0, 0, .5)",
-    borderRightWidth: 0.75,
+    borderRightWidth: 1.5,
     borderBottomColor: "rgba(0, 0, 0, .5)",
-    borderBottomWidth: 0.75,
+    borderBottomWidth: 1.5,
     borderBottomLeftRadius: 5,
     borderBottomRightRadius: 5,
   },

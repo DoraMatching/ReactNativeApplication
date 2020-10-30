@@ -63,7 +63,7 @@ export default class ListItemBlog extends Component {
             </View>
           </View>
           <Image
-            style={{width: "100%", marginTop: 10, height: 200}}
+            style={{width: "100%", marginTop: 5, height: 200}}
             resizeMode="cover"
             source={{
               uri: this.props.featuredImage,

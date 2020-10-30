@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     marginVertical: 5,
     marginLeft: 10,
     fontWeight: "bold",
-    fontSize: 15,
+    fontSize: 18,
     color: colors.primary,
   },
   horizontalLayout: {

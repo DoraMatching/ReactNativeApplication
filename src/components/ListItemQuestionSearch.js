@@ -1,8 +1,14 @@
-import React, {Component} from "react";
-import {Text, View, Image, StyleSheet} from "react-native";
+import React, { Component } from 'react';
+import { View, Text, StyleSheet, Image } from 'react-native';
 import moment from "moment";
 
-export default class ListItemBlogSearch extends Component {
+export default class ListItemQuestionTop extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+    };
+  }
+
   render() {
     return (
       <View style={{...styles.container, paddingVertical: 10}}>
@@ -37,21 +43,19 @@ export default class ListItemBlogSearch extends Component {
         <View style={{...styles.horizontalLayout, marginHorizontal: 10}}>
           <Text style={{...styles.descriptionText, flex : 80}}>
             <Text style={{...styles.time}}>{moment(this.props.createdAt).format("MMM Do \u2022 ")}</Text>
-            {this.props.subTitle.length > 120
-              ? this.props.subTitle.substring(0, 120 - 3) + "..."
-              : this.props.subTitle}
+            {this.props.content.length > 120
+              ? this.props.content.substring(0, 120 - 3) + "..."
+              : this.props.content}
 
-            <Text style={{...styles.authorLabel}}> written by </Text>
+            <Text style={{...styles.authorLabel}}> asked by </Text>
             <Text style={{fontWeight: "bold"}}>
               {this.props.author ? this.props.author.name : "ABC"}
             </Text>
           </Text>
           <Image
             style={{flex: 20, marginTop: 5, height: '100%', borderRadius: 5, marginStart: 5}}
-            resizeMode="cover"
-            source={{
-              uri: this.props.featuredImage,
-            }}
+            resizeMode="contain"
+            source={require("../images/QuestionFeaturedImage.png")}
           />
         </View>
         <View
@@ -127,3 +131,4 @@ const styles = StyleSheet.create({
     fontStyle: "italic",
   },
 });
+

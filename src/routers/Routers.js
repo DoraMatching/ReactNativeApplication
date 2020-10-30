@@ -5,13 +5,13 @@ import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 import React from "react";
 import Home from "../screens/Home/Home.container";
 import BlogSearch from '../screens/BlogSearch/BlogSearch.container';
+import QuestionSearch from '../screens/QuestionSearch/QuestionSearch.container';
 import LoginContainer from "../screens/Login/Login.container";
 import RegisterContainer from "../screens/Register/Register.container";
 import BlogDetail from "../screens/BlogDetail/BlogDetail.screens";
-import QuestionList from '../screens/QuestionList/QuestionList.screens';
+
+
 import Profile from '../screens/Profile/Profile.screens';
-import Schedule from '../screens/Schedule/Schedule.screens';
-import Comment from '../components/Comment';
 import QuestionDetail from '../screens/QuestionDetail/QuestionDetail.screens';
 
 
@@ -52,7 +52,16 @@ const blogRouters = ({params}) => (
       <Stack.Screen name="BlogSearch" component={BlogSearch} />
     </Stack.Navigator>
 );
-
+const questionRouters = ({params}) => (
+  <Stack.Navigator
+      initialRouteName="QuestionSearch"
+      screenOptions={{
+        headerShown: false,
+      }}>
+      <Stack.Screen name="BlogDetail" component={BlogDetail} />
+      <Stack.Screen name="QuestionSearch" component={QuestionSearch} />
+    </Stack.Navigator>
+);
 const tabRouters = () => (
   <Tab.Navigator
     screenOptions={({route}) => ({
@@ -90,7 +99,7 @@ const tabRouters = () => (
     <Tab.Screen name="Home" component={homeRouters} />
     <Tab.Screen name="Blogs" component={blogRouters} />
     <Tab.Screen name="Schedule" component={BlogSearch} />
-    <Tab.Screen name="Questions" component={QuestionDetail} /> 
+    <Tab.Screen name="Questions" component={questionRouters} /> 
     <Tab.Screen name="Profile" component={Profile} />
   </Tab.Navigator>
   // </NavigationContainer>

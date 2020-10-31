@@ -9,6 +9,7 @@ import ListItemQuestionSearch from '../../components/ListItemQuestionSearch';
 export default class QuestionSearch extends Component {
   constructor(props) {
     super(props);
+    console.log("QuestionSearch constructor is called");
     this.state = {
     };
     this.props.onFetchTag({url : 'tag-question?page=1&limit=20&order=DESC'});

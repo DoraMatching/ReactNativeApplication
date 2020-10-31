@@ -9,6 +9,7 @@ import colors from "../../themes/color";
 export default class BlogSearch extends Component {
   constructor(props) {
     super(props);
+    console.log("BlogSearch constructor is called");
     this.props.onFetchTag({url : 'tag-post?page=1&limit=20&order=DESC'});
     this.props.onFetchTop({url : 'posts?page=1&limit=3&order=DESC'});
   }

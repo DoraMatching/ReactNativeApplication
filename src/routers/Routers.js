@@ -98,7 +98,7 @@ const tabRouters = () => (
     >
     <Tab.Screen name="Home" component={homeRouters} />
     <Tab.Screen name="Blogs" component={blogRouters} />
-    <Tab.Screen name="Schedule" component={BlogSearch} />
+    <Tab.Screen name="Schedule" component={QuestionDetail} />
     <Tab.Screen name="Questions" component={questionRouters} /> 
     <Tab.Screen name="Profile" component={Profile} />
   </Tab.Navigator>

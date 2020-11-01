@@ -15,11 +15,15 @@ const HomeReducer = (data = null , action) => {
 
 const HomeItemReducer = (dataItem = [], action) => {
   switch (action.type) {
+    
     case Actions.GET_DATA_SUCCEEDED:
       return [...dataItem, ...action.data.items];
 
     case Actions.GET_DATA_FAILED:
       return dataItem;
+
+    case Actions.REFRESH_DATA:
+      return [];
 
     default:
       return dataItem;

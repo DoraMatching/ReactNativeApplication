@@ -14,6 +14,9 @@ const mapDispatchToProps = (dispatch) => {
     onFetchData: (params) => {
       dispatch(actions.getDataAction(params));
     },
+    onRefreshData : () => {
+      dispatch(actions.getRefreshDataAction());
+    }
   };
 };
 

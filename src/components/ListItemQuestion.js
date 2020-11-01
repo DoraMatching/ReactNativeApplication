@@ -32,6 +32,8 @@ export default class ListItemBlog extends Component {
                 height: 45,
                 borderRadius: 1000,
                 marginRight: 10,
+                borderColor: "#c4c4c4",
+                borderWidth: 0.5,
               }}
               resizeMode="cover"
               source={{

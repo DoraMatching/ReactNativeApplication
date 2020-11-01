@@ -27,7 +27,14 @@ export default class ListItemBlog extends Component {
               justifyContent: "space-between",
             }}>
             <Image
-              style={{width: 45, height: 45, borderRadius: 1000, marginRight: 10}}
+              style={{
+                width: 45,
+                height: 45,
+                borderRadius: 1000,
+                marginRight: 10,
+                borderColor: "#c4c4c4",
+                borderWidth: 0.5,
+              }}
               resizeMode="cover"
               source={{
                 uri: this.props.author.avatarUrl,
@@ -39,7 +46,9 @@ export default class ListItemBlog extends Component {
                 paddingRight: 10,
                 flex: 60,
               }}>
-              <Text style={{...styles.title}} numberOfLines={2}>{this.props.title}</Text>
+              <Text style={{...styles.title}} numberOfLines={2}>
+                {this.props.title}
+              </Text>
               <TimeAgo time={this.props.createdAt} style={{...styles.time}} />
 
               <View
@@ -59,7 +68,11 @@ export default class ListItemBlog extends Component {
                 resizeMode="cover"
                 source={require("../images/BlogIcon.png")}
               />
-               {this.props.userID === this.props.author.id ? <MoreOptionIcon width={20} height={20} style={{marginTop: 5}} /> : <></>}
+              {this.props.userID === this.props.author.id ? (
+                <MoreOptionIcon width={20} height={20} style={{marginTop: 5}} />
+              ) : (
+                <></>
+              )}
             </View>
           </View>
           <Image
@@ -148,7 +161,7 @@ const styles = StyleSheet.create({
   },
   time: {
     fontSize: 12,
-    
+
     paddingEnd: 5,
     marginBottom: 5,
     color: "#3d3d4e",

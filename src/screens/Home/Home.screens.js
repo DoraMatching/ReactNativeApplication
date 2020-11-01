@@ -1,18 +1,24 @@
 import React, {Component} from "react";
 import {FlatList, StyleSheet, View, StatusBar, TextInput, TouchableOpacity} from "react-native";
-import SearchBar from "react-native-search-bar";
 import ListItemBlog from "../../components/ListItemBlog";
 import ListItemQuestion from "../../components/ListItemQuestion";
 import ListItemTrainer from "../../components/ListItemTrainer";
 import colors from "../../themes/color";
 import FinderIcon from "../../images/finder.svg";
+import BlogDetailModal from "../BlogDetail/BlogDetail.modals"
 export default class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
       search: "",
       url: "home?page=1&limit=4&order=DESC",
+      isLoading : false,
     };
+    this.blogDetailModal = null;
+
+    this.setBlogDetailModalRef = element => {
+        this.blogDetailModal = element;
+    }
   }
 
   componentWillMount() {
@@ -29,13 +35,21 @@ export default class Home extends Component {
     this.setState({search});
   };
 
-  navigateToDetail = (item, nestedNavigator, screen) => {
-    console.log("navigateToDetail is called");
-    this.props.navigation.navigate(
-      nestedNavigator, 
-      {screen: screen ,
-       params : item
-      });
+  // navigateToDetail = (item, nestedNavigator, screen) => {
+  //   console.log("navigateToDetail is called");
+  //   this.props.navigation.navigate(
+  //     nestedNavigator, 
+  //     {screen: screen ,
+  //      params : item
+  //     });
+  // }
+
+  refreshData = () => {
+    this.setState({isLoading:true});
+    this.props.onRefreshData();
+    const {url} = this.state;
+    this.props.onFetchData({url});
+    this.setState({isLoading:false})
   }
 
   retrieveMore = () => {
@@ -50,7 +64,7 @@ export default class Home extends Component {
 
   render() {
     const {search} = this.state;
-    console.log("props navigate in Home", this.props.navigation);
+    console.log("refs Home", this.refs);
     return (
       <View>
         <StatusBar backgroundColor={colors.primary} />
@@ -79,6 +93,8 @@ export default class Home extends Component {
           style={{backgroundColor: "#C4C4C4", marginBottom: 80}}
           data={this.props.dataItem}
           keyExtractor={(item) => item.id}
+          refreshing={this.state.isLoading}
+          onRefresh={this.refreshData}
           renderItem={({item, index}) => {
             console.log("Flatlist", this.props.userID);
             const userID = this.props.userID;
@@ -89,7 +105,7 @@ export default class Home extends Component {
               );
             if (item.type == "post")
               return (
-                <TouchableOpacity onPress={ () => this.navigateToDetail(item,"Home", "BlogDetail")}>
+              <TouchableOpacity onPress={ () => this.blogDetailModal.showBlogDetailModal(item)}>
                   <ListItemBlog {...{userID, ...item}} />
                   </TouchableOpacity>
               );
@@ -110,6 +126,7 @@ export default class Home extends Component {
           }}
           onEndReached={this.retrieveMore}
         />
+        <BlogDetailModal ref={this.setBlogDetailModalRef}></BlogDetailModal>
       </View>
     );
   }
@@ -117,7 +134,7 @@ export default class Home extends Component {
 
 const styles = StyleSheet.create({
   searchContainer: {
-    zIndex: 99,
+    zIndex: 0,
     backgroundColor: colors.primary,
     width: '100%',
     overflow: 'hidden',

@@ -1,6 +1,6 @@
 const Actions = {
   GET_DATA: "GET_DATA",
-
+  REFRESH_DATA:"REFRESH_DATA",
   GET_DATA_SUCCEEDED: "GET_DATA_SUCCEEDED",
   GET_DATA_FAILED: "GET_DATA_FAILED",
 
@@ -8,6 +8,13 @@ const Actions = {
     return {
       type: Actions.GET_DATA,
       params,
+    };
+  },
+
+  getRefreshDataAction: () => {
+    return {
+      type: Actions.REFRESH_DATA,
+      
     };
   },
 

@@ -3,6 +3,8 @@ const Actions = {
   REFRESH_DATA:"REFRESH_DATA",
   GET_DATA_SUCCEEDED: "GET_DATA_SUCCEEDED",
   GET_DATA_FAILED: "GET_DATA_FAILED",
+  REFRESH_DATA_SUCCEEDED: "GET_REFRESH_DATA_SUCCEEDED",
+  REFRESH_DATA_FAILED: "GET_REFRESH_DATA_FAILED",
 
   getDataAction: (params) => {
     return {
@@ -11,10 +13,10 @@ const Actions = {
     };
   },
 
-  getRefreshDataAction: () => {
+  getRefreshDataAction: (params) => {
     return {
       type: Actions.REFRESH_DATA,
-      
+      params,
     };
   },
 
@@ -28,6 +30,20 @@ const Actions = {
   getDataFailedAction: (error) => {
     return {
       type: Actions.GET_DATA_FAILED,
+      error,
+    };
+  },
+
+  getRefreshDataSuccessAction: (data) => {
+    return {
+      type: Actions.REFRESH_DATA_SUCCEEDED,
+      data,
+    };
+  },
+
+  getRefreshDataFailedAction: (error) => {
+    return {
+      type: Actions.REFRESH_DATA_FAILED,
       error,
     };
   },

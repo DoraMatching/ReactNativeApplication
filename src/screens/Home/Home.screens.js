@@ -46,10 +46,9 @@ export default class Home extends Component {
 
   refreshData = () => {
     this.setState({isLoading:true});
-    this.props.onRefreshData();
     const {url} = this.state;
-    this.props.onFetchData({url});
-    this.setState({isLoading:false})
+    this.props.onRefreshData({url});
+    this.setState({isLoading:false});
   }
 
   retrieveMore = () => {

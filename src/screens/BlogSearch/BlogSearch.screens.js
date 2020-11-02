@@ -43,14 +43,14 @@ export default class BlogSearch extends Component {
             marginLeft: 10,
             flexWrap: "wrap",
           }}>
-          {this.props.tags.items.map((item) => {
+          {this.props.tags ? this.props.tags.items.map((item) => {
             return <TagListItem item={item} />;
-          })}
+          }) : <></>}
         </View>
         <Text style={{...styles.label}}>Top Blogs</Text>
         <FlatList
           style={{}}
-          data={this.props.tops.items}
+          data={this.props.tops ? this.props.tops.items : []}
           keyExtractor={(item) => item.id}
           renderItem={({item, index}) => <ListItemBlogSearch {...item}/>}
         />

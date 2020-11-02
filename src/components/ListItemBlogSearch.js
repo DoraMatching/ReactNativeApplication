@@ -12,7 +12,14 @@ export default class ListItemBlogSearch extends Component {
             justifyContent: "space-between",
           }}>
           <Image
-            style={{width: 45, height: 45, borderRadius: 1000, marginRight: 10}}
+            style={{
+              width: 45,
+              height: 45,
+              borderRadius: 1000,
+              marginRight: 10,
+              borderColor: "#c4c4c4",
+              borderWidth: 0.5,
+            }}
             resizeMode="cover"
             source={{
               uri: this.props.author.avatarUrl,
@@ -27,16 +34,16 @@ export default class ListItemBlogSearch extends Component {
             <Text style={{...styles.title}} numberOfLines={2}>
               {this.props.title}
             </Text>
-            <Text style={{color: "#3d3d4e", flex: 90, }} numberOfLines={1}>
-              {this.props.tags
-                .map(({name}) => name)
-                .join(" \u2022 ")}
+            <Text style={{color: "#3d3d4e", flex: 90}} numberOfLines={1}>
+              {this.props.tags.map(({name}) => name).join(" \u2022 ")}
             </Text>
           </View>
         </View>
         <View style={{...styles.horizontalLayout, marginHorizontal: 10}}>
-          <Text style={{...styles.descriptionText, flex : 80}}>
-            <Text style={{...styles.time}}>{moment(this.props.createdAt).format("MMM Do \u2022 ")}</Text>
+          <Text style={{...styles.descriptionText, flex: 80}}>
+            <Text style={{...styles.time}}>
+              {moment(this.props.createdAt).format("MMM Do \u2022 ")}
+            </Text>
             {this.props.subTitle.length > 120
               ? this.props.subTitle.substring(0, 120 - 3) + "..."
               : this.props.subTitle}
@@ -47,7 +54,13 @@ export default class ListItemBlogSearch extends Component {
             </Text>
           </Text>
           <Image
-            style={{flex: 20, marginTop: 5, height: '100%', borderRadius: 5, marginStart: 5}}
+            style={{
+              flex: 20,
+              marginTop: 5,
+              height: "100%",
+              borderRadius: 5,
+              marginStart: 5,
+            }}
             resizeMode="cover"
             source={{
               uri: this.props.featuredImage,
@@ -55,35 +68,35 @@ export default class ListItemBlogSearch extends Component {
           />
         </View>
         <View
-            style={{
-              ...styles.horizontalLayout,
-              justifyContent: "space-between",
-              marginVertical: 5,
-              ...styles.borderColor,
-              marginHorizontal: 10
-            }}>
-            <View style={{...styles.horizontalLayout, marginTop: 5, flex: 50}}>
-              <Image
-                style={{width: 20, height: 20, marginEnd: 2}}
-                source={require("../images/UnlikedIcon.png")}
-              />
-              <Text style={{fontSize: 13, paddingTop: 5}}>250000</Text>
-            </View>
-            <View style={{...styles.horizontalLayout, marginTop: 5, flex: 50}}>
-              <Image
-                style={{width: 20, height: 20, marginEnd: 2, marginTop: 5}}
-                source={require("../images/CommentIcon.png")}
-              />
-              <Text
-                style={{
-                  fontSize: 13,
-                  alignSelf: "flex-end",
-                  textAlign: "right",
-                }}>
-                2500
-              </Text>
-            </View>
+          style={{
+            ...styles.horizontalLayout,
+            justifyContent: "space-between",
+            marginVertical: 5,
+            ...styles.borderColor,
+            marginHorizontal: 10,
+          }}>
+          <View style={{...styles.horizontalLayout, marginTop: 5, flex: 50}}>
+            <Image
+              style={{width: 20, height: 20, marginEnd: 2}}
+              source={require("../images/UnlikedIcon.png")}
+            />
+            <Text style={{fontSize: 13, paddingTop: 5}}>250000</Text>
           </View>
+          <View style={{...styles.horizontalLayout, marginTop: 5, flex: 50}}>
+            <Image
+              style={{width: 20, height: 20, marginEnd: 2, marginTop: 5}}
+              source={require("../images/CommentIcon.png")}
+            />
+            <Text
+              style={{
+                fontSize: 13,
+                alignSelf: "flex-end",
+                textAlign: "right",
+              }}>
+              2500
+            </Text>
+          </View>
+        </View>
       </View>
     );
   }

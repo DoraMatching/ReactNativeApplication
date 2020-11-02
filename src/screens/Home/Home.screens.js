@@ -1,24 +1,31 @@
 import React, {Component} from "react";
-import {FlatList, StyleSheet, View, StatusBar, TextInput, TouchableOpacity} from "react-native";
+import {
+  FlatList,
+  StyleSheet,
+  View,
+  StatusBar,
+  TextInput,
+  Pressable,
+} from "react-native";
 import ListItemBlog from "../../components/ListItemBlog";
 import ListItemQuestion from "../../components/ListItemQuestion";
 import ListItemTrainer from "../../components/ListItemTrainer";
 import colors from "../../themes/color";
 import FinderIcon from "../../images/finder.svg";
-import BlogDetailModal from "../BlogDetail/BlogDetail.modals"
+import BlogDetailModal from "../BlogDetail/BlogDetail.modals";
 export default class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
       search: "",
       url: "home?page=1&limit=4&order=DESC",
-      isLoading : false,
+      isLoading: false,
     };
     this.blogDetailModal = null;
 
-    this.setBlogDetailModalRef = element => {
-        this.blogDetailModal = element;
-    }
+    this.setBlogDetailModalRef = (element) => {
+      this.blogDetailModal = element;
+    };
   }
 
   componentWillMount() {
@@ -38,18 +45,18 @@ export default class Home extends Component {
   // navigateToDetail = (item, nestedNavigator, screen) => {
   //   console.log("navigateToDetail is called");
   //   this.props.navigation.navigate(
-  //     nestedNavigator, 
+  //     nestedNavigator,
   //     {screen: screen ,
   //      params : item
   //     });
   // }
 
   refreshData = () => {
-    this.setState({isLoading:true});
+    this.setState({isLoading: true});
     const {url} = this.state;
     this.props.onRefreshData({url});
-    this.setState({isLoading:false});
-  }
+    this.setState({isLoading: false});
+  };
 
   retrieveMore = () => {
     console.log("in RetrieveMore", this.props.data);
@@ -63,31 +70,29 @@ export default class Home extends Component {
 
   render() {
     const {search} = this.state;
-    console.log("refs Home", this.refs);
+    //this.props.navigation.navigate("BlogDetail");
     return (
       <View>
         <StatusBar backgroundColor={colors.primary} />
         <View style={styles.searchContainer}>
-        
-        <View style={styles.searchInput}>
-          <View  style={styles.searchIcon} >
-          <FinderIcon width={22} height={22}/>
+          <View style={styles.searchInput}>
+            <View style={styles.searchIcon}>
+              <FinderIcon width={22} height={22} />
+            </View>
+
+            <TextInput
+              style={styles.inputText}
+              placeholder={"I'm looking for..."}
+              placeholderTextColor={"#999"}
+              underlineColorAndroid={"#fff"}
+              autoCorrect={false}
+              ref={(inputSearch) => {
+                this.inputSearch = inputSearch;
+              }}
+            />
           </View>
-        
-                <TextInput 
-                  style={styles.inputText}
-                  placeholder={'I\'m looking for...'}
-                  placeholderTextColor={'#999'}
-                  underlineColorAndroid={'#fff'}
-                  autoCorrect={false}
-                 
-                  ref={(inputSearch) => {
-                    this.inputSearch = inputSearch;
-                  }}
-                />
-              </View>
-              </View>
-              
+        </View>
+
         <FlatList
           style={{backgroundColor: "#C4C4C4", marginBottom: 80}}
           data={this.props.dataItem}
@@ -98,15 +103,17 @@ export default class Home extends Component {
             console.log("Flatlist", this.props.userID);
             const userID = this.props.userID;
             if (item.type == "question")
-              return (
-                <ListItemQuestion {...{userID, ...item}} />
-                
-              );
+              return <ListItemQuestion {...{userID, ...item}} />;
             if (item.type == "post")
               return (
-              <TouchableOpacity onPress={ () => this.blogDetailModal.showBlogDetailModal(item)}>
+                <Pressable
+                  onPress={() =>{
+                    //this.props.navigation.navigate("BlogDetail");
+                    this.blogDetailModal.showBlogDetailModal(item)
+                  }
+                  }>
                   <ListItemBlog {...{userID, ...item}} />
-                  </TouchableOpacity>
+                </Pressable>
               );
             if (item.type == "user-list")
               return (
@@ -135,14 +142,14 @@ const styles = StyleSheet.create({
   searchContainer: {
     zIndex: 0,
     backgroundColor: colors.primary,
-    width: '100%',
-    overflow: 'hidden',
+    width: "100%",
+    overflow: "hidden",
     paddingBottom: 15,
     paddingTop: 20,
   },
   searchInput: {
-    display: 'flex',
-    backgroundColor: '#fff',
+    display: "flex",
+    backgroundColor: "#fff",
     borderRadius: 3,
     height: 45,
     marginTop: 3,
@@ -150,14 +157,13 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   inputText: {
-    
     marginTop: 9,
     marginLeft: 43,
     fontSize: 15,
-    color: '#999',
+    color: "#999",
   },
   searchIcon: {
-    position: 'absolute',
+    position: "absolute",
     left: 13,
     top: 12,
   },

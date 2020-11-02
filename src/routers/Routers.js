@@ -8,7 +8,7 @@ import BlogSearch from '../screens/BlogSearch/BlogSearch.container';
 import QuestionSearch from '../screens/QuestionSearch/QuestionSearch.container';
 import LoginContainer from "../screens/Login/Login.container";
 import RegisterContainer from "../screens/Register/Register.container";
-import BlogDetail from "../screens/BlogDetail/BlogDetail.screens";
+import BlogDetail from "../screens/BlogDetail/BlogDetail.modals";
 
 
 import Profile from '../screens/Profile/Profile.screens';

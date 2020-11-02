@@ -1,4 +1,5 @@
 import Actions from "./Home.actions";
+import BlogDetailActions from '../BlogDetail/BlogDetail.actions';
 
 const HomeReducer = (data = null, action) => {
   switch (action.type) {
@@ -26,6 +27,12 @@ const HomeItemReducer = (dataItem = [], action) => {
 
     case Actions.REFRESH_DATA_SUCCEEDED:
       return action.data.items;
+
+    case BlogDetailActions.POST_BLOG_COMMENT_SUCCEEDED:
+      console.log("Home reducer is called when post comment");
+      return dataItem.map(item => (item.id === action.data.id)
+      ? {...item, comments : action.data.comments}
+      : item)
 
     default:
       return dataItem;

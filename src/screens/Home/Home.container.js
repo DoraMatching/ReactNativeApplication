@@ -16,7 +16,10 @@ const mapDispatchToProps = (dispatch) => {
     },
     onRefreshData : (params) => {
       dispatch(actions.getRefreshDataAction(params));
-    }
+    },
+    onOpenBlogDetail : (data) => {
+      dispatch(actions.openBlogDetailAction(data));
+    },
   };
 };
 

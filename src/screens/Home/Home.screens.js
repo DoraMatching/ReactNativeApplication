@@ -109,7 +109,9 @@ export default class Home extends Component {
                 <Pressable
                   onPress={() =>{
                     //this.props.navigation.navigate("BlogDetail");
-                    this.blogDetailModal.showBlogDetailModal(item)
+                    this.props.onOpenBlogDetail(item);
+                    console.log("HomeScreen",this.blogDetailModal);
+                    this.blogDetailModal.showBlogDetailModal(item);
                   }
                   }>
                   <ListItemBlog {...{userID, ...item}} />

@@ -8,22 +8,26 @@ import {
   Image,
   ScrollView,
   TouchableOpacity,
-  Button,
   Pressable,
   TextInput,
   Keyboard,
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
 } from "react-native";
+
+import colors from "../../themes/color";
+
 import moment from "moment";
 import TagListItem from "../../components/ListItemTag";
 import Comment from "../../components/Comment";
 
 import likedIcon from "../../images/LikedIcon.png";
 import unlikedIcon from "../../images/UnlikedIcon.png";
-import CloseOutline from "../../images/close-outline.svg";
 
 import ScaledImage from "../../components/ScaledImage";
+
+import Modal from "react-native-modalbox";
+import Button from "react-native-button";
 
 var screen = Dimensions.get("window");
 export default class BlogDetail extends Component {
@@ -32,6 +36,7 @@ export default class BlogDetail extends Component {
     this.state = {
       isLiked: false,
       comment: "",
+      isOpen: false,
     };
     console.log("navigation Modal", this.props.navigation);
   }
@@ -39,18 +44,6 @@ export default class BlogDetail extends Component {
   updateComment = (comment) => {
     this.setState({comment});
   };
-
-  id;
-  author;
-  comments;
-  content;
-  createdAt;
-  featuredImage;
-  subTitle;
-  tags;
-  title;
-  updatedAt;
-  item;
 
   showBlogDetailModal = (item) => {
     //console.log("blog detail modal", item);
@@ -60,20 +53,15 @@ export default class BlogDetail extends Component {
     //console.log("blog detail modal tags", this.tags);
   };
 
-  setData = (item) => {
-    this.id = item.id;
-    this.author = item.author;
-    this.comments = item.comments;
-    this.content = item.content;
-    this.createdAt = item.createdAt;
-    this.featuredImage = item.featuredImage;
-    this.subTitle = item.subTitle;
-    this.tags = item.tags;
-    this.title = item.title;
-    this.updatedAt = item.updatedAt;
-  };
-
   render() {
+    var BContent = (
+      <View style={[styles.btn, styles.btnModal]}>
+        <Button
+          style={{color : "white", fontSize : 40}}
+          onPress={() => this.setState({isOpen: false})}
+        >X</Button>
+      </View>
+    );
     var imgSrc = this.state.isLiked ? likedIcon : unlikedIcon;
     const sampleUrl = "https://www.w3schools.com/w3images/avatar2.png";
     const flexTop = 95;
@@ -181,9 +169,9 @@ export default class BlogDetail extends Component {
                 Comments ({comments.length})
               </Text>
               <View>
-                {
-                  this.props.blog.comments.map(item => (<Comment {...item}></Comment>))
-                }
+                {this.props.blog.comments.map((item) => (
+                  <Comment {...item}></Comment>
+                ))}
               </View>
             </View>
           </ScrollView>
@@ -193,11 +181,12 @@ export default class BlogDetail extends Component {
           style={{
             flex: flexBottom,
             flexDirection: "row",
-            borderColor: "#000000",
+            borderColor: "rgba(0,0,0,0.2)",
             borderWidth: 1,
-            zIndex: 18,
+            borderRadius: 5,
             bottom: 0,
-            marginBottom: 10,
+            marginBottom: 0,
+            marginHorizontal: 20,
           }}>
           <TextInput
             multiline
@@ -210,17 +199,63 @@ export default class BlogDetail extends Component {
 
               backgroundColor: "white",
             }}
-            placeholder="Type Here..."
+            placeholder="Leave your comment here..."
             onChangeText={this.updateComment}
             value={this.state.comment}
+            onFocus={() => {
+              Keyboard.dismiss();
+              this.setState({isOpen: true});
+            }}
           />
-          <Button
-            title="Post"
-            style={{flex: 20, height: 20}}
-            onPress={() => {this.props.onCreateBlogComment({id, content : this.state.comment, token: this.props.token})
-                              this.setState({isOpen : false});
-                              this.setState({isOpen: true})}}></Button>
+          
         </View>
+        <Modal
+          isOpen={this.state.isOpen}
+          onClosed={() => this.setState({isOpen: false})}
+          style={[styles.modal, {height: 300}]}
+          position={"center"}
+          backdropPressToClose={false}
+          backdropContent={BContent}>
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <>
+              <TextInput
+                multiline
+                numberOfLines={6}
+                editable
+                style={{
+                  borderColor: "#000000",
+                  borderWidth: 1,
+                  width: screen.width - styles.container.paddingHorizontal * 2,
+                  marginLeft: 20,
+                  backgroundColor: "white",
+                }}
+                placeholder="Type Here..."
+                onChangeText={this.updateComment}
+                value={this.state.comment}
+              />
+              <Button
+                style={{
+                  marginVertical: 10,
+                  marginLeft: 20,
+                  backgroundColor: colors.primary,
+                  padding: 5,
+                  color: "white",
+                  fontSize: 13,
+                  borderRadius: 5,
+                }}
+                onPress={() => {
+                  this.props.onCreateBlogComment({
+                    id,
+                    content: this.state.comment,
+                    token: this.props.token,
+                  });
+                  this.setState({comment: ""});
+                }}>
+                Post your comment
+              </Button>
+            </>
+          </TouchableWithoutFeedback>
+        </Modal>
       </>
     );
   }
@@ -259,5 +294,25 @@ const styles = StyleSheet.create({
   featuredImage: {},
   content: {
     marginVertical: 5,
+  },
+  btn: {
+    margin: 10,
+    backgroundColor: "#3B5998",
+    color: "white",
+    padding: 10,
+  },
+
+  btnModal: {
+    position: "absolute",
+    top: 0,
+    right: 0,
+    width: 50,
+    height: 50,
+    backgroundColor: "transparent",
+  },
+
+  modal: {
+    justifyContent: "center",
+    alignItems: "flex-start",
   },
 });

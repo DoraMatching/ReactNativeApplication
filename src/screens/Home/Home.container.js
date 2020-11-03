@@ -20,6 +20,9 @@ const mapDispatchToProps = (dispatch) => {
     onOpenBlogDetail : (data) => {
       dispatch(actions.openBlogDetailAction(data));
     },
+    onOpenQuestionDetail : (data) => {
+      dispatch(actions.openQuestionDetailAction(data));
+    }
   };
 };
 

@@ -6,7 +6,7 @@ const Actions = {
   REFRESH_DATA_SUCCEEDED: "GET_REFRESH_DATA_SUCCEEDED",
   REFRESH_DATA_FAILED: "GET_REFRESH_DATA_FAILED",
   OPEN_BLOG_DETAIL : "OPEN_BLOG_DETAIL",
-
+  OPEN_QUESTION_DETAIL : "OPEN_QUESTION_DETAIL",
   getDataAction: (params) => {
     return {
       type: Actions.GET_DATA,
@@ -17,6 +17,13 @@ const Actions = {
   openBlogDetailAction: (data) => {
     return {
       type: Actions.OPEN_BLOG_DETAIL,
+      data,
+    }
+  },
+
+  openQuestionDetailAction: (data) => {
+    return {
+      type: Actions.OPEN_QUESTION_DETAIL,
       data,
     }
   },

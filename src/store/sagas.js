@@ -5,6 +5,7 @@ import RegisterSaga from "../screens/Register/Register.sagas";
 import BlogSearchSaga from "../screens/BlogSearch/BlogSearch.sagas";
 import QuestionSearchSaga from "../screens/QuestionSearch/QuestionSearch.sagas";
 import BlogDetailSaga from '../screens/BlogDetail/BlogDetail.sagas';
+import QuestionDetailSaga from '../screens/QuestionDetail/QuestionDetail.sagas';
 
 export default function* rootSaga() {
   yield all([
@@ -14,5 +15,6 @@ export default function* rootSaga() {
     BlogSearchSaga(),
     QuestionSearchSaga(),
     BlogDetailSaga(),
+    QuestionDetailSaga(),
   ]);
 }

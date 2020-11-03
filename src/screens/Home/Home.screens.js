@@ -13,6 +13,7 @@ import ListItemTrainer from "../../components/ListItemTrainer";
 import colors from "../../themes/color";
 import FinderIcon from "../../images/finder.svg";
 import BlogDetailModal from "../BlogDetail/BlogDetail.modals";
+import QuestionDetailModal from "../QuestionDetail/QuestionDetail.modals";
 export default class Home extends Component {
   constructor(props) {
     super(props);
@@ -25,6 +26,12 @@ export default class Home extends Component {
 
     this.setBlogDetailModalRef = (element) => {
       this.blogDetailModal = element;
+    };
+
+    this.questionDetailModal = null;
+
+    this.setQuestionDetailModalRef = (element) => {
+      this.questionDetailModal = element;
     };
   }
 
@@ -103,17 +110,26 @@ export default class Home extends Component {
             console.log("Flatlist", this.props.userID);
             const userID = this.props.userID;
             if (item.type == "question")
-              return <ListItemQuestion {...{userID, ...item}} />;
+              return (
+                <Pressable
+                  onPress={() => {
+                    //this.props.navigation.navigate("BlogDetail");
+                    this.props.onOpenQuestionDetail(item);
+                    //console.log("HomeScreen", this.blogDetailModal);
+                    this.questionDetailModal.showQuestionDetailModal(item);
+                  }}>
+                  <ListItemQuestion {...{userID, ...item}} />
+                </Pressable>
+              );
             if (item.type == "post")
               return (
                 <Pressable
-                  onPress={() =>{
+                  onPress={() => {
                     //this.props.navigation.navigate("BlogDetail");
                     this.props.onOpenBlogDetail(item);
-                    console.log("HomeScreen",this.blogDetailModal);
+                    console.log("HomeScreen", this.blogDetailModal);
                     this.blogDetailModal.showBlogDetailModal(item);
-                  }
-                  }>
+                  }}>
                   <ListItemBlog {...{userID, ...item}} />
                 </Pressable>
               );
@@ -135,6 +151,8 @@ export default class Home extends Component {
           onEndReached={this.retrieveMore}
         />
         <BlogDetailModal ref={this.setBlogDetailModalRef}></BlogDetailModal>
+        <QuestionDetailModal
+          ref={this.setQuestionDetailModalRef}></QuestionDetailModal>
       </View>
     );
   }

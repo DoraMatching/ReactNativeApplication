@@ -6,6 +6,8 @@ import RegisterReducer from "../screens/Register/Register.reducers";
 import {BlogTagReducer, BlogTopReducer} from '../screens/BlogSearch/BlogSearch.reducers'
 import {QuestionTagReducer, QuestionTopReducer} from '../screens/QuestionSearch/QuestionSearch.reducers'
 import {BlogDetailReducer} from '../screens/BlogDetail/BlogDetail.reducers';
+import {QuestionDetailReducer} from '../screens/QuestionDetail/QuestionDetail.reducers';
+
 
 const rootReducer = combineReducers({
   LoginReducer,
@@ -17,6 +19,7 @@ const rootReducer = combineReducers({
   QuestionTagReducer,
   QuestionTopReducer,
   BlogDetailReducer,
+  QuestionDetailReducer,
   form: formReducer,
 });
 

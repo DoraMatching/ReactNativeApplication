@@ -7,6 +7,7 @@ const mapStateToProps = (state) => {
   return {
     blog : state.BlogDetailReducer,
     token : state.LoginReducer?.message.token,
+    userID: !state.LoginReducer.message ? "" : state.LoginReducer.message.id,
   };
 };
 const mapDispatchToProps = (dispatch) => {
@@ -14,6 +15,9 @@ const mapDispatchToProps = (dispatch) => {
     onCreateBlogComment: (params) => {
       dispatch(actions.postBlogCommentAction(params));
     },
+    onEditBlogComment : (params) => {
+      dispatch(actions.patchBlogCommentAction(params));
+    }
   };
 };
 

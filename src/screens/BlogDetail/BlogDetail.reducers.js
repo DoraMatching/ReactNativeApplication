@@ -11,8 +11,16 @@ const BlogDetailReducer = (blog = null , action) => {
       return action.data;
 
     case Actions.POST_BLOG_COMMENT_FAILED:
+    case Actions.PATCH_BLOG_COMMENT_FAILED:
       return blog;
 
+    case Actions.PATCH_BLOG_COMMENT_SUCCEEDED:
+      console.log("patch comment successfully", action);
+      blog.comments = blog.comments.map(item =>  (item.id === action.data.id)
+      ? action.data
+      : item);
+      console.log("patch comment successfully", blog);
+      return blog;
     default:
       return blog;
   }

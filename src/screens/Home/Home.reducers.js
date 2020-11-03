@@ -34,6 +34,11 @@ const HomeItemReducer = (dataItem = [], action) => {
       ? {...item, comments : action.data.comments}
       : item)
 
+    case BlogDetailActions.PATCH_BLOG_COMMENT_SUCCEEDED:
+      return dataItem.map(item => (item.id === action.blogID)
+      ? {...item, comments : item.comments.map(item => (item.id === action.data.id) ? action.data : item)}
+      : item)
+
     default:
       return dataItem;
   }

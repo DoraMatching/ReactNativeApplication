@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import {View, Text, StyleSheet, Image} from "react-native";
 import TimeAgo from "react-native-timeago";
+import MoreOptionIcon from "../images/moreOption.svg";
 export default class Comment extends Component {
   constructor(props) {
     super(props);
@@ -10,7 +11,7 @@ export default class Comment extends Component {
   render() {
     return (
       <View style={{...styles.container}}>
-        <View style={{...styles.horizontalLayout, alignItems: "center"}}>
+        <View style={{...styles.horizontalLayout, alignItems: "center",justifyContent: "space-between",}}>
           <Image
             style={{
               width: 45,
@@ -28,12 +29,20 @@ export default class Comment extends Component {
             style={{
               paddingHorizontal: 10,
               justifyContent: "center",
+              flex: 60,
             }}>
             <Text style={{...styles.name}} numberOfLines={2}>
               {this.props.author.name}
             </Text>
             <TimeAgo time={this.props.createdAt} style={{...styles.time}} />
             {/* <Text style={{...styles.time}}>2 minutes ago</Text> */}
+          </View>
+          <View>
+            {this.props.userID === this.props.author.id ? (
+              <MoreOptionIcon width={20} height={20} style={{marginTop: 5}} />
+            ) : (
+              <></>
+            )}
           </View>
         </View>
         <Text style={{...styles.comment}}>{this.props.content}</Text>

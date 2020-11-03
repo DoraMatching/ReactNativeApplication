@@ -37,6 +37,8 @@ export default class BlogDetail extends Component {
       isLiked: false,
       comment: "",
       isOpen: false,
+      isCreated: true,
+      commentID: "",
     };
     console.log("navigation Modal", this.props.navigation);
   }
@@ -57,9 +59,10 @@ export default class BlogDetail extends Component {
     var BContent = (
       <View style={[styles.btn, styles.btnModal]}>
         <Button
-          style={{color : "white", fontSize : 40}}
-          onPress={() => this.setState({isOpen: false})}
-        >X</Button>
+          style={{color: "white", fontSize: 40}}
+          onPress={() => this.setState({isOpen: false})}>
+          X
+        </Button>
       </View>
     );
     var imgSrc = this.state.isLiked ? likedIcon : unlikedIcon;
@@ -79,6 +82,17 @@ export default class BlogDetail extends Component {
       updatedAt,
     } = this.props.blog;
     console.log("BlogDetailScreen: ", this.props.blog);
+    const onEditComment = (content, commentID, authorID) => {
+      console.log("author", author.id);
+      console.log("userID", this.props.userID);
+      if (this.props.userID !== authorID) return;
+      this.setState({
+        comment: content,
+        isOpen: true,
+        isCreated: false,
+        commentID: commentID,
+      });
+    };
     return (
       <>
         <View style={{flex: flexTop}}>
@@ -170,7 +184,13 @@ export default class BlogDetail extends Component {
               </Text>
               <View>
                 {this.props.blog.comments.map((item) => (
-                  <Comment {...item}></Comment>
+                  <Pressable
+                    onPress={() =>
+                      onEditComment(item.content, item.id, item.author.id)
+                    }>
+                    <Comment
+                      {...{...item, userID: this.props.userID}}></Comment>
+                  </Pressable>
                 ))}
               </View>
             </View>
@@ -194,20 +214,19 @@ export default class BlogDetail extends Component {
             editable
             style={{
               borderColor: "#000000",
-              borderWidth: 1,
+              borderWidth: 0.5,
               flex: 80,
-
+              borderRadius: 5,
               backgroundColor: "white",
             }}
             placeholder="Leave your comment here..."
-            onChangeText={this.updateComment}
+            // onChangeText={this.updateComment}
             value={this.state.comment}
             onFocus={() => {
               Keyboard.dismiss();
               this.setState({isOpen: true});
             }}
           />
-          
         </View>
         <Modal
           isOpen={this.state.isOpen}
@@ -216,7 +235,7 @@ export default class BlogDetail extends Component {
           position={"center"}
           backdropPressToClose={false}
           backdropContent={BContent}>
-          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <Pressable onPress={Keyboard.dismiss}>
             <>
               <TextInput
                 multiline
@@ -224,37 +243,59 @@ export default class BlogDetail extends Component {
                 editable
                 style={{
                   borderColor: "#000000",
-                  borderWidth: 1,
+                  borderWidth: 0.5,
+                  borderRadius: 5,
                   width: screen.width - styles.container.paddingHorizontal * 2,
                   marginLeft: 20,
                   backgroundColor: "white",
                 }}
-                placeholder="Type Here..."
+                placeholder="Leave your comment here..."
                 onChangeText={this.updateComment}
                 value={this.state.comment}
               />
-              <Button
+              <View
                 style={{
                   marginVertical: 10,
                   marginLeft: 20,
-                  backgroundColor: colors.primary,
-                  padding: 5,
-                  color: "white",
-                  fontSize: 13,
+                  //padding: 5,
                   borderRadius: 5,
-                }}
-                onPress={() => {
-                  this.props.onCreateBlogComment({
-                    id,
-                    content: this.state.comment,
-                    token: this.props.token,
-                  });
-                  this.setState({comment: ""});
+                  borderColor: "#f7f7f7",
+                  borderWidth: 0.75,
                 }}>
-                Post your comment
-              </Button>
+                <Button
+                  style={{
+                    // marginVertical: 10,
+                    // marginLeft: 20,
+                    backgroundColor: colors.primary,
+                    padding: 5,
+                    color: "white",
+                    fontSize: 13,
+                    borderRadius: 5,
+                  }}
+                  onPress={() => {
+                    if (this.state.isCreated)
+                      this.props.onCreateBlogComment({
+                        id,
+                        content: this.state.comment,
+                        token: this.props.token,
+                      });
+                    else {
+                      this.props.onEditBlogComment({
+                        blogID: id,
+                        content: this.state.comment,
+                        commentID: this.state.commentID,
+                        token: this.props.token,
+                      });
+                      this.setState({isCreated: true});
+                    }
+                    this.setState({comment: "", commentID: ""});
+                    this.setState({isOpen: false});
+                  }}>
+                  Send your comment
+                </Button>
+              </View>
             </>
-          </TouchableWithoutFeedback>
+          </Pressable>
         </Modal>
       </>
     );
@@ -314,5 +355,6 @@ const styles = StyleSheet.create({
   modal: {
     justifyContent: "center",
     alignItems: "flex-start",
+    backgroundColor: "transparent",
   },
 });

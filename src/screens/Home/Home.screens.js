@@ -6,14 +6,23 @@ import {
   StatusBar,
   TextInput,
   Pressable,
+  Dimensions
 } from "react-native";
 import ListItemBlog from "../../components/ListItemBlog";
 import ListItemQuestion from "../../components/ListItemQuestion";
 import ListItemTrainer from "../../components/ListItemTrainer";
+import ListItemTopic from "../../components/ListItemTopic";
+
 import colors from "../../themes/color";
 import FinderIcon from "../../images/finder.svg";
 import BlogDetailModal from "../BlogDetail/BlogDetail.modals";
 import QuestionDetailModal from "../QuestionDetail/QuestionDetail.modals";
+
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+
+import topic from '../../data/topic';
+
+var screen = Dimensions.get("window");
 export default class Home extends Component {
   constructor(props) {
     super(props);
@@ -79,7 +88,8 @@ export default class Home extends Component {
     const {search} = this.state;
     //this.props.navigation.navigate("BlogDetail");
     return (
-      <View>
+      <SafeAreaView  style={{ flex: 1, justifyContent: 'space-between', alignItems: 'center' }}>
+      <View style={{marginBottom: 0}}>
         <StatusBar backgroundColor={colors.primary} />
         <View style={styles.searchContainer}>
           <View style={styles.searchInput}>
@@ -99,9 +109,20 @@ export default class Home extends Component {
             />
           </View>
         </View>
+        <FlatList
+                  style={{
+                    marginVertical: 5,
+                    backgroundColor: "white",
+                  }}
+                  horizontal={true}
+                  data={topic}
+                  renderItem={({item, index}) => {
+                    return <ListItemTopic {...item}></ListItemTopic>;
+                  }}
+                  keyExtractor={(item, index) => item.name}></FlatList>
 
         <FlatList
-          style={{backgroundColor: "#C4C4C4", marginBottom: 80}}
+          style={{backgroundColor: "#C4C4C4", }}
           data={this.props.dataItem}
           keyExtractor={(item) => item.id}
           refreshing={this.state.isLoading}
@@ -147,13 +168,16 @@ export default class Home extends Component {
                   }}
                   keyExtractor={(item, index) => item.hour}></FlatList>
               );
-          }}
+              
+          }
+        }
           onEndReached={this.retrieveMore}
         />
         <BlogDetailModal ref={this.setBlogDetailModalRef}></BlogDetailModal>
         <QuestionDetailModal
           ref={this.setQuestionDetailModalRef}></QuestionDetailModal>
       </View>
+      </SafeAreaView>
     );
   }
 }
@@ -162,7 +186,7 @@ const styles = StyleSheet.create({
   searchContainer: {
     zIndex: 0,
     backgroundColor: colors.primary,
-    width: "100%",
+    width: screen.width,
     overflow: "hidden",
     paddingBottom: 15,
     paddingTop: 20,

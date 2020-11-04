@@ -13,7 +13,7 @@ import BlogDetail from "../screens/BlogDetail/BlogDetail.modals";
 
 import Profile from '../screens/Profile/Profile.screens';
 import QuestionDetail from '../screens/QuestionDetail/QuestionDetail.screens';
-
+import {ClassForm} from '../screens/ClassForm/ClassForm.screens';
 
 import HomeOutlineIcon from '../images/home-outline.svg';
 import HomeIcon from '../images/home.svg';
@@ -27,6 +27,9 @@ import CalendarOutlineIcon from '../images/calendar-outline.svg';
 import CalendarIcon from '../images/calendar.svg';
 
 import colors from '../themes/color';
+
+
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -94,11 +97,12 @@ const tabRouters = () => (
     tabBarOptions={{
       activeTintColor: colors.primary,
       inactiveTintColor: "dimgray",
+      
     }}
     >
     <Tab.Screen name="Home" component={homeRouters} />
     <Tab.Screen name="Blogs" component={blogRouters} />
-    <Tab.Screen name="Schedule" component={QuestionDetail} />
+    <Tab.Screen name="Schedule" component={ClassForm} />
     <Tab.Screen name="Questions" component={questionRouters} /> 
     <Tab.Screen name="Profile" component={Profile} />
   </Tab.Navigator>
@@ -108,6 +112,7 @@ const tabRouters = () => (
 
 
 const myRouters = ({params}) => (
+  <SafeAreaProvider>
   <NavigationContainer>
     <Stack.Navigator
       initialRouteName="Login"
@@ -120,6 +125,7 @@ const myRouters = ({params}) => (
       <Stack.Screen name="Nav" component={tabRouters} />
     </Stack.Navigator>
   </NavigationContainer>
+  </SafeAreaProvider>
 );
 
 export default myRouters;

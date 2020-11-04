@@ -22,6 +22,10 @@ target 'react_native_app' do
 
   pod 'RNSearchBar', :path => '../node_modules/react-native-search-bar'
 
+
+
+  pod 'RNDateTimePicker', :path => '../node_modules/@react-native-community/datetimepicker'
+
   target 'react_native_appTests' do
     inherit! :complete
     # Pods for testing

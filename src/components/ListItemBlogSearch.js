@@ -5,7 +5,7 @@ import moment from "moment";
 export default class ListItemBlogSearch extends Component {
   render() {
     return (
-      <View style={{...styles.container, paddingVertical: 10}}>
+      <View style={{...styles.container, padding: 10}}>
         <View
           style={{
             ...styles.horizontalLayout,
@@ -39,7 +39,7 @@ export default class ListItemBlogSearch extends Component {
             </Text>
           </View>
         </View>
-        <View style={{...styles.horizontalLayout, marginHorizontal: 10}}>
+        <View style={{...styles.horizontalLayout, marginHorizontal: 0}}>
           <Text style={{...styles.descriptionText, flex: 80}}>
             <Text style={{...styles.time}}>
               {moment(this.props.createdAt).format("MMM Do \u2022 ")}

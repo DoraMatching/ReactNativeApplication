@@ -76,7 +76,7 @@ export default class QuestionDetailModal extends Component {
         onClosed={this.onClose}
         onOpened={this.onOpen}
         isOpen={this.state.isOpen}>
-          <View style={{flexDirection: "column", flex: 1, marginBottom: 90}}>
+          <View style={{flexDirection: "column", flex: 1, marginBottom: 5}}>
           <QuestionDetail></QuestionDetail>
           <View
               style={{
@@ -85,7 +85,7 @@ export default class QuestionDetailModal extends Component {
                 position: "absolute",
                 right: 5,
                 top: 0,
-                width: screen.width,
+                width: '100%',
                 backgroundColor: "rgb(255,255,255)",
                 borderBottomColor: "rgba(0,0,0,0.5)",
                 borderBottomWidth: 0.3,

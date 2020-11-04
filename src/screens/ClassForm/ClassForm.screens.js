@@ -7,14 +7,15 @@ import {
   Keyboard,
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
-  Button,
-  Platform
+  Platform,
 } from "react-native";
 import MultiSelect from "react-native-multiple-select";
-//import DateTimePicker from "@react-native-community/datetimepicker";
-
+import DateTimePicker from "@react-native-community/datetimepicker";
+//import DatePicker from "react-native-datepicker";
+import Button from "react-native-button";
 import {Field, reduxForm} from "redux-form";
 import colors from "../../themes/color";
+import moment from 'moment';
 
 const items = [
   {
@@ -56,12 +57,13 @@ const items = [
 ];
 
 const ClassInput = ({
+  val,
   label,
   meta: {touched, error, warning},
   input: {onChange, ...input},
   ...rest
 }) => (
-  <View>
+  <View style={styles.textInputContainer}>
     <Text style={styles.label}>{label}</Text>
     <TextInput
       style={styles.textInput}
@@ -69,14 +71,13 @@ const ClassInput = ({
       {...input}
       {...rest}
       returnKeyType="next"
-      autoCorrect={false}></TextInput>
+      autoCorrect={false}
+      value={val}></TextInput>
   </View>
 );
 
-const ClassFormScreen = (props) => {
-  const [selectedItems, onSelectedItemsChange] = useState([]);
-  const [multiSelect, setMultiSelectRef] = useState(null);
-  const [date, setDate] = useState(new Date(1598051730000));
+const MyDateTimePicker = (props) => {
+  const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState("date");
   const [show, setShow] = useState(false);
 
@@ -84,6 +85,9 @@ const ClassFormScreen = (props) => {
     const currentDate = selectedDate || date;
     setShow(Platform.OS === "ios");
     setDate(currentDate);
+    console.log("currentDate", currentDate);
+    console.log("date", date);
+    props.setDateTime(currentDate);
   };
 
   const showMode = (currentMode) => {
@@ -100,152 +104,161 @@ const ClassFormScreen = (props) => {
   };
 
   return (
-    <KeyboardAvoidingView behavior="padding" style={{flex: 1}}>
+    <>
+      <View style={styles.dateTimePicker}>
+        <Button style={styles.button} onPress={showDatepicker}>
+          Pick date
+        </Button>
+        <Button style={styles.button} onPress={showTimepicker}>
+          Pick time
+        </Button>
+      </View>
+      {show && (
+        <DateTimePicker
+          testID="startDateTimePicker"
+          value={date}
+          mode={mode}
+          is24Hour={true}
+          display="default"
+          onChange={onChange}
+        />
+      )}
+    </>
+  );
+};
+
+const ClassFormScreen = (props) => {
+  const [selectedItems, onSelectedItemsChange] = useState([]);
+  const [multiSelect, setMultiSelectRef] = useState(null);
+  const [dateStart, setDateStart] = useState(new Date());
+  const [dateEnd, setDateEnd] = useState(new Date());
+
+  return (
+    <KeyboardAvoidingView
+      behavior="padding"
+      style={{flex: 1, paddingHorizontal: 10}}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <>
           <Field
             name={"classname"}
-            props={{
-              multiline: true,
-              numberOfLines: 2,
-            }}
             label={"Classname"}
             component={ClassInput}
+            val={""}
           />
           <Field
             name={"description"}
+            props={{
+              multiline: true,
+              numberOfLines: 5,
+            }}
             label={"Description"}
             component={ClassInput}
+            val={""}
           />
-          {/* <MultiSelect
-          hideTags
-          items={items}
-          uniqueKey="id"
-          ref={setMultiSelectRef}
-          onSelectedItemsChange={onSelectedItemsChange}
-          selectedItems={selectedItems}
-          selectText="Pick Items"
-          searchInputPlaceholderText="Search Items..."
-          onChangeInput={ (text)=> console.log(text)}
-          altFontFamily="ProximaNova-Light"
-          tagRemoveIconColor="#CCC"
-          tagBorderColor="#CCC"
-          tagTextColor="#CCC"
-          selectedItemTextColor="#CCC"
-          selectedItemIconColor="#CCC"
-          itemTextColor="#000"
-          displayKey="name"
-          searchInputStyle={{ color: '#CCC' }}
-          submitButtonColor="#CCC"
-          submitButtonText="Submit"
-        />
-        <View>
-          {multiSelect.getSelectedItemsExt(selectedItems)}
-        </View> */}
-          {/* <View>
-            <Button onPress={showDatepicker} title="Show date picker!" />
+          <View style={{marginVertical: 5}}>
+            {multiSelect
+              ? multiSelect.getSelectedItemsExt(selectedItems)
+              : null}
           </View>
-          <View>
-            <Button onPress={showTimepicker} title="Show time picker!" />
-          </View>
-          {show && (
-            <DateTimePicker
-              testID="dateTimePicker"
-              value={date}
-              mode={mode}
-              is24Hour={true}
-              display="default"
-              onChange={onChange}
-            />
-          )} */}
+          <MultiSelect
+            style={{marginVertical: 5}}
+            hideTags
+            items={items}
+            uniqueKey="id"
+            ref={setMultiSelectRef}
+            onSelectedItemsChange={onSelectedItemsChange}
+            selectedItems={selectedItems}
+            selectText="    Pick Topics"
+            searchInputPlaceholderText="Search Topics..."
+            onChangeInput={(text) => console.log(text)}
+            altFontFamily="Roboto"
+            tagRemoveIconColor="#667"
+            tagBorderColor="#667"
+            tagTextColor="#667"
+            selectedItemTextColor="#667"
+            selectedItemIconColor="#667"
+            itemTextColor="#000"
+            displayKey="name"
+            searchInputStyle={{color: "#667"}}
+            submitButtonColor={colors.primary}
+            submitButtonText="Select"
+            styleDropdownMenu={styles.topic}
+            styleSelectorContainer={styles.topic}
+            styleListContainer={styles.topic}
+          />
+
+          <Field
+            name={"startTime"}
+            props={{
+              editable : false,
+            }}
+            label={"Start Time"}
+            component={ClassInput}
+            val={moment(dateStart).format('MMMM Do YYYY, h:mm:ss a')}
+          />
+
+          <MyDateTimePicker setDateTime={setDateStart} />
+
+          <Field
+            name={"endTime"}
+            props={{
+              editable : false,
+            }}
+            label={"End Time"}
+            component={ClassInput}
+            val={moment(dateEnd).format('MMMM Do YYYY, h:mm:ss a')}
+          />
+
+          <MyDateTimePicker setDateTime={setDateEnd} />
+
+          <Field
+            name={"duration"}
+            label={"Duration"}
+            component={ClassInput}
+            val={""}
+          />
+
+          <Button style={[styles.button,{fontSize: 18,paddingVertical : 10,  marginVertical: 5,}]}>Create</Button>
         </>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
   );
 };
 
-// class ClassFormScreen extends Component {
-//   constructor(props) {
-//     super(props);
-//     this.state = {
-//       selectedItems: [],
-//       date : new Date(),
-//     };
-//     this.multiSelect = null;
-
-//     this.setMultiSelectRef = (element) => {
-//       this.multiSelect = element;
-//     };
-
-//   }
-
-//   onSetDate = (date) => {
-//       this.setState({date});
-//   }
-//   onSelectedItemsChange = (selectedItems) => {
-//     this.setState({selectedItems});
-//   };
-
-//   render() {
-//     const {selectedItems} = this.state;
-
-//     return (
-//       <KeyboardAvoidingView behavior="padding" style={{flex: 1}}>
-//         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-//           <>
-//             <Field
-//               name={"classname"}
-//               props={{
-//                 multiline: true,
-//                 numberOfLines: 2,
-//               }}
-//               label={"Classname"}
-//               component={ClassInput}
-//             />
-//             <Field
-//               name={"description"}
-//               label={"Description"}
-//               component={ClassInput}
-//             />
-//             <MultiSelect
-//               hideTags
-//               items={items}
-//               uniqueKey="id"
-//               ref={this.setMultiSelectRef}
-//               onSelectedItemsChange={this.onSelectedItemsChange}
-//               selectedItems={selectedItems}
-//               selectText="Pick Items"
-//               searchInputPlaceholderText="Search Items..."
-//               onChangeInput={(text) => console.log(text)}
-//               altFontFamily="ProximaNova-Light"
-//               tagRemoveIconColor="#CCC"
-//               tagBorderColor="#CCC"
-//               tagTextColor="#CCC"
-//               selectedItemTextColor="#CCC"
-//               selectedItemIconColor="#CCC"
-//               itemTextColor="#000"
-//               displayKey="name"
-//               searchInputStyle={{color: "#CCC"}}
-//               submitButtonColor="#CCC"
-//               submitButtonText="Submit"
-//             />
-//             {/* <View>
-//           {this.multiSelect.getSelectedItemsExt(selectedItems)}
-//         </View> */}
-
-//             {/* <DatePicker date={this.state.date} onDateChange={this.onSetDate} mode="datetime" /> */}
-//           </>
-//         </TouchableWithoutFeedback>
-//       </KeyboardAvoidingView>
-//     );
-//   }
-// }
-
 export const ClassForm = reduxForm({
   form: "class",
 })(ClassFormScreen);
 
 const styles = StyleSheet.create({
-  label: {},
-  textInput: {},
+  textInputContainer: {},
+  label: {
+    paddingVertical: 5,
+  },
+  textInput: {
+    backgroundColor: "#f0f2f5",
+    borderRadius: 5,
+    marginVertical: 5,
+    borderColor: "lightgray",
+    borderWidth: 1,
+    color: "black",
+  },
+  topic: {
+    // borderColor: "black",
+    // borderWidth: 1,
+
+    backgroundColor: "#f0f2f5",
+  },
+  dateTimePicker: {
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    marginVertical: 5,
+  },
+  button: {
+    marginRight: 5,
+    backgroundColor: colors.primary,
+    color: "white",
+    padding: 5,
+    borderRadius: 5,
+    fontSize: 12,
+  },
 });

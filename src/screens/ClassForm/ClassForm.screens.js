@@ -8,6 +8,7 @@ import {
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
   Platform,
+  TouchableOpacity
 } from "react-native";
 import MultiSelect from "react-native-multiple-select";
 import DateTimePicker from "@react-native-community/datetimepicker";
@@ -15,7 +16,7 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import Button from "react-native-button";
 import {Field, reduxForm} from "redux-form";
 import colors from "../../themes/color";
-import moment from 'moment';
+import moment from "moment";
 
 const items = [
   {
@@ -55,26 +56,6 @@ const items = [
     name: "Abuja",
   },
 ];
-
-const ClassInput = ({
-  val,
-  label,
-  meta: {touched, error, warning},
-  input: {onChange, ...input},
-  ...rest
-}) => (
-  <View style={styles.textInputContainer}>
-    <Text style={styles.label}>{label}</Text>
-    <TextInput
-      style={styles.textInput}
-      onChangeText={onChange}
-      {...input}
-      {...rest}
-      returnKeyType="next"
-      autoCorrect={false}
-      value={val}></TextInput>
-  </View>
-);
 
 const MyDateTimePicker = (props) => {
   const [date, setDate] = useState(new Date());
@@ -127,12 +108,75 @@ const MyDateTimePicker = (props) => {
   );
 };
 
+
+//Validation
+const required = (value) => {
+  //console.log("validate username", value);
+  return value ? undefined : "The field is required";
+};
+
+const dateTimeCompare = (start, end) => {
+  return (start, end) => start <= end ? undefined : "Endtime must be greater than Starttime"
+}
+
+//  
+
+const ClassInput = (
+  props,
+) => {
+  const {
+    meta: {touched, error, warning},
+    input: {onChange, ...input},
+    label,
+    val,
+    ...rest
+  } = props;
+  const [date, setDate] = useState(new Date());
+  return (
+    <View style={styles.textInputContainer}>
+      {console.log("props", props)}
+      <View style={styles.labelContainer}>
+        <Text style={styles.label}>{label}</Text>
+        <Text style={{color: "red", ...styles.errorText}}>
+          {touched && error ? error : ""}
+        </Text>
+      </View>
+      {val ? (
+        <>
+        <TextInput
+          style={styles.textInput}
+          onChangeText={onChange}
+          {...input}
+          value={val}
+          {...rest}
+          returnKeyType="next"
+          autoCorrect={false}></TextInput>
+          </>
+      ) : (
+        <>
+        <TextInput
+          style={styles.textInput}
+          onChangeText={onChange}
+          {...input}
+          {...rest}
+          returnKeyType="next"
+          autoCorrect={false}></TextInput>
+          
+          </>
+      )}
+    </View>
+  );
+};
+
 const ClassFormScreen = (props) => {
+  console.log("props in screen", props);
   const [selectedItems, onSelectedItemsChange] = useState([]);
   const [multiSelect, setMultiSelectRef] = useState(null);
   const [dateStart, setDateStart] = useState(new Date());
   const [dateEnd, setDateEnd] = useState(new Date());
-
+  const submit = (values) => {
+    console.log("ClassFormScreen", values);
+  };
   return (
     <KeyboardAvoidingView
       behavior="padding"
@@ -143,7 +187,8 @@ const ClassFormScreen = (props) => {
             name={"classname"}
             label={"Classname"}
             component={ClassInput}
-            val={""}
+            validate={required}
+            
           />
           <Field
             name={"description"}
@@ -153,7 +198,7 @@ const ClassFormScreen = (props) => {
             }}
             label={"Description"}
             component={ClassInput}
-            val={""}
+            validate={required}
           />
           <View style={{marginVertical: 5}}>
             {multiSelect
@@ -190,11 +235,14 @@ const ClassFormScreen = (props) => {
           <Field
             name={"startTime"}
             props={{
-              editable : false,
+              editable: false,
+              
             }}
             label={"Start Time"}
             component={ClassInput}
-            val={moment(dateStart).format('MMMM Do YYYY, h:mm:ss a')}
+            onChange={setDateStart}
+            value = {dateStart}
+            val={moment(dateStart).format("MMMM Do YYYY, h:mm:ss a")}
           />
 
           <MyDateTimePicker setDateTime={setDateStart} />
@@ -202,11 +250,14 @@ const ClassFormScreen = (props) => {
           <Field
             name={"endTime"}
             props={{
-              editable : false,
+              editable: false,
             }}
             label={"End Time"}
             component={ClassInput}
-            val={moment(dateEnd).format('MMMM Do YYYY, h:mm:ss a')}
+            onChange={setDateEnd}
+            value = {dateEnd}
+            val={moment(dateEnd).format("MMMM Do YYYY, h:mm:ss a")}
+            validate={dateTimeCompare(dateStart, dateEnd)}
           />
 
           <MyDateTimePicker setDateTime={setDateEnd} />
@@ -215,10 +266,18 @@ const ClassFormScreen = (props) => {
             name={"duration"}
             label={"Duration"}
             component={ClassInput}
-            val={""}
+            validate={required}
           />
 
-          <Button style={[styles.button,{fontSize: 18,paddingVertical : 10,  marginVertical: 5,}]}>Create</Button>
+          <Button
+            onPress={props.handleSubmit(submit)}
+            style={[
+              styles.button,
+              {fontSize: 18, paddingVertical: 10, marginVertical: 5},
+            ]}
+            >
+            Create
+          </Button>
         </>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
@@ -230,9 +289,24 @@ export const ClassForm = reduxForm({
 })(ClassFormScreen);
 
 const styles = StyleSheet.create({
-  textInputContainer: {},
-  label: {
+  textInputContainer: {
+    width: "100%",
+    borderWidth: 1,
+    borderColor: "transparent",
+  },
+  labelContainer: {
+    flexDirection: "row",
     paddingVertical: 5,
+  },
+  label: {
+    //paddingVertical: 5,
+  },
+  errorText: {
+    //textAlign: "right",
+    flex: 80,
+    textAlign: "right",
+    // borderWidth: 1,
+    // borderColor: "black",
   },
   textInput: {
     backgroundColor: "#f0f2f5",

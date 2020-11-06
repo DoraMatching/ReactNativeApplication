@@ -22,6 +22,10 @@ import Modal from "react-native-modalbox";
 import Button from "react-native-button";
 import moment from "moment";
 
+import {AutoGrowingTextInput} from "react-native-autogrow-textinput";
+import SendButton from "../../images/send-button.svg";
+
+
 var screen = Dimensions.get("window");
 
 export default class QuestionDetail extends Component {
@@ -34,10 +38,28 @@ export default class QuestionDetail extends Component {
       isCreated: true,
       commentID: "",
     };
+    this.commentTextInput = null;
+
+    this.setCommentTextInputRef = (element) => {
+      this.commentTextInput = element;
+    };
   }
   updateComment = (comment) => {
     this.setState({comment});
   };
+
+  onEditComment = (content, commentID, authorID) => {
+    // console.log("author", author.id);
+     //console.log("userID", this.props.userID);
+     if (this.props.userID !== authorID) return;
+     this.commentTextInput.focus();
+     this.setState({
+       comment: content,
+       isOpen: true,
+       isCreated: false,
+       commentID: commentID,
+     });
+   };
 
   render() {
     var BContent = (
@@ -51,8 +73,7 @@ export default class QuestionDetail extends Component {
     );
 
     var imgSrc = this.state.isLiked ? likedIcon : unlikedIcon;
-    const flexTop = 95;
-    const flexBottom = 5;
+    
     console.log("questiondetail", this.props.question);
     const {
       id,
@@ -64,20 +85,10 @@ export default class QuestionDetail extends Component {
       title,
       updatedAt,
     } = this.props.question;
-    const onEditComment = (content, commentID, authorID) => {
-      console.log("author", author.id);
-      console.log("userID", this.props.userID);
-      if (this.props.userID !== authorID) return;
-      this.setState({
-        comment: content,
-        isOpen: true,
-        isCreated: false,
-        commentID: commentID,
-      });
-    };
+    
     return (
       <>
-        <View style={{flex: flexTop}}>
+        <View style={{}}>
           <ScrollView>
             <View style={{...styles.container}}>
               <View style={{...styles.horizontalLayout, marginTop: 20}}>
@@ -103,13 +114,15 @@ export default class QuestionDetail extends Component {
                 </View>
               </View>
               <Text style={{...styles.title}}>{title}</Text>
+              
+
+              <Text style={{...styles.content}}>{content}</Text>
+
               <View style={{...styles.horizontalLayout}}>
                 {tags?.map((item) => {
                   return <TagListItem item={item} />;
                 })}
               </View>
-
-              <Text style={{...styles.content}}>{content}</Text>
               <TouchableOpacity
                 style={{
                   ...styles.horizontalLayout,
@@ -129,17 +142,14 @@ export default class QuestionDetail extends Component {
               </TouchableOpacity>
               <Text
                 style={{fontWeight: "bold", fontSize: 20, marginVertical: 5}}>
-                Comments ({comments.length})
+                Comments ({comments?.length})
               </Text>
               <View>
-                {comments?.map((item) => (
-                  <Pressable
-                    onPress={() =>
-                      onEditComment(item.content, item.id, item.author.id)
-                    }>
+                {comments.map((item) => (
+                  
                     <Comment
-                      {...{...item, userID: this.props.userID}}></Comment>
-                  </Pressable>
+                      {...{...item, userID: this.props.userID, onEditComment : this.onEditComment}}></Comment>
+                  
                 ))}
               </View>
             </View>
@@ -147,104 +157,49 @@ export default class QuestionDetail extends Component {
         </View>
         <View
           style={{
-            flex: flexBottom,
+            //flex: flexBottom,
+            position: "absolute",
             flexDirection: "row",
-            borderColor: "rgba(0,0,0,0.2)",
-            borderWidth: 1,
-            borderRadius: 5,
+            borderTopColor: "rgba(0,0,0,0.2)",
+            borderTopWidth: 1,
+
             bottom: 0,
             marginBottom: 0,
-            marginHorizontal: 20,
+            paddingHorizontal: 20,
+            alignItems: "flex-end",
+            backgroundColor: "white",
           }}>
-          <TextInput
-            multiline
-            numberOfLines={6}
-            editable
-            style={{
-              borderColor: "#000000",
-              borderWidth: 0.5,
-              flex: 80,
-              borderRadius: 5,
-              backgroundColor: "white",
-            }}
-            placeholder="Leave your comment here..."
-            // onChangeText={this.updateComment}
+          <AutoGrowingTextInput
+            ref={this.setCommentTextInputRef}
+            style={styles.textInput}
+            placeholder={"Your Message"}
+            onChangeText={this.updateComment}
             value={this.state.comment}
-            onFocus={() => {
-              Keyboard.dismiss();
-              this.setState({isOpen: true});
-            }}
           />
-        </View>
-        <Modal
-          isOpen={this.state.isOpen}
-          onClosed={() => this.setState({isOpen: false})}
-          style={[styles.modal, {height: 300}]}
-          position={"center"}
-          backdropPressToClose={false}
-          backdropContent={BContent}>
-          <Pressable onPress={Keyboard.dismiss}>
-            <>
-              <TextInput
-                multiline
-                numberOfLines={6}
-                editable
-                style={{
-                  borderColor: "#000000",
-                  borderWidth: 0.5,
-                  borderRadius: 5,
-                  width: screen.width - styles.container.paddingHorizontal * 4,
-                  marginLeft: 20,
-                  backgroundColor: "white",
-                }}
-                placeholder="Leave your comment here..."
-                onChangeText={this.updateComment}
-                value={this.state.comment}
-              />
-              <View
-                style={{
-                  marginVertical: 10,
-                  marginLeft: 20,
-                  //padding: 5,
-                  borderRadius: 5,
-                  borderColor: "#f7f7f7",
-                  borderWidth: 0.75,
-                }}>
-                <Button
-                  style={{
-                    // marginVertical: 10,
-                    // marginLeft: 20,
-                    backgroundColor: colors.primary,
-                    padding: 5,
-                    color: "white",
-                    fontSize: 13,
-                    borderRadius: 5,
-                  }}
-                  onPress={() => {
-                    if (this.state.isCreated)
-                      this.props.onCreateQuestionComment({
-                        id,
-                        content: this.state.comment,
-                        token: this.props.token,
-                      });
-                    else {
-                      this.props.onEditQuestionComment({
-                        questionID: id,
-                        content: this.state.comment,
-                        commentID: this.state.commentID,
-                        token: this.props.token,
-                      });
-                      this.setState({isCreated: true});
-                    }
-                    this.setState({comment: "", commentID: ""});
-                    this.setState({isOpen: false});
-                  }}>
-                  Send your comment
-                </Button>
-              </View>
-            </>
+          <Pressable
+            onPress={() => {
+              if (this.state.isCreated)
+                this.props.onCreateQuestionComment({
+                  id,
+                  content: this.state.comment,
+                  token: this.props.token,
+                });
+              else {
+                this.props.onEditQuestionComment({
+                  questionID: id,
+                  content: this.state.comment,
+                  commentID: this.state.commentID,
+                  token: this.props.token,
+                });
+                this.setState({isCreated: true});
+              }
+              this.setState({comment: "", commentID: ""});
+              this.setState({isOpen: false});
+            }}>
+            <SendButton width={20} height={40} style={styles.sendButton} />
           </Pressable>
-        </Modal>
+         
+        </View>
       </>
     );
   }
@@ -275,10 +230,20 @@ const styles = StyleSheet.create({
   },
   content: {
     padding: 10,
-    borderColor: colors.primary,
-    borderWidth: 2,
+    backgroundColor: "#f0f2f5",
     borderRadius: 5,
     marginVertical: 5,
+  },
+  textInput: {
+    //borderColor: "#000000",
+    //borderWidth: 0.5,
+    flex: 80,
+    borderRadius: 5,
+  },
+  sendButton: {
+    flex: 20,
+    marginLeft: 5,
+    //bottom: 0,
   },
   btn: {
     margin: 10,

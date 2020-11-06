@@ -26,6 +26,8 @@ target 'react_native_app' do
 
   pod 'RNDateTimePicker', :path => '../node_modules/@react-native-community/datetimepicker'
 
+  pod 'ReactNativeAutogrowTextinput', :path => '../node_modules/react-native-autogrow-textinput'
+
   target 'react_native_appTests' do
     inherit! :complete
     # Pods for testing

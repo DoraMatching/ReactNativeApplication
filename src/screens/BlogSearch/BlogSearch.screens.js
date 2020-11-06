@@ -55,7 +55,7 @@ export default class BlogSearch extends Component {
             />
           </View>
         </View>
-        <Text style={{...styles.label, marginTop: 10}}>Tags</Text>
+        {/* <Text style={{...styles.label, marginTop: 10}}>Tags</Text>
         <View
           style={{
             ...styles.horizontalLayout,
@@ -66,7 +66,7 @@ export default class BlogSearch extends Component {
           {this.props.tags ? this.props.tags.items.map((item) => {
             return <TagListItem item={item} />;
           }) : <></>}
-        </View>
+        </View> */}
         <Text style={{...styles.label}}>Top Blogs</Text>
         <FlatList
           style={{}}

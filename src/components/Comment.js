@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {View, Text, StyleSheet, Image} from "react-native";
+import {View, Text, StyleSheet, Image, Pressable} from "react-native";
 import TimeAgo from "react-native-timeago";
 import MoreOptionIcon from "../images/moreOption.svg";
 export default class Comment extends Component {
@@ -39,7 +39,9 @@ export default class Comment extends Component {
           </View>
           <View>
             {this.props.userID === this.props.author.id ? (
+              <Pressable onPress={() => this.props.onEditComment(this.props.content, this.props.id, this.props.author.id )}>
               <MoreOptionIcon width={20} height={20} style={{marginTop: 5}} />
+              </Pressable>
             ) : (
               <></>
             )}

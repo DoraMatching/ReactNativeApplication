@@ -37,7 +37,7 @@ export default class QuestionSearch extends Component {
               />
             </View>
           </View>
-          <Text style={{...styles.label, marginTop: 10}}>Tags</Text>
+          {/* <Text style={{...styles.label, marginTop: 10}}>Tags</Text>
           <View
             style={{
               ...styles.horizontalLayout,
@@ -48,7 +48,7 @@ export default class QuestionSearch extends Component {
             {this.props.tags? this.props.tags.items.map((item) => {
               return <TagListItem item={item} />;
             }) : <></>}
-          </View>
+          </View> */}
           <Text style={{...styles.label}}>Top Questions</Text>
           <FlatList
             style={{}}

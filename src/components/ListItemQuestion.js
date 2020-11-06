@@ -70,7 +70,9 @@ export default class ListItemBlog extends Component {
                 source={require("../images/QuestionIcon.png")}
               />
               {this.props.userID === this.props.author.id ? (
+                <Pressable onPress={() => this.props.showOptionModal()}>
                 <MoreOptionIcon width={20} height={20} style={{marginTop: 5}} />
+                </Pressable>
               ) : (
                 <></>
               )}
@@ -124,7 +126,7 @@ export default class ListItemBlog extends Component {
                   alignSelf: "flex-end",
                   textAlign: "right",
                 }}>
-                25 comments
+                {this.props.comments.length} comments
               </Text>
             </View>
           </View>

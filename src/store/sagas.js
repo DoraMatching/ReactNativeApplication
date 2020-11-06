@@ -6,7 +6,7 @@ import BlogSearchSaga from "../screens/BlogSearch/BlogSearch.sagas";
 import QuestionSearchSaga from "../screens/QuestionSearch/QuestionSearch.sagas";
 import BlogDetailSaga from '../screens/BlogDetail/BlogDetail.sagas';
 import QuestionDetailSaga from '../screens/QuestionDetail/QuestionDetail.sagas';
-
+import BlogFormSaga from '../screens/BlogForm/BlogForm.sagas';
 export default function* rootSaga() {
   yield all([
     LoginSaga(),
@@ -16,5 +16,6 @@ export default function* rootSaga() {
     QuestionSearchSaga(),
     BlogDetailSaga(),
     QuestionDetailSaga(),
+    BlogFormSaga(),
   ]);
 }

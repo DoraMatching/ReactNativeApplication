@@ -8,7 +8,8 @@ import {
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
   Platform,
-  TouchableOpacity
+  TouchableOpacity,
+  ScrollView
 } from "react-native";
 import MultiSelect from "react-native-multiple-select";
 import DateTimePicker from "@react-native-community/datetimepicker";
@@ -17,6 +18,8 @@ import Button from "react-native-button";
 import {Field, reduxForm} from "redux-form";
 import colors from "../../themes/color";
 import moment from "moment";
+
+import {SafeAreaProvider, SafeAreaView} from "react-native-safe-area-context";
 
 const items = [
   {
@@ -178,11 +181,12 @@ const ClassFormScreen = (props) => {
     console.log("ClassFormScreen", values);
   };
   return (
+    <SafeAreaView  style={{ flex: 1, justifyContent: 'space-between' }}>
     <KeyboardAvoidingView
-      behavior="padding"
+      behavior="height"
       style={{flex: 1, paddingHorizontal: 10}}>
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss} style={styles.layout}>
+        <ScrollView>
           <Field
             name={"classname"}
             label={"Classname"}
@@ -273,14 +277,15 @@ const ClassFormScreen = (props) => {
             onPress={props.handleSubmit(submit)}
             style={[
               styles.button,
-              {fontSize: 18, paddingVertical: 10, marginVertical: 5},
+              {fontSize: 18, paddingVertical: 10, marginVertical: 5, bottom : 10},
             ]}
             >
             Create
           </Button>
-        </>
+        </ScrollView>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 };
 
@@ -334,5 +339,11 @@ const styles = StyleSheet.create({
     padding: 5,
     borderRadius: 5,
     fontSize: 12,
+  },
+  layout: {
+    flex: 1,
+    // marginLeft: 30,
+    // marginRight: 30,
+    justifyContent: "space-around",
   },
 });

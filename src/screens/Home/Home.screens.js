@@ -18,6 +18,8 @@ import FinderIcon from "../../images/finder.svg";
 import BlogDetailModal from "../BlogDetail/BlogDetail.modals";
 import QuestionDetailModal from "../QuestionDetail/QuestionDetail.modals";
 
+import OptionModal from '../../helpers/optionModal'
+
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 
 import topic from '../../data/topic';
@@ -41,6 +43,12 @@ export default class Home extends Component {
 
     this.setQuestionDetailModalRef = (element) => {
       this.questionDetailModal = element;
+    };
+
+    this.optionModal = null;
+
+    this.setOptionModalRef = (element) => {
+      this.optionModal = element;
     };
   }
 
@@ -90,6 +98,10 @@ export default class Home extends Component {
     return (
       <SafeAreaView  style={{ flex: 1, justifyContent: 'space-between', alignItems: 'center' }}>
       <View style={{marginBottom: 0}}>
+      <BlogDetailModal ref={this.setBlogDetailModalRef}></BlogDetailModal>
+        <QuestionDetailModal
+          ref={this.setQuestionDetailModalRef}></QuestionDetailModal>
+          <OptionModal ref={this.setOptionModalRef}></OptionModal>
         <StatusBar backgroundColor={colors.primary} />
         <View style={styles.searchContainer}>
           <View style={styles.searchInput}>
@@ -129,6 +141,8 @@ export default class Home extends Component {
           onRefresh={this.refreshData}
           renderItem={({item, index}) => {
             console.log("Flatlist", this.props.userID);
+            console.log("optionModal",this.optionModal);
+            if (!this.optionModal) this.refreshData();
             const userID = this.props.userID;
             if (item.type == "question")
               return (
@@ -139,7 +153,7 @@ export default class Home extends Component {
                     //console.log("HomeScreen", this.blogDetailModal);
                     this.questionDetailModal.showQuestionDetailModal(item);
                   }}>
-                  <ListItemQuestion {...{userID, ...item}} />
+                  <ListItemQuestion {...{userID, showOptionModal: this.optionModal? this.optionModal.showOptionModal : () =>{}, ...item}} />
                 </Pressable>
               );
             if (item.type == "post")
@@ -149,9 +163,9 @@ export default class Home extends Component {
                     //this.props.navigation.navigate("BlogDetail");
                     this.props.onOpenBlogDetail(item);
                     console.log("HomeScreen", this.blogDetailModal);
-                    this.blogDetailModal.showBlogDetailModal(item);
+                    if (this.blogDetailModal) this.blogDetailModal.showBlogDetailModal(item);
                   }}>
-                  <ListItemBlog {...{userID, ...item}} />
+                  <ListItemBlog {...{userID, showOptionModal: this.optionModal? this.optionModal.showOptionModal : () =>{}, ...item}} />
                 </Pressable>
               );
             if (item.type == "user-list")
@@ -173,9 +187,7 @@ export default class Home extends Component {
         }
           onEndReached={this.retrieveMore}
         />
-        <BlogDetailModal ref={this.setBlogDetailModalRef}></BlogDetailModal>
-        <QuestionDetailModal
-          ref={this.setQuestionDetailModalRef}></QuestionDetailModal>
+        
       </View>
       </SafeAreaView>
     );

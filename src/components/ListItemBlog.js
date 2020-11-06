@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {Image, StyleSheet, Text, TouchableOpacity, View, Pressable} from "react-native";
 import Svg, {Line} from "react-native-svg";
 import TimeAgo from "react-native-timeago";
 import likedIcon from "../images/LikedIcon.png";
@@ -7,12 +7,14 @@ import unlikedIcon from "../images/UnlikedIcon.png";
 import TagListItem from "./ListItemTag";
 import MoreOptionIcon from "../images/moreOption.svg";
 
+
 export default class ListItemBlog extends Component {
   constructor(props) {
     super(props);
     this.state = {
       isLiked: false,
     };
+    
   }
 
   render() {
@@ -69,7 +71,9 @@ export default class ListItemBlog extends Component {
                 source={require("../images/BlogIcon.png")}
               />
               {this.props.userID === this.props.author.id ? (
+                <Pressable onPress={() => this.props.showOptionModal()}>
                 <MoreOptionIcon width={20} height={20} style={{marginTop: 5}} />
+                </Pressable>
               ) : (
                 <></>
               )}
@@ -130,11 +134,12 @@ export default class ListItemBlog extends Component {
                   alignSelf: "flex-end",
                   textAlign: "right",
                 }}>
-                25 comments
+                {this.props.comments.length} comments
               </Text>
             </View>
           </View>
         </View>
+        
       </View>
     );
   }

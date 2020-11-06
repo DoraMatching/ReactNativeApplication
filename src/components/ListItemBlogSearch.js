@@ -93,7 +93,7 @@ export default class ListItemBlogSearch extends Component {
                 alignSelf: "flex-end",
                 textAlign: "right",
               }}>
-              2500
+              {this.props.comments.length}
             </Text>
           </View>
         </View>

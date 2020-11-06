@@ -7,14 +7,21 @@ import Button from "react-native-button";
 import {FloatingAction} from "react-native-floating-action";
 import profile from "../../data/profile";
 import colors from "../../themes/color";
+import {storage} from "../../helpers/asyncStorage";
 export default class Profile extends Component {
   constructor(props) {
     super(props);
     this.state = {};
   }
 
+   signOut =  () => {
+    //await storage.removeData((error) => {});
+    this.props.navigation.navigate("Login");
+  };
+
   render() {
-    const {username, email, avatarUrl, roles, posts, questions} = profile;
+    console.log("profile", this.props.user);
+    const {username, email, avatarUrl, roles, posts, questions} = this.props.user.message;
     const actions = [
       {
         text: "Accessibility",
@@ -83,7 +90,7 @@ export default class Profile extends Component {
           )}
           <View style={[styles.horizontalLayout, {marginVertical: 5}]}>
             <Button style={styles.button}>Change</Button>
-            <Button style={[styles.button, {marginLeft: 5}]}>Sign out</Button>
+            <Button onPress={this.signOut} style={[styles.button, {marginLeft: 5}]}>Sign out</Button>
           </View>
         </View>
         <FloatingAction

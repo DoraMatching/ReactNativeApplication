@@ -9,9 +9,9 @@ import QuestionSearch from '../screens/QuestionSearch/QuestionSearch.container';
 import LoginContainer from "../screens/Login/Login.container";
 import RegisterContainer from "../screens/Register/Register.container";
 import BlogDetail from "../screens/BlogDetail/BlogDetail.modals";
+import BlogForm from '../screens/BlogForm/BlogForm.screens';
 
-
-import Profile from '../screens/Profile/Profile.screens';
+import ProfileContainer from '../screens/Profile/Profile.container';
 import QuestionDetail from '../screens/QuestionDetail/QuestionDetail.screens';
 import {ClassForm} from '../screens/ClassForm/ClassForm.screens';
 
@@ -41,7 +41,7 @@ const homeRouters = () => (
         headerShown: false,
       }}
       >
-      <Stack.Screen name="BlogDetail" component={BlogDetail} />
+      {/* <Stack.Screen name="BlogDetail" component={BlogDetail} /> */}
       <Stack.Screen name="HomeScreen" component={Home} />
     </Stack.Navigator>
 );
@@ -51,7 +51,7 @@ const blogRouters = ({params}) => (
       screenOptions={{
         headerShown: false,
       }}>
-      <Stack.Screen name="BlogDetail" component={BlogDetail} />
+      {/* <Stack.Screen name="BlogForm" component={BlogForm} /> */}
       <Stack.Screen name="BlogSearch" component={BlogSearch} />
     </Stack.Navigator>
 );
@@ -104,7 +104,7 @@ const tabRouters = () => (
     <Tab.Screen name="Blogs" component={blogRouters} />
     <Tab.Screen name="Schedule" component={ClassForm} />
     <Tab.Screen name="Questions" component={questionRouters} /> 
-    <Tab.Screen name="Profile" component={Profile} />
+    <Tab.Screen name="Profile" component={ProfileContainer} />
   </Tab.Navigator>
   // </NavigationContainer>
 );

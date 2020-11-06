@@ -1,21 +1,41 @@
 import React, {Component} from "react";
-import {Text, View, StyleSheet, FlatList, TextInput} from "react-native";
+import {Text, View, StyleSheet, FlatList, TextInput, Dimensions} from "react-native";
 import TagListItem from "../../components/ListItemTag";
 import FinderIcon from "../../images/finder.svg";
 import ListItemBlogTop from "../../components/ListItemBlogTop";
-import ListItemBlogSearch from '../../components/ListItemBlogSearch'
+import ListItemBlogSearch from '../../components/ListItemBlogSearch';
+import {FloatingAction} from "react-native-floating-action";
 import colors from "../../themes/color";
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 
+import BlogFormModal from "../BlogForm/BlogForm.modals";
+
+const actions = [
+  {
+    text: "Create your blog",
+    //icon: require("../../images/book.svg"),
+    name: "bt_create",
+    position: 2,
+  },
+  
+];
+var screen = Dimensions.get("window");
 export default class BlogSearch extends Component {
   constructor(props) {
     super(props);
     console.log("BlogSearch constructor is called");
     this.props.onFetchTag({url : 'tag-post?page=1&limit=20&order=DESC'});
     this.props.onFetchTop({url : 'posts?page=1&limit=3&order=DESC'});
+    this.blogFormModal = null;
+
+    this.setBlogFormModalRef = (element) => {
+      this.blogFormModal = element;
+    };
   }
   render() {
     
     return (
+      <SafeAreaView  style={{ flex: 1, justifyContent: 'space-between', alignItems: 'center' }}>
       <View style={{flex: 1}}>
         <View style={styles.searchContainer}>
           <View style={styles.searchInput}>
@@ -54,7 +74,15 @@ export default class BlogSearch extends Component {
           keyExtractor={(item) => item.id}
           renderItem={({item, index}) => <ListItemBlogSearch {...item}/>}
         />
+        <FloatingAction
+            actions={actions}
+            onPressItem={(name) => {
+              if (name === "bt_create") this.blogFormModal.showBlogFormModal();
+            }}
+          />
+          <BlogFormModal ref={this.setBlogFormModalRef}></BlogFormModal>
       </View>
+      </SafeAreaView>
     );
   }
 }
@@ -71,9 +99,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   searchContainer: {
-    zIndex: 99,
+    zIndex: 0,
     backgroundColor: colors.primary,
-    width: "100%",
+    width: screen.width,
     overflow: "hidden",
     paddingBottom: 15,
     paddingTop: 20,
@@ -98,4 +126,5 @@ const styles = StyleSheet.create({
     left: 13,
     top: 12,
   },
+  
 });

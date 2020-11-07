@@ -28,6 +28,8 @@ target 'react_native_app' do
 
   pod 'ReactNativeAutogrowTextinput', :path => '../node_modules/react-native-autogrow-textinput'
 
+  pod 'RNFastImage', :path => '../node_modules/react-native-fast-image'
+
   target 'react_native_appTests' do
     inherit! :complete
     # Pods for testing

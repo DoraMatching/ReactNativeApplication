@@ -1,6 +1,8 @@
 import {connect} from "react-redux";
 import QuestionSearch from "./QuestionSearch.screens";
 import actions from "./QuestionSearch.actions";
+import HomeActions from "../Home/Home.actions";
+
 
 const mapStateToProps = (state) => {
   //console.log("Blog tag reducer", state.BlogTagReducer);
@@ -16,6 +18,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     onFetchTop: (params) => {
       dispatch(actions.getQuestionTopAction(params));
+    },
+    onOpenQuestionDetail : (data) => {
+      dispatch(HomeActions.openQuestionDetailAction(data));
     }
   };
 };

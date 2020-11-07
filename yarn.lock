@@ -6190,6 +6190,11 @@ react-native-elements@^2.3.2:
     react-native-ratings "^7.2.0"
     react-native-status-bar-height "^2.5.0"
 
+react-native-fast-image@^8.3.3:
+  version "8.3.3"
+  resolved "https://registry.yarnpkg.com/react-native-fast-image/-/react-native-fast-image-8.3.3.tgz#84c2a337a33d7663657d7cf8b8fd1210bf1a6c63"
+  integrity sha512-gVAgQdSgzmuBhwjCOxzwv55j/OJd0iJB15RgVk1FuDgq29DVcTeQgtC2Ici/ezaKaOWSgMmR8/wwUGjgIuJW9w==
+
 react-native-floating-action@^1.21.0:
   version "1.21.0"
   resolved "https://registry.yarnpkg.com/react-native-floating-action/-/react-native-floating-action-1.21.0.tgz#cb1e8349fec5b9aed06c8053c07372822c64b22f"

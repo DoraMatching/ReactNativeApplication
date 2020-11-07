@@ -88,9 +88,9 @@ export default class QuestionDetail extends Component {
     
     return (
       <>
-        <View style={{}}>
-          <ScrollView>
-            <View style={{...styles.container}}>
+        
+          <ScrollView style={{...styles.container}}> 
+            <View style={{}}>
               <View style={{...styles.horizontalLayout, marginTop: 20}}>
                 <Image
                   style={{
@@ -154,7 +154,6 @@ export default class QuestionDetail extends Component {
               </View>
             </View>
           </ScrollView>
-        </View>
         <View
           style={{
             //flex: flexBottom,
@@ -208,7 +207,8 @@ export default class QuestionDetail extends Component {
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 10,
-    marginTop: 45,
+    marginTop: 30,
+    marginBottom: 50,
   },
   horizontalLayout: {
     flexDirection: "row",

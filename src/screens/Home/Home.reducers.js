@@ -1,6 +1,8 @@
 import Actions from "./Home.actions";
+import BlogSearchActions from "../BlogSearch/BlogSearch.actions";
 import BlogDetailActions from '../BlogDetail/BlogDetail.actions';
 import QuestionDetailActions from '../QuestionDetail/QuestionDetail.actions';
+import { act } from "react-test-renderer";
 
 
 const HomeReducer = (data = null, action) => {
@@ -46,8 +48,22 @@ const HomeItemReducer = (dataItem = [], action) => {
       return dataItem.map(item => (item.id === action.questionID)
       ? {...item, comments : item.comments.map(item => (item.id === action.data.id) ? action.data : item)}
       : item)
+
+    case BlogSearchActions.DELETE_BLOG_SUCCEEDED:
+      return dataItem.filter(item => item.id !== action.id)
     default:
       return dataItem;
   }
 };
-export {HomeReducer, HomeItemReducer};
+
+const HomeAlertReducer = (alert = null, action) => {
+  switch (action.type) {
+    case BlogSearchActions.DELETE_BLOG_SUCCEEDED:
+      return action.data;
+    case BlogSearchActions.DELETE_BLOG_FAILED:
+      return action.error;
+    default:
+      return null;
+  }
+}
+export {HomeReducer, HomeItemReducer, HomeAlertReducer};

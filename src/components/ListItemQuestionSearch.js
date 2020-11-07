@@ -1,6 +1,8 @@
 import React, {Component} from "react";
 import {View, Text, StyleSheet, Image} from "react-native";
 import moment from "moment";
+import FastImage from "react-native-fast-image";
+import TagListItem from "./ListItemTag";
 
 export default class ListItemQuestionTop extends Component {
   constructor(props) {
@@ -39,9 +41,17 @@ export default class ListItemQuestionTop extends Component {
             <Text style={{...styles.title}} numberOfLines={2}>
               {this.props.title}
             </Text>
-            <Text style={{color: "#3d3d4e", flex: 90}} numberOfLines={1}>
-              {this.props.tags.map(({name}) => name).join(" \u2022 ")}
-            </Text>
+            <View
+              style={{
+                ...styles.horizontalLayout,
+                marginBottom: 0,
+                flexWrap: "wrap",
+                marginVertical: 5,
+              }}>
+              {this.props.tags.map((item) => {
+                return <TagListItem item={item} />;
+              })}
+            </View>
           </View>
         </View>
         <View style={{...styles.horizontalLayout, marginHorizontal: 0}}>

@@ -1,12 +1,19 @@
 import React, {Component} from "react";
-import {Image, StyleSheet, Text, TouchableOpacity, View, Pressable} from "react-native";
+import {
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  Pressable,
+} from "react-native";
 import Svg, {Line} from "react-native-svg";
 import TimeAgo from "react-native-timeago";
 import likedIcon from "../images/LikedIcon.png";
 import unlikedIcon from "../images/UnlikedIcon.png";
 import TagListItem from "./ListItemTag";
 import MoreOptionIcon from "../images/moreOption.svg";
-
+import FastImage from "react-native-fast-image";
 
 export default class ListItemBlog extends Component {
   constructor(props) {
@@ -14,12 +21,14 @@ export default class ListItemBlog extends Component {
     this.state = {
       isLiked: false,
     };
-    
   }
 
   render() {
     var imgSrc = this.state.isLiked ? likedIcon : unlikedIcon;
-
+    var paramsForOptionModal = [
+        deletePost = this.props.deletePost(this.props.id),
+        editPost = this.props.editPost(this.props.id),
+  ];
     return (
       <View>
         <View style={{...styles.container, ...styles.verticalLayout}}>
@@ -42,6 +51,23 @@ export default class ListItemBlog extends Component {
                 uri: this.props.author.avatarUrl,
               }}
             />
+            {/* <FastImage
+              style={{
+                width: 45,
+                height: 45,
+                borderRadius: 1000,
+                marginRight: 10,
+                borderColor: "#c4c4c4",
+                borderWidth: 0.5,
+              }}
+              source={{
+                uri: this.props.featuredImage,//this.props.author.avatarUrl,
+                //headers: {Authorization: "someAuthToken"},
+                //priority: FastImage.priority.high,
+              }}
+              resizeMode={FastImage.resizeMode.cover}
+            /> */}
+
             <View
               style={{
                 ...styles.verticalLayout,
@@ -71,21 +97,34 @@ export default class ListItemBlog extends Component {
                 source={require("../images/BlogIcon.png")}
               />
               {this.props.userID === this.props.author.id ? (
-                <Pressable onPress={() => this.props.showOptionModal()}>
-                <MoreOptionIcon width={20} height={20} style={{marginTop: 5}} />
+                <Pressable onPress={() => this.props.showOptionModal(...paramsForOptionModal)}>
+                  <MoreOptionIcon
+                    width={20}
+                    height={20}
+                    style={{marginTop: 5}}
+                  />
                 </Pressable>
               ) : (
                 <></>
               )}
             </View>
           </View>
-          <Image
+          <FastImage
+            style={{width: "100%", marginTop: 5, height: 200}}
+            source={{
+              uri: this.props.featuredImage,
+              //headers: {Authorization: "someAuthToken"},
+              priority: FastImage.priority.normal,
+            }}
+            resizeMode={FastImage.resizeMode.cover}
+          />
+          {/* <Image
             style={{width: "100%", marginTop: 5, height: 200}}
             resizeMode="cover"
             source={{
               uri: this.props.featuredImage,
             }}
-          />
+          /> */}
           <Text style={styles.descriptionText}>
             {this.props.subTitle.length > 120
               ? this.props.subTitle.substring(0, 120 - 3) + "..."
@@ -139,7 +178,6 @@ export default class ListItemBlog extends Component {
             </View>
           </View>
         </View>
-        
       </View>
     );
   }

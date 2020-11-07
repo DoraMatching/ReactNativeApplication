@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Text, View, StyleSheet} from "react-native";
+import {Text, View, StyleSheet, Pressable} from "react-native";
 import Modal from "react-native-modalbox";
 import Icon from 'react-native-vector-icons/Ionicons';
 export default class optionModal extends Component {
@@ -16,14 +16,19 @@ export default class optionModal extends Component {
 
     //this.props.navigation.setOptions({tabBarVisible : false});
   }
-
-  showOptionModal = () => {
+  deletePost;
+  editPost;
+  
+  showOptionModal = (deletePost, editPost) => {
     //console.log("blog detail modal", item);
-
+    this.deletePost = deletePost;
+    this.editPost= editPost;
     //this.blogDetailModal.open();
     this.setState({isOpen: true});
     //console.log("blog detail modal tags", this.tags);
   };
+
+  
 
   onOpen = () => {
     this.setState({isOpen: true});
@@ -34,6 +39,7 @@ export default class optionModal extends Component {
   };
 
   render() {
+    
     return (
       <Modal
         style={[styles.modal, styles.modal4]}
@@ -44,15 +50,18 @@ export default class optionModal extends Component {
         onClosed={this.onClose}
         onOpened={this.onOpen}
         isOpen={this.state.isOpen}>
-        
+        <Pressable onPress={() => this.editPost()}>
         <View style={styles.layout}>
             <Icon name="pencil" size={30} color="#606770" />
             <Text style={styles.text}>Edit your post</Text>
         </View>
+        </Pressable>
+        <Pressable onPress={() => this.deletePost()}>
         <View style={styles.layout}>
             <Icon name="close" size={30} color="#606770" />
             <Text style={styles.text}>Delete your post</Text>
         </View>
+        </Pressable>
       </Modal>
     );
   }

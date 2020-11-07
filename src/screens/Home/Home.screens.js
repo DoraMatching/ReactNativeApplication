@@ -91,7 +91,10 @@ export default class Home extends Component {
     }
     this.props.onFetchData({url});
   };
-
+  optionForBlog = {
+    deleteBlog : ({id}) => this.props.onDeleteBlog({id}),
+    editBlog : ({id}) => () => {},
+  }
   render() {
     const {search} = this.state;
     //this.props.navigation.navigate("BlogDetail");
@@ -165,7 +168,7 @@ export default class Home extends Component {
                     console.log("HomeScreen", this.blogDetailModal);
                     if (this.blogDetailModal) this.blogDetailModal.showBlogDetailModal(item);
                   }}>
-                  <ListItemBlog {...{userID, showOptionModal: this.optionModal? this.optionModal.showOptionModal : () =>{}, ...item}} />
+                  <ListItemBlog {...{userID, showOptionModal: this.optionModal? this.optionModal.showOptionModal : () =>{}, ...item, ...this.optionForBlog}} />
                 </Pressable>
               );
             if (item.type == "user-list")

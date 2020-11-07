@@ -1,6 +1,8 @@
 import React, {Component} from "react";
 import {Text, View, Image, StyleSheet} from "react-native";
 import moment from "moment";
+import FastImage from "react-native-fast-image";
+import TagListItem from "./ListItemTag";
 
 export default class ListItemBlogSearch extends Component {
   render() {
@@ -34,9 +36,17 @@ export default class ListItemBlogSearch extends Component {
             <Text style={{...styles.title}} numberOfLines={2}>
               {this.props.title}
             </Text>
-            <Text style={{color: "#3d3d4e", flex: 90}} numberOfLines={1}>
-              {this.props.tags.map(({name}) => name).join(" \u2022 ")}
-            </Text>
+            <View
+              style={{
+                ...styles.horizontalLayout,
+                marginBottom: 0,
+                flexWrap: "wrap",
+                marginVertical: 5,
+              }}>
+              {this.props.tags.map((item) => {
+                return <TagListItem item={item} />;
+              })}
+            </View>
           </View>
         </View>
         <View style={{...styles.horizontalLayout, marginHorizontal: 0}}>
@@ -53,7 +63,7 @@ export default class ListItemBlogSearch extends Component {
               {this.props.author ? this.props.author.name : "ABC"}
             </Text>
           </Text>
-          <Image
+          {/* <Image
             style={{
               flex: 20,
               marginTop: 5,
@@ -65,6 +75,21 @@ export default class ListItemBlogSearch extends Component {
             source={{
               uri: this.props.featuredImage,
             }}
+          /> */}
+          <FastImage
+            style={{
+              flex: 20,
+              marginTop: 5,
+              height: "100%",
+              borderRadius: 5,
+              marginStart: 5,
+            }}
+            source={{
+              uri: this.props.featuredImage,
+              //headers: {Authorization: "someAuthToken"},
+              priority: FastImage.priority.normal,
+            }}
+            resizeMode={FastImage.resizeMode.cover}
           />
         </View>
         <View

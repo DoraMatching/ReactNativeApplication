@@ -1,9 +1,9 @@
 import {combineReducers} from "redux";
 import {reducer as formReducer} from "redux-form";
-import {HomeReducer, HomeItemReducer} from "../screens/Home/Home.reducers";
+import {HomeReducer, HomeItemReducer, HomeAlertReducer} from "../screens/Home/Home.reducers";
 import LoginReducer from "../screens/Login/Login.reducers";
 import RegisterReducer from "../screens/Register/Register.reducers";
-import {BlogTagReducer, BlogTopReducer} from '../screens/BlogSearch/BlogSearch.reducers'
+import {BlogTopReducer, BlogTopItemReducer} from '../screens/BlogSearch/BlogSearch.reducers'
 import {QuestionTagReducer, QuestionTopReducer} from '../screens/QuestionSearch/QuestionSearch.reducers'
 import {BlogDetailReducer} from '../screens/BlogDetail/BlogDetail.reducers';
 import {QuestionDetailReducer} from '../screens/QuestionDetail/QuestionDetail.reducers';
@@ -15,13 +15,14 @@ const rootReducer = combineReducers({
   RegisterReducer,
   HomeReducer,
   HomeItemReducer,
-  BlogTagReducer,
+  BlogTopItemReducer,
   BlogTopReducer,
   QuestionTagReducer,
   QuestionTopReducer,
   BlogDetailReducer,
   QuestionDetailReducer,
   BlogFormReducer,
+  HomeAlertReducer,
   form: formReducer,
 });
 

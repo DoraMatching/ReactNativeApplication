@@ -2,6 +2,63 @@ import React, {Component} from "react";
 import {Text, View, StyleSheet, Pressable} from "react-native";
 import Modal from "react-native-modalbox";
 import Icon from 'react-native-vector-icons/Ionicons';
+
+
+
+import { connect } from 'react-redux'
+import BlogSearchActions from "../screens/BlogSearch/BlogSearch.actions";
+import QuestionSearchActions from "../screens/QuestionSearch/QuestionSearch.actions";
+
+class option extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isOpen: false,
+    };
+  }
+  deletePost = () => {
+    const {id, token ,type} = this.props.params;
+    type === "blog" ? this.props.onDeleteBlog({id, token})
+                : this.props.onDeleteQuestion({id, token});
+  }
+
+  render() {
+    return (
+      <>
+       <Pressable style={styles.layout} onPress={() => this.editPost()}>
+        <View style={styles.layout}>
+            <Icon name="pencil" size={30} color="#606770" />
+            <Text style={styles.text}>Edit your post</Text>
+        </View>
+        </Pressable>
+        <Pressable style={styles.layout} onPress={() => this.deletePost()}>
+        <View style={styles.layout}>
+            <Icon name="close" size={30} color="#606770" />
+            <Text style={styles.text}>Delete your post</Text>
+        </View>
+        </Pressable>
+      </>
+    )
+  }
+}
+
+const mapStateToProps = (state) => ({
+  
+})
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onDeleteBlog : (params) => {
+      dispatch(BlogSearchActions.deleteBlogAction(params));
+    },
+    onDeleteQuestion : (params) => {
+      dispatch(QuestionSearchActions.deleteQuestionAction(params));
+    }
+  }
+}
+
+const OptionContainer = connect(mapStateToProps, mapDispatchToProps)(option)
+
 export default class optionModal extends Component {
   constructor(props) {
     super(props);
@@ -16,13 +73,11 @@ export default class optionModal extends Component {
 
     //this.props.navigation.setOptions({tabBarVisible : false});
   }
-  deletePost;
-  editPost;
+  params;
   
-  showOptionModal = (deletePost, editPost) => {
+  showOptionModal = (params) => {
     //console.log("blog detail modal", item);
-    this.deletePost = deletePost;
-    this.editPost= editPost;
+    this.params = params;
     //this.blogDetailModal.open();
     this.setState({isOpen: true});
     //console.log("blog detail modal tags", this.tags);
@@ -50,22 +105,14 @@ export default class optionModal extends Component {
         onClosed={this.onClose}
         onOpened={this.onOpen}
         isOpen={this.state.isOpen}>
-        <Pressable onPress={() => this.editPost()}>
-        <View style={styles.layout}>
-            <Icon name="pencil" size={30} color="#606770" />
-            <Text style={styles.text}>Edit your post</Text>
-        </View>
-        </Pressable>
-        <Pressable onPress={() => this.deletePost()}>
-        <View style={styles.layout}>
-            <Icon name="close" size={30} color="#606770" />
-            <Text style={styles.text}>Delete your post</Text>
-        </View>
-        </Pressable>
+       <OptionContainer params = {this.params}></OptionContainer>
       </Modal>
     );
   }
 }
+
+
+
 
 const styles = StyleSheet.create({
     modal: {

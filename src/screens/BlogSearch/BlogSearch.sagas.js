@@ -34,8 +34,9 @@ function* fetchBlogTop(action) {
 
 function* deleteBlog(action) {
   try {
+    console.log("deleteBlog: params", action.params);
     const res = yield deleteDataFromAPI(action.params);
-
+    console.log("deleteBlog: response", res);
     if (res.status === 204) {
       console.log("blogSearch.saga.js: top", res.data);
       yield put({type: actions.DELETE_BLOG_SUCCEEDED, data: res.data.message});

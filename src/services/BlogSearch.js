@@ -11,9 +11,13 @@ const getDataFromAPI = ({url}) => {
     });
 };
 
-const deleteDataFromAPI = ({id}) => {
+const deleteDataFromAPI = ({id, token}) => {
   return request
-    .delete(`post/${id}`)
+    .delete(`post/${id}`,{
+      headers: {
+        'Authorization': `Bearer ${token}` 
+      }
+    })
     .then((res) => {
       return res;
     })

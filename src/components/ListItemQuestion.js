@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {Image, StyleSheet, Text, TouchableOpacity, View, Pressable} from "react-native";
 import Svg, {Line} from "react-native-svg";
 import TimeAgo from "react-native-timeago";
 import likedIcon from "../images/LikedIcon.png";
@@ -17,6 +17,11 @@ export default class ListItemBlog extends Component {
 
   render() {
     var imgSrc = this.state.isLiked ? likedIcon : unlikedIcon;
+    var paramsForOptionModal = {
+      type : "question",
+      id : this.props.id,
+      token : this.props.token,
+  };
     console.log("listItemQuestion: ", this.props.userID);
     return (
       <View>
@@ -70,7 +75,7 @@ export default class ListItemBlog extends Component {
                 source={require("../images/QuestionIcon.png")}
               />
               {this.props.userID === this.props.author.id ? (
-                <Pressable onPress={() => this.props.showOptionModal()}>
+                <Pressable onPress={() => this.props.showOptionModal(paramsForOptionModal)}>
                 <MoreOptionIcon width={20} height={20} style={{marginTop: 5}} />
                 </Pressable>
               ) : (

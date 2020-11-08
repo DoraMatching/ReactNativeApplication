@@ -91,12 +91,13 @@ export default class Home extends Component {
     }
     this.props.onFetchData({url});
   };
-  optionForBlog = {
-    deleteBlog : ({id}) => this.props.onDeleteBlog({id}),
-    editBlog : ({id}) => () => {},
-  }
+  
   render() {
     const {search} = this.state;
+    if (this.props.alert) {
+      alert(this.props.alert);
+      this.optionModal.onClose();
+    }
     //this.props.navigation.navigate("BlogDetail");
     return (
       <SafeAreaView  style={{ flex: 1, justifyContent: 'space-between', alignItems: 'center' }}>
@@ -147,6 +148,7 @@ export default class Home extends Component {
             console.log("optionModal",this.optionModal);
             if (!this.optionModal) this.refreshData();
             const userID = this.props.userID;
+            const token = this.props.token;
             if (item.type == "question")
               return (
                 <Pressable
@@ -156,7 +158,7 @@ export default class Home extends Component {
                     //console.log("HomeScreen", this.blogDetailModal);
                     this.questionDetailModal.showQuestionDetailModal(item);
                   }}>
-                  <ListItemQuestion {...{userID, showOptionModal: this.optionModal? this.optionModal.showOptionModal : () =>{}, ...item}} />
+                  <ListItemQuestion {...{token, userID, showOptionModal: this.optionModal? this.optionModal.showOptionModal : () =>{}, ...item}} />
                 </Pressable>
               );
             if (item.type == "post")
@@ -168,7 +170,7 @@ export default class Home extends Component {
                     console.log("HomeScreen", this.blogDetailModal);
                     if (this.blogDetailModal) this.blogDetailModal.showBlogDetailModal(item);
                   }}>
-                  <ListItemBlog {...{userID, showOptionModal: this.optionModal? this.optionModal.showOptionModal : () =>{}, ...item, ...this.optionForBlog}} />
+                  <ListItemBlog {...{token, userID, showOptionModal: this.optionModal? this.optionModal.showOptionModal : () =>{}, ...item}} />
                 </Pressable>
               );
             if (item.type == "user-list")

@@ -8,7 +8,8 @@ const mapStateToProps = (state) => {
     data: state.HomeReducer ,
     dataItem : !state.HomeItemReducer ? [] : state.HomeItemReducer,
     userID: !state.LoginReducer.message ? "" : state.LoginReducer.message.id,
-    alert : state.HomeAlertReducer,
+    token: !state.LoginReducer.message ? "" : state.LoginReducer.message.token,
+    alert : state.AlertReducer,
   };
 };
 const mapDispatchToProps = (dispatch) => {
@@ -25,9 +26,7 @@ const mapDispatchToProps = (dispatch) => {
     onOpenQuestionDetail : (data) => {
       dispatch(actions.openQuestionDetailAction(data));
     },
-    onDeleteBlog : (params) => {
-      dispatch(BlogSearchActions.deleteBlogAction(params));
-    }
+    
   };
 };
 

@@ -1,9 +1,9 @@
 import Actions from "./Home.actions";
 import BlogSearchActions from "../BlogSearch/BlogSearch.actions";
-import BlogDetailActions from '../BlogDetail/BlogDetail.actions';
-import QuestionDetailActions from '../QuestionDetail/QuestionDetail.actions';
-import { act } from "react-test-renderer";
-
+import QuestionSearchActions from "../QuestionSearch/QuestionSearch.actions";
+import BlogDetailActions from "../BlogDetail/BlogDetail.actions";
+import QuestionDetailActions from "../QuestionDetail/QuestionDetail.actions";
+import {act} from "react-test-renderer";
 
 const HomeReducer = (data = null, action) => {
   switch (action.type) {
@@ -35,35 +35,54 @@ const HomeItemReducer = (dataItem = [], action) => {
     case BlogDetailActions.POST_BLOG_COMMENT_SUCCEEDED:
     case QuestionDetailActions.POST_QUESTION_COMMENT_SUCCEEDED:
       console.log("Home reducer is called when post comment");
-      return dataItem.map(item => (item.id === action.data.id)
-      ? {...item, comments : action.data.comments}
-      : item)
+      return dataItem.map((item) =>
+        item.id === action.data.id
+          ? {...item, comments: action.data.comments}
+          : item,
+      );
 
     case BlogDetailActions.PATCH_BLOG_COMMENT_SUCCEEDED:
-    
-      return dataItem.map(item => (item.id === action.blogID)
-      ? {...item, comments : item.comments.map(item => (item.id === action.data.id) ? action.data : item)}
-      : item)
+      return dataItem.map((item) =>
+        item.id === action.blogID
+          ? {
+              ...item,
+              comments: item.comments.map((item) =>
+                item.id === action.data.id ? action.data : item,
+              ),
+            }
+          : item,
+      );
     case QuestionDetailActions.PATCH_QUESTION_COMMENT_SUCCEEDED:
-      return dataItem.map(item => (item.id === action.questionID)
-      ? {...item, comments : item.comments.map(item => (item.id === action.data.id) ? action.data : item)}
-      : item)
+      return dataItem.map((item) =>
+        item.id === action.questionID
+          ? {
+              ...item,
+              comments: item.comments.map((item) =>
+                item.id === action.data.id ? action.data : item,
+              ),
+            }
+          : item,
+      );
 
     case BlogSearchActions.DELETE_BLOG_SUCCEEDED:
-      return dataItem.filter(item => item.id !== action.id)
+    case QuestionSearchActions.DELETE_QUESTION_SUCCEEDED:
+      return dataItem.filter((item) => item.id !== action.id);
+
     default:
       return dataItem;
   }
 };
 
-const HomeAlertReducer = (alert = null, action) => {
+const AlertReducer = (alert = null, action) => {
   switch (action.type) {
     case BlogSearchActions.DELETE_BLOG_SUCCEEDED:
+    case QuestionSearchActions.DELETE_QUESTION_SUCCEEDED:
       return action.data;
     case BlogSearchActions.DELETE_BLOG_FAILED:
+    case QuestionSearchActions.DELETE_QUESTION_FAILED:
       return action.error;
     default:
       return null;
   }
-}
-export {HomeReducer, HomeItemReducer, HomeAlertReducer};
+};
+export {HomeReducer, HomeItemReducer, AlertReducer};

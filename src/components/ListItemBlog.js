@@ -25,10 +25,11 @@ export default class ListItemBlog extends Component {
 
   render() {
     var imgSrc = this.state.isLiked ? likedIcon : unlikedIcon;
-    var paramsForOptionModal = [
-        deletePost = this.props.deletePost(this.props.id),
-        editPost = this.props.editPost(this.props.id),
-  ];
+    var paramsForOptionModal = {
+        type : "blog",
+        id : this.props.id,
+        token : this.props.token,
+    };
     return (
       <View>
         <View style={{...styles.container, ...styles.verticalLayout}}>
@@ -97,7 +98,7 @@ export default class ListItemBlog extends Component {
                 source={require("../images/BlogIcon.png")}
               />
               {this.props.userID === this.props.author.id ? (
-                <Pressable onPress={() => this.props.showOptionModal(...paramsForOptionModal)}>
+                <Pressable onPress={() => this.props.showOptionModal(paramsForOptionModal)}>
                   <MoreOptionIcon
                     width={20}
                     height={20}

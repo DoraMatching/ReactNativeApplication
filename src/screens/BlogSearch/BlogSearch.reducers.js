@@ -1,5 +1,6 @@
 import Actions from "./BlogSearch.actions";
-
+import BlogFormActions from "../BlogForm/BlogForm.actions";
+import _ from "lodash";
 // const BlogTagReducer = (data = null , action) => {
 //   switch (action.type) {
 //     case Actions.GET_BLOG_TAG_SUCCEEDED:
@@ -13,12 +14,14 @@ import Actions from "./BlogSearch.actions";
 //   }
 // };
 
-const BlogTopReducer = (data = null , action) => {
+const BlogTopReducer = (data = null, action) => {
   switch (action.type) {
     case Actions.GET_BLOG_TOP_SUCCEEDED:
+    case Actions.REFRESH_DATA_SUCCEEDED:
       return action.data;
 
     case Actions.GET_BLOG_TOP_FAILED:
+    case Actions.REFRESH_DATA_FAILED:
       return data;
 
     default:
@@ -26,17 +29,24 @@ const BlogTopReducer = (data = null , action) => {
   }
 };
 
-const BlogTopItemReducer = (dataItem = [] , action) => {
+const BlogTopItemReducer = (dataItem = [], action) => {
   switch (action.type) {
-
     case Actions.GET_BLOG_TOP_SUCCEEDED:
-      return [...dataItem, ...action.data.items];
+      return _.uniq([...dataItem, ...action.data.items], "id");
 
     case Actions.DELETE_BLOG_SUCCEEDED:
-      return dataItem.filter(item => item.id !== action.id);
+      return dataItem.filter((item) => item.id !== action.id);
+
+      case Actions.REFRESH_DATA_SUCCEEDED:
+        return action.data.items;
+
+    case BlogFormActions.POST_BLOG_SUCCEEDED:
+      console.log("post blog search: ",[ ...dataItem, action.data]);
+      return [ action.data ,...dataItem,];
 
     case Actions.GET_BLOG_TOP_FAILED:
-      case Actions.DELETE_BLOG_FAILED:
+    case Actions.DELETE_BLOG_FAILED:
+    case Actions.REFRESH_DATA_FAILED:
       return dataItem;
 
     default:

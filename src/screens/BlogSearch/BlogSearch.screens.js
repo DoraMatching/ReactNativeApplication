@@ -32,7 +32,12 @@ export default class BlogSearch extends Component {
     super(props);
     //console.log("BlogSearch constructor is called");
     //this.props.onFetchTag({url: "tag-post?page=1&limit=20&order=DESC"});
-    this.props.onFetchTop({url: "posts?page=1&limit=3&order=DESC"});
+    this.state = {
+      search: "",
+      url: "posts?page=1&limit=4&order=DESC",
+      isLoading: false,
+    };
+    this.props.onFetchTop({url: this.state.url});
     this.blogFormModal = null;
 
     this.setBlogFormModalRef = (element) => {
@@ -45,6 +50,25 @@ export default class BlogSearch extends Component {
       this.blogDetailModal = element;
     };
   }
+
+  refreshData = () => {
+    this.setState({isLoading: true});
+    const {url} = this.state;
+    this.props.onRefreshData({url});
+    this.setState({isLoading: false});
+  };
+
+  retrieveMore = () => {
+    console.log("BlogSerach in RetrieveMore", this.props.data);
+    console.log("retrieveMore is called");
+    let url = this.props.data.links.next;
+    if (url === "") {
+      return;
+    }
+    this.props.onFetchTop({url});
+  };
+
+
   render() {
     return (
       <SafeAreaView
@@ -88,7 +112,9 @@ export default class BlogSearch extends Component {
           <Text style={{...styles.label}}>Top Blogs</Text>
           <FlatList
             style={{}}
-            data={this.props.tops ? this.props.tops.items : []}
+            onRefresh={this.refreshData}
+            refreshing={this.state.isLoading}
+            data={this.props.tops ? this.props.tops : []}
             keyExtractor={(item) => item.id}
             renderItem={({item, index}) => (
               <Pressable
@@ -99,6 +125,7 @@ export default class BlogSearch extends Component {
                 <ListItemBlogSearch {...item} />
               </Pressable>
             )}
+            onEndReached={this.retrieveMore}
           />
           <FloatingAction
             actions={actions}

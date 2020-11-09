@@ -8,7 +8,8 @@ const mapStateToProps = (state) => {
   //console.log("Blog tag reducer", state.BlogTagReducer);
   return {
     //tags : state.BlogTagReducer,
-    tops : state.BlogTopReducer,
+    data: state.BlogTopReducer,
+    tops : state.BlogTopItemReducer,
   };
 };
 const mapDispatchToProps = (dispatch) => {
@@ -18,6 +19,9 @@ const mapDispatchToProps = (dispatch) => {
     // },
     onFetchTop: (params) => {
       dispatch(actions.getBlogTopAction(params));
+    },
+    onRefreshData : (params) => {
+      dispatch(actions.getRefreshDataAction(params));
     },
     onOpenBlogDetail : (data) => {
       dispatch(HomeActions.openBlogDetailAction(data));

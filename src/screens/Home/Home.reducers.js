@@ -3,6 +3,8 @@ import BlogSearchActions from "../BlogSearch/BlogSearch.actions";
 import QuestionSearchActions from "../QuestionSearch/QuestionSearch.actions";
 import BlogDetailActions from "../BlogDetail/BlogDetail.actions";
 import QuestionDetailActions from "../QuestionDetail/QuestionDetail.actions";
+import BlogFormActions from "../BlogForm/BlogForm.actions";
+import _ from "lodash";
 import {act} from "react-test-renderer";
 
 const HomeReducer = (data = null, action) => {
@@ -23,7 +25,7 @@ const HomeReducer = (data = null, action) => {
 const HomeItemReducer = (dataItem = [], action) => {
   switch (action.type) {
     case Actions.GET_DATA_SUCCEEDED:
-      return [...dataItem, ...action.data.items];
+      return _.uniq([...dataItem, ...action.data.items],"id");
 
     case Actions.GET_DATA_FAILED:
     case Actions.REFRESH_DATA_FAILED:
@@ -63,6 +65,10 @@ const HomeItemReducer = (dataItem = [], action) => {
             }
           : item,
       );
+
+    case BlogFormActions.POST_BLOG_SUCCEEDED:
+      //console.log("post blog search: ", [...dataItem, action.data]);
+      return [action.data, ...dataItem];
 
     case BlogSearchActions.DELETE_BLOG_SUCCEEDED:
     case QuestionSearchActions.DELETE_QUESTION_SUCCEEDED:

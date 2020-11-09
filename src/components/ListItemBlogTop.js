@@ -39,7 +39,7 @@ export default class ListItemBlogTop extends Component {
               marginTop: 10,
               width: "100%",
             }}
-            numberOfLines={2}>
+            numberOfLines={1}>
             {this.props.title}
           </Text>
           <View

@@ -1,8 +1,7 @@
 import React, {Component} from "react";
 import {View, Text, StyleSheet, Image} from "react-native";
-import TagListItem from "./ListItemTag";
 
-export default class ListItemBlogTop extends Component {
+export default class ListItemQuestionTop extends Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -28,7 +27,7 @@ export default class ListItemBlogTop extends Component {
           resizeMode="cover"
           source={{
             uri:
-              this.props.featuredImage,
+              require("../images/QuestionFeaturedImage.png")
           }}
         />
         <View style={{marginHorizontal: 10, flexWrap: "wrap", flex: 75}}>
@@ -50,20 +49,14 @@ export default class ListItemBlogTop extends Component {
               flexWrap: "wrap",
               height: 20,
               justifyContent: "flex-start",
-              marginBottom: 10,
+              
             }}>
             
-            <View
-              style={{
-                ...styles.horizontalLayout,
-                marginBottom: 0,
-                flexWrap: "wrap",
-                marginVertical: 5,
-              }}>
-              {this.props.tags.map((item) => {
-                return <TagListItem item={item} />;
-              })}
-            </View>
+            <Text style={{color: "#3d3d4e", flex: 90, }} numberOfLines={1}>
+              {this.props.tags
+                .map(({name}) => name)
+                .join(" \u2022 ")}
+            </Text>
           </View>
 
           <View

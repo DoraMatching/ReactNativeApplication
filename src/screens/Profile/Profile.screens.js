@@ -8,20 +8,30 @@ import {FloatingAction} from "react-native-floating-action";
 import profile from "../../data/profile";
 import colors from "../../themes/color";
 import {storage} from "../../helpers/asyncStorage";
+import TabView from "./Profile.routers";
 export default class Profile extends Component {
   constructor(props) {
     super(props);
     this.state = {};
+    this.props.onFetchUser({id : this.props.id, token : this.props.token});
   }
 
-   signOut =  () => {
+  signOut = () => {
     //await storage.removeData((error) => {});
     this.props.navigation.navigate("Login");
   };
 
   render() {
-    console.log("profile", this.props.user);
-    const {username, email, avatarUrl, roles, posts, questions} = this.props.user.message;
+    if (!this.props.data) return <></>;
+    console.log("profilescreen", this.props.data);
+    const {
+      username,
+      email,
+      avatarUrl,
+      roles,
+      posts,
+      questions,
+    } = this.props.data;
     const actions = [
       {
         text: "Accessibility",
@@ -52,8 +62,8 @@ export default class Profile extends Component {
       <SafeAreaView
         style={{
           flex: 1,
-          justifyContent: "space-between",
-          alignItems: "center",
+          //justifyContent: "space-between",
+          //alignItems: "center",
           padding: 20,
         }}>
         <View style={{alignSelf: "flex-start"}}>
@@ -90,16 +100,79 @@ export default class Profile extends Component {
           )}
           <View style={[styles.horizontalLayout, {marginVertical: 5}]}>
             <Button style={styles.button}>Change</Button>
-            <Button onPress={this.signOut} style={[styles.button, {marginLeft: 5}]}>Sign out</Button>
+            <Button
+              onPress={this.signOut}
+              style={[styles.button, {marginLeft: 5}]}>
+              Sign out
+            </Button>
           </View>
         </View>
+
+        
+        <TabView style={{marginVertical : 5}}></TabView>
         <FloatingAction
           actions={actions}
           onPressItem={(name) => {
             console.log(`selected button: ${name}`);
           }}
+          style={{zIndex : 5}}
         />
       </SafeAreaView>
+
+      // <SafeAreaView
+      //   style={{
+      //     flex: 1,
+      //     justifyContent: "space-between",
+      //     alignItems: "center",
+      //     padding: 20,
+      //   }}>
+
+      //   <View style={{alignSelf: "flex-start"}}>
+      //     <View
+      //       style={{
+      //         ...styles.horizontalLayout,
+      //         justifyContent: "space-between",
+      //       }}>
+      //       <Image
+      //         style={styles.avatar}
+      //         resizeMode="cover"
+      //         source={{
+      //           uri: avatarUrl,
+      //         }}
+      //       />
+      //       <View
+      //         style={{
+      //           paddingRight: 10,
+      //         }}>
+      //         <Text style={styles.username} numberOfLines={1}>
+      //           {username}
+      //         </Text>
+      //         <Text style={styles.email}>{email}</Text>
+      //       </View>
+      //     </View>
+      //     <Text style={styles.role}>{roles.join(" - ")}</Text>
+      //     {roles.findIndex((item) => item === "Trainer") === -1 ? (
+      //       <Text style={styles.offerTrainer}>
+      //         Do you want to be a trainer?{" "}
+      //         <Text style={styles.signUpTrainer}>Sign up</Text>
+      //       </Text>
+      //     ) : (
+      //       <></>
+      //     )}
+      //     <View style={[styles.horizontalLayout, {marginVertical: 5}]}>
+      //       <Button style={styles.button}>Change</Button>
+      //       <Button onPress={this.signOut} style={[styles.button, {marginLeft: 5}]}>Sign out</Button>
+      //     </View>
+
+      //   </View>
+
+      //   <FloatingAction
+      //     actions={actions}
+      //     onPressItem={(name) => {
+      //       console.log(`selected button: ${name}`);
+      //     }}
+      //   />
+      // </SafeAreaView>
     );
   }
 }

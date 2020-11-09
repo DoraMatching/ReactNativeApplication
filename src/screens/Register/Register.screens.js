@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import {Field} from "redux-form";
 import EditText from "../../components/EditText";
-import colors from '../../themes/color';
+import colors from "../../themes/color";
 
 //Validation
 const required = (value) => {
@@ -108,20 +108,20 @@ const RegisterScreen = ({handleSubmit, onSubmit, user, navigation}) => {
               <Text style={styles.buttonText}>Sign up</Text>
             </TouchableOpacity>
             <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "center",
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "center",
 
-              marginTop: 30,
-            }}>
-            <Text>Already have an account ? </Text>
-            <Text
-              style={styles.signInText}
-              onPress={() => navigation.navigate("Login")}>
-              Sign in
-            </Text>
-          </View>
+                marginTop: 30,
+              }}>
+              <Text>Already have an account ? </Text>
+              <Text
+                style={styles.signInText}
+                onPress={() => navigation.navigate("Login")}>
+                Sign in
+              </Text>
+            </View>
           </View>
         </View>
       </TouchableWithoutFeedback>

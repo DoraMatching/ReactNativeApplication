@@ -80,7 +80,7 @@ export default class ListItemBlogSearch extends Component {
             style={{
               flex: 20,
               marginTop: 5,
-              height: "100%",
+              height: 75,
               borderRadius: 5,
               marginStart: 5,
             }}

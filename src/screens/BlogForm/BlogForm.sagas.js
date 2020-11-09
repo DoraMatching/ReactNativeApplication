@@ -5,7 +5,7 @@ import {postBlogFromAPI} from '../../services/BlogForm';
 function* createBlog(action) {
     try {
       const res = yield postBlogFromAPI(action.params);
-      console.log('createBlog.saga,js res: ', action.params);
+      console.log('createBlog.saga,js res: ', res);
       if (res.status === 201) {
         yield put({type: actions.POST_BLOG_SUCCEEDED, data: res.data});
       } else {

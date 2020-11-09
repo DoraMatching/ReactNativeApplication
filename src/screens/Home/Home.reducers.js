@@ -66,6 +66,7 @@ const HomeItemReducer = (dataItem = [], action) => {
 
     case BlogSearchActions.DELETE_BLOG_SUCCEEDED:
     case QuestionSearchActions.DELETE_QUESTION_SUCCEEDED:
+      console.log("action in Home", action);
       return dataItem.filter((item) => item.id !== action.id);
 
     default:
@@ -74,6 +75,7 @@ const HomeItemReducer = (dataItem = [], action) => {
 };
 
 const AlertReducer = (alert = null, action) => {
+  console.log("alert: ", action);
   switch (action.type) {
     case BlogSearchActions.DELETE_BLOG_SUCCEEDED:
     case QuestionSearchActions.DELETE_QUESTION_SUCCEEDED:

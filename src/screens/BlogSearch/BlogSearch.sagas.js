@@ -37,9 +37,9 @@ function* deleteBlog(action) {
     console.log("deleteBlog: params", action.params);
     const res = yield deleteDataFromAPI(action.params);
     console.log("deleteBlog: response", res);
-    if (res.status === 204) {
+    if (res.status === 202) {
       console.log("blogSearch.saga.js: top", res.data);
-      yield put({type: actions.DELETE_BLOG_SUCCEEDED, data: res.data.message});
+      yield put({type: actions.DELETE_BLOG_SUCCEEDED, data: res.data.message, id: action.params.id});
     } else {
       yield put({type: actions.DELETE_BLOG_FAILED, error: res.message});
     }

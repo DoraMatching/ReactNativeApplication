@@ -30,7 +30,7 @@ const BlogTopItemReducer = (dataItem = [] , action) => {
   switch (action.type) {
 
     case Actions.GET_BLOG_TOP_SUCCEEDED:
-      return [dataItem, ...action.data.items];
+      return [...dataItem, ...action.data.items];
 
     case Actions.DELETE_BLOG_SUCCEEDED:
       return dataItem.filter(item => item.id !== action.id);

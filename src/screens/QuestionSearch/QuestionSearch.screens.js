@@ -18,7 +18,7 @@ export default class QuestionSearch extends Component {
     super(props);
     console.log("QuestionSearch constructor is called");
     this.state = {};
-    this.props.onFetchTag({url: "tag-question?page=1&limit=20&order=DESC"});
+    //this.props.onFetchTag({url: "tag-question?page=1&limit=20&order=DESC"});
     this.props.onFetchTop({url: "questions?page=1&limit=3&order=DESC"});
 
     this.questionDetailModal = null;

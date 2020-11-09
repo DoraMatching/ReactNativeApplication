@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {
   Text,
   View,
@@ -8,10 +8,15 @@ import {
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
   TextInput,
+  ActivityIndicator,
+  Pressable,
 } from "react-native";
 import {Field, reduxForm} from "redux-form";
-import colors from '../../themes/color';
-import Button from 'react-native-button'
+import colors from "../../themes/color";
+import Button from "react-native-button";
+import ImagePicker from "react-native-image-picker";
+import {Image} from "react-native-elements";
+import defaultImage from "../../images/BlogFeaturedImage.png";
 const BlogInput = (props) => {
   const {
     meta: {touched, error, warning},
@@ -42,30 +47,50 @@ const required = (value) => {
   return value ? undefined : "The field is required";
 };
 
-
-
 const BlogFormScreen = (props) => {
+  const [avatar, setAvatar] = useState(defaultImage);
+  const [isHidden, setHidden] = useState(true);
+
+  const handlePicker = () => {
+    console.log('edit');
+    ImagePicker.showImagePicker({}, (response) => {
+      console.log("Response = ", response);
+      setHidden(true);
+      if (response.didCancel) {
+        console.log("User cancelled image picker");
+      } else if (response.error) {
+        console.log("ImagePicker Error: ", response.error);
+      } else if (response.customButton) {
+        console.log("User tapped custom button: ", response.customButton);
+      } else {
+        setAvatar({uri: response.uri});
+        // here we can call a API to upload image on server
+      }
+    });
+  };
   const submit = (values) => {
     const tags = [
       {
-        "name": "java"
-      }
+        name: "java",
+      },
     ];
-    const featuredImage = "https://www.pixelrockstar.com/wp-content/uploads/2017/04/featured-image.png";
-    props.onCreateBlog({tags,featuredImage, token : props.token, ...values});
+    const featuredImage =
+      "https://www.pixelrockstar.com/wp-content/uploads/2017/04/featured-image.png";
+    props.onCreateBlog({tags, featuredImage, token: props.token, ...values});
     console.log("BlogFormScreen", values);
     if (props.data && props.data.success === true) {
+      alert("Your blog has just been created !");
       props.onClose();
     } else if (props.data.success === false) {
       alert(props.data.message);
     }
   };
-  
+
   return (
     <KeyboardAvoidingView
       behavior="padding"
-      style={{flex: 1, paddingHorizontal: 10, paddingTop: 40,}}>
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      style={{flex: 1, paddingHorizontal: 10, paddingTop: 40}}>
+      <Pressable onPress={() => {Keyboard.dismiss;setHidden(true);}}>
         <>
           <ScrollView>
             <Field
@@ -73,7 +98,7 @@ const BlogFormScreen = (props) => {
               placeholder={"Type your title here ..."}
               component={BlogInput}
               validate={required}
-              styles = {styles.title}
+              styles={styles.title}
             />
             <Field
               name={"subTitle"}
@@ -84,9 +109,27 @@ const BlogFormScreen = (props) => {
               placeholder={"Your description is here ..."}
               component={BlogInput}
               validate={required}
-              styles = {styles.description}
+              styles={styles.description}
             />
-
+            <Pressable
+              style={styles.featuredImage}
+              onPress={() => setHidden(false)}
+              >
+              <Image
+                source={avatar}
+                PlaceholderContent={<ActivityIndicator />}
+                style={{width: "100%", height: 200, borderRadius: 5, resizeMode : "cover"}}
+              />
+              {!isHidden ? (
+                <Pressable onPress={() => setHidden(true)}  style={styles.overlay}>
+                
+                  <Text style={styles.editLabel} onPress={handlePicker}>Edit your featured image</Text>
+                
+                </Pressable>
+              ) : (
+                <></>
+              )}
+            </Pressable>
             <Field
               name={"content"}
               props={{
@@ -96,7 +139,7 @@ const BlogFormScreen = (props) => {
               placeholder={"Your content is here ..."}
               component={BlogInput}
               validate={required}
-              styles = {styles.description}
+              styles={styles.description}
             />
 
             <Button
@@ -108,9 +151,8 @@ const BlogFormScreen = (props) => {
               Create
             </Button>
           </ScrollView>
-          
         </>
-      </TouchableWithoutFeedback>
+      </Pressable>
     </KeyboardAvoidingView>
   );
 };
@@ -129,7 +171,6 @@ const styles = StyleSheet.create({
     borderColor: "transparent",
   },
   button: {
-    
     backgroundColor: colors.primary,
     color: "white",
     padding: 5,
@@ -137,18 +178,36 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
   title: {
-      fontWeight: 'bold',
-      fontSize : 18,
-      color: 'black',
-      borderBottomWidth: 1,
-      borderBottomColor: 'rgba(0,0,0,.5)',
-      marginBottom: 5,
+    fontWeight: "bold",
+    fontSize: 18,
+    color: "black",
+    borderBottomWidth: 1,
+    borderBottomColor: "rgba(0,0,0,.5)",
+    marginBottom: 5,
   },
   description: {
     borderWidth: 1,
-    borderColor: 'rgba(0,0,0,.5)',
+    borderColor: "rgba(0,0,0,.5)",
     borderRadius: 5,
     paddingHorizontal: 5,
     marginBottom: 5,
-  }
+  },
+  featuredImage: {
+    marginVertical: 5,
+    width: "100%",
+    height: 200,
+  },
+  overlay: {
+    width: "100%",
+    height: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "rgba(0,0,0,.7)",
+    position: "absolute",
+  },
+  editLabel: {
+    color: "white",
+    fontSize: 18,
+    padding : 5,
+  },
 });

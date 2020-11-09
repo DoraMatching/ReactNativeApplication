@@ -8,6 +8,7 @@ import {QuestionTagReducer, QuestionTopReducer} from '../screens/QuestionSearch/
 import {BlogDetailReducer} from '../screens/BlogDetail/BlogDetail.reducers';
 import {QuestionDetailReducer} from '../screens/QuestionDetail/QuestionDetail.reducers';
 import {BlogFormReducer} from '../screens/BlogForm/BlogForm.reducers';
+import {ProfileReducer} from '../screens/Profile/Profile.reducers';
 
 
 const rootReducer = combineReducers({
@@ -23,6 +24,7 @@ const rootReducer = combineReducers({
   QuestionDetailReducer,
   BlogFormReducer,
   AlertReducer,
+  ProfileReducer,
   form: formReducer,
 });
 

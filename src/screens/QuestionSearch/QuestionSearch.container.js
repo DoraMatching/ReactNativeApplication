@@ -13,9 +13,9 @@ const mapStateToProps = (state) => {
 };
 const mapDispatchToProps = (dispatch) => {
   return {
-    onFetchTag: (params) => {
-      dispatch(actions.getQuestionTagAction(params));
-    },
+    // onFetchTag: (params) => {
+    //   dispatch(actions.getQuestionTagAction(params));
+    // },
     onFetchTop: (params) => {
       dispatch(actions.getQuestionTopAction(params));
     },

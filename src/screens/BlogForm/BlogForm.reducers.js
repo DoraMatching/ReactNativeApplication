@@ -3,7 +3,7 @@ import HomeActions from "../Home/Home.actions";
 const BlogFormReducer = (data = {success: null, message: null} , action) => {
   switch (action.type) {
     case Actions.POST_BLOG_SUCCEEDED:
-      //console.log("comment successfully", action);
+      console.log("comment successfully", action);
       return {success: true, message: action.data};
 
     

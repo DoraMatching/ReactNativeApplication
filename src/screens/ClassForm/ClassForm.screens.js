@@ -9,7 +9,8 @@ import {
   TouchableWithoutFeedback,
   Platform,
   TouchableOpacity,
-  ScrollView
+  ScrollView,
+  Pressable,
 } from "react-native";
 import MultiSelect from "react-native-multiple-select";
 import DateTimePicker from "@react-native-community/datetimepicker";
@@ -18,7 +19,7 @@ import Button from "react-native-button";
 import {Field, reduxForm} from "redux-form";
 import colors from "../../themes/color";
 import moment from "moment";
-
+import SearchableDropdown from "react-native-searchable-dropdown";
 import {SafeAreaProvider, SafeAreaView} from "react-native-safe-area-context";
 
 const items = [
@@ -88,7 +89,7 @@ const MyDateTimePicker = (props) => {
   };
 
   return (
-    <>
+    
       <View style={styles.dateTimePicker}>
         <Button style={styles.button} onPress={showDatepicker}>
           Pick date
@@ -96,7 +97,7 @@ const MyDateTimePicker = (props) => {
         <Button style={styles.button} onPress={showTimepicker}>
           Pick time
         </Button>
-      </View>
+      
       {show && (
         <DateTimePicker
           testID="startDateTimePicker"
@@ -107,10 +108,10 @@ const MyDateTimePicker = (props) => {
           onChange={onChange}
         />
       )}
-    </>
+      </View>
+    
   );
 };
-
 
 //Validation
 const required = (value) => {
@@ -119,14 +120,13 @@ const required = (value) => {
 };
 
 const dateTimeCompare = (start, end) => {
-  return (start, end) => start <= end ? undefined : "Endtime must be greater than Starttime"
-}
+  return (start, end) =>
+    start <= end ? undefined : "Endtime must be greater than Starttime";
+};
 
-//  
+//
 
-const ClassInput = (
-  props,
-) => {
+const ClassInput = (props) => {
   const {
     meta: {touched, error, warning},
     input: {onChange, ...input},
@@ -146,26 +146,25 @@ const ClassInput = (
       </View>
       {val ? (
         <>
-        <TextInput
-          style={styles.textInput}
-          onChangeText={onChange}
-          {...input}
-          value={val}
-          {...rest}
-          returnKeyType="next"
-          autoCorrect={false}></TextInput>
-          </>
+          <TextInput
+            style={styles.textInput}
+            onChangeText={onChange}
+            {...input}
+            value={val}
+            {...rest}
+            returnKeyType="next"
+            autoCorrect={false}></TextInput>
+        </>
       ) : (
         <>
-        <TextInput
-          style={styles.textInput}
-          onChangeText={onChange}
-          {...input}
-          {...rest}
-          returnKeyType="next"
-          autoCorrect={false}></TextInput>
-          
-          </>
+          <TextInput
+            style={styles.textInput}
+            onChangeText={onChange}
+            {...input}
+            {...rest}
+            returnKeyType="next"
+            autoCorrect={false}></TextInput>
+        </>
       )}
     </View>
   );
@@ -181,110 +180,146 @@ const ClassFormScreen = (props) => {
     console.log("ClassFormScreen", values);
   };
   return (
-    <SafeAreaView  style={{ flex: 1, justifyContent: 'space-between' }}>
-    <KeyboardAvoidingView
-      behavior="height"
-      style={{flex: 1, paddingHorizontal: 10}}>
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss} style={styles.layout}>
-        <ScrollView>
-          <Field
-            name={"classname"}
-            label={"Classname"}
-            component={ClassInput}
-            validate={required}
-            
-          />
-          <Field
-            name={"description"}
-            props={{
-              multiline: true,
-              numberOfLines: 5,
-            }}
-            label={"Description"}
-            component={ClassInput}
-            validate={required}
-          />
-          <View style={{marginVertical: 5}}>
-            {multiSelect
-              ? multiSelect.getSelectedItemsExt(selectedItems)
-              : null}
+    <SafeAreaView style={{flex: 1, justifyContent: "flex-end"}}>
+      <KeyboardAvoidingView behavior="padding" style={{flex: 1}}>
+        <Pressable onPress={Keyboard.dismiss} style={styles.layout}>
+          <View style={styles.layout}>
+            <View>
+              <View style={styles.labelContainer}>
+                <Text style={styles.label}>Topic</Text>
+              </View>
+              <SearchableDropdown
+                onItemSelect={(item) => {
+                  const items = selectedItems;
+                  items.push(item);
+                  onSelectedItemsChange(items);
+                }}
+                selectedItems={selectedItems}
+                containerStyle={{marginVertical: 5}}
+                onRemoveItem={(item, index) => {
+                  const items = selectedItems.filter(
+                    (sitem) => sitem.id !== item.id,
+                  );
+                  onSelectedItemsChange(items);
+                }}
+                itemStyle={{
+                  padding: 10,
+                  marginTop: 2,
+                  backgroundColor: "#ddd",
+                  borderColor: "#bbb",
+                  borderWidth: 1,
+                  borderRadius: 5,
+                }}
+                itemTextStyle={{color: "#222"}}
+                itemsContainerStyle={{
+                  maxHeight: 140,
+                  position: "absolute",
+                  width: "100%",
+                  top: 45,
+                  zIndex: 99,
+                }}
+                items={items}
+                defaultIndex={2}
+                resetValue={false}
+                textInputProps={{
+                  placeholder: "placeholder",
+                  underlineColorAndroid: "transparent",
+                  style: {
+                    padding: 12,
+                    borderWidth: 1,
+                    borderColor: "#ccc",
+                    borderRadius: 5,
+                  },
+                  //onTextChange: (text) => alert(text),
+                }}
+                listProps={{
+                  nestedScrollEnabled: true,
+                }}
+              />
+            </View>
+
+            {/* <ScrollView> */}
+            <Field
+              name={"classname"}
+              label={"Classname"}
+              component={ClassInput}
+              validate={required}
+            />
+            <Field
+              name={"description"}
+              props={{
+                multiline: true,
+                numberOfLines: 5,
+              }}
+              label={"Description"}
+              component={ClassInput}
+              validate={required}
+            />
+
+            <View style={{}}>
+              <View
+                style={{flexDirection: "row", justifyContent: "space-between"}}>
+                <View style={{flex : 50}}>
+                  <Field
+                    name={"startTime"}
+                    props={{
+                      editable: false,
+                    }}
+                    label={"Start Time"}
+                    component={ClassInput}
+                    onChange={setDateStart}
+                    value={dateStart}
+                    val={moment(dateStart).format("MMM Do YYYY, h:mm:ss a")}
+                    //style={{flex : 50}}
+                  />
+                </View>
+                <View style={{flex : 50}}>
+                  <Field
+                    name={"endTime"}
+                    props={{
+                      editable: false,
+                    }}
+                    label={"End Time"}
+                    component={ClassInput}
+                    onChange={setDateEnd}
+                    value={dateEnd}
+                    val={moment(dateEnd).format("MMM Do YYYY, h:mm:ss a")}
+                    //validate={dateTimeCompare(dateStart, dateEnd)}
+                    //style={{flex : 50}}
+                  />
+                </View>
+              </View>
+              <View
+                style={{flexDirection: "row", justifyContent: "flex-start"}}>
+                <MyDateTimePicker setDateTime={setDateStart} style={{flex : 50}}/>
+                <MyDateTimePicker setDateTime={setDateEnd} style={{flex: 50,}}/>
+              </View>
+            </View>
+
+            <Field
+              name={"duration"}
+              label={"Duration"}
+              component={ClassInput}
+              validate={required}
+            />
+
+            <Button
+              onPress={props.handleSubmit(submit)}
+              style={[
+                styles.button,
+                {
+                  fontSize: 18,
+                  paddingVertical: 10,
+                  marginVertical: 5,
+                  //bottom: 10,
+                },
+              ]}>
+              Create
+            </Button>
+            {/* </ScrollView> */}
           </View>
-          <MultiSelect
-            style={{marginVertical: 5}}
-            hideTags
-            items={items}
-            uniqueKey="id"
-            ref={setMultiSelectRef}
-            onSelectedItemsChange={onSelectedItemsChange}
-            selectedItems={selectedItems}
-            selectText="    Pick Topics"
-            searchInputPlaceholderText="Search Topics..."
-            onChangeInput={(text) => console.log(text)}
-            altFontFamily="Roboto"
-            tagRemoveIconColor="#667"
-            tagBorderColor="#667"
-            tagTextColor="#667"
-            selectedItemTextColor="#667"
-            selectedItemIconColor="#667"
-            itemTextColor="#000"
-            displayKey="name"
-            searchInputStyle={{color: "#667"}}
-            submitButtonColor={colors.primary}
-            submitButtonText="Select"
-            styleDropdownMenu={styles.topic}
-            styleSelectorContainer={styles.topic}
-            styleListContainer={styles.topic}
-          />
-
-          <Field
-            name={"startTime"}
-            props={{
-              editable: false,
-              
-            }}
-            label={"Start Time"}
-            component={ClassInput}
-            onChange={setDateStart}
-            value = {dateStart}
-            val={moment(dateStart).format("MMMM Do YYYY, h:mm:ss a")}
-          />
-
-          <MyDateTimePicker setDateTime={setDateStart} />
-
-          <Field
-            name={"endTime"}
-            props={{
-              editable: false,
-            }}
-            label={"End Time"}
-            component={ClassInput}
-            onChange={setDateEnd}
-            value = {dateEnd}
-            val={moment(dateEnd).format("MMMM Do YYYY, h:mm:ss a")}
-            validate={dateTimeCompare(dateStart, dateEnd)}
-          />
-
-          <MyDateTimePicker setDateTime={setDateEnd} />
-
-          <Field
-            name={"duration"}
-            label={"Duration"}
-            component={ClassInput}
-            validate={required}
-          />
-
-          <Button
-            onPress={props.handleSubmit(submit)}
-            style={[
-              styles.button,
-              {fontSize: 18, paddingVertical: 10, marginVertical: 5, bottom : 10},
-            ]}
-            >
-            Create
-          </Button>
-        </ScrollView>
-      </TouchableWithoutFeedback>
-    </KeyboardAvoidingView>
+        </Pressable>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 };
@@ -298,10 +333,11 @@ const styles = StyleSheet.create({
     width: "100%",
     borderWidth: 1,
     borderColor: "transparent",
+    marginVertical: 3,
   },
   labelContainer: {
     flexDirection: "row",
-    paddingVertical: 5,
+    marginVertical: 5,
   },
   label: {
     //paddingVertical: 5,
@@ -341,9 +377,13 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
   layout: {
-    flex: 1,
+    //flex: 1,
     // marginLeft: 30,
     // marginRight: 30,
+    //flexDirection: "column",
+    flex: 1,
     justifyContent: "space-around",
+    marginHorizontal: 10,
+    //marginVertical: 10,
   },
 });

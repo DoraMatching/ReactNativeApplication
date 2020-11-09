@@ -1,11 +1,9 @@
 import React, {Component} from "react";
-import {Text, View, StyleSheet, Pressable} from "react-native";
+import {Text, View, StyleSheet, Pressable, Alert} from "react-native";
 import Modal from "react-native-modalbox";
-import Icon from 'react-native-vector-icons/Ionicons';
+import Icon from "react-native-vector-icons/Ionicons";
 
-
-
-import { connect } from 'react-redux'
+import {connect} from "react-redux";
 import BlogSearchActions from "../screens/BlogSearch/BlogSearch.actions";
 import QuestionSearchActions from "../screens/QuestionSearch/QuestionSearch.actions";
 
@@ -17,47 +15,64 @@ class option extends Component {
     };
   }
   deletePost = () => {
-    const {id, token ,type} = this.props.params;
-    type === "blog" ? this.props.onDeleteBlog({id, token})
-                : this.props.onDeleteQuestion({id, token});
-  }
+    const {id, token, type} = this.props.params;
+    Alert.alert(
+      "",
+      "Are you SURE you want to DELETE the selected post?",
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel",
+        },
+        {
+          text: "OK",
+          onPress: () =>
+            type === "blog"
+              ? this.props.onDeleteBlog({id, token})
+              : this.props.onDeleteQuestion({id, token}),
+        },
+      ],
+      {cancelable: false},
+    );
+    // type === "blog" ? this.props.onDeleteBlog({id, token})
+    //             : this.props.onDeleteQuestion({id, token});
+  };
 
   render() {
     return (
       <>
-       <Pressable style={styles.layout} onPress={() => this.editPost()}>
-        <View style={styles.layout}>
+        <Pressable style={styles.layout} onPress={() => this.editPost()}>
+          <View style={styles.layout}>
             <Icon name="pencil" size={30} color="#606770" />
             <Text style={styles.text}>Edit your post</Text>
-        </View>
+          </View>
         </Pressable>
         <Pressable style={styles.layout} onPress={() => this.deletePost()}>
-        <View style={styles.layout}>
+          <View style={styles.layout}>
             <Icon name="close" size={30} color="#606770" />
             <Text style={styles.text}>Delete your post</Text>
-        </View>
+          </View>
         </Pressable>
       </>
-    )
+    );
   }
 }
 
-const mapStateToProps = (state) => ({
-  
-})
+const mapStateToProps = (state) => ({});
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onDeleteBlog : (params) => {
+    onDeleteBlog: (params) => {
       dispatch(BlogSearchActions.deleteBlogAction(params));
     },
-    onDeleteQuestion : (params) => {
+    onDeleteQuestion: (params) => {
       dispatch(QuestionSearchActions.deleteQuestionAction(params));
-    }
-  }
-}
+    },
+  };
+};
 
-const OptionContainer = connect(mapStateToProps, mapDispatchToProps)(option)
+const OptionContainer = connect(mapStateToProps, mapDispatchToProps)(option);
 
 export default class optionModal extends Component {
   constructor(props) {
@@ -74,7 +89,7 @@ export default class optionModal extends Component {
     //this.props.navigation.setOptions({tabBarVisible : false});
   }
   params;
-  
+
   showOptionModal = (params) => {
     //console.log("blog detail modal", item);
     this.params = params;
@@ -82,8 +97,6 @@ export default class optionModal extends Component {
     this.setState({isOpen: true});
     //console.log("blog detail modal tags", this.tags);
   };
-
-  
 
   onOpen = () => {
     this.setState({isOpen: true});
@@ -94,7 +107,6 @@ export default class optionModal extends Component {
   };
 
   render() {
-    
     return (
       <Modal
         style={[styles.modal, styles.modal4]}
@@ -105,33 +117,30 @@ export default class optionModal extends Component {
         onClosed={this.onClose}
         onOpened={this.onOpen}
         isOpen={this.state.isOpen}>
-       <OptionContainer params = {this.params}></OptionContainer>
+        <OptionContainer params={this.params}></OptionContainer>
       </Modal>
     );
   }
 }
 
-
-
-
 const styles = StyleSheet.create({
-    modal: {
-        justifyContent: 'flex-start',
-        alignItems: 'center'
-      },
-      modal4: {
-        height: 150
-      },
-    layout: {
-        width: '100%',
-        //borderColor: 'black',
-        //borderWidth: 1,
-        flexDirection: 'row',
-        alignItems: 'center',
-        paddingHorizontal: 10,
-        marginVertical: 10,
-    },
-    text: {
-        marginLeft: 10,
-    },
+  modal: {
+    justifyContent: "flex-start",
+    alignItems: "center",
+  },
+  modal4: {
+    height: 150,
+  },
+  layout: {
+    width: "100%",
+    //borderColor: 'black',
+    //borderWidth: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: 10,
+    marginVertical: 10,
+  },
+  text: {
+    marginLeft: 10,
+  },
 });

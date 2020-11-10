@@ -9,6 +9,7 @@ import profile from "../../data/profile";
 import colors from "../../themes/color";
 import {storage} from "../../helpers/asyncStorage";
 import TabView from "./Profile.routers";
+import FloatingButtonAction from '../../helpers/FloatingActionButton';
 export default class Profile extends Component {
   constructor(props) {
     super(props);
@@ -110,13 +111,14 @@ export default class Profile extends Component {
 
         
         <TabView style={{marginVertical : 5}}></TabView>
-        <FloatingAction
+        {/* <FloatingAction
           actions={actions}
           onPressItem={(name) => {
             console.log(`selected button: ${name}`);
           }}
           style={{zIndex : 5}}
-        />
+        /> */}
+        <FloatingButtonAction/>
       </SafeAreaView>
 
       // <SafeAreaView

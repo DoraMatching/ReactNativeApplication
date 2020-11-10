@@ -72,7 +72,7 @@ export default class ListItemQuestionTop extends Component {
             style={{
               flex: 20,
               marginTop: 5,
-              height: "100%",
+              height: 120,
               borderRadius: 5,
               marginStart: 5,
             }}

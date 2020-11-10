@@ -24,11 +24,10 @@ export default class ListItemQuestionTop extends Component {
         }}>
         <Image
           style={{flex: 25, height: 103, ...styles.border}}
-          resizeMode="cover"
-          source={{
-            uri:
+          resizeMode="contain"
+          source={
               require("../images/QuestionFeaturedImage.png")
-          }}
+          }
         />
         <View style={{marginHorizontal: 10, flexWrap: "wrap", flex: 75}}>
           <Text

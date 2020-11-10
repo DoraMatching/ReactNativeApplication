@@ -191,6 +191,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     paddingHorizontal: 5,
     marginBottom: 5,
+    textAlignVertical: "top"
   },
   featuredImage: {
     marginVertical: 5,

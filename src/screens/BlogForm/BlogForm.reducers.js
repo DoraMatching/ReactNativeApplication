@@ -14,7 +14,7 @@ const BlogFormReducer = (data = {success: null, message: null} , action) => {
 
     
     default:
-      return data;
+      return {success: null, message: null};
   }
 };
 

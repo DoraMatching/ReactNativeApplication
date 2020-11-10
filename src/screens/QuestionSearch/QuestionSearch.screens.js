@@ -12,14 +12,19 @@ import FinderIcon from "../../images/finder.svg";
 import colors from "../../themes/color";
 import ListItemQuestionSearch from "../../components/ListItemQuestionSearch";
 import QuestionDetailModal from "../QuestionDetail/QuestionDetail.modals";
+import FloatingButtonAction from "../../helpers/FloatingActionButton";
 
 export default class QuestionSearch extends Component {
   constructor(props) {
     super(props);
     console.log("QuestionSearch constructor is called");
-    this.state = {};
+    this.state = {
+      search: "",
+      url: "questions?page=1&limit=4&order=DESC",
+      isLoading: false,
+    };
     //this.props.onFetchTag({url: "tag-question?page=1&limit=20&order=DESC"});
-    this.props.onFetchTop({url: "questions?page=1&limit=3&order=DESC"});
+    this.props.onFetchTop({url: this.state.url});
 
     this.questionDetailModal = null;
 
@@ -27,6 +32,23 @@ export default class QuestionSearch extends Component {
       this.questionDetailModal = element;
     };
   }
+
+  refreshData = () => {
+    this.setState({isLoading: true});
+    const {url} = this.state;
+    this.props.onRefreshData({url});
+    this.setState({isLoading: false});
+  };
+
+  retrieveMore = () => {
+    console.log("QuestionSearch in RetrieveMore", this.props.data);
+    console.log("retrieveMore is called");
+    let url = this.props.data.links.next;
+    if (url === "") {
+      return;
+    }
+    this.props.onFetchTop({url});
+  };
 
   render() {
     return (
@@ -66,18 +88,23 @@ export default class QuestionSearch extends Component {
         <Text style={{...styles.label}}>Top Questions</Text>
         <FlatList
           style={{}}
-          data={this.props.tops ? this.props.tops.items : []}
+          onRefresh={this.refreshData}
+          refreshing={this.state.isLoading}
+          data={this.props.tops ? this.props.tops : []}
           keyExtractor={(item) => item.id}
           renderItem={({item, index}) => (
             <Pressable
-            onPress={() => {
-              this.props.onOpenQuestionDetail(item);
-              if (this.questionDetailModal) this.questionDetailModal.showQuestionDetailModal(item);
-            }}>
+              onPress={() => {
+                this.props.onOpenQuestionDetail(item);
+                if (this.questionDetailModal)
+                  this.questionDetailModal.showQuestionDetailModal(item);
+              }}>
               <ListItemQuestionSearch {...item} />
             </Pressable>
           )}
+          onEndReached={this.retrieveMore}
         />
+        <FloatingButtonAction />
       </View>
     );
   }

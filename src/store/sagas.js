@@ -7,6 +7,7 @@ import QuestionSearchSaga from "../screens/QuestionSearch/QuestionSearch.sagas";
 import BlogDetailSaga from '../screens/BlogDetail/BlogDetail.sagas';
 import QuestionDetailSaga from '../screens/QuestionDetail/QuestionDetail.sagas';
 import BlogFormSaga from '../screens/BlogForm/BlogForm.sagas';
+import QuestionFormSaga from '../screens/QuestionForm/QuestionForm.sagas';
 import ProfileSaga from '../screens/Profile/Profile.sagas';
 export default function* rootSaga() {
   yield all([
@@ -18,6 +19,7 @@ export default function* rootSaga() {
     BlogDetailSaga(),
     QuestionDetailSaga(),
     BlogFormSaga(),
+    QuestionFormSaga(),
     ProfileSaga(),
   ]);
 }

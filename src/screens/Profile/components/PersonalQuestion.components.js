@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
-import { View, Text } from 'react-native'
+
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import { View, Text, FlatList } from 'react-native'
+import BlogItem from '../../../components/ListItemQuestionTop'
 
 export class PersonalQuestion extends Component {
     static propTypes = {
@@ -10,15 +12,25 @@ export class PersonalQuestion extends Component {
 
     render() {
         return (
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                <Text> PersonalQuestion </Text>
-            </View>
+            <View style={{ flex: 1,  }}>
+            <FlatList
+              style={{
+                marginVertical: 5,
+                //backgroundColor: "white",
+              }}
+              data={this.props.blogs}
+              renderItem={({item, index}) => {
+                return <BlogItem {...item}></BlogItem>;
+              }}
+              keyExtractor={(item, index) => item.name}></FlatList>
+
+        </View>
         )
     }
 }
 
 const mapStateToProps = (state) => ({
-    
+    blogs  : state.ProfileReducer.posts,
 })
 
 const mapDispatchToProps = {

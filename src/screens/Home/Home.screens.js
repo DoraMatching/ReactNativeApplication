@@ -24,6 +24,8 @@ import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 
 import topic from '../../data/topic';
 
+import FloatingButtonAction from '../../helpers/FloatingActionButton';
+
 var screen = Dimensions.get("window");
 export default class Home extends Component {
   constructor(props) {
@@ -192,7 +194,7 @@ export default class Home extends Component {
         }
           onEndReached={this.retrieveMore}
         />
-        
+        <FloatingButtonAction/>
       </View>
       </SafeAreaView>
     );

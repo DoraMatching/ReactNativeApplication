@@ -10,6 +10,10 @@ const Actions = {
   DELETE_QUESTION_SUCCEEDED: "DELETE_QUESTION_SUCCEEDED",
   DELETE_QUESTION_FAILED: "DELETE_QUESTION_FAILED",
 
+  REFRESH_DATA:"REFRESH_DATA",
+  REFRESH_DATA_SUCCEEDED: "GET_REFRESH_DATA_SUCCEEDED",
+  REFRESH_DATA_FAILED: "GET_REFRESH_DATA_FAILED",
+
   getQuestionTagAction: (params) => {
     return {
       type: Actions.GET_QUESTION_TAG,
@@ -19,6 +23,12 @@ const Actions = {
   getQuestionTopAction: (params) => {
     return {
       type: Actions.GET_QUESTION_TOP,
+      params,
+    };
+  },
+  getRefreshDataAction: (params) => {
+    return {
+      type: Actions.REFRESH_DATA,
       params,
     };
   },
@@ -69,6 +79,20 @@ const Actions = {
   deleteQuestionFailedAction: (error) => {
     return {
       type: Actions.DELETE_QUESTION_FAILED,
+      error,
+    };
+  },
+
+  getRefreshDataSuccessAction: (data) => {
+    return {
+      type: Actions.REFRESH_DATA_SUCCEEDED,
+      data,
+    };
+  },
+
+  getRefreshDataFailedAction: (error) => {
+    return {
+      type: Actions.REFRESH_DATA_FAILED,
       error,
     };
   },

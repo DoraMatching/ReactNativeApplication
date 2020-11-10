@@ -4,6 +4,7 @@ import QuestionSearchActions from "../QuestionSearch/QuestionSearch.actions";
 import BlogDetailActions from "../BlogDetail/BlogDetail.actions";
 import QuestionDetailActions from "../QuestionDetail/QuestionDetail.actions";
 import BlogFormActions from "../BlogForm/BlogForm.actions";
+import QuestionFormActions from "../QuestionForm/QuestionForm.actions";
 import _ from "lodash";
 import {act} from "react-test-renderer";
 
@@ -67,6 +68,7 @@ const HomeItemReducer = (dataItem = [], action) => {
       );
 
     case BlogFormActions.POST_BLOG_SUCCEEDED:
+    case QuestionFormActions.POST_QUESTION_SUCCEEDED:
       //console.log("post blog search: ", [...dataItem, action.data]);
       return [action.data, ...dataItem];
 

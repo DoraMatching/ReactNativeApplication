@@ -7,8 +7,9 @@ import HomeActions from "../Home/Home.actions";
 const mapStateToProps = (state) => {
   //console.log("Blog tag reducer", state.BlogTagReducer);
   return {
-    tags : state.QuestionTagReducer,
-    tops : state.QuestionTopReducer,
+    //tags : state.QuestionTagReducer,
+    data: state.QuestionTopReducer,
+    tops : state.QuestionTopItemReducer,
   };
 };
 const mapDispatchToProps = (dispatch) => {
@@ -18,6 +19,9 @@ const mapDispatchToProps = (dispatch) => {
     // },
     onFetchTop: (params) => {
       dispatch(actions.getQuestionTopAction(params));
+    },
+    onRefreshData : (params) => {
+      dispatch(actions.getRefreshDataAction(params));
     },
     onOpenQuestionDetail : (data) => {
       dispatch(HomeActions.openQuestionDetailAction(data));

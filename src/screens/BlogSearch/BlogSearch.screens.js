@@ -18,6 +18,8 @@ import BlogDetailModal from "../BlogDetail/BlogDetail.modals";
 
 import BlogFormModal from "../BlogForm/BlogForm.modals";
 
+import FloatingButtonAction from '../../helpers/FloatingActionButton'
+
 const actions = [
   {
     text: "Create your blog",
@@ -127,13 +129,14 @@ export default class BlogSearch extends Component {
             )}
             onEndReached={this.retrieveMore}
           />
-          <FloatingAction
+          {/* <FloatingAction
             actions={actions}
             onPressItem={(name) => {
               if (name === "bt_create") this.blogFormModal.showBlogFormModal();
             }}
           />
-          <BlogFormModal ref={this.setBlogFormModalRef}></BlogFormModal>
+          <BlogFormModal ref={this.setBlogFormModalRef}></BlogFormModal> */}
+          <FloatingButtonAction/>
         </View>
       </SafeAreaView>
     );

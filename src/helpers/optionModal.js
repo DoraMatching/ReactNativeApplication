@@ -6,6 +6,9 @@ import Icon from "react-native-vector-icons/Ionicons";
 import {connect} from "react-redux";
 import BlogSearchActions from "../screens/BlogSearch/BlogSearch.actions";
 import QuestionSearchActions from "../screens/QuestionSearch/QuestionSearch.actions";
+import BlogFormEditActions from "../screens/BlogFormEdit/BlogFormEdit.actions";
+//import BlogFormModal from '../screens/BlogFormEdit/BlogFormEdit.modals'
+import BlogFormEditModal from "../screens/BlogFormEdit/BlogFormEdit.modals";
 
 class option extends Component {
   constructor(props) {
@@ -39,6 +42,14 @@ class option extends Component {
     //             : this.props.onDeleteQuestion({id, token});
   };
 
+  editPost = () => {
+    const {id, token, type, title, subTitle, content} = this.props.params;
+    this.props.onOpenEditForm();
+    type === "blog"
+              ? this.props.onEditBlog(this.props.params)
+              : this.props.onEditQuestion(this.props.params);
+  };
+
   render() {
     return (
       <>
@@ -69,6 +80,12 @@ const mapDispatchToProps = (dispatch) => {
     onDeleteQuestion: (params) => {
       dispatch(QuestionSearchActions.deleteQuestionAction(params));
     },
+    onEditBlog: (params) => {
+      dispatch(BlogFormEditActions.editBlogAction(params));
+    },
+    onEditQuestion: (params) => {
+      //dispatch(BlogFormEditActions.editBlogAction(params));
+    },
   };
 };
 
@@ -84,6 +101,12 @@ export default class optionModal extends Component {
 
     this.optionModalRef = (element) => {
       this.optionModal = element;
+    };
+
+    this.blogFormEditModal = null;
+
+    this.setBlogFormEditModalRef = (element) => {
+      this.blogFormEditModal = element;
     };
 
     //this.props.navigation.setOptions({tabBarVisible : false});
@@ -117,7 +140,8 @@ export default class optionModal extends Component {
         onClosed={this.onClose}
         onOpened={this.onOpen}
         isOpen={this.state.isOpen}>
-        <OptionContainer params={this.params}></OptionContainer>
+        <OptionContainer params={this.params} onOpenEditForm = {this.props.onOpenEditForm? this.props.onOpenEditForm : () => {}}></OptionContainer>
+        
       </Modal>
     );
   }

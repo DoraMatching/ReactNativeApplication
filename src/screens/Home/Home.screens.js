@@ -6,7 +6,7 @@ import {
   StatusBar,
   TextInput,
   Pressable,
-  Dimensions
+  Dimensions,
 } from "react-native";
 import ListItemBlog from "../../components/ListItemBlog";
 import ListItemQuestion from "../../components/ListItemQuestion";
@@ -18,13 +18,15 @@ import FinderIcon from "../../images/finder.svg";
 import BlogDetailModal from "../BlogDetail/BlogDetail.modals";
 import QuestionDetailModal from "../QuestionDetail/QuestionDetail.modals";
 
-import OptionModal from '../../helpers/optionModal'
+import OptionModal from "../../helpers/optionModal";
 
-import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import {SafeAreaProvider, SafeAreaView} from "react-native-safe-area-context";
 
-import topic from '../../data/topic';
+import topic from "../../data/topic";
 
-import FloatingButtonAction from '../../helpers/FloatingActionButton';
+import FloatingButtonAction from "../../helpers/FloatingActionButton";
+
+import BlogFormEditModal from "../BlogFormEdit/BlogFormEdit.modals";
 
 var screen = Dimensions.get("window");
 export default class Home extends Component {
@@ -51,6 +53,12 @@ export default class Home extends Component {
 
     this.setOptionModalRef = (element) => {
       this.optionModal = element;
+    };
+
+    this.blogFormEditModal = null;
+
+    this.setBlogFormEditModalRef = (element) => {
+      this.blogFormEditModal = element;
     };
   }
 
@@ -93,7 +101,7 @@ export default class Home extends Component {
     }
     this.props.onFetchData({url});
   };
-  
+
   render() {
     const {search} = this.state;
     if (this.props.alert) {
@@ -102,100 +110,124 @@ export default class Home extends Component {
     }
     //this.props.navigation.navigate("BlogDetail");
     return (
-      <SafeAreaView  style={{ flex: 1, justifyContent: 'space-between', alignItems: 'center' }}>
-      <View style={{marginBottom: 0}}>
-      <BlogDetailModal ref={this.setBlogDetailModalRef}></BlogDetailModal>
-        <QuestionDetailModal
-          ref={this.setQuestionDetailModalRef}></QuestionDetailModal>
-          <OptionModal ref={this.setOptionModalRef}></OptionModal>
-        <StatusBar backgroundColor={colors.primary} />
-        <View style={styles.searchContainer}>
-          <View style={styles.searchInput}>
-            <View style={styles.searchIcon}>
-              <FinderIcon width={22} height={22} />
+      <SafeAreaView
+        style={{
+          flex: 1,
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}>
+        <View style={{marginBottom: 0}}>
+          <BlogDetailModal ref={this.setBlogDetailModalRef}></BlogDetailModal>
+          <QuestionDetailModal
+            ref={this.setQuestionDetailModalRef}></QuestionDetailModal>
+          <BlogFormEditModal
+            ref={this.setBlogFormEditModalRef} ></BlogFormEditModal>
+          <OptionModal ref={this.setOptionModalRef} onOpenEditForm = {this.blogFormEditModal? this.blogFormEditModal.showBlogFormEditModal : () => {}}></OptionModal>
+          <StatusBar backgroundColor={colors.primary} />
+          <View style={styles.searchContainer}>
+            <View style={styles.searchInput}>
+              <View style={styles.searchIcon}>
+                <FinderIcon width={22} height={22} />
+              </View>
+
+              <TextInput
+                style={styles.inputText}
+                placeholder={"I'm looking for..."}
+                placeholderTextColor={"#999"}
+                underlineColorAndroid={"#fff"}
+                autoCorrect={false}
+                ref={(inputSearch) => {
+                  this.inputSearch = inputSearch;
+                }}
+              />
             </View>
-
-            <TextInput
-              style={styles.inputText}
-              placeholder={"I'm looking for..."}
-              placeholderTextColor={"#999"}
-              underlineColorAndroid={"#fff"}
-              autoCorrect={false}
-              ref={(inputSearch) => {
-                this.inputSearch = inputSearch;
-              }}
-            />
           </View>
-        </View>
-        <FlatList
-                  style={{
-                    marginVertical: 5,
-                    backgroundColor: "white",
-                  }}
-                  horizontal={true}
-                  data={topic}
-                  renderItem={({item, index}) => {
-                    return <ListItemTopic {...item}></ListItemTopic>;
-                  }}
-                  keyExtractor={(item, index) => item.name}></FlatList>
+          <FlatList
+            style={{
+              marginVertical: 5,
+              backgroundColor: "white",
+            }}
+            horizontal={true}
+            data={topic}
+            renderItem={({item, index}) => {
+              return <ListItemTopic {...item}></ListItemTopic>;
+            }}
+            keyExtractor={(item, index) => item.name}></FlatList>
 
-        <FlatList
-          style={{backgroundColor: "#C4C4C4", }}
-          data={this.props.dataItem}
-          keyExtractor={(item) => item.id}
-          refreshing={this.state.isLoading}
-          onRefresh={this.refreshData}
-          renderItem={({item, index}) => {
-            console.log("Flatlist", this.props.userID);
-            console.log("optionModal",this.optionModal);
-            if (!this.optionModal) this.refreshData();
-            const userID = this.props.userID;
-            const token = this.props.token;
-            if (item.type == "question")
-              return (
-                <Pressable
-                  onPress={() => {
-                    //this.props.navigation.navigate("BlogDetail");
-                    this.props.onOpenQuestionDetail(item);
-                    //console.log("HomeScreen", this.blogDetailModal);
-                    this.questionDetailModal.showQuestionDetailModal(item);
-                  }}>
-                  <ListItemQuestion {...{token, userID, showOptionModal: this.optionModal? this.optionModal.showOptionModal : () =>{}, ...item}} />
-                </Pressable>
-              );
-            if (item.type == "post")
-              return (
-                <Pressable
-                  onPress={() => {
-                    //this.props.navigation.navigate("BlogDetail");
-                    this.props.onOpenBlogDetail(item);
-                    console.log("HomeScreen", this.blogDetailModal);
-                    if (this.blogDetailModal) this.blogDetailModal.showBlogDetailModal(item);
-                  }}>
-                  <ListItemBlog {...{token, userID, showOptionModal: this.optionModal? this.optionModal.showOptionModal : () =>{}, ...item}} />
-                </Pressable>
-              );
-            if (item.type == "user-list")
-              return (
-                <FlatList
-                  style={{
-                    marginVertical: 5,
-                    backgroundColor: "white",
-                  }}
-                  horizontal={true}
-                  data={item.userList}
-                  renderItem={({item, index}) => {
-                    return <ListItemTrainer {...item}></ListItemTrainer>;
-                  }}
-                  keyExtractor={(item, index) => item.hour}></FlatList>
-              );
-              
-          }
-        }
-          onEndReached={this.retrieveMore}
-        />
-        <FloatingButtonAction/>
-      </View>
+          <FlatList
+            style={{backgroundColor: "#C4C4C4"}}
+            data={this.props.dataItem}
+            keyExtractor={(item) => item.id}
+            refreshing={this.state.isLoading}
+            onRefresh={this.refreshData}
+            renderItem={({item, index}) => {
+              console.log("Flatlist", this.props.userID);
+              console.log("optionModal", this.optionModal);
+              if (!this.optionModal) this.refreshData();
+              const userID = this.props.userID;
+              const token = this.props.token;
+              if (item.type == "question")
+                return (
+                  <Pressable
+                    onPress={() => {
+                      //this.props.navigation.navigate("BlogDetail");
+                      this.props.onOpenQuestionDetail(item);
+                      //console.log("HomeScreen", this.blogDetailModal);
+                      this.questionDetailModal.showQuestionDetailModal(item);
+                    }}>
+                    <ListItemQuestion
+                      {...{
+                        token,
+                        userID,
+                        showOptionModal: this.optionModal
+                          ? this.optionModal.showOptionModal
+                          : () => {},
+                        ...item,
+                      }}
+                    />
+                  </Pressable>
+                );
+              if (item.type == "post")
+                return (
+                  <Pressable
+                    onPress={() => {
+                      //this.props.navigation.navigate("BlogDetail");
+                      this.props.onOpenBlogDetail(item);
+                      console.log("HomeScreen", this.blogDetailModal);
+                      if (this.blogDetailModal)
+                        this.blogDetailModal.showBlogDetailModal(item);
+                    }}>
+                    <ListItemBlog
+                      {...{
+                        token,
+                        userID,
+                        showOptionModal: this.optionModal
+                          ? this.optionModal.showOptionModal
+                          : () => {},
+                        ...item,
+                      }}
+                    />
+                  </Pressable>
+                );
+              if (item.type == "user-list")
+                return (
+                  <FlatList
+                    style={{
+                      marginVertical: 5,
+                      backgroundColor: "white",
+                    }}
+                    horizontal={true}
+                    data={item.userList}
+                    renderItem={({item, index}) => {
+                      return <ListItemTrainer {...item}></ListItemTrainer>;
+                    }}
+                    keyExtractor={(item, index) => item.hour}></FlatList>
+                );
+            }}
+            onEndReached={this.retrieveMore}
+          />
+          <FloatingButtonAction />
+        </View>
       </SafeAreaView>
     );
   }

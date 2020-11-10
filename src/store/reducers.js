@@ -9,6 +9,7 @@ import {BlogDetailReducer} from '../screens/BlogDetail/BlogDetail.reducers';
 import {QuestionDetailReducer} from '../screens/QuestionDetail/QuestionDetail.reducers';
 import {BlogFormReducer} from '../screens/BlogForm/BlogForm.reducers';
 import {QuestionFormReducer} from '../screens/QuestionForm/QuestionForm.reducers';
+import {BlogFormEditReducer, EditReducer} from '../screens/BlogFormEdit/BlogFormEdit.reducers';
 import {ProfileReducer} from '../screens/Profile/Profile.reducers';
 
 
@@ -27,6 +28,8 @@ const rootReducer = combineReducers({
   AlertReducer,
   ProfileReducer,
   QuestionFormReducer,
+  BlogFormEditReducer,
+  EditReducer,
   form: formReducer,
 });
 

@@ -29,6 +29,10 @@ export default class ListItemBlog extends Component {
         type : "blog",
         id : this.props.id,
         token : this.props.token,
+        title : this.props.title,
+        subTitle : this.props.subTitle,
+        content : this.props.content,
+        status : true,
     };
     return (
       <View>

@@ -7,8 +7,9 @@ import {connect} from "react-redux";
 import BlogSearchActions from "../screens/BlogSearch/BlogSearch.actions";
 import QuestionSearchActions from "../screens/QuestionSearch/QuestionSearch.actions";
 import BlogFormEditActions from "../screens/BlogFormEdit/BlogFormEdit.actions";
+import QuestionFormEditActions from "../screens/QuestionFormEdit/QuestionFormEdit.actions";
 //import BlogFormModal from '../screens/BlogFormEdit/BlogFormEdit.modals'
-import BlogFormEditModal from "../screens/BlogFormEdit/BlogFormEdit.modals";
+//import BlogFormEditModal from "../screens/BlogFormEdit/BlogFormEdit.modals";
 
 class option extends Component {
   constructor(props) {
@@ -44,10 +45,16 @@ class option extends Component {
 
   editPost = () => {
     const {id, token, type, title, subTitle, content} = this.props.params;
-    this.props.onOpenEditForm();
-    type === "blog"
-              ? this.props.onEditBlog(this.props.params)
-              : this.props.onEditQuestion(this.props.params);
+
+    if (type === "blog") {
+      this.props.onEditBlog(this.props.params);
+      this.props.onOpenBlogEditForm();
+      this.props.onClose();
+      return;
+    }
+    this.props.onEditQuestion(this.props.params);
+    this.props.onOpenQuestionEditForm();
+    this.props.onClose();
   };
 
   render() {
@@ -84,7 +91,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(BlogFormEditActions.editBlogAction(params));
     },
     onEditQuestion: (params) => {
-      //dispatch(BlogFormEditActions.editBlogAction(params));
+      dispatch(QuestionFormEditActions.editQuestionAction(params));
     },
   };
 };
@@ -140,8 +147,18 @@ export default class optionModal extends Component {
         onClosed={this.onClose}
         onOpened={this.onOpen}
         isOpen={this.state.isOpen}>
-        <OptionContainer params={this.params} onOpenEditForm = {this.props.onOpenEditForm? this.props.onOpenEditForm : () => {}}></OptionContainer>
-        
+        <OptionContainer
+          params={this.params}
+          onOpenEditForm={
+            this.props.onOpenEditForm ? this.props.onOpenEditForm : () => {}
+          }
+          onOpenBlogEditForm={
+            this.props.onOpenBlogEditForm ? this.props.onOpenBlogEditForm : () => {}
+          }
+          onOpenQuestionEditForm={
+            this.props.onOpenQuestionEditForm ? this.props.onOpenQuestionEditForm : () => {}
+          }
+          onClose={this.onClose}></OptionContainer>
       </Modal>
     );
   }

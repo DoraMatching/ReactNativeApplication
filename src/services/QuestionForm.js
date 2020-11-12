@@ -31,4 +31,20 @@ const postQuestionFromAPI = ({
     });
 };
 
-export {postQuestionFromAPI};
+const patchQuestionFromAPI = ({id,token, ...params}) => {
+  return request
+    .patch(`question/${id}`, {
+      ...params,
+    },{
+      headers: {
+        'Authorization': `Bearer ${token}` 
+      }
+    })
+    .then((res) => {
+      return res;
+    })
+    .catch((error) => {
+      return error.response.data;
+    });
+  }
+export {postQuestionFromAPI, patchQuestionFromAPI};

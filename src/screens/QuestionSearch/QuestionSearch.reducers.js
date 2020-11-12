@@ -1,5 +1,6 @@
 import Actions from "./QuestionSearch.actions";
 import QuestionFormActions from "../QuestionForm/QuestionForm.actions";
+import QuestionFormEditActions from "../QuestionFormEdit/QuestionFormEdit.actions";
 import _ from "lodash";
 const QuestionTagReducer = (data = null , action) => {
   switch (action.type) {
@@ -46,6 +47,14 @@ const QuestionTopItemReducer = (dataItem = [], action) => {
     case Actions.DELETE_QUESTION_FAILED:
     case Actions.REFRESH_DATA_FAILED:
       return dataItem;
+
+    case QuestionFormEditActions.UPDATE_QUESTION_SUCCEEDED:
+      console.log("action Update in QuestionSearch", action);
+      return dataItem.map((item) =>
+      item.id === action.data.id
+        ? action.data
+        : item,
+    );
 
     default:
       return dataItem;

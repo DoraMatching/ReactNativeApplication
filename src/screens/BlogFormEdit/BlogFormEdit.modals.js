@@ -72,6 +72,7 @@ export default class BlogFormEditModal extends Component {
         onOpened={this.onOpen}
         isOpen={this.state.isOpen}>
           <View style={{flexDirection: "column", flex: 1,marginBottom: 5}}>
+            {/* <Text>Hello world</Text> */}
           <BlogFormEdit onClose={this.onClose} onOpen={this.onOpen}></BlogFormEdit>
           <View
               style={{

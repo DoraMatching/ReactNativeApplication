@@ -3,6 +3,7 @@ import {View, Text, StyleSheet, Image} from "react-native";
 import moment from "moment";
 import FastImage from "react-native-fast-image";
 import TagListItem from "./ListItemTag";
+import MoreOptionIcon from "../images/moreOption.svg";
 
 export default class ListItemQuestionTop extends Component {
   constructor(props) {
@@ -53,6 +54,15 @@ export default class ListItemQuestionTop extends Component {
               })}
             </View>
           </View>
+          {/* <View>
+            {this.props.userID === this.props.author.id ? (
+              <Pressable onPress={() => this.props.onEditComment(this.props.content, this.props.id, this.props.author.id )}>
+              <MoreOptionIcon width={20} height={20} style={{marginTop: 5}} />
+              </Pressable>
+            ) : (
+              <></>
+            )}
+          </View> */}
         </View>
         <View style={{...styles.horizontalLayout, marginHorizontal: 0}}>
           <Text style={{...styles.descriptionText, flex: 80}}>

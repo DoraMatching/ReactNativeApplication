@@ -6,16 +6,17 @@ const mapStateToProps = (state) => {
   //console.log("Blog tag reducer", state.BlogTagReducer);
   return {
     //data : state.BlogFormReducer,
-    edit : state.EditReducer,
-    token : state.LoginReducer? state.LoginReducer.message.token : "",
+    params : state.EditReducer,
+    //token : state.LoginReducer? state.LoginReducer.message.token : "",
     //userID: !state.LoginReducer.message ? "" : state.LoginReducer.message.id,
+    result : state.BlogFormEditReducer,
   };
 };
 const mapDispatchToProps = (dispatch) => {
   return {
-    // onCreateBlog: (params) => {
-    //   dispatch(actions.postBlogAction(params));
-    // },
+    onEditBlog: (params) => {
+      dispatch(actions.updateBlogAction(params));
+    },
     
   };
 };

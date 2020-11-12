@@ -15,66 +15,40 @@ import {
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
 } from "react-native";
-import moment from "moment";
-import TagListItem from "../../components/ListItemTag";
-import Comment from "../../components/Comment";
 
-import likedIcon from "../../images/LikedIcon.png";
-import unlikedIcon from "../../images/UnlikedIcon.png";
 import CloseOutline from "../../images/close-outline.svg";
 
-import ScaledImage from "../../components/ScaledImage";
 
-import BlogDetail from './BlogDetail.container';
+
+import QuestionFormEdit from './QuestionFormEdit.container';
 
 var screen = Dimensions.get("window");
-export default class BlogDetailModal extends Component {
+export default class QuestionFormEditModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
       isLiked: false,
       isOpen: false,
     };
-    this.blogDetailModal = null;
+    this.questionFormEditModal = null;
 
-    this.setBlogDetailModalRef = (element) => {
-      this.blogDetailModal = element;
+    this.setQuestionFormEditModalRef = (element) => {
+      this.questionFormEditModal = element;
     };
-    //console.log("navigation Modal", this.props.navigation);
+    
     //this.props.navigation.setOptions({tabBarVisible : false});
   }
-  id;
-  author;
-  comments;
-  content;
-  createdAt;
-  featuredImage;
-  subTitle;
-  tags;
-  title;
-  updatedAt;
-  item;
+  
 
-  showBlogDetailModal = (item) => {
+  showQuestionFormEditModal = () => {
     //console.log("blog detail modal", item);
-    this.setData(item);
+    
     //this.blogDetailModal.open();
     this.setState({isOpen: true});
     //console.log("blog detail modal tags", this.tags);
   };
 
-  setData = (item) => {
-    this.id = item.id;
-    this.author = item.author;
-    this.comments = item.comments;
-    this.content = item.content;
-    this.createdAt = item.createdAt;
-    this.featuredImage = item.featuredImage;
-    this.subTitle = item.subTitle;
-    this.tags = item.tags;
-    this.title = item.title;
-    this.updatedAt = item.updatedAt;
-  };
+  
   onOpen = () => {
     this.setState({isOpen: true});
   };
@@ -83,22 +57,23 @@ export default class BlogDetailModal extends Component {
     this.setState({isOpen: false});
   };
   render() {
-    var imgSrc = this.state.isLiked ? likedIcon : unlikedIcon;
-    const sampleUrl = "https://www.w3schools.com/w3images/avatar2.png";
-    const flexTop = 95;
-    const flexBottom = 5;
-    //console.log("BlogDetail: ", this.props.blog);
+    // var imgSrc = this.state.isLiked ? likedIcon : unlikedIcon;
+    // const sampleUrl = "https://www.w3schools.com/w3images/avatar2.png";
+    // const flexTop = 95;
+    // const flexBottom = 5;
+    // console.log("BlogDetail: ", this.props.blog);
     return (
       
       <Modal
-        ref={this.setBlogDetailModalRef}
+        ref={this.setQuestionFormEditModalRef}
         swipeToClose={false}
         backButtonClose={true}
         onClosed={this.onClose}
         onOpened={this.onOpen}
         isOpen={this.state.isOpen}>
           <View style={{flexDirection: "column", flex: 1,marginBottom: 5}}>
-          <BlogDetail></BlogDetail>
+            {/* <Text>Hello world</Text> */}
+          <QuestionFormEdit onClose={this.onClose} onOpen={this.onOpen}></QuestionFormEdit>
           <View
               style={{
                 flexDirection: "row",

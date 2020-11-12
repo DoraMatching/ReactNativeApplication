@@ -5,6 +5,7 @@ import BlogDetailActions from "../BlogDetail/BlogDetail.actions";
 import QuestionDetailActions from "../QuestionDetail/QuestionDetail.actions";
 import BlogFormActions from "../BlogForm/BlogForm.actions";
 import QuestionFormActions from "../QuestionForm/QuestionForm.actions";
+import QuestionFormEditActions from "../QuestionFormEdit/QuestionFormEdit.actions";
 import _ from "lodash";
 import {act} from "react-test-renderer";
 
@@ -37,7 +38,7 @@ const HomeItemReducer = (dataItem = [], action) => {
 
     case BlogDetailActions.POST_BLOG_COMMENT_SUCCEEDED:
     case QuestionDetailActions.POST_QUESTION_COMMENT_SUCCEEDED:
-      console.log("Home reducer is called when post comment");
+      //console.log("Home reducer is called when post comment");
       return dataItem.map((item) =>
         item.id === action.data.id
           ? {...item, comments: action.data.comments}
@@ -74,16 +75,23 @@ const HomeItemReducer = (dataItem = [], action) => {
 
     case BlogSearchActions.DELETE_BLOG_SUCCEEDED:
     case QuestionSearchActions.DELETE_QUESTION_SUCCEEDED:
-      console.log("action in Home", action);
+      //console.log("action in Home", action);
       return dataItem.filter((item) => item.id !== action.id);
-
+          
+    case QuestionFormEditActions.UPDATE_QUESTION_SUCCEEDED:
+      console.log("action Update in Home", action);
+      return dataItem.map((item) =>
+      item.id === action.data.id
+        ? action.data
+        : item,
+    );
     default:
       return dataItem;
   }
 };
 
 const AlertReducer = (alert = null, action) => {
-  console.log("alert: ", action);
+  console.log("alert in Home.reducer: ", action);
   switch (action.type) {
     case BlogSearchActions.DELETE_BLOG_SUCCEEDED:
     case QuestionSearchActions.DELETE_QUESTION_SUCCEEDED:

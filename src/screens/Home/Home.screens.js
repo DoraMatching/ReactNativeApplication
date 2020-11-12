@@ -27,6 +27,7 @@ import topic from "../../data/topic";
 import FloatingButtonAction from "../../helpers/FloatingActionButton";
 
 import BlogFormEditModal from "../BlogFormEdit/BlogFormEdit.modals";
+import QuestionFormEditModal from "../QuestionFormEdit/QuestionFormEdit.modals";
 
 var screen = Dimensions.get("window");
 export default class Home extends Component {
@@ -60,13 +61,19 @@ export default class Home extends Component {
     this.setBlogFormEditModalRef = (element) => {
       this.blogFormEditModal = element;
     };
+
+    this.questionFormEditModal = null;
+
+    this.setQuestionFormEditModalRef = (element) => {
+      this.questionFormEditModal = element;
+    };
   }
 
   componentWillMount() {
-    console.log("in componentWillMount", this.props.data);
-    console.log("in componentWillMount", this.props.dataItem);
+    //console.log("in componentWillMount", this.props.data);
+    //console.log("in componentWillMount", this.props.dataItem);
     if (!this.props.data) {
-      console.log("in componentWillMount");
+      //console.log("in componentWillMount");
       const {url} = this.state;
       this.props.onFetchData({url});
     }
@@ -93,8 +100,8 @@ export default class Home extends Component {
   };
 
   retrieveMore = () => {
-    console.log("in RetrieveMore", this.props.data);
-    console.log("retrieveMore is called");
+    //console.log("in RetrieveMore", this.props.data);
+    //console.log("retrieveMore is called");
     let url = this.props.data.links.next;
     if (url === "") {
       return;
@@ -121,8 +128,21 @@ export default class Home extends Component {
           <QuestionDetailModal
             ref={this.setQuestionDetailModalRef}></QuestionDetailModal>
           <BlogFormEditModal
-            ref={this.setBlogFormEditModalRef} ></BlogFormEditModal>
-          <OptionModal ref={this.setOptionModalRef} onOpenEditForm = {this.blogFormEditModal? this.blogFormEditModal.showBlogFormEditModal : () => {}}></OptionModal>
+            ref={this.setBlogFormEditModalRef}></BlogFormEditModal>
+          <QuestionFormEditModal
+            ref={this.setQuestionFormEditModalRef}></QuestionFormEditModal>
+          <OptionModal
+            ref={this.setOptionModalRef}
+            onOpenBlogEditForm={
+              this.blogFormEditModal
+                ? this.blogFormEditModal.showBlogFormEditModal
+                : () => {}
+            }
+            onOpenQuestionEditForm={
+              this.questionFormEditModal
+                ? this.questionFormEditModal.showQuestionFormEditModal
+                : () => {}
+            }></OptionModal>
           <StatusBar backgroundColor={colors.primary} />
           <View style={styles.searchContainer}>
             <View style={styles.searchInput}>
@@ -161,8 +181,8 @@ export default class Home extends Component {
             refreshing={this.state.isLoading}
             onRefresh={this.refreshData}
             renderItem={({item, index}) => {
-              console.log("Flatlist", this.props.userID);
-              console.log("optionModal", this.optionModal);
+              //console.log("Flatlist", this.props.userID);
+              //console.log("optionModal", this.optionModal);
               if (!this.optionModal) this.refreshData();
               const userID = this.props.userID;
               const token = this.props.token;
@@ -193,7 +213,7 @@ export default class Home extends Component {
                     onPress={() => {
                       //this.props.navigation.navigate("BlogDetail");
                       this.props.onOpenBlogDetail(item);
-                      console.log("HomeScreen", this.blogDetailModal);
+                      //console.log("HomeScreen", this.blogDetailModal);
                       if (this.blogDetailModal)
                         this.blogDetailModal.showBlogDetailModal(item);
                     }}>

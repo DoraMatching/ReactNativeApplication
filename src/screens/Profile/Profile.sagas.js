@@ -4,11 +4,11 @@ import actions from "./Profile.actions";
 
 function* fetchUser(action) {
   try {
-    console.log("profile params", action.params);
+    //console.log("profile params", action.params);
     const res = yield getUserFromAPI(action.params);
 
     if (res.status === 200) {
-      console.log("Profile.saga.js: ", res.data);
+      //console.log("Profile.saga.js: ", res.data);
       yield put({type: actions.GET_PROFILE_SUCCEEDED, data: res.data});
     } else {
       yield put({type: actions.GET_PROFILE_FAILED, error: res.message});
@@ -19,7 +19,7 @@ function* fetchUser(action) {
 }
 
 function* watchFetchUser() {
-  console.log("Profile.saga.js: watchFetchUser");
+  //console.log("Profile.saga.js: watchFetchUser");
   yield takeLatest(actions.GET_PROFILE, fetchUser);
 }
 

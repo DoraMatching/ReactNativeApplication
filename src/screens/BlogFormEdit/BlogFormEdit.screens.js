@@ -20,13 +20,15 @@ import defaultImage from "../../images/BlogFeaturedImage.png";
 const BlogInput = (props) => {
   const {
     meta: {touched, error, warning},
-    input: {onChange, name, ...input},
+    input: {onChange, name, value, ...input},
     label,
     val,
     styles,
     ...rest
   } = props;
-  const [editingValue, setEditingValue] = useState(val);
+  console.log(`BlogEdit Input ${name}`, value);
+  //const [editingValue, setEditingValue] = useState(val);
+  //console.log(name, editingValue);
   return (
     <>
       <Text style={{color: "red", ...styles.errorText}}>
@@ -35,8 +37,9 @@ const BlogInput = (props) => {
       <TextInput
         style={styles}
         onChangeText={onChange}
-        {...{val : editingValue,...input}}
+        {...input}
         {...rest}
+        value = {val}
         returnKeyType="next"
         autoCorrect={false}></TextInput>
     </>
@@ -52,9 +55,16 @@ const required = (value) => {
 const BlogFormScreen = (props) => {
   const [avatar, setAvatar] = useState(defaultImage);
   const [isHidden, setHidden] = useState(true);
-  if (!props.edit) return (<></>);
-  const {title, subTitle, content} = props.edit;
-  console.log("blogform screen", props);
+  
+  console.log("BlogFormEdit props: ", props);
+  //if (!props.edit) return (<></>);
+  const {id, token, title, subTitle, content} = props.params;
+
+  const [editingTitle, setEditingTitle] = useState(title);
+  const [editingSubTitle, setEditingSubTitle] = useState(subTitle);
+  const [editingContent, setEditingContent] = useState(content);
+
+  //console.log("blogform screen", props);
   const handlePicker = () => {
     console.log('edit');
     ImagePicker.showImagePicker({}, (response) => {
@@ -73,25 +83,25 @@ const BlogFormScreen = (props) => {
     });
   };
   const submit = (values) => {
-    const tags = [
-      {
-        name: "java",
-      },
-    ];
-    const featuredImage =
-      "https://www.pixelrockstar.com/wp-content/uploads/2017/04/featured-image.png";
-    props.onCreateBlog({tags, featuredImage, token: props.token, ...values});
-    console.log("BlogFormScreen", values);
-    if (props.data && props.data.success === true) {
-      alert("Your blog has just been created !");
-      props.onClose();
-    } else if (props.data.success === false) {
-      alert(props.data.message);
-    }
+    // const tags = [
+    //   {
+    //     name: "java",
+    //   },
+    // ];
+    // const featuredImage =
+    //   "https://www.pixelrockstar.com/wp-content/uploads/2017/04/featured-image.png";
+    // props.onCreateBlog({tags, featuredImage, token: props.token, ...values});
+    console.log("BlogFormEditScreen", values);
+    props.onEditBlog({id, token, isDraft : true,...values});
+    // if (props.data && props.data.success === true) {
+    //   alert("Your blog has just been created !");
+    //   props.onClose();
+    // } else if (props.data.success === false) {
+    //   alert(props.data.message);
+    // }
   };
-  if (props.edit && props.edit.status){
-    props.onOpen();
-  }
+
+  
   return (
     <KeyboardAvoidingView
       behavior="padding"
@@ -103,9 +113,10 @@ const BlogFormScreen = (props) => {
               name={"title"}
               placeholder={"Type your title here ..."}
               component={BlogInput}
-              validate={required}
+              //validate={required}
+              onChange={setEditingTitle}
               styles={styles.title}
-              val={title}
+              val={editingTitle}
             />
             <Field
               name={"subTitle"}
@@ -115,9 +126,10 @@ const BlogFormScreen = (props) => {
               }}
               placeholder={"Your description is here ..."}
               component={BlogInput}
-              validate={required}
+              //validate={required}
               styles={styles.description}
-              val={subTitle}
+              onChange={setEditingSubTitle}
+              val={editingSubTitle}
             />
             <Pressable
               style={styles.featuredImage}
@@ -146,9 +158,10 @@ const BlogFormScreen = (props) => {
               }}
               placeholder={"Your content is here ..."}
               component={BlogInput}
-              validate={required}
+              //validate={required}
               styles={styles.description}
-              val={content}
+              onChange={setEditingContent}
+              val={editingContent}
             />
 
             <Button

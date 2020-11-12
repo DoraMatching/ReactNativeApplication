@@ -21,10 +21,10 @@ const BlogFormEditReducer = (data = {success: null, message: null} , action) => 
 const EditReducer = (params = null, action) => {
   switch (action.type) {
     case Actions.EDIT_BLOG:
-      console.log("edit blog", action);
+      console.log("edit blog reducer", action);
       return action.params;
     default:
-      return null;
+      return params;
   }
 }
 

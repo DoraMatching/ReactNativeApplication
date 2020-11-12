@@ -22,7 +22,7 @@ function* fetchBlogTop(action) {
     const res = yield getDataFromAPI(action.params);
 
     if (res.status === 200) {
-      console.log("blogSearch.saga.js: top", res.data);
+      //console.log("blogSearch.saga.js: top", res.data);
       yield put({type: actions.GET_BLOG_TOP_SUCCEEDED, data: res.data});
     } else {
       yield put({type: actions.GET_BLOG_TOP_FAILED, error: res.message});
@@ -37,7 +37,7 @@ function* refreshData(action) {
     const res = yield getDataFromAPI(action.params);
 
     if (res.status === 200) {
-      console.log("home.saga.js: data", res.data);
+      //console.log("home.saga.js: data", res.data);
       yield put({type: actions.REFRESH_DATA_SUCCEEDED, data: res.data});
     } else {
       yield put({type: actions.REFRESH_DATA_FAILED, error: res.message});
@@ -50,9 +50,9 @@ function* refreshData(action) {
 
 function* deleteBlog(action) {
   try {
-    console.log("deleteBlog: params", action.params);
+    //console.log("deleteBlog: params", action.params);
     const res = yield deleteDataFromAPI(action.params);
-    console.log("deleteBlog: response", res);
+    //console.log("deleteBlog: response", res);
     if (res.status === 202) {
       console.log("blogSearch.saga.js: top", res.data);
       yield put({type: actions.DELETE_BLOG_SUCCEEDED, data: res.data.message, id: action.params.id});
@@ -69,17 +69,17 @@ function* deleteBlog(action) {
 //   yield takeLatest(actions.GET_BLOG_TAG, fetchBlogTag);
 // }
 function* watchFetchBlogTop() {
-  console.log("blogSearch.saga.js: watchFetch");
+  //console.log("blogSearch.saga.js: watchFetch");
   yield takeLatest(actions.GET_BLOG_TOP, fetchBlogTop);
 }
 
 function* watchDeleteBlog() {
-  console.log("blogSearch.saga.js: watchDeleteBlog");
+  //console.log("blogSearch.saga.js: watchDeleteBlog");
   yield takeLatest(actions.DELETE_BLOG, deleteBlog);
 }
 
 function* watchRefreshData() {
-  console.log("blogSearch.saga.js: data", "watchFetchData");
+  //console.log("blogSearch.saga.js: data", "watchFetchData");
   yield takeLatest(actions.REFRESH_DATA, refreshData);
 }
 

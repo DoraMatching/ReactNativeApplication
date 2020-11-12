@@ -21,8 +21,12 @@ export default class ListItemBlog extends Component {
       type : "question",
       id : this.props.id,
       token : this.props.token,
+      title : this.props.title,
+      //subTitle : this.props.subTitle,
+      content : this.props.content,
+      status : true,
   };
-    console.log("listItemQuestion: ", this.props.userID);
+    //console.log("listItemQuestion: ", this.props.userID);
     return (
       <View>
         <View style={{...styles.container, ...styles.verticalLayout}}>

@@ -13,6 +13,8 @@ import colors from "../../themes/color";
 import ListItemQuestionSearch from "../../components/ListItemQuestionSearch";
 import QuestionDetailModal from "../QuestionDetail/QuestionDetail.modals";
 import FloatingButtonAction from "../../helpers/FloatingActionButton";
+import OptionModal from "../../helpers/optionModal";
+import QuestionFormEditModal from "../QuestionFormEdit/QuestionFormEdit.modals";
 
 export default class QuestionSearch extends Component {
   constructor(props) {
@@ -30,6 +32,18 @@ export default class QuestionSearch extends Component {
 
     this.setQuestionDetailModalRef = (element) => {
       this.questionDetailModal = element;
+    };
+
+    this.optionModal = null;
+
+    this.setOptionModalRef = (element) => {
+      this.optionModal = element;
+    };
+
+    this.questionFormEditModal = null;
+
+    this.setQuestionFormEditModalRef = (element) => {
+      this.questionFormEditModal = element;
     };
   }
 
@@ -55,6 +69,20 @@ export default class QuestionSearch extends Component {
       <View style={{flex: 1}}>
         <QuestionDetailModal
           ref={this.setQuestionDetailModalRef}></QuestionDetailModal>
+        <QuestionFormEditModal
+          ref={this.setQuestionFormEditModalRef}></QuestionFormEditModal>
+        <OptionModal
+          ref={this.setOptionModalRef}
+          onOpenBlogEditForm={
+            this.blogFormEditModal
+              ? this.blogFormEditModal.showBlogFormEditModal
+              : () => {}
+          }
+          onOpenQuestionEditForm={
+            this.questionFormEditModal
+              ? this.questionFormEditModal.showQuestionFormEditModal
+              : () => {}
+          }></OptionModal>
         <View style={styles.searchContainer}>
           <View style={styles.searchInput}>
             <View style={styles.searchIcon}>
@@ -73,18 +101,7 @@ export default class QuestionSearch extends Component {
             />
           </View>
         </View>
-        {/* <Text style={{...styles.label, marginTop: 10}}>Tags</Text>
-          <View
-            style={{
-              ...styles.horizontalLayout,
-              marginBottom: 0,
-              marginLeft: 10,
-              flexWrap: "wrap",
-            }}>
-            {this.props.tags? this.props.tags.items.map((item) => {
-              return <TagListItem item={item} />;
-            }) : <></>}
-          </View> */}
+
         <Text style={{...styles.label}}>Top Questions</Text>
         <FlatList
           style={{}}
@@ -92,16 +109,30 @@ export default class QuestionSearch extends Component {
           refreshing={this.state.isLoading}
           data={this.props.tops ? this.props.tops : []}
           keyExtractor={(item) => item.id}
-          renderItem={({item, index}) => (
-            <Pressable
-              onPress={() => {
-                this.props.onOpenQuestionDetail(item);
-                if (this.questionDetailModal)
-                  this.questionDetailModal.showQuestionDetailModal(item);
-              }}>
-              <ListItemQuestionSearch {...item} />
-            </Pressable>
-          )}
+          renderItem={({item, index}) => {
+            if (!this.optionModal) this.refreshData();
+            const userID = this.props.userID;
+            const token = this.props.token;
+            return (
+              <Pressable
+                onPress={() => {
+                  this.props.onOpenQuestionDetail(item);
+                  if (this.questionDetailModal)
+                    this.questionDetailModal.showQuestionDetailModal(item);
+                }}>
+                <ListItemQuestionSearch
+                  {...{
+                    token,
+                    userID,
+                    showOptionModal: this.optionModal
+                      ? this.optionModal.showOptionModal
+                      : () => {},
+                    ...item,
+                  }}
+                />
+              </Pressable>
+            );
+          }}
           onEndReached={this.retrieveMore}
         />
         <FloatingButtonAction />

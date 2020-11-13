@@ -28,7 +28,7 @@ const QuestionInput = (props) => {
   //const [date, setDate] = useState(new Date());
   return (
     <View style={styles.textInputContainer}>
-      {console.log("props", props)}
+      
       <View style={styles.labelContainer}>
         <Text style={styles.label}>{label}</Text>
         <Text style={{color: "red", ...styles.errorText}}>
@@ -79,13 +79,14 @@ const QuestionFormScreen = (props) => {
     console.log("QuestionFormScreen", values);
     props.onCreateQuestion({tags, token: props.token, ...values});
     //console.log("BlogFormScreen", values);
-    if (props.data && props.data.success === true) {
-      alert("Your question has just been created !");
-      props.onClose();
-    } else if (props.data.success === false) {
-      alert(props.data.message);
-    }
+    
   };
+  if (props.data && props.data.success === true) {
+    alert("Your question has just been created !");
+    props.onClose();
+  } else if (props.data.success === false) {
+    alert(props.data.message);
+  }
   return (
     <SafeAreaView style={{flex: 1, justifyContent: "center"}}>
       <KeyboardAvoidingView behavior="padding" style={{flex: 1}}>

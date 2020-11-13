@@ -22,12 +22,12 @@ const QuestionInput = (props) => {
     val,
     ...rest
   } = props;
-  console.log(`QuestionEdit Input ${name}`, value);
+  //console.log(`QuestionEdit Input ${name}`, value);
   //const [editingValue, setEditingValue] = useState(val);
   //console.log(name, editingValue);
   return (
     <View style={styles.textInputContainer}>
-      {console.log("props", props)}
+      
       <View style={styles.labelContainer}>
         <Text style={styles.label}>{label}</Text>
         <Text style={{color: "red", ...styles.errorText}}>

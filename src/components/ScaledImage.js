@@ -30,7 +30,7 @@ export default class ScaledImage extends Component {
     return (
       <Image
         source={this.state.source}
-        style={{height: this.state.height, width: this.state.width}}
+        style={{height: this.state.height, width: this.state.width, ...this.props}}
       />
     );
   }

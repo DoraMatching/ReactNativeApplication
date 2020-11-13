@@ -90,7 +90,7 @@ const MyDateTimePicker = (props) => {
 
   return (
     
-      <View style={styles.dateTimePicker}>
+      <View style={[styles.dateTimePicker, props.style]}>
         <Button style={styles.button} onPress={showDatepicker}>
           Pick date
         </Button>
@@ -180,7 +180,7 @@ const ClassFormScreen = (props) => {
     console.log("ClassFormScreen", values);
   };
   return (
-    <SafeAreaView style={{flex: 1, justifyContent: "flex-end"}}>
+    
       <KeyboardAvoidingView behavior="padding" style={{flex: 1}}>
         <Pressable onPress={Keyboard.dismiss} style={styles.layout}>
           <View style={styles.layout}>
@@ -249,7 +249,7 @@ const ClassFormScreen = (props) => {
               name={"description"}
               props={{
                 multiline: true,
-                numberOfLines: 5,
+                numberOfLines: 3,
               }}
               label={"Description"}
               component={ClassInput}
@@ -290,7 +290,7 @@ const ClassFormScreen = (props) => {
                 </View>
               </View>
               <View
-                style={{flexDirection: "row", justifyContent: "flex-start"}}>
+                style={{flexDirection: "row", }}>
                 <MyDateTimePicker setDateTime={setDateStart} style={{flex : 50}}/>
                 <MyDateTimePicker setDateTime={setDateEnd} style={{flex: 50,}}/>
               </View>
@@ -320,7 +320,7 @@ const ClassFormScreen = (props) => {
           </View>
         </Pressable>
       </KeyboardAvoidingView>
-    </SafeAreaView>
+   
   );
 };
 
@@ -356,6 +356,7 @@ const styles = StyleSheet.create({
     borderColor: "lightgray",
     borderWidth: 1,
     color: "black",
+    textAlignVertical: "top"
   },
   topic: {
     // borderColor: "black",
@@ -382,8 +383,9 @@ const styles = StyleSheet.create({
     // marginRight: 30,
     //flexDirection: "column",
     flex: 1,
-    justifyContent: "space-around",
+    justifyContent: "space-evenly",
     marginHorizontal: 10,
+    marginTop: 15,
     //marginVertical: 10,
   },
 });

@@ -10,6 +10,8 @@ const mapStateToProps = (state) => {
     //tags : state.QuestionTagReducer,
     data: state.QuestionTopReducer,
     tops : state.QuestionTopItemReducer,
+    userID: !state.LoginReducer.message ? "" : state.LoginReducer.message.id,
+    token: !state.LoginReducer.message ? "" : state.LoginReducer.message.token,
   };
 };
 const mapDispatchToProps = (dispatch) => {

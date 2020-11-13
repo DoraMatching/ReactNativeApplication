@@ -13,6 +13,8 @@ import RegisterContainer from "../screens/Register/Register.container";
 //import BlogForm from "../screens/BlogForm/BlogForm.screens";
 
 import ProfileContainer from "../screens/Profile/Profile.container";
+import TopicDetail from '../screens/TopicDetail/TopicDetail.screens';
+import ClassDetail from '../screens/ClassDetail/ClassDetail.screens'
 
 //import {ClassForm} from "../screens/ClassForm/ClassForm.screens";
 import QuestionForm from "../screens/QuestionForm/QuestionForm.screens";
@@ -114,7 +116,7 @@ const tabRouters = () => (
       }}>
       <Tab.Screen name="Home" component={homeRouters} />
       <Tab.Screen name="Blogs" component={blogRouters} />
-      <Tab.Screen name="Schedule" component={QuestionForm} />
+      <Tab.Screen name="Schedule" component={ClassDetail} />
       <Tab.Screen name="Questions" component={questionRouters} />
       <Tab.Screen name="Profile" component={ProfileContainer} />
     </Tab.Navigator>

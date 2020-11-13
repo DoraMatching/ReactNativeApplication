@@ -72,6 +72,7 @@ export default class BlogSearch extends Component {
 
 
   render() {
+    if (!this.props.tops) return <></>;
     return (
       <SafeAreaView
         style={{
@@ -124,7 +125,7 @@ export default class BlogSearch extends Component {
                 this.props.onOpenBlogDetail(item);
                 if (this.blogDetailModal) this.blogDetailModal.showBlogDetailModal(item);
               }}>
-                <ListItemBlogSearch {...item} />
+                <ListItemBlogSearch {...{userID : this.props.userID, ...item}} />
               </Pressable>
             )}
             onEndReached={this.retrieveMore}

@@ -10,6 +10,7 @@ const mapStateToProps = (state) => {
     //tags : state.BlogTagReducer,
     data: state.BlogTopReducer,
     tops : state.BlogTopItemReducer,
+    userID: !state.LoginReducer.message ? "" : state.LoginReducer.message.id,
   };
 };
 const mapDispatchToProps = (dispatch) => {

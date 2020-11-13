@@ -9,10 +9,12 @@ function* editQuestion(action) {
       console.log('editQuestion.saga,js res: ', res);
       if (res.status === 200) {
         yield put({type: actions.UPDATE_QUESTION_SUCCEEDED, data: res.data});
+        return;
       } else {
         yield put({type: actions.UPDATE_QUESTION_FAILED, error: res.message});
       }
     } catch (error) {
+      console.log("error",error);
       yield put({type: actions.UPDATE_QUESTION_FAILED, error: "Please try again!"});
     }
 }

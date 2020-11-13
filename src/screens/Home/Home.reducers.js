@@ -80,11 +80,14 @@ const HomeItemReducer = (dataItem = [], action) => {
           
     case QuestionFormEditActions.UPDATE_QUESTION_SUCCEEDED:
       console.log("action Update in Home", action);
+      console.log("ok");
       return dataItem.map((item) =>
       item.id === action.data.id
         ? action.data
         : item,
     );
+    case QuestionFormEditActions.UPDATE_QUESTION_FAILED:
+      console.log("Failed in update question in Home screen", action);
     default:
       return dataItem;
   }

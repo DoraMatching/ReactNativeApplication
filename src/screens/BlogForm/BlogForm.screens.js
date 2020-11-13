@@ -77,15 +77,17 @@ const BlogFormScreen = (props) => {
     const featuredImage =
       "https://www.pixelrockstar.com/wp-content/uploads/2017/04/featured-image.png";
     props.onCreateBlog({tags, featuredImage, token: props.token, ...values});
-    console.log("BlogFormScreen", values);
-    if (props.data && props.data.success === true) {
-      alert("Your blog has just been created !");
-      props.onClose();
-    } else if (props.data.success === false) {
-      alert(props.data.message);
-    }
+    console.log("BlogFormScreen", props.data);
+    
   };
 
+  if (props.data && props.data.success === true) {
+    alert("Your blog has just been created !");
+    props.onClose();
+  } else if (props.data.success === false) {
+    alert(props.data.message);
+  }
+  
   return (
     <KeyboardAvoidingView
       behavior="padding"

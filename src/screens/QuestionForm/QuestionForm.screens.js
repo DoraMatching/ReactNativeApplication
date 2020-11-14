@@ -7,6 +7,7 @@ import {
   KeyboardAvoidingView,
   Pressable,
   TextInput,
+  Alert
 } from "react-native";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
@@ -15,7 +16,9 @@ import {SafeAreaProvider, SafeAreaView} from "react-native-safe-area-context";
 import Button from "react-native-button";
 import colors from "../../themes/color";
 import MultiSelect from "react-native-multiple-select";
+import { TagSelect } from 'react-native-tag-select';
 import actions from "./QuestionForm.actions";
+import _ from "lodash";
 
 const QuestionInput = (props) => {
   const {
@@ -28,7 +31,6 @@ const QuestionInput = (props) => {
   //const [date, setDate] = useState(new Date());
   return (
     <View style={styles.textInputContainer}>
-      
       <View style={styles.labelContainer}>
         <Text style={styles.label}>{label}</Text>
         <Text style={{color: "red", ...styles.errorText}}>
@@ -69,7 +71,10 @@ const required = (value) => {
 
 const QuestionFormScreen = (props) => {
   const [selectedItems, onSelectedItemsChange] = useState([]);
-  const [multiSelect, setMultiSelectRef] = useState(null);
+  const [tag, setTagRef] = useState(null);
+  const [tagName, setTagName] = useState("");
+  const items = [{id: 1, name : "java"}, {id: 2, name : "C#"}, {id: 3, name : "PHP"}];
+  //const [selectItems, onSelectItemsChange] = useState([]);
   const submit = (values) => {
     const tags = [
       {
@@ -79,7 +84,6 @@ const QuestionFormScreen = (props) => {
     console.log("QuestionFormScreen", values);
     props.onCreateQuestion({tags, token: props.token, ...values});
     //console.log("BlogFormScreen", values);
-    
   };
   if (props.data && props.data.success === true) {
     alert("Your question has just been created !");
@@ -93,6 +97,52 @@ const QuestionFormScreen = (props) => {
         <Pressable onPress={Keyboard.dismiss} style={styles.layout}>
           <View style={styles.layout}>
             {/* <ScrollView> */}
+            {/* <MultiSelect
+              hideTags
+              items={items}
+              uniqueKey="id"
+              ref={setMultiSelectRef}
+              onSelectedItemsChange={onSelectedItemsChange}
+              selectedItems={selectedItems}
+              selectText="Pick Items"
+              searchInputPlaceholderText="Search Items..."
+              onChangeInput={(text) => console.log(text)}
+              altFontFamily="ProximaNova-Light"
+              tagRemoveIconColor="dimgray"
+              tagBorderColor="dimgray"
+              tagTextColor="dimgray"
+              selectedItemTextColor="dimgray"
+              selectedItemIconColor="dimgray"
+              itemTextColor="#000"
+              displayKey="name"
+              searchInputStyle={{color: "#CCC"}}
+              submitButtonColor="#CCC"
+              submitButtonText="Submit"
+              canAddItems={true}
+            />
+            <View>
+              {multiSelect && multiSelect.getSelectedItemsExt(selectedItems)}
+            </View> */}
+            <TagSelect
+          data={selectedItems}
+          //max={3}
+          ref={setTagRef}
+          onMaxError={() => {
+            Alert.alert('Ops', 'Max reached');
+          }}
+        />
+            <TextInput
+            style={styles.textInput}
+            onChangeText={setTagName}
+            //{...input}
+            value={tagName}
+            //{...rest}
+            returnKeyType="next"
+            autoCorrect={false}></TextInput>
+            <Button onPress={() => {
+              onSelectedItemsChange(_.uniq([{id : tagName,label : tagName}, ...selectedItems], "label"));
+              setTagName("");
+            }}>Add</Button>
             <Field
               name={"title"}
               label={"Title"}
@@ -170,7 +220,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     marginHorizontal: 10,
     //marginVertical: 10,
-    marginTop : 30,
+    marginTop: 30,
   },
   button: {
     marginRight: 5,
@@ -196,7 +246,6 @@ const mapDispatchToProps = (dispatch) => {
     onCreateQuestion: (params) => {
       dispatch(actions.postQuestionAction(params));
     },
-    
   };
 };
 

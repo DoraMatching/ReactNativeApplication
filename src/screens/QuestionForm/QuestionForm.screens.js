@@ -73,14 +73,13 @@ const QuestionFormScreen = (props) => {
   const [selectedItems, onSelectedItemsChange] = useState([]);
   const [tag, setTagRef] = useState(null);
   const [tagName, setTagName] = useState("");
-  const items = [{id: 1, name : "java"}, {id: 2, name : "C#"}, {id: 3, name : "PHP"}];
+  //const [isHidden, setHidden] = useState(true);
+  
+  //const [removedItem, setRemovedItem] = useState(null);
+  //const items = [{id: 1, name : "java"}, {id: 2, name : "C#"}, {id: 3, name : "PHP"}];
   //const [selectItems, onSelectItemsChange] = useState([]);
   const submit = (values) => {
-    const tags = [
-      {
-        name: "java",
-      },
-    ];
+    const tags = tag.itemsSelected.map(item => {return {"name" : item.label}});
     console.log("QuestionFormScreen", values);
     props.onCreateQuestion({tags, token: props.token, ...values});
     //console.log("BlogFormScreen", values);
@@ -91,6 +90,19 @@ const QuestionFormScreen = (props) => {
   } else if (props.data.success === false) {
     alert(props.data.message);
   }
+  const onItemPress = (item) => {
+    console.log("onItemPress", item);
+    
+    //setHidden(!isHidden);
+    //setRemovedItem(item);
+  }
+  const onRemoveButton = () => {
+    console.log("onRemoveButton", tag);
+    tag.setState({value : {}});
+    onSelectedItemsChange(_.difference(selectedItems, tag.itemsSelected));
+    //setRemovedItem(null);
+    //setHidden(true);
+  };
   return (
     <SafeAreaView style={{flex: 1, justifyContent: "center"}}>
       <KeyboardAvoidingView behavior="padding" style={{flex: 1}}>
@@ -123,13 +135,23 @@ const QuestionFormScreen = (props) => {
             <View>
               {multiSelect && multiSelect.getSelectedItemsExt(selectedItems)}
             </View> */}
+            {
+              console.log("selectedItems", selectedItems)
+              
+            }
+            {
+              tag && console.log("onPressButton", tag.itemsSelected)
+              
+            }
+            {
+              <Button onPress={onRemoveButton}>Remove</Button> 
+            }
             <TagSelect
           data={selectedItems}
+          //onItemPress={onItemPress}
           //max={3}
           ref={setTagRef}
-          onMaxError={() => {
-            Alert.alert('Ops', 'Max reached');
-          }}
+          
         />
             <TextInput
             style={styles.textInput}
@@ -140,7 +162,12 @@ const QuestionFormScreen = (props) => {
             returnKeyType="next"
             autoCorrect={false}></TextInput>
             <Button onPress={() => {
-              onSelectedItemsChange(_.uniq([{id : tagName,label : tagName}, ...selectedItems], "label"));
+              if (!tagName) return;
+              const arr = [{id : tagName.toLowerCase(),label : tagName}, ...selectedItems];
+              
+              console.log("arr", arr);
+              onSelectedItemsChange(_.uniqBy(arr, 'id'));
+              
               setTagName("");
             }}>Add</Button>
             <Field

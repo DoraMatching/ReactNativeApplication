@@ -162,9 +162,11 @@ const QuestionFormScreen = (props) => {
             returnKeyType="next"
             autoCorrect={false}></TextInput>
             <Button onPress={() => {
+              console.log("onPressButton", tag);
               if (!tagName) return;
-              const arr = [{id : tagName.toLowerCase(),label : tagName}, ...selectedItems];
-              
+              const newTag = {id : tagName.toLowerCase(),label : tagName}
+              const arr = [newTag, ...selectedItems];
+              tag.setState({value : {[newTag.id] : newTag,...tag.state.value}});
               console.log("arr", arr);
               onSelectedItemsChange(_.uniqBy(arr, 'id'));
               

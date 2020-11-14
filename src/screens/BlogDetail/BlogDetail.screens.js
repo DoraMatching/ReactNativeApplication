@@ -50,6 +50,12 @@ export default class BlogDetail extends Component {
     this.setCommentTextInputRef = (element) => {
       this.commentTextInput = element;
     };
+
+    this.scrollView = null;
+
+    this.setScrolllViewRef = (element) => {
+      this.scrollView = element;
+    };
   }
 
   updateComment = (comment) => {
@@ -105,7 +111,7 @@ export default class BlogDetail extends Component {
     return (
       <>
         
-          <ScrollView style={styles.container}>
+          <ScrollView style={styles.container} ref={this.setScrolllViewRef}>
             <View style={{}}>
               <Text style={{...styles.title}}>{title}</Text>
               <View
@@ -189,10 +195,10 @@ export default class BlogDetail extends Component {
               </TouchableOpacity>
               <Text
                 style={{fontWeight: "bold", fontSize: 20, marginVertical: 5}}>
-                Comments ({comments.length})
+                Comments ({this.props.comments.length})
               </Text>
               <View>
-                {this.props.blog.comments.map((item) => (
+                {this.props.comments.map((item) => (
                   
                     <Comment
                       {...{...item, userID: this.props.userID, onEditComment : this.onEditComment}}></Comment>
@@ -241,6 +247,8 @@ export default class BlogDetail extends Component {
                 });
                 this.setState({isCreated: true});
               }
+              Keyboard.dismiss();
+              this.scrollView.scrollToEnd();
               this.setState({comment: "", commentID: ""});
               this.setState({isOpen: false});
             }}>

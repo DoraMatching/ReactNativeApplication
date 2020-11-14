@@ -11,6 +11,12 @@ export class PersonalQuestion extends Component {
     }
 
     render() {
+      if (this.props.questions.length == 0)
+        return (
+          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                <Text> No question </Text>
+            </View>
+        );
         return (
             <View style={{ flex: 1,  }}>
             <FlatList
@@ -18,7 +24,7 @@ export class PersonalQuestion extends Component {
                 marginVertical: 5,
                 //backgroundColor: "white",
               }}
-              data={this.props.blogs}
+              data={this.props.questions}
               renderItem={({item, index}) => {
                 return <BlogItem {...item}></BlogItem>;
               }}
@@ -30,7 +36,7 @@ export class PersonalQuestion extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    blogs  : state.ProfileReducer.posts,
+    questions  : state.ProfileReducer.questions,
 })
 
 const mapDispatchToProps = {

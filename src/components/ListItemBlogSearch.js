@@ -1,11 +1,21 @@
 import React, {Component} from "react";
-import {Text, View, Image, StyleSheet} from "react-native";
+import {Text, View, Image, StyleSheet, Pressable} from "react-native";
 import moment from "moment";
 import FastImage from "react-native-fast-image";
 import TagListItem from "./ListItemTag";
+import MoreOptionIcon from "../images/moreOption.svg";
 
 export default class ListItemBlogSearch extends Component {
   render() {
+    var paramsForOptionModal = {
+      type : "blog",
+      id : this.props.id,
+      token : this.props.token,
+      title : this.props.title,
+      subTitle : this.props.subTitle,
+      content : this.props.content,
+      status : true,
+  };
     return (
       <View style={{...styles.container, padding: 10}}>
         <View
@@ -47,6 +57,18 @@ export default class ListItemBlogSearch extends Component {
                 return <TagListItem item={item} />;
               })}
             </View>
+          </View>
+          <View>
+            {this.props.userID === this.props.author.id ? (
+              <Pressable
+                onPress={() =>
+                  this.props.showOptionModal(paramsForOptionModal)
+                }>
+                <MoreOptionIcon width={20} height={20} style={{marginTop: 5}} />
+              </Pressable>
+            ) : (
+              <></>
+            )}
           </View>
         </View>
         <View style={{...styles.horizontalLayout, marginHorizontal: 0}}>

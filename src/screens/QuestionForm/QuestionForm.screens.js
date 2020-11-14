@@ -167,9 +167,10 @@ const styles = StyleSheet.create({
     // marginRight: 30,
     //flexDirection: "column",
     flex: 1,
-    justifyContent: "flex-end",
+    justifyContent: "flex-start",
     marginHorizontal: 10,
     //marginVertical: 10,
+    marginTop : 30,
   },
   button: {
     marginRight: 5,

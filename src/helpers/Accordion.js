@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { View, TouchableOpacity, Text, StyleSheet, LayoutAnimation, Platform, UIManager} from "react-native";
-import { Colors } from './Colors';
+//import { Colors } from './Colors';
+import colors from '../themes/color';
 import Icon from "react-native-vector-icons/MaterialIcons";
 
 export default class Accordion extends Component{
@@ -23,7 +24,7 @@ export default class Accordion extends Component{
        <View>
             <TouchableOpacity ref={this.accordian} style={styles.row} onPress={()=>this.toggleExpand()}>
                 <Text style={[styles.title, styles.font]}>{this.props.title}</Text>
-                <Icon name={this.state.expanded ? 'keyboard-arrow-up' : 'keyboard-arrow-down'} size={30} color={Colors.DARKGRAY} />
+                <Icon name={this.state.expanded ? 'keyboard-arrow-up' : 'keyboard-arrow-down'} size={30} color={"white"} />
             </TouchableOpacity>
             <View style={styles.parentHr}/>
             {
@@ -48,7 +49,7 @@ const styles = StyleSheet.create({
     title:{
         fontSize: 14,
         fontWeight:'bold',
-        color: Colors.DARKGRAY,
+        color: "white",
     },
     row:{
         flexDirection: 'row',
@@ -57,15 +58,15 @@ const styles = StyleSheet.create({
         paddingLeft:25,
         paddingRight:18,
         alignItems:'center',
-        backgroundColor: Colors.CGRAY,
+        backgroundColor: colors.primary,
     },
     parentHr:{
         height:1,
-        color: Colors.WHITE,
+        color: "#ffffff",
         width:'100%'
     },
     child:{
-        backgroundColor: Colors.LIGHTGRAY,
+        backgroundColor: "#D3D3D3",
         padding:16,
     }
     

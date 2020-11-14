@@ -11,7 +11,7 @@ export class PersonalClass extends Component {
     render() {
         return (
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                <Text> PersonalClass </Text>
+                <Text> No class </Text>
             </View>
         )
     }

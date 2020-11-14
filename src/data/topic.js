@@ -18,6 +18,54 @@ const topic = [
                 {
                     name : "Machine learning"
                 }
+            ],
+            trainee: [
+                {
+                    name : "ABC",
+                    avatarUrl: "https://www.w3schools.com/howto/img_avatar2.png"
+                },
+                {
+                    name : "ABCd",
+                    avatarUrl: "https://www.w3schools.com/howto/img_avatar2.png"
+                },
+                {
+                    name : "ABCe",
+                    avatarUrl: "https://www.w3schools.com/howto/img_avatar2.png"
+                },
+                {
+                    name : "ABCf",
+                    avatarUrl: "https://www.w3schools.com/howto/img_avatar2.png"
+                },
+                {
+                    name : "ABCg",
+                    avatarUrl: "https://www.w3schools.com/howto/img_avatar2.png"
+                },
+                {
+                    name : "ABCh",
+                    avatarUrl: "https://www.w3schools.com/howto/img_avatar2.png"
+                },
+            ],
+            lesson : [
+                {
+                    name : "lesson 101",
+                    content : "abcxyz",
+                },
+                {
+                    name : "lesson 101",
+                    content : "abcxyz",
+                },
+                {
+                    name : "lesson 101",
+                    content : "abcxyz",
+                },
+                {
+                    name : "lesson 101",
+                    content : "abcxyz",
+                },
+                {
+                    name : "lesson 101",
+                    content : "abcxyz",
+                },
             ]
 
         },

@@ -16,9 +16,11 @@ import colors from "../../themes/color";
 import {SafeAreaView} from "react-native-safe-area-context";
 import BlogDetailModal from "../BlogDetail/BlogDetail.modals";
 
-import BlogFormModal from "../BlogForm/BlogForm.modals";
+import BlogFormEditModal from "../BlogFormEdit/BlogFormEdit.modals";
 
-import FloatingButtonAction from '../../helpers/FloatingActionButton'
+import OptionModal from "../../helpers/optionModal";
+
+import FloatingButtonAction from "../../helpers/FloatingActionButton";
 
 const actions = [
   {
@@ -51,6 +53,18 @@ export default class BlogSearch extends Component {
     this.setBlogDetailModalRef = (element) => {
       this.blogDetailModal = element;
     };
+
+    this.blogFormEditModal = null;
+
+    this.setBlogFormEditModalRef = (element) => {
+      this.blogFormEditModal = element;
+    };
+
+    this.optionModal = null;
+
+    this.setOptionModalRef = (element) => {
+      this.optionModal = element;
+    };
   }
 
   refreshData = () => {
@@ -70,7 +84,6 @@ export default class BlogSearch extends Component {
     this.props.onFetchTop({url});
   };
 
-
   render() {
     if (!this.props.tops) return <></>;
     return (
@@ -82,6 +95,20 @@ export default class BlogSearch extends Component {
         }}>
         <View style={{flex: 1}}>
           <BlogDetailModal ref={this.setBlogDetailModalRef}></BlogDetailModal>
+          <BlogFormEditModal
+            ref={this.setBlogFormEditModalRef}></BlogFormEditModal>
+          <OptionModal
+            ref={this.setOptionModalRef}
+            onOpenBlogEditForm={
+              this.blogFormEditModal
+                ? this.blogFormEditModal.showBlogFormEditModal
+                : () => {}
+            }
+            onOpenQuestionEditForm={
+              this.questionFormEditModal
+                ? this.questionFormEditModal.showQuestionFormEditModal
+                : () => {}
+            }></OptionModal>
           <View style={styles.searchContainer}>
             <View style={styles.searchInput}>
               <View style={styles.searchIcon}>
@@ -119,15 +146,27 @@ export default class BlogSearch extends Component {
             refreshing={this.state.isLoading}
             data={this.props.tops ? this.props.tops : []}
             keyExtractor={(item) => item.id}
-            renderItem={({item, index}) => (
+            renderItem={({item, index}) =>{ 
+              if (!this.optionModal) this.refreshData();
+            const userID = this.props.userID;
+            const token = this.props.token;
+              return (
               <Pressable
-              onPress={() => {
-                this.props.onOpenBlogDetail(item);
-                if (this.blogDetailModal) this.blogDetailModal.showBlogDetailModal(item);
-              }}>
-                <ListItemBlogSearch {...{userID : this.props.userID, ...item}} />
+                onPress={() => {
+                  this.props.onOpenBlogDetail(item);
+                  if (this.blogDetailModal)
+                    this.blogDetailModal.showBlogDetailModal(item);
+                }}>
+                <ListItemBlogSearch {...{
+                    token,
+                    userID,
+                    showOptionModal: this.optionModal
+                      ? this.optionModal.showOptionModal
+                      : () => {},
+                    ...item,
+                  }} />
               </Pressable>
-            )}
+            )}}
             onEndReached={this.retrieveMore}
           />
           {/* <FloatingAction
@@ -137,7 +176,7 @@ export default class BlogSearch extends Component {
             }}
           />
           <BlogFormModal ref={this.setBlogFormModalRef}></BlogFormModal> */}
-          <FloatingButtonAction/>
+          <FloatingButtonAction />
         </View>
       </SafeAreaView>
     );

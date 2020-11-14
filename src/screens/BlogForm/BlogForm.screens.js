@@ -49,13 +49,13 @@ const required = (value) => {
 
 const BlogFormScreen = (props) => {
   const [avatar, setAvatar] = useState(defaultImage);
-  const [isHidden, setHidden] = useState(true);
+  //const [isHidden, setHidden] = useState(true);
 
   const handlePicker = () => {
-    console.log('edit');
+    console.log("edit");
     ImagePicker.showImagePicker({}, (response) => {
       console.log("Response = ", response);
-      setHidden(true);
+      //setHidden(true);
       if (response.didCancel) {
         console.log("User cancelled image picker");
       } else if (response.error) {
@@ -78,7 +78,6 @@ const BlogFormScreen = (props) => {
       "https://www.pixelrockstar.com/wp-content/uploads/2017/04/featured-image.png";
     props.onCreateBlog({tags, featuredImage, token: props.token, ...values});
     console.log("BlogFormScreen", props.data);
-    
   };
 
   if (props.data && props.data.success === true) {
@@ -87,12 +86,15 @@ const BlogFormScreen = (props) => {
   } else if (props.data.success === false) {
     alert(props.data.message);
   }
-  
+
   return (
     <KeyboardAvoidingView
       behavior="padding"
       style={{flex: 1, paddingHorizontal: 10, paddingTop: 40}}>
-      <Pressable onPress={() => {Keyboard.dismiss;setHidden(true);}}>
+      <Pressable
+        onPress={() => {
+          Keyboard.dismiss;
+        }}>
         <>
           <ScrollView>
             <Field
@@ -113,24 +115,23 @@ const BlogFormScreen = (props) => {
               validate={required}
               styles={styles.description}
             />
-            <Pressable
-              style={styles.featuredImage}
-              onPress={() => setHidden(false)}
-              >
+            <Pressable style={styles.featuredImage}>
               <Image
                 source={avatar}
                 PlaceholderContent={<ActivityIndicator />}
-                style={{width: "100%", height: 200, borderRadius: 5, resizeMode : "cover"}}
+                style={{
+                  width: "100%",
+                  height: 200,
+                  borderRadius: 5,
+                  resizeMode: "cover",
+                }}
               />
-              {!isHidden ? (
-                <Pressable onPress={() => setHidden(true)}  style={styles.overlay}>
-                
-                  <Text style={styles.editLabel} onPress={handlePicker}>Edit your featured image</Text>
-                
-                </Pressable>
-              ) : (
-                <></>
-              )}
+
+              <Pressable style={styles.overlay}>
+                <Text style={styles.editLabel} onPress={handlePicker}>
+                  Edit your featured image
+                </Text>
+              </Pressable>
             </Pressable>
             <Field
               name={"content"}
@@ -193,7 +194,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     paddingHorizontal: 5,
     marginBottom: 5,
-    textAlignVertical: "top"
+    textAlignVertical: "top",
   },
   featuredImage: {
     marginVertical: 5,
@@ -211,6 +212,6 @@ const styles = StyleSheet.create({
   editLabel: {
     color: "white",
     fontSize: 18,
-    padding : 5,
+    padding: 5,
   },
 });

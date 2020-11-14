@@ -142,10 +142,14 @@ export default class QuestionDetail extends Component {
               </TouchableOpacity>
               <Text
                 style={{fontWeight: "bold", fontSize: 20, marginVertical: 5}}>
-                Comments ({comments?.length})
+                Comments ({this.props.comments?.length})
               </Text>
               <View>
-                {comments.map((item) => (
+                {
+                  console.log("Question comment", this.props.comments)
+                }
+                {
+                this.props.comments.map((item) => (
                   
                     <Comment
                       {...{...item, userID: this.props.userID, onEditComment : this.onEditComment}}></Comment>
@@ -192,6 +196,8 @@ export default class QuestionDetail extends Component {
                 });
                 this.setState({isCreated: true});
               }
+              Keyboard.dismiss();
+              //ScrollView.scrollToEnd();
               this.setState({comment: "", commentID: ""});
               this.setState({isOpen: false});
             }}>

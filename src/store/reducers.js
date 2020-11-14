@@ -5,8 +5,8 @@ import LoginReducer from "../screens/Login/Login.reducers";
 import RegisterReducer from "../screens/Register/Register.reducers";
 import {BlogTopReducer, BlogTopItemReducer} from '../screens/BlogSearch/BlogSearch.reducers'
 import {QuestionTopItemReducer, QuestionTopReducer} from '../screens/QuestionSearch/QuestionSearch.reducers'
-import {BlogDetailReducer} from '../screens/BlogDetail/BlogDetail.reducers';
-import {QuestionDetailReducer} from '../screens/QuestionDetail/QuestionDetail.reducers';
+import {BlogDetailReducer, BlogCommentReducer} from '../screens/BlogDetail/BlogDetail.reducers';
+import {QuestionDetailReducer, QuestionCommentReducer} from '../screens/QuestionDetail/QuestionDetail.reducers';
 import {BlogFormReducer} from '../screens/BlogForm/BlogForm.reducers';
 import {QuestionFormReducer} from '../screens/QuestionForm/QuestionForm.reducers';
 import {BlogFormEditReducer, EditReducer} from '../screens/BlogFormEdit/BlogFormEdit.reducers';
@@ -24,7 +24,9 @@ const rootReducer = combineReducers({
   QuestionTopItemReducer,
   QuestionTopReducer,
   BlogDetailReducer,
+  BlogCommentReducer,
   QuestionDetailReducer,
+  QuestionCommentReducer,
   BlogFormReducer,
   AlertReducer,
   ProfileReducer,

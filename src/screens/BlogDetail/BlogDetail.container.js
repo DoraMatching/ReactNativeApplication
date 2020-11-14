@@ -8,6 +8,7 @@ const mapStateToProps = (state) => {
     blog : state.BlogDetailReducer,
     token : state.LoginReducer? state.LoginReducer.message.token : "",
     userID: !state.LoginReducer.message ? "" : state.LoginReducer.message.id,
+    comments : state.BlogCommentReducer,
   };
 };
 const mapDispatchToProps = (dispatch) => {

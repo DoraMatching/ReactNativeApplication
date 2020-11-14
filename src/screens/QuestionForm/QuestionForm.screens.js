@@ -7,7 +7,7 @@ import {
   KeyboardAvoidingView,
   Pressable,
   TextInput,
-  Alert
+  Alert,
 } from "react-native";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
@@ -16,9 +16,10 @@ import {SafeAreaProvider, SafeAreaView} from "react-native-safe-area-context";
 import Button from "react-native-button";
 import colors from "../../themes/color";
 import MultiSelect from "react-native-multiple-select";
-import { TagSelect } from 'react-native-tag-select';
+import {TagSelect} from "react-native-tag-select";
 import actions from "./QuestionForm.actions";
 import _ from "lodash";
+import {color} from "react-native-reanimated";
 
 const QuestionInput = (props) => {
   const {
@@ -74,12 +75,14 @@ const QuestionFormScreen = (props) => {
   const [tag, setTagRef] = useState(null);
   const [tagName, setTagName] = useState("");
   //const [isHidden, setHidden] = useState(true);
-  
+
   //const [removedItem, setRemovedItem] = useState(null);
   //const items = [{id: 1, name : "java"}, {id: 2, name : "C#"}, {id: 3, name : "PHP"}];
   //const [selectItems, onSelectItemsChange] = useState([]);
   const submit = (values) => {
-    const tags = tag.itemsSelected.map(item => {return {"name" : item.label}});
+    const tags = tag.itemsSelected.map((item) => {
+      return {name: item.label};
+    });
     console.log("QuestionFormScreen", values);
     props.onCreateQuestion({tags, token: props.token, ...values});
     //console.log("BlogFormScreen", values);
@@ -92,13 +95,13 @@ const QuestionFormScreen = (props) => {
   }
   const onItemPress = (item) => {
     console.log("onItemPress", item);
-    
+
     //setHidden(!isHidden);
     //setRemovedItem(item);
-  }
+  };
   const onRemoveButton = () => {
     console.log("onRemoveButton", tag);
-    tag.setState({value : {}});
+    tag.setState({value: {}});
     onSelectedItemsChange(_.difference(selectedItems, tag.itemsSelected));
     //setRemovedItem(null);
     //setHidden(true);
@@ -108,70 +111,74 @@ const QuestionFormScreen = (props) => {
       <KeyboardAvoidingView behavior="padding" style={{flex: 1}}>
         <Pressable onPress={Keyboard.dismiss} style={styles.layout}>
           <View style={styles.layout}>
-            {/* <ScrollView> */}
-            {/* <MultiSelect
-              hideTags
-              items={items}
-              uniqueKey="id"
-              ref={setMultiSelectRef}
-              onSelectedItemsChange={onSelectedItemsChange}
-              selectedItems={selectedItems}
-              selectText="Pick Items"
-              searchInputPlaceholderText="Search Items..."
-              onChangeInput={(text) => console.log(text)}
-              altFontFamily="ProximaNova-Light"
-              tagRemoveIconColor="dimgray"
-              tagBorderColor="dimgray"
-              tagTextColor="dimgray"
-              selectedItemTextColor="dimgray"
-              selectedItemIconColor="dimgray"
-              itemTextColor="#000"
-              displayKey="name"
-              searchInputStyle={{color: "#CCC"}}
-              submitButtonColor="#CCC"
-              submitButtonText="Submit"
-              canAddItems={true}
-            />
-            <View>
-              {multiSelect && multiSelect.getSelectedItemsExt(selectedItems)}
-            </View> */}
-            {
-              console.log("selectedItems", selectedItems)
-              
-            }
-            {
-              tag && console.log("onPressButton", tag.itemsSelected)
-              
-            }
-            {
-              <Button onPress={onRemoveButton}>Remove</Button> 
-            }
+            {console.log("selectedItems", selectedItems)}
+            {tag && console.log("onPressButton", tag.itemsSelected)}
+
+            
+            <View style={styles.labelContainer}>
+              <Text style={styles.label}>Tag</Text>
+            </View>
             <TagSelect
-          data={selectedItems}
-          //onItemPress={onItemPress}
-          //max={3}
-          ref={setTagRef}
-          
-        />
-            <TextInput
-            style={styles.textInput}
-            onChangeText={setTagName}
-            //{...input}
-            value={tagName}
-            //{...rest}
-            returnKeyType="next"
-            autoCorrect={false}></TextInput>
-            <Button onPress={() => {
-              console.log("onPressButton", tag);
-              if (!tagName) return;
-              const newTag = {id : tagName.toLowerCase(),label : tagName}
-              const arr = [newTag, ...selectedItems];
-              tag.setState({value : {[newTag.id] : newTag,...tag.state.value}});
-              console.log("arr", arr);
-              onSelectedItemsChange(_.uniqBy(arr, 'id'));
-              
-              setTagName("");
-            }}>Add</Button>
+              data={selectedItems}
+              //onItemPress={onItemPress}
+              //max={3}
+              ref={setTagRef}
+            />
+            <View style={{flexDirection: "row"}}>
+              <TextInput
+                style={{flex: 40, ...styles.textInput}}
+                onChangeText={setTagName}
+                //{...input}
+                value={tagName}
+                //{...rest}
+                returnKeyType="next"
+                autoCorrect={false}></TextInput>
+              <Button
+                onPress={() => {
+                  console.log("onPressButton", tag);
+                  if (!tagName) return;
+                  const newTag = {id: tagName.toLowerCase(), label: tagName};
+                  const arr = [newTag, ...selectedItems];
+                  //tag.setState({value : {[newTag.id] : newTag,...tag.state.value}});
+                  console.log("arr", arr);
+                  onSelectedItemsChange(_.uniqBy(arr, "id"));
+
+                  setTagName("");
+                }}
+                style={[
+                  styles.button,
+                  {
+                    fontSize: 15,
+                    paddingVertical: 15,
+                    paddingHorizontal: 10,
+                    marginVertical: 5,
+                    marginLeft: 5,
+                    //height: 50,
+                    //bottom: 10,
+                    //flex : 30
+                  },
+                ]}>
+                Add
+              </Button>
+              <Button
+                onPress={onRemoveButton}
+                style={[
+                  styles.button,
+                  {
+                    fontSize: 15,
+                    paddingVertical: 15,
+                    paddingHorizontal: 10,
+                    marginVertical: 5,
+                    //marginLeft: 5,
+                    //height: 50,
+                    //flex : 30,
+                    //bottom: 10,
+                  },
+                ]}>
+                Remove
+              </Button>
+            </View>
+
             <Field
               name={"title"}
               label={"Title"}

@@ -20,6 +20,7 @@ export default class ListItemQuestionTop extends Component {
       //subTitle : this.props.subTitle,
       content : this.props.content,
       status : true,
+      tags : this.props.tags,
   };
     return (
       <View style={{...styles.container, padding: 10}}>

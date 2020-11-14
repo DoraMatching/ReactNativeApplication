@@ -25,6 +25,7 @@ export default class ListItemBlog extends Component {
       //subTitle : this.props.subTitle,
       content : this.props.content,
       status : true,
+      tags : this.props.tags,
   };
     //console.log("listItemQuestion: ", this.props.userID);
     return (

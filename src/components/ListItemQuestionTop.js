@@ -1,5 +1,7 @@
 import React, {Component} from "react";
-import {View, Text, StyleSheet, Image} from "react-native";
+import {View, Text, StyleSheet, Image, Pressable} from "react-native";
+import TagListItem from "./ListItemTag";
+import MoreOptionIcon from "../images/moreOption.svg";
 
 export default class ListItemQuestionTop extends Component {
   constructor(props) {
@@ -8,13 +10,23 @@ export default class ListItemQuestionTop extends Component {
   }
 
   render() {
+    var paramsForOptionModal = {
+      type : "question",
+      id : this.props.id,
+      token : this.props.token,
+      title : this.props.title,
+      //subTitle : this.props.subTitle,
+      content : this.props.content,
+      status : true,
+      tags : this.props.tags,
+  };
     return (
       <View
         style={{
           ...styles.horizontalLayout,
           marginHorizontal: 10,
           marginVertical: 5,
-          
+
           height: 103,
           ...styles.border,
           ...styles.borderColor,
@@ -25,9 +37,7 @@ export default class ListItemQuestionTop extends Component {
         <Image
           style={{flex: 25, height: 103, ...styles.border}}
           resizeMode="contain"
-          source={
-              require("../images/QuestionFeaturedImage.png")
-          }
+          source={require("../images/QuestionFeaturedImage.png")}
         />
         <View style={{marginHorizontal: 10, flexWrap: "wrap", flex: 75}}>
           <Text
@@ -37,7 +47,7 @@ export default class ListItemQuestionTop extends Component {
               marginTop: 10,
               width: "100%",
             }}
-            numberOfLines={2}>
+            numberOfLines={1}>
             {this.props.title}
           </Text>
           <View
@@ -48,14 +58,27 @@ export default class ListItemQuestionTop extends Component {
               flexWrap: "wrap",
               height: 20,
               justifyContent: "flex-start",
-              
+              marginBottom: 10,
             }}>
-            
-            <Text style={{color: "#3d3d4e", flex: 90, }} numberOfLines={1}>
+            {/* <Text style={{color: "#3d3d4e", flex: 90, }} numberOfLines={1}>
               {this.props.tags
                 .map(({name}) => name)
                 .join(" \u2022 ")}
-            </Text>
+            </Text> */}
+
+            <View
+              style={{
+                ...styles.horizontalLayout,
+                marginBottom: 0,
+                flexWrap: "wrap",
+                marginVertical: 5,
+                flex: 90,
+                //marginVertical: 5,
+              }}>
+              {this.props.tags.map((item) => {
+                return <TagListItem item={item} />;
+              })}
+            </View>
           </View>
 
           <View
@@ -88,6 +111,10 @@ export default class ListItemQuestionTop extends Component {
             </View>
           </View>
         </View>
+        <Pressable
+          onPress={() => this.props.showOptionModal(paramsForOptionModal)}>
+          <MoreOptionIcon width={20} height={20} style={{marginTop: 5}} />
+        </Pressable>
       </View>
     );
   }
@@ -104,7 +131,5 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 5,
     borderBottomLeftRadius: 5,
   },
-  borderColor: {
-    
-  },
+  borderColor: {},
 });

@@ -6,6 +6,7 @@ const Actions = {
     // GET_BLOG_TAG_FAILED: "GET_BLOG_TAG_FAILED",
     GET_PROFILE_SUCCEEDED: "GET_PROFILE_SUCCEEDED",
     GET_PROFILE_FAILED: "GET_PROFILE_FAILED",
+    GET_OPTION_MODAL : "GET_OPTION_MODAL",
     // DELETE_BLOG_SUCCEEDED: "DELETE_BLOG_SUCCEEDED",
     // DELETE_BLOG_FAILED: "DELETE_BLOG_FAILED",
   
@@ -20,6 +21,13 @@ const Actions = {
         type: Actions.GET_PROFILE,
         params,
       };
+    },
+
+    getOptionModalAction: (params) => {
+      return {
+        type : Actions.GET_OPTION_MODAL,
+        params,
+      }
     },
   
     

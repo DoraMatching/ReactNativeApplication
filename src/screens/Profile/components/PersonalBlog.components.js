@@ -1,40 +1,79 @@
-import React, { Component } from 'react'
-import { View, Text, FlatList } from 'react-native'
-import BlogItem from '../../../components/ListItemBlogTop'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
+import React, {Component} from "react";
+import {View, Text, FlatList} from "react-native";
+import BlogItem from "../../../components/ListItemBlogTop";
+import PropTypes from "prop-types";
+import {connect} from "react-redux";
+
+
+import ProfileAction from '../Profile.actions';
 
 class PersonalBlog extends Component {
-    static propTypes = {
-        prop: PropTypes
-    }
+  constructor(props) {
+    super(props);
 
-    render() {
-        console.log("myblog: ", this.props.blogs);
-        return (
-            <View style={{ flex: 1,  }}>
-                <FlatList
-                  style={{
-                    marginVertical: 5,
-                    //backgroundColor: "white",
-                  }}
-                  data={this.props.blogs}
-                  renderItem={({item, index}) => {
-                    return <BlogItem {...item}></BlogItem>;
-                  }}
-                  keyExtractor={(item, index) => item.name}></FlatList>
+    this.state = {
+      isLoading: false,
+    };
 
-            </View>
-        )
-    }
+   
+  }
+
+  refreshData = () => {
+    this.setState({isLoading: true});
+    const {url} = this.state;
+    this.props.onFetchUser({id : this.props.userID, token : this.props.token});
+    this.setState({isLoading: false});
+  };
+
+  render() {
+    console.log("myblog: ", this.props.blogs);
+    return (
+      <View style={{flex: 1}}>
+        <FlatList
+          style={{
+            marginVertical: 5,
+            //backgroundColor: "white",
+          }}
+          onRefresh={this.refreshData}
+          refreshing={this.state.isLoading}
+          data={this.props.blogs}
+          renderItem={({item, index}) => {
+            //if (!this.optionModal) this.refreshData();
+            const userID = this.props.userID;
+            const token = this.props.token;
+
+            return (
+              <BlogItem
+                {...{
+                  token,
+                  userID,
+                  showOptionModal: this.props.showOptionModal
+                    ,
+                  ...item,
+                }}></BlogItem>
+            );
+          }}
+          keyExtractor={(item, index) => item.name}></FlatList>
+
+        
+      </View>
+    );
+  }
 }
 
 const mapStateToProps = (state) => ({
-    blogs  : state.ProfileReducer.posts,
-})
+  blogs: state.PersonalBlogReducer,
+  userID: !state.LoginReducer.message ? "" : state.LoginReducer.message.id,
+  token: !state.LoginReducer.message ? "" : state.LoginReducer.message.token,
+  showOptionModal: state.OptionModal,
+});
 
-const mapDispatchToProps = {
-    
+const mapDispatchToProps = (dispatch) => {
+    return {
+      onFetchUser: (params) => {
+        dispatch(ProfileAction.getProfileAction(params));
+      },
+    };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(PersonalBlog)
+export default connect(mapStateToProps, mapDispatchToProps)(PersonalBlog);

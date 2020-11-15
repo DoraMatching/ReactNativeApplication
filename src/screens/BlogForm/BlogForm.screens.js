@@ -108,65 +108,68 @@ const BlogFormScreen = (props) => {
         }}>
         <>
           <ScrollView>
-          <TagSelect
-              data={selectedItems}
-              //onItemPress={onItemPress}
-              //max={3}
-              ref={setTagRef}
-            />
-            <View style={{flexDirection: "row"}}>
-              <TextInput
-                style={{flex: 40, ...styles.textInput}}
-                onChangeText={setTagName}
-                //{...input}
-                value={tagName}
-                //{...rest}
-                returnKeyType="next"
-                autoCorrect={false}></TextInput>
-              <Button
-                onPress={() => {
-                  console.log("onPressButton", tag);
-                  if (!tagName) return;
-                  const newTag = {id: tagName.toLowerCase(), label: tagName};
-                  const arr = [newTag, ...selectedItems];
-                  //tag.setState({value : {[newTag.id] : newTag,...tag.state.value}});
-                  console.log("arr", arr);
-                  onSelectedItemsChange(_.uniqBy(arr, "id"));
+            <View style={{marginTop: 5,}}>
+              <TagSelect
+                data={selectedItems}
+                //onItemPress={onItemPress}
+                //max={3}
+                ref={setTagRef}
+              />
+              <View style={{flexDirection: "row"}}>
+                <TextInput
+                  style={{flex: 40, ...styles.textInput}}
+                  onChangeText={setTagName}
+                  //{...input}
+                  placeholder={"Type your tag here"}
+                  value={tagName}
+                  //{...rest}
+                  returnKeyType="next"
+                  autoCorrect={false}></TextInput>
+                <Button
+                  onPress={() => {
+                    console.log("onPressButton", tag);
+                    if (!tagName) return;
+                    const newTag = {id: tagName.toLowerCase(), label: tagName};
+                    const arr = [newTag, ...selectedItems];
+                    //tag.setState({value : {[newTag.id] : newTag,...tag.state.value}});
+                    console.log("arr", arr);
+                    onSelectedItemsChange(_.uniqBy(arr, "id"));
 
-                  setTagName("");
-                }}
-                style={[
-                  styles.button,
-                  {
-                    fontSize: 15,
-                    paddingVertical: 15,
-                    paddingHorizontal: 10,
-                    marginVertical: 5,
-                    marginLeft: 5,
-                    //height: 50,
-                    //bottom: 10,
-                    //flex : 30
-                  },
-                ]}>
-                Add
-              </Button>
-              <Button
-                onPress={onRemoveButton}
-                style={[
-                  styles.button,
-                  {
-                    fontSize: 15,
-                    paddingVertical: 15,
-                    paddingHorizontal: 10,
-                    marginVertical: 5,
-                    marginLeft: 5,
-                    //height: 50,
-                    //flex : 30,
-                    //bottom: 10,
-                  },
-                ]}>
-                Remove
-              </Button>
+                    setTagName("");
+                  }}
+                  style={[
+                    styles.button,
+                    {
+                      fontSize: 15,
+                      paddingVertical: 15,
+                      paddingHorizontal: 10,
+                      marginVertical: 5,
+                      marginLeft: 5,
+                      //height: 50,
+                      //bottom: 10,
+                      //flex : 30
+                    },
+                  ]}>
+                  Add
+                </Button>
+                <Button
+                  onPress={onRemoveButton}
+                  style={[
+                    styles.button,
+                    {
+                      fontSize: 15,
+                      paddingVertical: 15,
+                      paddingHorizontal: 10,
+                      marginVertical: 5,
+                      marginLeft: 5,
+                      //height: 50,
+                      //flex : 30,
+                      //bottom: 10,
+                    },
+                  ]}>
+                  Remove
+                </Button>
+              </View>
             </View>
             <Field
               name={"title"}
@@ -292,6 +295,6 @@ const styles = StyleSheet.create({
     borderColor: "lightgray",
     borderWidth: 1,
     color: "black",
-    textAlignVertical: "top",
-  }
+   // textAlignVertical: "top",
+  },
 });

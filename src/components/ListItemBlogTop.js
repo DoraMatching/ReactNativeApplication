@@ -1,6 +1,7 @@
 import React, {Component} from "react";
-import {View, Text, StyleSheet, Image} from "react-native";
+import {View, Text, StyleSheet, Image, Pressable} from "react-native";
 import TagListItem from "./ListItemTag";
+import MoreOptionIcon from "../images/moreOption.svg";
 
 export default class ListItemBlogTop extends Component {
   constructor(props) {
@@ -9,13 +10,22 @@ export default class ListItemBlogTop extends Component {
   }
 
   render() {
+    var paramsForOptionModal = {
+      type: "blog",
+      id: this.props.id,
+      token: this.props.token,
+      title: this.props.title,
+      subTitle: this.props.subTitle,
+      content: this.props.content,
+      status: true,
+    };
     return (
       <View
         style={{
           ...styles.horizontalLayout,
           marginHorizontal: 10,
           marginVertical: 5,
-          
+
           height: 103,
           ...styles.border,
           ...styles.borderColor,
@@ -27,8 +37,7 @@ export default class ListItemBlogTop extends Component {
           style={{flex: 25, height: 103, ...styles.border}}
           resizeMode="cover"
           source={{
-            uri:
-              this.props.featuredImage,
+            uri: this.props.featuredImage,
           }}
         />
         <View style={{marginHorizontal: 10, flexWrap: "wrap", flex: 75}}>
@@ -52,7 +61,6 @@ export default class ListItemBlogTop extends Component {
               justifyContent: "flex-start",
               marginBottom: 10,
             }}>
-            
             <View
               style={{
                 ...styles.horizontalLayout,
@@ -96,6 +104,10 @@ export default class ListItemBlogTop extends Component {
             </View>
           </View>
         </View>
+        <Pressable
+          onPress={() => this.props.showOptionModal(paramsForOptionModal)}>
+          <MoreOptionIcon width={20} height={20} style={{marginTop: 5}} />
+        </Pressable>
       </View>
     );
   }
@@ -112,7 +124,5 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 5,
     borderBottomLeftRadius: 5,
   },
-  borderColor: {
-    
-  },
+  borderColor: {},
 });

@@ -12,6 +12,7 @@ import {QuestionFormReducer} from '../screens/QuestionForm/QuestionForm.reducers
 import {BlogFormEditReducer, EditReducer} from '../screens/BlogFormEdit/BlogFormEdit.reducers';
 import {QuestionFormEditReducer, QuestionEditReducer} from '../screens/QuestionFormEdit/QuestionFormEdit.reducers';
 import {ProfileReducer} from '../screens/Profile/Profile.reducers';
+import {ProfileEditReducer} from '../screens/ProfileEdit/ProfileEdit.reducers';
 
 
 const rootReducer = combineReducers({
@@ -30,6 +31,7 @@ const rootReducer = combineReducers({
   BlogFormReducer,
   AlertReducer,
   ProfileReducer,
+  ProfileEditReducer,
   QuestionFormReducer,
   BlogFormEditReducer,
   EditReducer,

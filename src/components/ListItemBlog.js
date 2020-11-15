@@ -15,6 +15,7 @@ import TagListItem from "./ListItemTag";
 import MoreOptionIcon from "../images/moreOption.svg";
 import FastImage from "react-native-fast-image";
 
+
 export default class ListItemBlog extends Component {
   constructor(props) {
     super(props);

@@ -9,7 +9,7 @@ const mapStateToProps = (state) => {
     params : state.QuestionEditReducer,
     //token : state.LoginReducer? state.LoginReducer.message.token : "",
     //userID: !state.LoginReducer.message ? "" : state.LoginReducer.message.id,
-    result : state.QuestionFormEditReducer,
+    data : state.QuestionFormEditReducer,
   };
 };
 const mapDispatchToProps = (dispatch) => {

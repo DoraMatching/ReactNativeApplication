@@ -100,7 +100,7 @@ export default class Profile extends Component {
             <></>
           )}
           <View style={[styles.horizontalLayout, {marginVertical: 5}]}>
-            <Button style={styles.button}>Change</Button>
+            <Button style={styles.button} onPress={() => this.props.navigation.navigate("ProfileEdit")}>Change</Button>
             <Button
               onPress={this.signOut}
               style={[styles.button, {marginLeft: 5}]}>

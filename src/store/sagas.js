@@ -4,13 +4,14 @@ import LoginSaga from "../screens/Login/Login.sagas";
 import RegisterSaga from "../screens/Register/Register.sagas";
 import BlogSearchSaga from "../screens/BlogSearch/BlogSearch.sagas";
 import QuestionSearchSaga from "../screens/QuestionSearch/QuestionSearch.sagas";
-import BlogDetailSaga from '../screens/BlogDetail/BlogDetail.sagas';
-import QuestionDetailSaga from '../screens/QuestionDetail/QuestionDetail.sagas';
-import BlogFormSaga from '../screens/BlogForm/BlogForm.sagas';
-import BlogFormEditSaga from '../screens/BlogFormEdit/BlogFormEdit.sagas';
-import QuestionFormSaga from '../screens/QuestionForm/QuestionForm.sagas';
-import QuestionFormEditSaga from '../screens/QuestionFormEdit/QuestionFormEdit.sagas';
-import ProfileSaga from '../screens/Profile/Profile.sagas';
+import BlogDetailSaga from "../screens/BlogDetail/BlogDetail.sagas";
+import QuestionDetailSaga from "../screens/QuestionDetail/QuestionDetail.sagas";
+import BlogFormSaga from "../screens/BlogForm/BlogForm.sagas";
+import BlogFormEditSaga from "../screens/BlogFormEdit/BlogFormEdit.sagas";
+import QuestionFormSaga from "../screens/QuestionForm/QuestionForm.sagas";
+import QuestionFormEditSaga from "../screens/QuestionFormEdit/QuestionFormEdit.sagas";
+import ProfileSaga from "../screens/Profile/Profile.sagas";
+import ProfileEditSaga from "../screens/ProfileEdit/ProfileEdit.sagas";
 export default function* rootSaga() {
   yield all([
     LoginSaga(),
@@ -24,6 +25,7 @@ export default function* rootSaga() {
     QuestionFormSaga(),
     ProfileSaga(),
     BlogFormEditSaga(),
-   QuestionFormEditSaga(),
+    QuestionFormEditSaga(),
+    ProfileEditSaga(),
   ]);
 }

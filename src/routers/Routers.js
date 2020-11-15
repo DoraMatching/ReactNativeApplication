@@ -13,8 +13,9 @@ import RegisterContainer from "../screens/Register/Register.container";
 //import BlogForm from "../screens/BlogForm/BlogForm.screens";
 
 import ProfileContainer from "../screens/Profile/Profile.container";
-import TopicDetail from '../screens/TopicDetail/TopicDetail.screens';
-import ClassDetail from '../screens/ClassDetail/ClassDetail.screens'
+import TopicDetail from "../screens/TopicDetail/TopicDetail.screens";
+import ClassDetail from "../screens/ClassDetail/ClassDetail.screens";
+import ProfileEdit from "../screens/ProfileEdit/ProfileEdit.screens";
 
 //import {ClassForm} from "../screens/ClassForm/ClassForm.screens";
 import QuestionForm from "../screens/QuestionForm/QuestionForm.screens";
@@ -70,6 +71,28 @@ const questionRouters = ({params}) => (
   </Stack.Navigator>
 );
 
+const profileRouters = ({params}) => (
+  <Stack.Navigator
+    initialRouteName="Profile"
+    screenOptions={{
+      headerShown: false,
+    }}>
+    {/* <Stack.Screen name="BlogDetail" component={BlogDetail} /> */}
+    <Stack.Screen name="Profile" component={ProfileContainer} />
+    <Stack.Screen
+      name="ProfileEdit"
+      component={ProfileEdit}
+      options={{
+        headerShown: true,
+        title: "Edit your profile",
+        headerStyle: {
+          backgroundColor: colors.primary,
+        },
+        headerTintColor: "#fff",
+      }}
+    />
+  </Stack.Navigator>
+);
 
 const tabRouters = () => (
   <>
@@ -118,7 +141,7 @@ const tabRouters = () => (
       <Tab.Screen name="Blogs" component={blogRouters} />
       <Tab.Screen name="Schedule" component={ClassDetail} />
       <Tab.Screen name="Questions" component={questionRouters} />
-      <Tab.Screen name="Profile" component={ProfileContainer} />
+      <Tab.Screen name="Profile" component={profileRouters} />
     </Tab.Navigator>
     {/* <FloatingButton></FloatingButton> */}
   </>

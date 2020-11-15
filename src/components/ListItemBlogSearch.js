@@ -16,6 +16,7 @@ export default class ListItemBlogSearch extends Component {
       content : this.props.content,
       status : true,
   };
+  if (!this.props.author || !this.props.title || !this.props.tags || !this.props.createdAt || !this.props.subTitle) return <></>;
     return (
       <View style={{...styles.container, padding: 10}}>
         <View

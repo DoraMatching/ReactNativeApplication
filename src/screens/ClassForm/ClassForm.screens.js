@@ -21,6 +21,7 @@ import colors from "../../themes/color";
 import moment from "moment";
 import SearchableDropdown from "react-native-searchable-dropdown";
 import {SafeAreaProvider, SafeAreaView} from "react-native-safe-area-context";
+import { set } from "react-native-reanimated";
 
 const items = [
   {
@@ -174,8 +175,10 @@ const ClassFormScreen = (props) => {
   console.log("props in screen", props);
   const [selectedItems, onSelectedItemsChange] = useState([]);
   const [multiSelect, setMultiSelectRef] = useState(null);
+  const [topic, setTopic] = useState("");
   const [dateStart, setDateStart] = useState(new Date());
   const [dateEnd, setDateEnd] = useState(new Date());
+  console.log("ClassForm - topic : ", topic);
   const submit = (values) => {
     console.log("ClassFormScreen", values);
   };
@@ -191,6 +194,7 @@ const ClassFormScreen = (props) => {
               <SearchableDropdown
                 onItemSelect={(item) => {
                   const items = selectedItems;
+                  setTopic(item.name);
                   items.push(item);
                   onSelectedItemsChange(items);
                 }}
@@ -222,7 +226,7 @@ const ClassFormScreen = (props) => {
                 defaultIndex={2}
                 resetValue={false}
                 textInputProps={{
-                  placeholder: "placeholder",
+                  placeholder: "",
                   underlineColorAndroid: "transparent",
                   style: {
                     padding: 12,
@@ -231,6 +235,8 @@ const ClassFormScreen = (props) => {
                     borderRadius: 5,
                   },
                   //onTextChange: (text) => alert(text),
+                  onChangeText : setTopic,
+                  value : topic
                 }}
                 listProps={{
                   nestedScrollEnabled: true,

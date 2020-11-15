@@ -101,6 +101,13 @@ const BlogFormScreen = (props) => {
     // }
   };
 
+  if (props.data && props.data.success === true) {
+    alert("Your Blog Has Been Successfully Updated.");
+    props.onClose();
+  } else if (props.data.success === false) {
+    alert(props.data.message);
+  }
+
   return (
     <KeyboardAvoidingView
       behavior="padding"

@@ -17,6 +17,8 @@ import Button from "react-native-button";
 import ImagePicker from "react-native-image-picker";
 import {Image} from "react-native-elements";
 import defaultImage from "../../images/BlogFeaturedImage.png";
+import {TagSelect} from "react-native-tag-select";
+import _ from "lodash";
 const BlogInput = (props) => {
   const {
     meta: {touched, error, warning},
@@ -49,6 +51,9 @@ const required = (value) => {
 
 const BlogFormScreen = (props) => {
   const [avatar, setAvatar] = useState(defaultImage);
+  const [selectedItems, onSelectedItemsChange] = useState([]);
+  const [tag, setTagRef] = useState(null);
+  const [tagName, setTagName] = useState("");
   //const [isHidden, setHidden] = useState(true);
 
   const handlePicker = () => {
@@ -69,11 +74,9 @@ const BlogFormScreen = (props) => {
     });
   };
   const submit = (values) => {
-    const tags = [
-      {
-        name: "java",
-      },
-    ];
+    const tags = tag.itemsSelected.map((item) => {
+      return {name: item.label};
+    });
     const featuredImage =
       "https://www.pixelrockstar.com/wp-content/uploads/2017/04/featured-image.png";
     props.onCreateBlog({tags, featuredImage, token: props.token, ...values});
@@ -87,6 +90,14 @@ const BlogFormScreen = (props) => {
     alert(props.data.message);
   }
 
+  const onRemoveButton = () => {
+    console.log("onRemoveButton", tag);
+    tag.setState({value: {}});
+    onSelectedItemsChange(_.difference(selectedItems, tag.itemsSelected));
+    //setRemovedItem(null);
+    //setHidden(true);
+  };
+
   return (
     <KeyboardAvoidingView
       behavior="padding"
@@ -97,6 +108,66 @@ const BlogFormScreen = (props) => {
         }}>
         <>
           <ScrollView>
+          <TagSelect
+              data={selectedItems}
+              //onItemPress={onItemPress}
+              //max={3}
+              ref={setTagRef}
+            />
+            <View style={{flexDirection: "row"}}>
+              <TextInput
+                style={{flex: 40, ...styles.textInput}}
+                onChangeText={setTagName}
+                //{...input}
+                value={tagName}
+                //{...rest}
+                returnKeyType="next"
+                autoCorrect={false}></TextInput>
+              <Button
+                onPress={() => {
+                  console.log("onPressButton", tag);
+                  if (!tagName) return;
+                  const newTag = {id: tagName.toLowerCase(), label: tagName};
+                  const arr = [newTag, ...selectedItems];
+                  //tag.setState({value : {[newTag.id] : newTag,...tag.state.value}});
+                  console.log("arr", arr);
+                  onSelectedItemsChange(_.uniqBy(arr, "id"));
+
+                  setTagName("");
+                }}
+                style={[
+                  styles.button,
+                  {
+                    fontSize: 15,
+                    paddingVertical: 15,
+                    paddingHorizontal: 10,
+                    marginVertical: 5,
+                    marginLeft: 5,
+                    //height: 50,
+                    //bottom: 10,
+                    //flex : 30
+                  },
+                ]}>
+                Add
+              </Button>
+              <Button
+                onPress={onRemoveButton}
+                style={[
+                  styles.button,
+                  {
+                    fontSize: 15,
+                    paddingVertical: 15,
+                    paddingHorizontal: 10,
+                    marginVertical: 5,
+                    marginLeft: 5,
+                    //height: 50,
+                    //flex : 30,
+                    //bottom: 10,
+                  },
+                ]}>
+                Remove
+              </Button>
+            </View>
             <Field
               name={"title"}
               placeholder={"Type your title here ..."}
@@ -214,4 +285,13 @@ const styles = StyleSheet.create({
     fontSize: 18,
     padding: 5,
   },
+  textInput: {
+    backgroundColor: "#f0f2f5",
+    borderRadius: 5,
+    marginVertical: 5,
+    borderColor: "lightgray",
+    borderWidth: 1,
+    color: "black",
+    textAlignVertical: "top",
+  }
 });

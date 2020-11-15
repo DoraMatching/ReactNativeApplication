@@ -127,11 +127,19 @@ const QuestionFormEditScreen = (props) => {
     console.log("selectedItems", selectedItems);
     console.log("c", _.difference(selectedItems, tag.itemsSelected));
     onSelectedItemsChange(_.difference(selectedItems, tag.itemsSelected));
-    tag.setState({value: {}});
+    //tag.setState({value: {}});
+    console.log("tag", tag);
     
     //setRemovedItem(null);
     //setHidden(true);
   };
+
+  if (props.data && props.data.success === true) {
+    alert("Your Question Has Been Successfully Updated.");
+    props.onClose();
+  } else if (props.data.success === false) {
+    alert(props.data.message);
+  }
   
   return (
     <SafeAreaView style={{flex: 1, justifyContent: "center"}}>

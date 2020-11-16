@@ -64,6 +64,7 @@ export default class Profile extends Component {
   };
 
   render() {
+    console.log("profile screen");
     if (!this.props.data) return <></>;
 
     this.props.onGetOptionModal(
@@ -113,6 +114,7 @@ export default class Profile extends Component {
           padding: 20,
         }}>
         <View style={{alignSelf: "flex-start"}}>
+          
           <View
             style={{
               ...styles.horizontalLayout,

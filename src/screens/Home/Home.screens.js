@@ -162,7 +162,7 @@ export default class Home extends Component {
               />
             </View>
           </View>
-          <FlatList
+          {/* <FlatList
             style={{
               marginVertical: 5,
               backgroundColor: "white",
@@ -172,7 +172,7 @@ export default class Home extends Component {
             renderItem={({item, index}) => {
               return <ListItemTopic {...item}></ListItemTopic>;
             }}
-            keyExtractor={(item, index) => item.name}></FlatList>
+            keyExtractor={(item, index) => item.name}></FlatList> */}
 
           <FlatList
             style={{backgroundColor: "#C4C4C4"}}
@@ -245,6 +245,19 @@ export default class Home extends Component {
                 );
             }}
             onEndReached={this.retrieveMore}
+            ListHeaderComponent={() => (
+              <FlatList
+                style={{
+                  marginVertical: 5,
+                  backgroundColor: "white",
+                }}
+                horizontal={true}
+                data={topic}
+                renderItem={({item, index}) => {
+                  return <ListItemTopic {...item}></ListItemTopic>;
+                }}
+                keyExtractor={(item, index) => item.name}></FlatList>
+            )}
           />
           <FloatingButtonAction />
         </View>

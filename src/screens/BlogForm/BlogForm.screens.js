@@ -1,4 +1,5 @@
-import React, {useState} from "react";
+import React, {useState, Component, useEffect} from "react";
+
 import {
   Text,
   View,
@@ -51,6 +52,7 @@ const required = (value) => {
 
 const BlogFormScreen = (props) => {
   const [avatar, setAvatar] = useState(defaultImage);
+  const [selectItems, onSelectItemsChange] = useState([]);
   const [selectedItems, onSelectedItemsChange] = useState([]);
   const [tag, setTagRef] = useState(null);
   const [tagName, setTagName] = useState("");
@@ -90,146 +92,131 @@ const BlogFormScreen = (props) => {
     alert(props.data.message);
   }
 
-  const onRemoveButton = () => {
-    console.log("onRemoveButton", tag);
-    tag.setState({value: {}});
-    onSelectedItemsChange(_.difference(selectedItems, tag.itemsSelected));
-    //setRemovedItem(null);
-    //setHidden(true);
-  };
+  useEffect(() => {
+    if (tag)  tag.data = selectItems;
+  }, [selectItems]);
+  useEffect(() => {
+    tag?.changeValue(selectedItems);
+  }, [selectedItems]);
+  const onItemPress = () => {
+    onSelectItemsChange(tag.itemsSelected);
+  }
 
   return (
     <KeyboardAvoidingView
       behavior="padding"
       style={{flex: 1, paddingHorizontal: 10, paddingTop: 40}}>
-      <Pressable
+      {/* <Pressable
         onPress={() => {
           Keyboard.dismiss;
-        }}>
-        <>
-          <ScrollView>
-            <View style={{marginTop: 5,}}>
-              <TagSelect
-                data={selectedItems}
-                //onItemPress={onItemPress}
-                //max={3}
-                ref={setTagRef}
-              />
-              <View style={{flexDirection: "row"}}>
-                <TextInput
-                  style={{flex: 40, ...styles.textInput}}
-                  onChangeText={setTagName}
-                  //{...input}
-                  placeholder={"Type your tag here"}
-                  value={tagName}
-                  //{...rest}
-                  returnKeyType="next"
-                  autoCorrect={false}></TextInput>
-                <Button
-                  onPress={() => {
-                    console.log("onPressButton", tag);
-                    if (!tagName) return;
-                    const newTag = {id: tagName.toLowerCase(), label: tagName};
-                    const arr = [newTag, ...selectedItems];
-                    //tag.setState({value : {[newTag.id] : newTag,...tag.state.value}});
-                    console.log("arr", arr);
-                    onSelectedItemsChange(_.uniqBy(arr, "id"));
+        }}
+        style={{justifyContent: "flex-start"}}> */}
+        <ScrollView>
+        <Field
+          name={"title"}
+          placeholder={"Type your title here ..."}
+          component={BlogInput}
+          validate={required}
+          styles={styles.title}
+        />
+        <TagSelect
+              value={selectedItems}
+              data={selectItems}
+              //onRemovee={onRemove}
+              onItemPress={onItemPress}
+              //max={3}
+              ref={setTagRef}
+            />
+            <View style={{flexDirection: "row", ...styles.textInput}}>
+              <TextInput
+                style={{flex: 30, ...styles.tagInput}}
+                onChangeText={setTagName}
+                //{...input}
+                value={tagName}
+                placeholder={"Type your tag here ..."}
+                //{...rest}
+                returnKeyType="next"
+                autoCorrect={false}></TextInput>
+              <Button
+                onPress={() => {
+                  console.log("onPressButton", tag);
+                  if (!tagName) return;
+                  const newTag = {id: tagName.toLowerCase(), label: tagName};
+                  const arr = [newTag, ...tag.itemsSelected];
+                  //tag.setState({value : {[newTag.id] : newTag,...tag.state.value}});
+                  console.log("arr", arr);
+                  onSelectItemsChange(_.uniqBy(arr, "id"));
+                  onSelectedItemsChange(_.uniqBy(arr, "id"));
 
-                    setTagName("");
-                  }}
-                  style={[
-                    styles.button,
-                    {
-                      fontSize: 15,
-                      paddingVertical: 15,
-                      paddingHorizontal: 10,
-                      marginVertical: 5,
-                      marginLeft: 5,
-                      //height: 50,
-                      //bottom: 10,
-                      //flex : 30
-                    },
-                  ]}>
-                  Add
-                </Button>
-                <Button
-                  onPress={onRemoveButton}
-                  style={[
-                    styles.button,
-                    {
-                      fontSize: 15,
-                      paddingVertical: 15,
-                      paddingHorizontal: 10,
-                      marginVertical: 5,
-                      marginLeft: 5,
-                      //height: 50,
-                      //flex : 30,
-                      //bottom: 10,
-                    },
-                  ]}>
-                  Remove
-                </Button>
-              </View>
-            </View>
-            <Field
-              name={"title"}
-              placeholder={"Type your title here ..."}
-              component={BlogInput}
-              validate={required}
-              styles={styles.title}
-            />
-            <Field
-              name={"subTitle"}
-              props={{
-                multiline: true,
-                numberOfLines: 5,
-              }}
-              placeholder={"Your description is here ..."}
-              component={BlogInput}
-              validate={required}
-              styles={styles.description}
-            />
-            <Pressable style={styles.featuredImage}>
-              <Image
-                source={avatar}
-                PlaceholderContent={<ActivityIndicator />}
-                style={{
-                  width: "100%",
-                  height: 200,
-                  borderRadius: 5,
-                  resizeMode: "cover",
+                  setTagName("");
                 }}
-              />
+                style={[
+                  styles.button,
+                  {
+                    fontSize: 15,
+                    paddingVertical: 15,
+                    paddingHorizontal: 20,
+                    //marginVertical: 5,
+                    //marginLeft: 5,
+                    //height: 50,
+                    //bottom: 10,
+                    //flex : 40
+                  },
+                ]}>
+                Add
+              </Button>
+            </View>
+        <Field
+          name={"subTitle"}
+          props={{
+            multiline: true,
+            numberOfLines: 3,
+          }}
+          placeholder={"Your description is here ..."}
+          component={BlogInput}
+          validate={required}
+          styles={styles.description}
+        />
+        <Pressable style={styles.featuredImage}>
+          <Image
+            source={avatar}
+            PlaceholderContent={<ActivityIndicator />}
+            style={{
+              width: "100%",
+              height: 200,
+              borderRadius: 3,
+              resizeMode: "cover",
+            }}
+          />
 
-              <Pressable style={styles.overlay}>
-                <Text style={styles.editLabel} onPress={handlePicker}>
-                  Edit your featured image
-                </Text>
-              </Pressable>
-            </Pressable>
-            <Field
-              name={"content"}
-              props={{
-                multiline: true,
-                numberOfLines: 5,
-              }}
-              placeholder={"Your content is here ..."}
-              component={BlogInput}
-              validate={required}
-              styles={styles.description}
-            />
+          <Pressable style={styles.overlay}>
+            <Text style={styles.editLabel} onPress={handlePicker}>
+              Edit your featured image
+            </Text>
+          </Pressable>
+        </Pressable>
+        <Field
+          name={"content"}
+          props={{
+            multiline: true,
+            numberOfLines: 5,
+          }}
+          placeholder={"Your content is here ..."}
+          component={BlogInput}
+          validate={required}
+          styles={styles.description}
+        />
 
-            <Button
-              onPress={props.handleSubmit(submit)}
-              style={[
-                styles.button,
-                {fontSize: 18, paddingVertical: 10, marginVertical: 5},
-              ]}>
-              Create
-            </Button>
-          </ScrollView>
-        </>
-      </Pressable>
+        <Button
+          onPress={props.handleSubmit(submit)}
+          style={[
+            styles.button,
+            {fontSize: 18, paddingVertical: 10, marginVertical: 5},
+          ]}>
+          Create
+        </Button>
+        </ScrollView>
+      {/* </Pressable> */}
     </KeyboardAvoidingView>
   );
 };
@@ -295,6 +282,30 @@ const styles = StyleSheet.create({
     borderColor: "lightgray",
     borderWidth: 1,
     color: "black",
-   // textAlignVertical: "top",
+    textAlignVertical: "top",
+  },
+  tagInput : {
+    backgroundColor: "#f0f2f5",
+    borderTopLeftRadius: 5,
+    borderBottomLeftRadius: 5,
+    //marginVertical: 2,
+    borderTopColor: "lightgray",
+    borderLeftColor: "lightgray",
+    borderBottomColor: "lightgray",
+    borderRightColor: "transparent",
+    borderTopWidth: 0.25,
+    borderLeftWidth: 0.25,
+    borderBottomWidth: 0.25,
+    color: "black",
+    //textAlignVertical: "top",
+  },
+  button: {
+    //marginRight: 5,
+    backgroundColor: colors.primary,
+    color: "white",
+    //height: "auto",
+    padding: 5,
+    borderRadius: 5,
+    fontSize: 12,
   },
 });

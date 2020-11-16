@@ -69,8 +69,17 @@ const ProfileEdit = (props) => {
   const submit = (values) => {
     const {id, token} = props.data;
     props.onEditProfile({id, token, ...values});
+    
     //console.log("BlogFormScreen", values);
   };
+  console.log("props in profile edit", props);
+  if (props.response && props.response.success === true) {
+    alert("Your Profile Has Just Been Successfully Updated");
+    //props.onClose();
+    props.reset();
+  } else if (props.data.success === false) {
+    alert(props.data.message);
+  }
 
   return (
     <Pressable
@@ -227,7 +236,7 @@ const ProfileEditForm = reduxForm({
 })(ProfileEdit);
 
 const mapStateToProps = (state) => ({
-  data: state.LoginReducer.message,
+  data: state.UserLoginReducer,
   response: state.ProfileEditReducer,
 });
 

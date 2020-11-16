@@ -1,4 +1,4 @@
-import React, {useState, Component} from "react";
+import React, {useState, Component, useEffect} from "react";
 import {
   View,
   Text,
@@ -71,14 +71,13 @@ const required = (value) => {
 };
 
 const QuestionFormScreen = (props) => {
-  const [selectedItems, onSelectedItemsChange] = useState([]);
+  //const [selectedItems, onSelectedItemsChange] = useState([]);
   const [tag, setTagRef] = useState(null);
   const [tagName, setTagName] = useState("");
-  //const [isHidden, setHidden] = useState(true);
 
-  //const [removedItem, setRemovedItem] = useState(null);
-  //const items = [{id: 1, name : "java"}, {id: 2, name : "C#"}, {id: 3, name : "PHP"}];
-  //const [selectItems, onSelectItemsChange] = useState([]);
+  const [selectItems, onSelectItemsChange] = useState([]);
+  const [selectedItems, onSelectedItemsChange] = useState([]);
+ 
   const submit = (values) => {
     const tags = tag.itemsSelected.map((item) => {
       return {name: item.label};
@@ -93,19 +92,15 @@ const QuestionFormScreen = (props) => {
   } else if (props.data.success === false) {
     alert(props.data.message);
   }
-  const onItemPress = (item) => {
-    console.log("onItemPress", item);
-
-    //setHidden(!isHidden);
-    //setRemovedItem(item);
-  };
-  const onRemoveButton = () => {
-    console.log("onRemoveButton", tag);
-    tag.setState({value: {}});
-    onSelectedItemsChange(_.difference(selectedItems, tag.itemsSelected));
-    //setRemovedItem(null);
-    //setHidden(true);
-  };
+  useEffect(() => {
+    if (tag)  tag.data = selectItems;
+  }, [selectItems]);
+  useEffect(() => {
+    tag?.changeValue(selectedItems);
+  }, [selectedItems]);
+  const onItemPress = () => {
+    onSelectItemsChange(tag.itemsSelected);
+  }
   return (
     <SafeAreaView style={{flex: 1, justifyContent: "center"}}>
       <KeyboardAvoidingView behavior="padding" style={{flex: 1}}>
@@ -119,14 +114,16 @@ const QuestionFormScreen = (props) => {
               <Text style={styles.label}>Tag</Text>
             </View>
             <TagSelect
-              data={selectedItems}
-              //onItemPress={onItemPress}
+              value={selectedItems}
+              data={selectItems}
+              //onRemovee={onRemove}
+              onItemPress={onItemPress}
               //max={3}
               ref={setTagRef}
             />
-            <View style={{flexDirection: "row"}}>
+            <View style={{flexDirection: "row", ...styles.textInput}}>
               <TextInput
-                style={{flex: 40, ...styles.textInput}}
+                style={{flex: 30, ...styles.tagInput}}
                 onChangeText={setTagName}
                 //{...input}
                 value={tagName}
@@ -138,9 +135,10 @@ const QuestionFormScreen = (props) => {
                   console.log("onPressButton", tag);
                   if (!tagName) return;
                   const newTag = {id: tagName.toLowerCase(), label: tagName};
-                  const arr = [newTag, ...selectedItems];
+                  const arr = [newTag, ...tag.itemsSelected];
                   //tag.setState({value : {[newTag.id] : newTag,...tag.state.value}});
                   console.log("arr", arr);
+                  onSelectItemsChange(_.uniqBy(arr, "id"));
                   onSelectedItemsChange(_.uniqBy(arr, "id"));
 
                   setTagName("");
@@ -150,32 +148,15 @@ const QuestionFormScreen = (props) => {
                   {
                     fontSize: 15,
                     paddingVertical: 15,
-                    paddingHorizontal: 10,
-                    marginVertical: 5,
-                    marginLeft: 5,
+                    paddingHorizontal: 20,
+                    //marginVertical: 5,
+                    //marginLeft: 5,
                     //height: 50,
                     //bottom: 10,
-                    //flex : 30
+                    //flex : 40
                   },
                 ]}>
                 Add
-              </Button>
-              <Button
-                onPress={onRemoveButton}
-                style={[
-                  styles.button,
-                  {
-                    fontSize: 15,
-                    paddingVertical: 15,
-                    paddingHorizontal: 10,
-                    marginVertical: 5,
-                    //marginLeft: 5,
-                    //height: 50,
-                    //flex : 30,
-                    //bottom: 10,
-                  },
-                ]}>
-                Remove
               </Button>
             </View>
 
@@ -247,6 +228,21 @@ const styles = StyleSheet.create({
     color: "black",
     textAlignVertical: "top",
   },
+  tagInput : {
+    backgroundColor: "#f0f2f5",
+    borderTopLeftRadius: 5,
+    borderBottomLeftRadius: 5,
+    //marginVertical: 2,
+    borderTopColor: "lightgray",
+    borderLeftColor: "lightgray",
+    borderBottomColor: "lightgray",
+    borderRightColor: "transparent",
+    borderTopWidth: 0.25,
+    borderLeftWidth: 0.25,
+    borderBottomWidth: 0.25,
+    color: "black",
+    //textAlignVertical: "top",
+  },
   layout: {
     //flex: 1,
     // marginLeft: 30,
@@ -259,9 +255,10 @@ const styles = StyleSheet.create({
     marginTop: 30,
   },
   button: {
-    marginRight: 5,
+    //marginRight: 5,
     backgroundColor: colors.primary,
     color: "white",
+    //height: "auto",
     padding: 5,
     borderRadius: 5,
     fontSize: 12,
@@ -274,7 +271,7 @@ const QuestionForm = reduxForm({
 
 const mapStateToProps = (state) => ({
   data: state.QuestionFormReducer,
-  token: state.LoginReducer ? state.LoginReducer.message.token : "",
+  token: state.UserLoginReducer ? state.UserLoginReducer.token : "",
 });
 
 const mapDispatchToProps = (dispatch) => {

@@ -1,7 +1,7 @@
 import {combineReducers} from "redux";
 import {reducer as formReducer} from "redux-form";
 import {HomeReducer, HomeItemReducer, AlertReducer} from "../screens/Home/Home.reducers";
-import LoginReducer from "../screens/Login/Login.reducers";
+import {LoginReducer, UserLoginReducer} from "../screens/Login/Login.reducers";
 import RegisterReducer from "../screens/Register/Register.reducers";
 import {BlogTopReducer, BlogTopItemReducer} from '../screens/BlogSearch/BlogSearch.reducers'
 import {QuestionTopItemReducer, QuestionTopReducer} from '../screens/QuestionSearch/QuestionSearch.reducers'
@@ -17,6 +17,7 @@ import {ProfileEditReducer} from '../screens/ProfileEdit/ProfileEdit.reducers';
 
 const rootReducer = combineReducers({
   LoginReducer,
+  UserLoginReducer,
   RegisterReducer,
   HomeReducer,
   HomeItemReducer,

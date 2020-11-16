@@ -27,6 +27,12 @@ class PersonalBlog extends Component {
 
   render() {
     console.log("myblog: ", this.props.blogs);
+    if (this.props.blogs.length == 0)
+      return (
+        <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
+          <Text> No blog </Text>
+        </View>
+      );
     return (
       <View style={{flex: 1}}>
         <FlatList

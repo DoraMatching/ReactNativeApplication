@@ -13,12 +13,13 @@ import Actions from "./ProfileEdit.actions";
 //   }
 // };
 
-const ProfileEditReducer = (data = {success: null, messsage: null}, action) => {
+const ProfileEditReducer = (response = {success: null, messsage: null}, action) => {
   switch (action.type) {
     case Actions.UPDATE_PROFILE_SUCCEEDED:
-      return {sucess: true, messsage: action.data};
+      console.log("in profileEditReducer");
+      return {success: true, messsage: action.data};
     case Actions.UPDATE_PROFILE_FAILED:
-      return {sucess: false, messsage: action.data};
+      return {success: false, messsage: action.error};
     default:
       return {success: null, messsage: null};
   }

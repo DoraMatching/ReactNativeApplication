@@ -156,9 +156,9 @@ const QuestionFormEditScreen = (props) => {
               //max={3}
               ref={setTagRef}
             />
-            <View style={{flexDirection: "row"}}>
+            <View style={{flexDirection: "row", ...styles.textInput}}>
               <TextInput
-                style={{flex: 40, ...styles.textInput}}
+                style={{flex: 40, ...styles.tagInput}}
                 onChangeText={setTagName}
                 //{...input}
                 value={tagName}
@@ -184,8 +184,8 @@ const QuestionFormEditScreen = (props) => {
                     fontSize: 15,
                     paddingVertical: 15,
                     paddingHorizontal: 10,
-                    marginVertical: 5,
-                    marginLeft: 5,
+                   // marginVertical: 5,
+                    //marginLeft: 5,
                     //height: 50,
                     //bottom: 10,
                     //flex : 30
@@ -286,6 +286,21 @@ const styles = StyleSheet.create({
     color: "black",
     textAlignVertical: "top",
   },
+  tagInput : {
+    backgroundColor: "#f0f2f5",
+    borderTopLeftRadius: 5,
+    borderBottomLeftRadius: 5,
+    //marginVertical: 2,
+    borderTopColor: "lightgray",
+    borderLeftColor: "lightgray",
+    borderBottomColor: "lightgray",
+    borderRightColor: "transparent",
+    borderTopWidth: 0.25,
+    borderLeftWidth: 0.25,
+    borderBottomWidth: 0.25,
+    color: "black",
+    //textAlignVertical: "top",
+  },
   layout: {
     //flex: 1,
     // marginLeft: 30,
@@ -298,9 +313,10 @@ const styles = StyleSheet.create({
     marginTop: 30,
   },
   button: {
-    marginRight: 5,
+    //marginRight: 5,
     backgroundColor: colors.primary,
     color: "white",
+    //height: "auto",
     padding: 5,
     borderRadius: 5,
     fontSize: 12,

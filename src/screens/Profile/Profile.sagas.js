@@ -4,7 +4,7 @@ import actions from "./Profile.actions";
 
 function* fetchUser(action) {
   try {
-    //console.log("profile params", action.params);
+    console.log("profile params", action.params);
     const res = yield getUserFromAPI(action.params);
 
     if (res.status === 200) {

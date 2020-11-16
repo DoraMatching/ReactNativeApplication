@@ -23,8 +23,9 @@ export default class ListItemTopic extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    paddingBottom: 100,
+    //paddingBottom: 100,
     marginHorizontal: 5,
+    marginVertical: 5,
   },
   image: {
     width: 120,

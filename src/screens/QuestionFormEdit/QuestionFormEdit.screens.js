@@ -1,4 +1,4 @@
-import React, {useState, Component} from "react";
+import React, {useState, Component, useEffect} from "react";
 import {
   View,
   Text,
@@ -29,7 +29,6 @@ const QuestionInput = (props) => {
   //console.log(name, editingValue);
   return (
     <View style={styles.textInputContainer}>
-      
       <View style={styles.labelContainer}>
         <Text style={styles.label}>{label}</Text>
         <Text style={{color: "red", ...styles.errorText}}>
@@ -68,70 +67,60 @@ const required = (value) => {
   return value ? undefined : "The field is required";
 };
 
-
+let inn = false;
+let count = 0;
 
 const QuestionFormEditScreen = (props) => {
-  
-  
   //console.log("1. QuestionFormEdit props: ", props);
   //if (!props.edit) return (<></>);
   const {id, token, title, content, tags} = props.params;
 
+  const tagRender = () => {
+    return (
+      tags &&
+      tags.map((tag, index) => {
+        return {id: tag.name.toLowerCase(), label: tag.name};
+      })
+    );
+  };
+
   const [editingTitle, setEditingTitle] = useState(title);
   const [editingContent, setEditingContent] = useState(content);
-  const items = tags && tags.map(item => { return {id : item.name.toLowerCase(), label : item.name}});
-  const [selectedItems, onSelectedItemsChange] = useState(items);
+  const items =
+    tags &&
+    tags.map((item) => {
+      return {id: item.name.toLowerCase(), label: item.name};
+    });
+  const [selectItems, onSelectItemsChange] = useState(items);
+  const [selectedItems, onSelectedItemsChange] = useState(tagRender());
   const [tag, setTagRef] = useState(null);
   const [tagName, setTagName] = useState("");
-  const [init, setInit] = useState(false);
 
-  //console.log("2. selectedItems screen", selectedItems);
-  
   const submit = (values) => {
     const tags = tag.itemsSelected.map((item) => {
       return {name: item.label};
     });
-    // const featuredImage =
-    //   "https://www.pixelrockstar.com/wp-content/uploads/2017/04/featured-image.png";
-    // props.onCreateBlog({tags, featuredImage, token: props.token, ...values});
-    console.log("QuestionFormEditScreen", values);
-    props.onEditQuestion({id, token, isDraft : true, tags, ...values});
-    //props.onEditBlog({id, token, isDraft : true,...values});
-    // if (props.data && props.data.success === true) {
-    //   alert("Your blog has just been created !");
-    //   props.onClose();
-    // } else if (props.data.success === false) {
-    //   alert(props.data.message);
-    // }
+    props.onEditQuestion({id, token, isDraft: true, tags, ...values});
   };
-  //console.log("3. first tag", tag);
-  //console.log("4. init tag", initTags);
-  
-  if (tag && tags && !init) {
-    let obj = {}
-    tags.map(item => {
-     // console.log("3.1. item", item);
-      obj = ( {[item.name.toLowerCase()] : {id : item.name.toLowerCase(), label : item.name}, ...obj});
-      //console.log("item", tag);
-    });
-    setInit(true);
-    //console.log("object", initTags);
-    tag.setState({value : {...tag.state.value, ...obj}});
-  }
-    
-  
 
-  const onRemoveButton = () => {
-    
-    console.log("tag.itemsSelected", tag.itemsSelected);
-    console.log("selectedItems", selectedItems);
-    console.log("c", _.difference(selectedItems, tag.itemsSelected));
-    onSelectedItemsChange(_.difference(selectedItems, tag.itemsSelected));
-    //tag.setState({value: {}});
-    console.log("tag", tag);
-    
-    //setRemovedItem(null);
-    //setHidden(true);
+  const onRemoveButton = async () => {
+    //console.log("remove", tag.itemsSelected.map(item => item.id));
+    onSelectItemsChange(
+      selectItems.filter((item) => {
+        return (
+          tag.itemsSelected.length != 0 &&
+          tag.itemsSelected.map((item) => item.id).indexOf(item.id) == -1
+        );
+      }),
+    );
+    onSelectedItemsChange([]);
+
+    //console.log("tag in removeButton", tag);
+  };
+
+  const onRemove = (item) => {
+      onSelectedItemsChange(selectedItems.filter((i) => i.id != item.id));
+      onSelectItemsChange(selectItems.filter((i) => i.id != item.id));
   };
 
   if (props.data && props.data.success === true) {
@@ -140,20 +129,30 @@ const QuestionFormEditScreen = (props) => {
   } else if (props.data.success === false) {
     alert(props.data.message);
   }
-  
+  useEffect(() => {
+    if (tag)  tag.data = selectItems;
+  }, [selectItems]);
+  useEffect(() => {
+    tag?.changeValue(selectedItems);
+  }, [selectedItems]);
+  const onItemPress = () => {
+    onSelectItemsChange(tag.itemsSelected);
+  }
   return (
     <SafeAreaView style={{flex: 1, justifyContent: "center"}}>
       <KeyboardAvoidingView behavior="padding" style={{flex: 1}}>
         <Pressable onPress={Keyboard.dismiss} style={styles.layout}>
           <View style={styles.layout}>
             {/* <ScrollView> */}
-            
+            {console.log("is rendered")}
             <View style={styles.labelContainer}>
               <Text style={styles.label}>Tag</Text>
             </View>
             <TagSelect
-              data={selectedItems}
-              //onItemPress={onItemPress}
+              value={selectedItems}
+              data={selectItems}
+              //onRemovee={onRemove}
+              onItemPress={onItemPress}
               //max={3}
               ref={setTagRef}
             />
@@ -171,9 +170,10 @@ const QuestionFormEditScreen = (props) => {
                   console.log("onPressButton", tag);
                   if (!tagName) return;
                   const newTag = {id: tagName.toLowerCase(), label: tagName};
-                  const arr = [newTag, ...selectedItems];
+                  const arr = [newTag, ...tag.itemsSelected];
                   //tag.setState({value : {[newTag.id] : newTag,...tag.state.value}});
                   console.log("arr", arr);
+                  onSelectItemsChange(_.uniqBy(arr, "id"));
                   onSelectedItemsChange(_.uniqBy(arr, "id"));
 
                   setTagName("");
@@ -193,7 +193,7 @@ const QuestionFormEditScreen = (props) => {
                 ]}>
                 Add
               </Button>
-              <Button
+              {/* <Button
                 onPress={onRemoveButton}
                 style={[
                   styles.button,
@@ -209,7 +209,7 @@ const QuestionFormEditScreen = (props) => {
                   },
                 ]}>
                 Remove
-              </Button>
+              </Button> */}
             </View>
             <Field
               name={"title"}
@@ -245,13 +245,11 @@ const QuestionFormEditScreen = (props) => {
               ]}>
               Edit
             </Button>
-            
           </View>
         </Pressable>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
-  
 };
 
 export const QuestionFormEdit = reduxForm({
@@ -297,7 +295,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     marginHorizontal: 10,
     //marginVertical: 10,
-    marginTop : 30,
+    marginTop: 30,
   },
   button: {
     marginRight: 5,

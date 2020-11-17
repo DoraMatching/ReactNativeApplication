@@ -7,6 +7,7 @@ const Actions = {
   REFRESH_DATA_FAILED: "GET_REFRESH_DATA_FAILED",
   OPEN_BLOG_DETAIL : "OPEN_BLOG_DETAIL",
   OPEN_QUESTION_DETAIL : "OPEN_QUESTION_DETAIL",
+  OPEN_PROFILE_INFO : "OPEN_PROFILE_INFO",
   getDataAction: (params) => {
     return {
       type: Actions.GET_DATA,
@@ -24,6 +25,13 @@ const Actions = {
   openQuestionDetailAction: (data) => {
     return {
       type: Actions.OPEN_QUESTION_DETAIL,
+      data,
+    }
+  },
+
+  openProfileInfoAction: (data) => {
+    return {
+      type: Actions.OPEN_PROFILE_INFO,
       data,
     }
   },

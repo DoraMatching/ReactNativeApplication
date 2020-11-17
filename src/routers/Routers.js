@@ -35,6 +35,8 @@ import colors from "../themes/color";
 // import {FloatingAction} from "react-native-floating-action";
 // import BlogFormModal from "../screens/BlogForm/BlogForm.modals";
 
+import LessonForm from '../screens/LessonForm/LessonForm.screens';
+
 import {SafeAreaProvider, SafeAreaView} from "react-native-safe-area-context";
 
 const Stack = createStackNavigator();
@@ -139,7 +141,7 @@ const tabRouters = () => (
       }}>
       <Tab.Screen name="Home" component={homeRouters} />
       <Tab.Screen name="Blogs" component={blogRouters} />
-      <Tab.Screen name="Schedule" component={ClassDetail} />
+      <Tab.Screen name="Schedule" component={LessonForm} />
       <Tab.Screen name="Questions" component={questionRouters} />
       <Tab.Screen name="Profile" component={profileRouters} />
     </Tab.Navigator>

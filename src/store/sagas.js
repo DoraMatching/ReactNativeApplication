@@ -12,6 +12,7 @@ import QuestionFormSaga from "../screens/QuestionForm/QuestionForm.sagas";
 import QuestionFormEditSaga from "../screens/QuestionFormEdit/QuestionFormEdit.sagas";
 import ProfileSaga from "../screens/Profile/Profile.sagas";
 import ProfileEditSaga from "../screens/ProfileEdit/ProfileEdit.sagas";
+import ProfileInfoSaga from "../screens/ProfileInfo/ProfileInfo.sagas";
 export default function* rootSaga() {
   yield all([
     LoginSaga(),
@@ -27,5 +28,6 @@ export default function* rootSaga() {
     BlogFormEditSaga(),
     QuestionFormEditSaga(),
     ProfileEditSaga(),
+    ProfileInfoSaga(),
   ]);
 }

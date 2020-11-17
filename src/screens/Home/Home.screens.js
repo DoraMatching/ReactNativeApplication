@@ -29,6 +29,8 @@ import FloatingButtonAction from "../../helpers/FloatingActionButton";
 import BlogFormEditModal from "../BlogFormEdit/BlogFormEdit.modals";
 import QuestionFormEditModal from "../QuestionFormEdit/QuestionFormEdit.modals";
 
+import ProfileInfoModal from "../ProfileInfo/ProfileInfo.modals";
+
 var screen = Dimensions.get("window");
 export default class Home extends Component {
   constructor(props) {
@@ -66,6 +68,12 @@ export default class Home extends Component {
 
     this.setQuestionFormEditModalRef = (element) => {
       this.questionFormEditModal = element;
+    };
+
+    this.profileInfoModal = null;
+
+    this.setProfileInfoModalRef = (element) => {
+      this.profileInfoModal = element;
     };
   }
 
@@ -131,6 +139,8 @@ export default class Home extends Component {
             ref={this.setBlogFormEditModalRef}></BlogFormEditModal>
           <QuestionFormEditModal
             ref={this.setQuestionFormEditModalRef}></QuestionFormEditModal>
+          <ProfileInfoModal
+            ref={this.setProfileInfoModalRef}></ProfileInfoModal>
           <OptionModal
             ref={this.setOptionModalRef}
             onOpenBlogEditForm={
@@ -162,17 +172,6 @@ export default class Home extends Component {
               />
             </View>
           </View>
-          {/* <FlatList
-            style={{
-              marginVertical: 5,
-              backgroundColor: "white",
-            }}
-            horizontal={true}
-            data={topic}
-            renderItem={({item, index}) => {
-              return <ListItemTopic {...item}></ListItemTopic>;
-            }}
-            keyExtractor={(item, index) => item.name}></FlatList> */}
 
           <FlatList
             style={{backgroundColor: "#C4C4C4"}}
@@ -239,7 +238,17 @@ export default class Home extends Component {
                     horizontal={true}
                     data={item.userList}
                     renderItem={({item, index}) => {
-                      return <ListItemTrainer {...item}></ListItemTrainer>;
+                      return (
+                      <Pressable
+                        onPress={() => {
+                          //this.props.navigation.navigate("BlogDetail");
+                          //this.props.onOpenBlogDetail(item);
+                          //console.log("HomeScreen", this.blogDetailModal);
+                          if (this.profileInfoModal)
+                            this.profileInfoModal.showProfileInfoModal(item.id);
+                        }}>
+                        <ListItemTrainer {...item}></ListItemTrainer>
+                      </Pressable>);
                     }}
                     keyExtractor={(item, index) => item.hour}></FlatList>
                 );

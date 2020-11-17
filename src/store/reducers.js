@@ -13,6 +13,8 @@ import {BlogFormEditReducer, EditReducer} from '../screens/BlogFormEdit/BlogForm
 import {QuestionFormEditReducer, QuestionEditReducer} from '../screens/QuestionFormEdit/QuestionFormEdit.reducers';
 import {ProfileReducer, PersonalBlogReducer, PersonalQuestionReducer, OptionModal} from '../screens/Profile/Profile.reducers';
 import {ProfileEditReducer} from '../screens/ProfileEdit/ProfileEdit.reducers';
+import {ProfileInfoReducer, UserBlogReducer, UserQuestionReducer} from '../screens/ProfileInfo/ProfileInfo.reducers'
+import {LessonReducer} from '../screens/LessonForm/LessonForm.reducers'
 
 
 const rootReducer = combineReducers({
@@ -41,6 +43,10 @@ const rootReducer = combineReducers({
   QuestionFormEditReducer,
   QuestionEditReducer,
   OptionModal,
+  LessonReducer,
+  ProfileInfoReducer,
+  UserBlogReducer,
+  UserQuestionReducer,
   form: formReducer,
 });
 

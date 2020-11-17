@@ -34,6 +34,7 @@ export default class ListItemBlog extends Component {
         subTitle : this.props.subTitle,
         content : this.props.content,
         tags : this.props.tags,
+        featuredImage: this.props.featuredImage,
         status : true,
     };
     return (

@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import {connect} from "react-redux";
 
 
-import ProfileAction from '../Profile.actions';
+import ProfileAction from '../ProfileInfo.actions';
 
 class PersonalBlog extends Component {
   constructor(props) {
@@ -53,9 +53,8 @@ class PersonalBlog extends Component {
                 {...{
                   token,
                   userID,
-                  author : {id : userID},
-                  showOptionModal: this.props.showOptionModal
-                    ,
+                  //showOptionModal: this.props.showOptionModal
+                   // ,
                   ...item,
                 }}></BlogItem>
             );
@@ -69,10 +68,10 @@ class PersonalBlog extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  blogs: state.PersonalBlogReducer,
+  blogs: state.UserBlogReducer,
   userID: !state.UserLoginReducer ? "" : state.UserLoginReducer.id,
   token: !state.UserLoginReducer ? "" : state.UserLoginReducer.token,
-  showOptionModal: state.OptionModal,
+  //showOptionModal: state.OptionModal,
 });
 
 const mapDispatchToProps = (dispatch) => {

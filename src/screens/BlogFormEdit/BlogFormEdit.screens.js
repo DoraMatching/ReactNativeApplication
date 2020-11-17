@@ -55,12 +55,16 @@ const required = (value) => {
 };
 
 const BlogFormScreen = (props) => {
+  const {id, token, title, subTitle, content, tags, featuredImage} = props.params;
+  const defaultImage = {
+    uri: featuredImage,
+  };
   const [avatar, setAvatar] = useState(defaultImage);
   //const [isHidden, setHidden] = useState(true);
 
   console.log("BlogFormEdit props: ", props);
   //if (!props.edit) return (<></>);
-  const {id, token, title, subTitle, content, tags} = props.params;
+  
 
   const tagRender = () => {
     return (

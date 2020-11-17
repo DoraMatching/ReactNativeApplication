@@ -31,8 +31,7 @@ export class PersonalQuestion extends Component {
             return <BlogItem {...{
               token,
               userID,
-              author : {id : userID},
-              showOptionModal: this.props.showOptionModal,
+              //showOptionModal: this.props.showOptionModal,
               ...item,
             }}></BlogItem>;
           }}
@@ -43,10 +42,10 @@ export class PersonalQuestion extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  questions: state.PersonalQuestionReducer,
+  questions: state.UserQuestionReducer,
   userID: !state.UserLoginReducer ? "" : state.UserLoginReducer.id,
   token: !state.UserLoginReducer ? "" : state.UserLoginReducer.token,
-  showOptionModal: state.OptionModal,
+  //showOptionModal: state.OptionModal,
 });
 
 const mapDispatchToProps = {};

@@ -111,10 +111,19 @@ export default class ListItemQuestionTop extends Component {
             </View>
           </View>
         </View>
-        <Pressable
-          onPress={() => this.props.showOptionModal(paramsForOptionModal)}>
-          <MoreOptionIcon width={20} height={20} style={{marginTop: 5}} />
-        </Pressable>
+       
+        <View>
+            { this.props.author && this.props.userID === this.props.author.id ? (
+              <Pressable
+                onPress={() =>
+                  this.props.showOptionModal(paramsForOptionModal)
+                }>
+                <MoreOptionIcon width={20} height={20} style={{marginTop: 5}} />
+              </Pressable>
+            ) : (
+              <></>
+            )}
+          </View>
       </View>
     );
   }

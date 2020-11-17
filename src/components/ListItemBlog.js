@@ -33,6 +33,7 @@ export default class ListItemBlog extends Component {
         title : this.props.title,
         subTitle : this.props.subTitle,
         content : this.props.content,
+        tags : this.props.tags,
         status : true,
     };
     return (

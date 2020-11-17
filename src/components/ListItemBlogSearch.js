@@ -14,6 +14,7 @@ export default class ListItemBlogSearch extends Component {
       title : this.props.title,
       subTitle : this.props.subTitle,
       content : this.props.content,
+      tags : this.props.tags,
       status : true,
   };
   if (!this.props.author || !this.props.title || !this.props.tags || !this.props.createdAt || !this.props.subTitle) return <></>;

@@ -7,8 +7,8 @@ const mapStateToProps = (state) => {
   return {
     data: state.HomeReducer ,
     dataItem : !state.HomeItemReducer ? [] : state.HomeItemReducer,
-    userID: !state.LoginReducer.message ? "" : state.LoginReducer.message.id,
-    token: !state.LoginReducer.message ? "" : state.LoginReducer.message.token,
+    userID: !state.UserLoginReducer ? "" : state.UserLoginReducer.id,
+    token: !state.UserLoginReducer ? "" : state.UserLoginReducer.token,
     alert : state.AlertReducer,
   };
 };

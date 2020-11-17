@@ -6,6 +6,7 @@ import QuestionDetailActions from "../QuestionDetail/QuestionDetail.actions";
 import BlogFormActions from "../BlogForm/BlogForm.actions";
 import QuestionFormActions from "../QuestionForm/QuestionForm.actions";
 import QuestionFormEditActions from "../QuestionFormEdit/QuestionFormEdit.actions";
+import BlogFormEditActions from "../BlogFormEdit/BlogFormEdit.actions";
 import _ from "lodash";
 import {act} from "react-test-renderer";
 
@@ -27,7 +28,7 @@ const HomeReducer = (data = null, action) => {
 const HomeItemReducer = (dataItem = [], action) => {
   switch (action.type) {
     case Actions.GET_DATA_SUCCEEDED:
-      return _.uniq([...dataItem, ...action.data.items],"id");
+      return _.uniq([...dataItem, ...action.data.items], "id");
 
     case Actions.GET_DATA_FAILED:
     case Actions.REFRESH_DATA_FAILED:
@@ -77,15 +78,14 @@ const HomeItemReducer = (dataItem = [], action) => {
     case QuestionSearchActions.DELETE_QUESTION_SUCCEEDED:
       //console.log("action in Home", action);
       return dataItem.filter((item) => item.id !== action.id);
-          
+
+    case BlogFormEditActions.UPDATE_BLOG_SUCCEEDED:
     case QuestionFormEditActions.UPDATE_QUESTION_SUCCEEDED:
       console.log("action Update in Home", action);
       console.log("ok");
       return dataItem.map((item) =>
-      item.id === action.data.id
-        ? action.data
-        : item,
-    );
+        item.id === action.data.id ? action.data : item,
+      );
     case QuestionFormEditActions.UPDATE_QUESTION_FAILED:
       console.log("Failed in update question in Home screen", action);
     default:

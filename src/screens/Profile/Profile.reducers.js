@@ -3,6 +3,8 @@ import BlogFormActions from "../BlogForm/BlogForm.actions";
 import QuestionFormActions from "../QuestionForm/QuestionForm.actions";
 import BlogFormEditActions from "../BlogFormEdit/BlogFormEdit.actions";
 import QuestionFormEditActions from "../QuestionFormEdit/QuestionFormEdit.actions";
+import QuestionDetailActions from "../QuestionDetail/QuestionDetail.actions";
+import BlogDetailActions from "../BlogDetail/BlogDetail.actions";
 // const BlogTagReducer = (data = null , action) => {
 //   switch (action.type) {
 //     case Actions.GET_BLOG_TAG_SUCCEEDED:
@@ -19,7 +21,7 @@ import QuestionFormEditActions from "../QuestionFormEdit/QuestionFormEdit.action
 const ProfileReducer = (data = null, action) => {
   switch (action.type) {
     case Actions.GET_PROFILE_SUCCEEDED:
-      console.log("get user success", action.data);
+      //console.log("get user success", action.data);
       return action.data;
 
     // case BlogFormActions.POST_BLOG_SUCCEEDED:
@@ -44,11 +46,11 @@ const ProfileReducer = (data = null, action) => {
 const PersonalBlogReducer = (data = [], action) => {
   switch (action.type) {
     case Actions.GET_PROFILE_SUCCEEDED:
-      console.log("get user success", action.data);
+      //console.log("get user success", action.data);
       return action.data.posts;
 
     case BlogFormActions.POST_BLOG_SUCCEEDED:
-    //case QuestionFormActions.POST_QUESTION_SUCCEEDED:
+      //case QuestionFormActions.POST_QUESTION_SUCCEEDED:
       console.log("post blog user success", action.data);
       //if (data) data.posts.unshift(action.data);
       return [action.data, ...data];
@@ -60,6 +62,26 @@ const PersonalBlogReducer = (data = [], action) => {
         item.id === action.data.id ? action.data : item,
       );
 
+    case BlogDetailActions.POST_BLOG_COMMENT_SUCCEEDED:
+      //console.log("Home reducer is called when post comment");
+      return data.map((item) =>
+        item.id === action.data.id
+          ? {...item, comments: action.data.comments}
+          : item,
+      );
+
+    case BlogDetailActions.PATCH_BLOG_COMMENT_SUCCEEDED:
+      return dataItem.map((item) =>
+        item.id === action.blogID
+          ? {
+              ...item,
+              comments: item.comments.map((item) =>
+                item.id === action.data.id ? action.data : item,
+              ),
+            }
+          : item,
+      );
+
     default:
       return data;
   }
@@ -68,12 +90,12 @@ const PersonalBlogReducer = (data = [], action) => {
 const PersonalQuestionReducer = (data = [], action) => {
   switch (action.type) {
     case Actions.GET_PROFILE_SUCCEEDED:
-      console.log("get user success", action.data);
+      //console.log("get user success", action.data);
       return action.data.questions;
 
     //case BlogFormActions.POST_BLOG_SUCCEEDED:
     case QuestionFormActions.POST_QUESTION_SUCCEEDED:
-      console.log("post blog user success", action.data);
+      //console.log("post blog user success", action.data);
       //if (data) data.posts.unshift(action.data);
       return [action.data, ...data];
     case Actions.GET_PROFILE_FAILED:
@@ -84,6 +106,26 @@ const PersonalQuestionReducer = (data = [], action) => {
         item.id === action.data.id ? action.data : item,
       );
 
+    case QuestionDetailActions.POST_QUESTION_COMMENT_SUCCEEDED:
+      //console.log("Home reducer is called when post comment");
+      return data.map((item) =>
+        item.id === action.data.id
+          ? {...item, comments: action.data.comments}
+          : item,
+      );
+
+    case QuestionDetailActions.PATCH_QUESTION_COMMENT_SUCCEEDED:
+      return dataItem.map((item) =>
+        item.id === action.questionID
+          ? {
+              ...item,
+              comments: item.comments.map((item) =>
+                item.id === action.data.id ? action.data : item,
+              ),
+            }
+          : item,
+      );
+
     default:
       return data;
   }
@@ -92,14 +134,17 @@ const PersonalQuestionReducer = (data = [], action) => {
 const OptionModal = (showOptionModal = () => {}, action) => {
   switch (action.type) {
     case Actions.GET_OPTION_MODAL:
-      console.log("get user success", action.params);
+      //console.log("get user success", action.params);
       return action.params;
-
-   
 
     default:
       return showOptionModal;
   }
 };
 
-export {ProfileReducer, PersonalBlogReducer, PersonalQuestionReducer, OptionModal};
+export {
+  ProfileReducer,
+  PersonalBlogReducer,
+  PersonalQuestionReducer,
+  OptionModal,
+};

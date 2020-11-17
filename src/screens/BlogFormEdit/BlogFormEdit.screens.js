@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import {
   Text,
   View,
@@ -17,6 +17,8 @@ import Button from "react-native-button";
 import ImagePicker from "react-native-image-picker";
 import {Image} from "react-native-elements";
 import defaultImage from "../../images/BlogFeaturedImage.png";
+import {TagSelect} from "react-native-tag-select";
+import _ from "lodash";
 const BlogInput = (props) => {
   const {
     meta: {touched, error, warning},
@@ -58,7 +60,26 @@ const BlogFormScreen = (props) => {
 
   console.log("BlogFormEdit props: ", props);
   //if (!props.edit) return (<></>);
-  const {id, token, title, subTitle, content} = props.params;
+  const {id, token, title, subTitle, content, tags} = props.params;
+
+  const tagRender = () => {
+    return (
+      tags &&
+      tags.map((tag, index) => {
+        return {id: tag.name.toLowerCase(), label: tag.name};
+      })
+    );
+  };
+
+  const items =
+    tags &&
+    tags.map((item) => {
+      return {id: item.name.toLowerCase(), label: item.name};
+    });
+  const [selectItems, onSelectItemsChange] = useState(items);
+  const [selectedItems, onSelectedItemsChange] = useState(tagRender());
+  const [tag, setTagRef] = useState(null);
+  const [tagName, setTagName] = useState("");
 
   const [editingTitle, setEditingTitle] = useState(title);
   const [editingSubTitle, setEditingSubTitle] = useState(subTitle);
@@ -91,8 +112,11 @@ const BlogFormScreen = (props) => {
     // const featuredImage =
     //   "https://www.pixelrockstar.com/wp-content/uploads/2017/04/featured-image.png";
     // props.onCreateBlog({tags, featuredImage, token: props.token, ...values});
+    const tags = tag.itemsSelected.map((item) => {
+      return {name: item.label};
+    });
     console.log("BlogFormEditScreen", values);
-    props.onEditBlog({id, token, isDraft: true, ...values});
+    props.onEditBlog({id, token, isDraft: true, tags, ...values});
     // if (props.data && props.data.success === true) {
     //   alert("Your blog has just been created !");
     //   props.onClose();
@@ -106,6 +130,16 @@ const BlogFormScreen = (props) => {
     props.onClose();
   } else if (props.data.success === false) {
     alert(props.data.message);
+  }
+
+  useEffect(() => {
+    if (tag)  tag.data = selectItems;
+  }, [selectItems]);
+  useEffect(() => {
+    tag?.changeValue(selectedItems);
+  }, [selectedItems]);
+  const onItemPress = () => {
+    onSelectItemsChange(tag.itemsSelected);
   }
 
   return (
@@ -128,6 +162,54 @@ const BlogFormScreen = (props) => {
               styles={styles.title}
               val={editingTitle}
             />
+             <TagSelect
+              value={selectedItems}
+              data={selectItems}
+              //onRemovee={onRemove}
+              onItemPress={onItemPress}
+              //max={3}
+              ref={setTagRef}
+              containerStyle={{marginTop : 5}}
+            />
+            <View style={{flexDirection: "row", ...styles.textInput}}>
+              <TextInput
+                style={{flex: 30, ...styles.tagInput}}
+                onChangeText={setTagName}
+                //{...input}
+                value={tagName}
+                placeholder={"Type your tag here ..."}
+                //{...rest}
+                returnKeyType="next"
+                autoCorrect={false}></TextInput>
+              <Button
+                onPress={() => {
+                  console.log("onPressButton", tag);
+                  if (!tagName) return;
+                  const newTag = {id: tagName.toLowerCase(), label: tagName};
+                  const arr = [newTag, ...tag.itemsSelected];
+                  //tag.setState({value : {[newTag.id] : newTag,...tag.state.value}});
+                  console.log("arr", arr);
+                  onSelectItemsChange(_.uniqBy(arr, "id"));
+                  onSelectedItemsChange(_.uniqBy(arr, "id"));
+
+                  setTagName("");
+                }}
+                style={[
+                  styles.button,
+                  {
+                    fontSize: 15,
+                    paddingVertical: 15,
+                    paddingHorizontal: 20,
+                    //marginVertical: 5,
+                    //marginLeft: 5,
+                    //height: 50,
+                    //bottom: 10,
+                    //flex : 40
+                  },
+                ]}>
+                Add
+              </Button>
+            </View>
             <Field
               name={"subTitle"}
               props={{
@@ -141,9 +223,7 @@ const BlogFormScreen = (props) => {
               onChange={setEditingSubTitle}
               val={editingSubTitle}
             />
-            <Pressable
-              style={styles.featuredImage}
-              >
+            <Pressable style={styles.featuredImage}>
               <Image
                 source={avatar}
                 PlaceholderContent={<ActivityIndicator />}
@@ -155,7 +235,7 @@ const BlogFormScreen = (props) => {
                 }}
               />
 
-              <Pressable  style={styles.overlay}>
+              <Pressable style={styles.overlay}>
                 <Text style={styles.editLabel} onPress={handlePicker}>
                   Edit your featured image
                 </Text>
@@ -243,5 +323,38 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 18,
     padding: 5,
+  },
+  textInput: {
+    backgroundColor: "#f0f2f5",
+    borderRadius: 5,
+    marginVertical: 5,
+    borderColor: "lightgray",
+    borderWidth: 1,
+    color: "black",
+    textAlignVertical: "top",
+  },
+  tagInput : {
+    backgroundColor: "#f0f2f5",
+    borderTopLeftRadius: 5,
+    borderBottomLeftRadius: 5,
+    //marginVertical: 2,
+    borderTopColor: "lightgray",
+    borderLeftColor: "lightgray",
+    borderBottomColor: "lightgray",
+    borderRightColor: "transparent",
+    borderTopWidth: 0.25,
+    borderLeftWidth: 0.25,
+    borderBottomWidth: 0.25,
+    color: "black",
+    //textAlignVertical: "top",
+  },
+  button: {
+    //marginRight: 5,
+    backgroundColor: colors.primary,
+    color: "white",
+    //height: "auto",
+    padding: 5,
+    borderRadius: 5,
+    fontSize: 12,
   },
 });

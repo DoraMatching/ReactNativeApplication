@@ -6,8 +6,8 @@ const mapStateToProps = (state) => {
   //console.log("Blog tag reducer", state.BlogTagReducer);
   return {
     blog : state.BlogDetailReducer,
-    token : state.LoginReducer? state.LoginReducer.message.token : "",
-    userID: !state.LoginReducer.message ? "" : state.LoginReducer.message.id,
+    token : state.UserLoginReducer? state.UserLoginReducer.token : "",
+    userID: !state.UserLoginReducer ? "" : state.UserLoginReducer.id,
     comments : state.BlogCommentReducer,
   };
 };

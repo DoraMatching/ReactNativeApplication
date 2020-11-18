@@ -2,6 +2,8 @@ import React, {Component} from "react";
 import {View, Text, StyleSheet, Image, Pressable} from "react-native";
 import TimeAgo from "react-native-timeago";
 import MoreOptionIcon from "../images/moreOption.svg";
+
+import Markdown from './MarkdownContent'
 export default class Comment extends Component {
   constructor(props) {
     super(props);
@@ -46,8 +48,12 @@ export default class Comment extends Component {
               <></>
             )}
           </View>
+        </View >
+        {/* <Text style={{...styles.comment}}>{this.props.content}</Text> */}
+        <View style={{...styles.comment}}>
+        <Markdown content={this.props.content} ></Markdown>
         </View>
-        <Text style={{...styles.comment}}>{this.props.content}</Text>
+        
       </View>
     );
   }

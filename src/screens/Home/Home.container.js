@@ -1,7 +1,7 @@
 import {connect} from "react-redux";
 import Home from "./Home.screens";
 import actions from "./Home.actions";
-import BlogSearchActions from "../BlogSearch/BlogSearch.actions";
+import TopicSearchActions from "../TopicSearch/TopicSearch.actions";
 
 const mapStateToProps = (state) => {
   return {
@@ -10,6 +10,7 @@ const mapStateToProps = (state) => {
     userID: !state.UserLoginReducer ? "" : state.UserLoginReducer.id,
     token: !state.UserLoginReducer ? "" : state.UserLoginReducer.token,
     alert : state.AlertReducer,
+    topic : !state.TopicTopItemReducer ? [] : state.TopicTopItemReducer,
   };
 };
 const mapDispatchToProps = (dispatch) => {
@@ -26,6 +27,9 @@ const mapDispatchToProps = (dispatch) => {
     onOpenQuestionDetail : (data) => {
       dispatch(actions.openQuestionDetailAction(data));
     },
+    onFetchTopic : (params) => {
+      dispatch(TopicSearchActions.getTopicTopAction(params));
+    }
     
   };
 };

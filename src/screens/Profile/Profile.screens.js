@@ -138,7 +138,7 @@ export default class Profile extends Component {
             </View>
           </View>
           <Text style={styles.role}>{roles.join(" - ")}</Text>
-          {roles.findIndex((item) => item === "Trainer") === -1 ? (
+          {roles.findIndex((item) => item === "TRAINER") === -1 ? (
             <Text style={styles.offerTrainer}>
               Do you want to be a trainer?{" "}
               <Text style={styles.signUpTrainer}>Sign up</Text>

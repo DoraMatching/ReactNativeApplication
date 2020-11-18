@@ -12,7 +12,7 @@ export default class ListItemTopic extends Component {
           <View style={styles.content}>
             <Text style={styles.textName} numberOfLines={2}>{this.props.name}</Text>
             <Text style={styles.textClassLength} numberOfLines={1}>
-              {this.props.classes.length} classes
+              {this.props.classes? this.props.classes.length : 0} classes
             </Text>
           </View>
         </ImageBackground>

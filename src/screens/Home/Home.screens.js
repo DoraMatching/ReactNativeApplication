@@ -84,6 +84,7 @@ export default class Home extends Component {
       //console.log("in componentWillMount");
       const {url} = this.state;
       this.props.onFetchData({url});
+      this.props.onFetchTopic({url : "topics?page=1&limit=20&order=DESC"});
     }
   }
 
@@ -261,11 +262,11 @@ export default class Home extends Component {
                   backgroundColor: "white",
                 }}
                 horizontal={true}
-                data={topic}
+                data={this.props.topic}
                 renderItem={({item, index}) => {
                   return <ListItemTopic {...item}></ListItemTopic>;
                 }}
-                keyExtractor={(item, index) => item.name}></FlatList>
+                keyExtractor={(item, index) => item.id}></FlatList>
             )}
           />
           <FloatingButtonAction />

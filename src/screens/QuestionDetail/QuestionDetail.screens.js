@@ -25,6 +25,7 @@ import moment from "moment";
 import {AutoGrowingTextInput} from "react-native-autogrow-textinput";
 import SendButton from "../../images/send-button.svg";
 
+import Markdown from "../../components/MarkdownContent";
 
 var screen = Dimensions.get("window");
 
@@ -50,16 +51,16 @@ export default class QuestionDetail extends Component {
 
   onEditComment = (content, commentID, authorID) => {
     // console.log("author", author.id);
-     //console.log("userID", this.props.userID);
-     if (this.props.userID !== authorID) return;
-     this.commentTextInput.focus();
-     this.setState({
-       comment: content,
-       isOpen: true,
-       isCreated: false,
-       commentID: commentID,
-     });
-   };
+    //console.log("userID", this.props.userID);
+    if (this.props.userID !== authorID) return;
+    this.commentTextInput.focus();
+    this.setState({
+      comment: content,
+      isOpen: true,
+      isCreated: false,
+      commentID: commentID,
+    });
+  };
 
   render() {
     var BContent = (
@@ -73,7 +74,7 @@ export default class QuestionDetail extends Component {
     );
 
     var imgSrc = this.state.isLiked ? likedIcon : unlikedIcon;
-    
+
     console.log("questiondetail", this.props.question);
     const {
       id,
@@ -85,79 +86,77 @@ export default class QuestionDetail extends Component {
       title,
       updatedAt,
     } = this.props.question;
-    
+
     return (
       <>
-        
-          <ScrollView style={{...styles.container}}> 
-            <View style={{}}>
-              <View style={{...styles.horizontalLayout, marginTop: 20}}>
-                <Image
-                  style={{
-                    width: 45,
-                    height: 45,
-                    borderRadius: 1000,
-                    marginRight: 10,
-                    borderColor: "#c4c4c4",
-                    borderWidth: 0.5,
-                  }}
-                  resizeMode="cover"
-                  source={{
-                    uri: author.avatarUrl,
-                  }}
-                />
-                <View>
-                  <Text style={{...styles.username}}>{author.name}</Text>
-                  <Text style={{...styles.time}}>
-                    Asked {moment(createdAt).format("llll")}
-                  </Text>
-                </View>
-              </View>
-              <Text style={{...styles.title}}>{title}</Text>
-              
-
-              <Text style={{...styles.content}}>{content}</Text>
-
-              <View style={{...styles.horizontalLayout}}>
-                {tags?.map((item) => {
-                  return <TagListItem item={item} />;
-                })}
-              </View>
-              <TouchableOpacity
+        <ScrollView style={{...styles.container}}>
+          <View style={{}}>
+            <View style={{...styles.horizontalLayout, marginTop: 20}}>
+              <Image
                 style={{
-                  ...styles.horizontalLayout,
-                  alignItems: "flex-end",
-                  marginVertical: 5,
+                  width: 45,
+                  height: 45,
+                  borderRadius: 1000,
+                  marginRight: 10,
+                  borderColor: "#c4c4c4",
+                  borderWidth: 0.5,
                 }}
-                onPress={() => this.setState({isLiked: !this.state.isLiked})}>
-                <Image
-                  style={{width: 30, height: 30}}
-                  resizeMode="cover"
-                  source={imgSrc}
-                />
-                <Text
-                  style={{fontSize: 15, paddingLeft: 5, fontWeight: "bold"}}>
-                  25 people liked this question
-                </Text>
-              </TouchableOpacity>
-              <Text
-                style={{fontWeight: "bold", fontSize: 20, marginVertical: 5}}>
-                Comments ({this.props.comments?.length})
-              </Text>
+                resizeMode="cover"
+                source={{
+                  uri: author.avatarUrl,
+                }}
+              />
               <View>
-                {
-                  console.log("Question comment", this.props.comments)
-                }
-                {
-                this.props.comments.map((item) => (
-                  
-                    <Comment
-                      {...{...item, userID: this.props.userID, onEditComment : this.onEditComment}}></Comment>
-                  
-                ))}
+                <Text style={{...styles.username}}>{author.name}</Text>
+                <Text style={{...styles.time}}>
+                  Asked {moment(createdAt).format("llll")}
+                </Text>
               </View>
             </View>
-          </ScrollView>
+            <Text style={{...styles.title}}>{title}</Text>
+
+            {/* <Text style={{...styles.content}}>{content}</Text> */}
+            <View style={{...styles.content}}>
+              <Markdown content={content}></Markdown>
+            </View>
+
+            <View style={{...styles.horizontalLayout}}>
+              {tags?.map((item) => {
+                return <TagListItem item={item} />;
+              })}
+            </View>
+            <TouchableOpacity
+              style={{
+                ...styles.horizontalLayout,
+                alignItems: "flex-end",
+                marginVertical: 5,
+              }}
+              onPress={() => this.setState({isLiked: !this.state.isLiked})}>
+              <Image
+                style={{width: 30, height: 30}}
+                resizeMode="cover"
+                source={imgSrc}
+              />
+              <Text style={{fontSize: 15, paddingLeft: 5, fontWeight: "bold"}}>
+                25 people liked this question
+              </Text>
+            </TouchableOpacity>
+            <Text style={{fontWeight: "bold", fontSize: 20, marginVertical: 5}}>
+              Comments ({this.props.comments?.length})
+            </Text>
+            <View>
+              {console.log("Question comment", this.props.comments)}
+              {this.props.comments.map((item) => (
+                <Comment
+                  {...{
+                    ...item,
+                    userID: this.props.userID,
+                    onEditComment: this.onEditComment,
+                  }}></Comment>
+              ))}
+            </View>
+          </View>
+        </ScrollView>
         <View
           style={{
             //flex: flexBottom,
@@ -203,7 +202,6 @@ export default class QuestionDetail extends Component {
             }}>
             <SendButton width={20} height={40} style={styles.sendButton} />
           </Pressable>
-         
         </View>
       </>
     );

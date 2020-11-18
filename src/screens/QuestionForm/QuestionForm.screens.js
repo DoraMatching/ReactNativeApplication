@@ -18,18 +18,21 @@ import colors from "../../themes/color";
 import MultiSelect from "react-native-multiple-select";
 import {TagSelect} from "react-native-tag-select";
 import actions from "./QuestionForm.actions";
+import tagPredictionActions from "../TagPrediction/TagPrediction.actions";
 import _ from "lodash";
 import {color} from "react-native-reanimated";
 
 const QuestionInput = (props) => {
   const {
     meta: {touched, error, warning},
-    input: {onChange, ...input},
+    input: {onChange,value,  ...input},
     label,
     val,
+    onEndEditing,
     ...rest
   } = props;
   //const [date, setDate] = useState(new Date());
+ // console.log("question input", props);
   return (
     <View style={styles.textInputContainer}>
       <View style={styles.labelContainer}>
@@ -54,6 +57,7 @@ const QuestionInput = (props) => {
           <TextInput
             style={styles.textInput}
             onChangeText={onChange}
+            onEndEditing={() => onEndEditing(value)}
             {...input}
             {...rest}
             returnKeyType="next"
@@ -77,7 +81,10 @@ const QuestionFormScreen = (props) => {
 
   const [selectItems, onSelectItemsChange] = useState([]);
   const [selectedItems, onSelectedItemsChange] = useState([]);
- 
+  
+  const [tagItems, onTagItemsChange] = useState([]);
+
+  //console.log("question props: ", props);
   const submit = (values) => {
     const tags = tag.itemsSelected.map((item) => {
       return {name: item.label};
@@ -95,19 +102,43 @@ const QuestionFormScreen = (props) => {
   useEffect(() => {
     if (tag)  tag.data = selectItems;
   }, [selectItems]);
+
   useEffect(() => {
     tag?.changeValue(selectedItems);
   }, [selectedItems]);
+
+  useEffect(() => {
+    onSelectItemsChange([...props.predictedTags,...tagItems]);
+    onSelectedItemsChange([...props.predictedTags,...tagItems]);
+    console.log("predictedTags", props.predictedTags);
+  }, [props.predictedTags]);
+
+  useEffect(() => {
+    onSelectItemsChange([...props.predictedTags,...tagItems]);
+    onSelectedItemsChange([...props.predictedTags,...tagItems]);
+    console.log("tagItems", tagItems);
+  }, [tagItems]);
+
+
   const onItemPress = () => {
+    console.log("onItemPress");
+    console.log("predictedTags", props.predictedTags);
+    console.log("tagItems", tagItems);
     onSelectItemsChange(tag.itemsSelected);
+  }
+  const onPredict = (content) => {
+   
+    //console.log("content to predict", content);
+   
+    props.onPredictTags({content});
   }
   return (
     <SafeAreaView style={{flex: 1, justifyContent: "center"}}>
       <KeyboardAvoidingView behavior="padding" style={{flex: 1}}>
         <Pressable onPress={Keyboard.dismiss} style={styles.layout}>
           <View style={styles.layout}>
-            {console.log("selectedItems", selectedItems)}
-            {tag && console.log("onPressButton", tag.itemsSelected)}
+            {/* {console.log("selectedItems", selectedItems)} */}
+            {tag && console.log("tag.itemsSelected", tag)}
 
             
             <View style={styles.labelContainer}>
@@ -137,10 +168,10 @@ const QuestionFormScreen = (props) => {
                   const newTag = {id: tagName.toLowerCase(), label: tagName};
                   const arr = [newTag, ...tag.itemsSelected];
                   //tag.setState({value : {[newTag.id] : newTag,...tag.state.value}});
-                  console.log("arr", arr);
+                  //console.log("arr", arr);
                   onSelectItemsChange(_.uniqBy(arr, "id"));
                   onSelectedItemsChange(_.uniqBy(arr, "id"));
-
+                  onTagItemsChange(_.uniqBy(arr, "id"));
                   setTagName("");
                 }}
                 style={[
@@ -149,11 +180,7 @@ const QuestionFormScreen = (props) => {
                     fontSize: 15,
                     paddingVertical: 15,
                     paddingHorizontal: 20,
-                    //marginVertical: 5,
-                    //marginLeft: 5,
-                    //height: 50,
-                    //bottom: 10,
-                    //flex : 40
+                  
                   },
                 ]}>
                 Add
@@ -172,6 +199,7 @@ const QuestionFormScreen = (props) => {
                 multiline: true,
                 numberOfLines: 5,
               }}
+              onEndEditing={onPredict}
               label={"Body"}
               component={QuestionInput}
               validate={required}
@@ -272,6 +300,7 @@ const QuestionForm = reduxForm({
 const mapStateToProps = (state) => ({
   data: state.QuestionFormReducer,
   token: state.UserLoginReducer ? state.UserLoginReducer.token : "",
+  predictedTags : state.TagPredictionReducer,
 });
 
 const mapDispatchToProps = (dispatch) => {
@@ -279,6 +308,9 @@ const mapDispatchToProps = (dispatch) => {
     onCreateQuestion: (params) => {
       dispatch(actions.postQuestionAction(params));
     },
+    onPredictTags: (params) => {
+      dispatch(tagPredictionActions.postTagPredictionAction(params));
+    }
   };
 };
 

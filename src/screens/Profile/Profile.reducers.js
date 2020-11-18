@@ -71,7 +71,7 @@ const PersonalBlogReducer = (data = [], action) => {
       );
 
     case BlogDetailActions.PATCH_BLOG_COMMENT_SUCCEEDED:
-      return dataItem.map((item) =>
+      return data.map((item) =>
         item.id === action.blogID
           ? {
               ...item,
@@ -115,7 +115,7 @@ const PersonalQuestionReducer = (data = [], action) => {
       );
 
     case QuestionDetailActions.PATCH_QUESTION_COMMENT_SUCCEEDED:
-      return dataItem.map((item) =>
+      return data.map((item) =>
         item.id === action.questionID
           ? {
               ...item,

@@ -12,6 +12,7 @@ function* createBlogComment(action) {
         yield put({type: actions.POST_BLOG_COMMENT_FAILED, error: res.message});
       }
     } catch (error) {
+      
       yield put({type: actions.POST_BLOG_COMMENT_FAILED, error: "Please try again!"});
     }
 }
@@ -27,6 +28,7 @@ function* editBlogComment(action) {
       yield put({type: actions.PATCH_BLOG_COMMENT_FAILED, error: res.message});
     }
   } catch (error) {
+    console.log(error);
     yield put({type: actions.PATCH_BLOG_COMMENT_FAILED, error: "Please try again!"});
   }
 }

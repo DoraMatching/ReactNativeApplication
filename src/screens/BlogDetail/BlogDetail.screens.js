@@ -31,6 +31,8 @@ import ScaledImage from "../../components/ScaledImage";
 import Modal from "react-native-modalbox";
 import Button from "react-native-button";
 
+import Markdown from "../../components/MarkdownContent";
+
 import {AutoGrowingTextInput} from "react-native-autogrow-textinput";
 
 var screen = Dimensions.get("window");
@@ -70,7 +72,7 @@ export default class BlogDetail extends Component {
     //console.log("blog detail modal tags", this.tags);
   };
   onEditComment = (content, commentID, authorID) => {
-   // console.log("author", author.id);
+    // console.log("author", author.id);
     //console.log("userID", this.props.userID);
     if (this.props.userID !== authorID) return;
     this.commentTextInput.focus();
@@ -93,7 +95,7 @@ export default class BlogDetail extends Component {
     );
     var imgSrc = this.state.isLiked ? likedIcon : unlikedIcon;
     const sampleUrl = "https://www.w3schools.com/w3images/avatar2.png";
-   
+
     const {
       id,
       author,
@@ -107,63 +109,62 @@ export default class BlogDetail extends Component {
       updatedAt,
     } = this.props.blog;
     console.log("BlogDetailScreen: ", this.props.blog);
-   
+
     return (
       <>
-        
-          <ScrollView style={styles.container} ref={this.setScrolllViewRef}>
-            <View style={{}}>
-              <Text style={{...styles.title}}>{title}</Text>
-              <View
+        <ScrollView style={styles.container} ref={this.setScrolllViewRef}>
+          <View style={{}}>
+            <Text style={{...styles.title}}>{title}</Text>
+            <View
+              style={{
+                ...styles.horizontalLayout,
+                marginVertical: 5,
+                flexWrap: "wrap",
+              }}>
+              {tags ? (
+                tags.map((item) => {
+                  return <TagListItem item={item} />;
+                })
+              ) : (
+                <></>
+              )}
+            </View>
+            <View
+              style={{
+                ...styles.horizontalLayout,
+                alignItems: "center",
+                marginVertical: 5,
+              }}>
+              <Image
                 style={{
-                  ...styles.horizontalLayout,
-                  marginVertical: 5,
-                  flexWrap: "wrap",
-                }}>
-                {tags ? (
-                  tags.map((item) => {
-                    return <TagListItem item={item} />;
-                  })
-                ) : (
-                  <></>
-                )}
-              </View>
-              <View
-                style={{
-                  ...styles.horizontalLayout,
-                  alignItems: "center",
-                  marginVertical: 5,
-                }}>
-                <Image
-                  style={{
-                    width: 45,
-                    height: 45,
-                    borderRadius: 1000,
-                    borderColor: "#c4c4c4",
-                    borderWidth: 0.5,
-                  }}
-                  resizeMode="cover"
-                  source={{
-                    uri: !this.author ? sampleUrl : author.avatarUrl,
-                  }}
-                />
-                <View style={{marginLeft: 10}}>
-                  <Text style={{...styles.author}}>
-                    {!author ? "" : author.name}
-                  </Text>
-                  <Text style={{...styles.time}}>
-                    created on {moment(createdAt).format("llll")}
-                  </Text>
-                </View>
-              </View>
-              <Text style={{...styles.description}}>{subTitle}</Text>
-              <ScaledImage
-                {...{
-                  uri: featuredImage,
-                  width: screen.width - styles.container.paddingHorizontal * 2,
+                  width: 45,
+                  height: 45,
+                  borderRadius: 1000,
+                  borderColor: "#c4c4c4",
+                  borderWidth: 0.5,
+                }}
+                resizeMode="cover"
+                source={{
+                  uri: !this.author ? sampleUrl : author.avatarUrl,
                 }}
               />
-              {/* <Image
+              <View style={{marginLeft: 10}}>
+                <Text style={{...styles.author}}>
+                  {!author ? "" : author.name}
+                </Text>
+                <Text style={{...styles.time}}>
+                  created on {moment(createdAt).format("llll")}
+                </Text>
+              </View>
+            </View>
+            <Text style={{...styles.description}}>{subTitle}</Text>
+            <ScaledImage
+              {...{
+                uri: featuredImage,
+                width: screen.width - styles.container.paddingHorizontal * 2,
+              }}
+            />
+            {/* <Image
                   style={{
                     width: screen.width,
                     height: 60,
@@ -175,39 +176,42 @@ export default class BlogDetail extends Component {
                     uri: this.featuredImage,
                   }}
                 /> */}
-              <Text style={{...styles.content}}>{content}</Text>
-              <TouchableOpacity
-                style={{
-                  ...styles.horizontalLayout,
-                  alignItems: "flex-end",
-                  marginVertical: 5,
-                }}
-                onPress={() => this.setState({isLiked: !this.state.isLiked})}>
-                <Image
-                  style={{width: 30, height: 30}}
-                  resizeMode="cover"
-                  source={imgSrc}
-                />
-                <Text
-                  style={{fontSize: 15, paddingLeft: 5, fontWeight: "bold"}}>
-                  25 people liked this blog
-                </Text>
-              </TouchableOpacity>
-              <Text
-                style={{fontWeight: "bold", fontSize: 20, marginVertical: 5}}>
-                Comments ({this.props.comments.length})
-              </Text>
-              <View>
-                {this.props.comments.map((item) => (
-                  
-                    <Comment
-                      {...{...item, userID: this.props.userID, onEditComment : this.onEditComment}}></Comment>
-                  
-                ))}
-              </View>
+            {/* <Text style={{...styles.content}}>{content}</Text> */}
+            <View style={{...styles.content}}>
+              <Markdown content={content}></Markdown>
             </View>
-          </ScrollView>
-        
+
+            <TouchableOpacity
+              style={{
+                ...styles.horizontalLayout,
+                alignItems: "flex-end",
+                marginVertical: 5,
+              }}
+              onPress={() => this.setState({isLiked: !this.state.isLiked})}>
+              <Image
+                style={{width: 30, height: 30}}
+                resizeMode="cover"
+                source={imgSrc}
+              />
+              <Text style={{fontSize: 15, paddingLeft: 5, fontWeight: "bold"}}>
+                25 people liked this blog
+              </Text>
+            </TouchableOpacity>
+            <Text style={{fontWeight: "bold", fontSize: 20, marginVertical: 5}}>
+              Comments ({this.props.comments.length})
+            </Text>
+            <View>
+              {this.props.comments.map((item) => (
+                <Comment
+                  {...{
+                    ...item,
+                    userID: this.props.userID,
+                    onEditComment: this.onEditComment,
+                  }}></Comment>
+              ))}
+            </View>
+          </View>
+        </ScrollView>
 
         <View
           style={{
@@ -254,9 +258,7 @@ export default class BlogDetail extends Component {
             }}>
             <SendButton width={20} height={40} style={styles.sendButton} />
           </Pressable>
-         
         </View>
-        
       </>
     );
   }

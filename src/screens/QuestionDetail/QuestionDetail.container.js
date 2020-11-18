@@ -7,8 +7,8 @@ const mapStateToProps = (state) => {
   return {
     question : state.QuestionDetailReducer,
     comments : state.QuestionCommentReducer,
-    token : state.LoginReducer?.message.token,
-    userID: !state.LoginReducer.message ? "" : state.LoginReducer.message.id,
+    token : state.UserLoginReducer.token,
+    userID: !state.UserLoginReducer ? "" : state.UserLoginReducer.id,
   };
 };
 const mapDispatchToProps = (dispatch) => {

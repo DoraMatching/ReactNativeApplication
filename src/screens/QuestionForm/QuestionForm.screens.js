@@ -57,7 +57,7 @@ const QuestionInput = (props) => {
           <TextInput
             style={styles.textInput}
             onChangeText={onChange}
-            onEndEditing={() => onEndEditing(value)}
+            onEndEditing={() => onEndEditing ? onEndEditing(value) : () => {}}
             {...input}
             {...rest}
             returnKeyType="next"
@@ -108,12 +108,15 @@ const QuestionFormScreen = (props) => {
   }, [selectedItems]);
 
   useEffect(() => {
+    if (props.predictedTags[0] === "default") return;
     onSelectItemsChange([...props.predictedTags,...tagItems]);
     onSelectedItemsChange([...props.predictedTags,...tagItems]);
     console.log("predictedTags", props.predictedTags);
   }, [props.predictedTags]);
 
   useEffect(() => {
+    if (props.predictedTags[0] === "default") return;
+    console.log("useEffect", [...props.predictedTags,...tagItems]);
     onSelectItemsChange([...props.predictedTags,...tagItems]);
     onSelectedItemsChange([...props.predictedTags,...tagItems]);
     console.log("tagItems", tagItems);
@@ -166,11 +169,7 @@ const QuestionFormScreen = (props) => {
                   console.log("onPressButton", tag);
                   if (!tagName) return;
                   const newTag = {id: tagName.toLowerCase(), label: tagName};
-                  const arr = [newTag, ...tag.itemsSelected];
-                  //tag.setState({value : {[newTag.id] : newTag,...tag.state.value}});
-                  //console.log("arr", arr);
-                  onSelectItemsChange(_.uniqBy(arr, "id"));
-                  onSelectedItemsChange(_.uniqBy(arr, "id"));
+                  const arr = [newTag];
                   onTagItemsChange(_.uniqBy(arr, "id"));
                   setTagName("");
                 }}

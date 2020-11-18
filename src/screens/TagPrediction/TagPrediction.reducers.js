@@ -15,7 +15,7 @@ const TagPredictionReducer = (data = [] , action) => {
 
     
     default:
-      return data;
+      return ["default"];
   }
 };
 

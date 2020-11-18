@@ -25,14 +25,12 @@ import {color} from "react-native-reanimated";
 const QuestionInput = (props) => {
   const {
     meta: {touched, error, warning},
-    input: {onChange,value,  ...input},
+    input: {onChange, value, ...input},
     label,
     val,
     onEndEditing,
     ...rest
   } = props;
-  //const [date, setDate] = useState(new Date());
- // console.log("question input", props);
   return (
     <View style={styles.textInputContainer}>
       <View style={styles.labelContainer}>
@@ -57,7 +55,7 @@ const QuestionInput = (props) => {
           <TextInput
             style={styles.textInput}
             onChangeText={onChange}
-            onEndEditing={() => onEndEditing ? onEndEditing(value) : () => {}}
+            onEndEditing={() => (onEndEditing ? onEndEditing(value) : () => {})}
             {...input}
             {...rest}
             returnKeyType="next"
@@ -75,23 +73,19 @@ const required = (value) => {
 };
 
 const QuestionFormScreen = (props) => {
-  //const [selectedItems, onSelectedItemsChange] = useState([]);
   const [tag, setTagRef] = useState(null);
   const [tagName, setTagName] = useState("");
 
   const [selectItems, onSelectItemsChange] = useState([]);
-  const [selectedItems, onSelectedItemsChange] = useState([]);
-  
-  const [tagItems, onTagItemsChange] = useState([]);
 
-  //console.log("question props: ", props);
+  const [tagItems, onTagItemsChange] = useState([]);
+  console.log("QuestionFormCompoent");
   const submit = (values) => {
     const tags = tag.itemsSelected.map((item) => {
       return {name: item.label};
     });
     console.log("QuestionFormScreen", values);
     props.onCreateQuestion({tags, token: props.token, ...values});
-    //console.log("BlogFormScreen", values);
   };
   if (props.data && props.data.success === true) {
     alert("Your question has just been created !");
@@ -100,41 +94,36 @@ const QuestionFormScreen = (props) => {
     alert(props.data.message);
   }
   useEffect(() => {
-    if (tag)  tag.data = selectItems;
+    if (tag) tag.data = selectItems;
+    tag?.changeValue(selectItems);
   }, [selectItems]);
 
   useEffect(() => {
-    tag?.changeValue(selectedItems);
-  }, [selectedItems]);
-
-  useEffect(() => {
     if (props.predictedTags[0] === "default") return;
-    onSelectItemsChange([...props.predictedTags,...tagItems]);
-    onSelectedItemsChange([...props.predictedTags,...tagItems]);
+    onSelectItemsChange([...props.predictedTags, ...tagItems]);
+
     console.log("predictedTags", props.predictedTags);
   }, [props.predictedTags]);
 
   useEffect(() => {
     if (props.predictedTags[0] === "default") return;
-    console.log("useEffect", [...props.predictedTags,...tagItems]);
-    onSelectItemsChange([...props.predictedTags,...tagItems]);
-    onSelectedItemsChange([...props.predictedTags,...tagItems]);
+    console.log("useEffect", [...props.predictedTags, ...tagItems]);
+    onSelectItemsChange([...props.predictedTags, ...tagItems]);
+
     console.log("tagItems", tagItems);
   }, [tagItems]);
-
 
   const onItemPress = () => {
     console.log("onItemPress");
     console.log("predictedTags", props.predictedTags);
     console.log("tagItems", tagItems);
     onSelectItemsChange(tag.itemsSelected);
-  }
+  };
   const onPredict = (content) => {
-   
     //console.log("content to predict", content);
-   
+
     props.onPredictTags({content});
-  }
+  };
   return (
     <SafeAreaView style={{flex: 1, justifyContent: "center"}}>
       <KeyboardAvoidingView behavior="padding" style={{flex: 1}}>
@@ -143,12 +132,11 @@ const QuestionFormScreen = (props) => {
             {/* {console.log("selectedItems", selectedItems)} */}
             {tag && console.log("tag.itemsSelected", tag)}
 
-            
             <View style={styles.labelContainer}>
               <Text style={styles.label}>Tag</Text>
             </View>
             <TagSelect
-              value={selectedItems}
+              value={selectItems}
               data={selectItems}
               //onRemovee={onRemove}
               onItemPress={onItemPress}
@@ -179,7 +167,6 @@ const QuestionFormScreen = (props) => {
                     fontSize: 15,
                     paddingVertical: 15,
                     paddingHorizontal: 20,
-                  
                   },
                 ]}>
                 Add
@@ -255,7 +242,7 @@ const styles = StyleSheet.create({
     color: "black",
     textAlignVertical: "top",
   },
-  tagInput : {
+  tagInput: {
     backgroundColor: "#f0f2f5",
     borderTopLeftRadius: 5,
     borderBottomLeftRadius: 5,
@@ -299,7 +286,7 @@ const QuestionForm = reduxForm({
 const mapStateToProps = (state) => ({
   data: state.QuestionFormReducer,
   token: state.UserLoginReducer ? state.UserLoginReducer.token : "",
-  predictedTags : state.TagPredictionReducer,
+  predictedTags: state.TagPredictionReducer,
 });
 
 const mapDispatchToProps = (dispatch) => {
@@ -309,7 +296,7 @@ const mapDispatchToProps = (dispatch) => {
     },
     onPredictTags: (params) => {
       dispatch(tagPredictionActions.postTagPredictionAction(params));
-    }
+    },
   };
 };
 

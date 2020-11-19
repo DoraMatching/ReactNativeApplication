@@ -16,7 +16,7 @@ import {SafeAreaProvider, SafeAreaView} from "react-native-safe-area-context";
 import Button from "react-native-button";
 import colors from "../../themes/color";
 import MultiSelect from "react-native-multiple-select";
-import {TagSelect} from "react-native-tag-select";
+import TagSelect from "../../helpers/TagSelect";
 import actions from "./QuestionForm.actions";
 import tagPredictionActions from "../TagPrediction/TagPrediction.actions";
 import _ from "lodash";

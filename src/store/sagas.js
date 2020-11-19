@@ -20,6 +20,8 @@ import TopicFormSaga from "../screens/TopicForm/TopicForm.sagas";
 import TopicSearchSaga from "../screens/TopicSearch/TopicSearch.sagas";
 
 import TagPredictionSaga from "../screens/TagPrediction/TagPrediction.sagas";
+
+import TopicDetailSaga from "../screens/TopicDetail/TopicDetail.sagas";
 export default function* rootSaga() {
   yield all([
     LoginSaga(),
@@ -38,6 +40,7 @@ export default function* rootSaga() {
     ProfileInfoSaga(),
     TopicFormSaga(),
     TopicSearchSaga(),
+    TopicDetailSaga(),
     TagPredictionSaga(),
   ]);
 }

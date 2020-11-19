@@ -24,12 +24,14 @@ import CloseOutline from "../../images/close-outline.svg";
 
 import {ClassForm} from './ClassForm.screens';
 
+import LessonForm from '../LessonForm/LessonForm.screens';
+
 var screen = Dimensions.get("window");
 export default class ClassFormModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLiked: false,
+      next: false,
       isOpen: false,
     };
     this.ClassFormModal = null;
@@ -75,7 +77,8 @@ export default class ClassFormModal extends Component {
         isOpen={this.state.isOpen}>
           <SafeAreaView style={{flex: 1, justifyContent: "flex-end"}}>
           <View style={{flexDirection: "column", flex: 1,marginBottom: 5}}>
-          <ClassForm onClose={this.onClose}></ClassForm>
+          {!this.state.next && <ClassForm onClose={this.onClose} setNext={(next) => this.setState({next})}></ClassForm>}
+          {this.state.next && <LessonForm setNext={(next) => this.setState({next})} ></LessonForm>}
           <View
               style={{
                 flexDirection: "row",

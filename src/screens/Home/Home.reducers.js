@@ -98,7 +98,8 @@ const AlertReducer = (alert = null, action) => {
   switch (action.type) {
     case BlogSearchActions.DELETE_BLOG_SUCCEEDED:
     case QuestionSearchActions.DELETE_QUESTION_SUCCEEDED:
-      return action.data;
+      return "success";
+    //   return action.data;
     case BlogSearchActions.DELETE_BLOG_FAILED:
     case QuestionSearchActions.DELETE_QUESTION_FAILED:
       return action.error;

@@ -14,10 +14,17 @@ import topic from "../../data/topic";
 import colors from "../../themes/color";
 
 import ListItemClass from "../../components/ListItemClass";
+
+import actions from "./TopicDetail.actions";
 var screen = Dimensions.get("window");
 export class TopicDetail extends Component {
+  constructor(props){
+    super(props);
+    this.props.onFetchTopicDetail({id : this.props.id, token : this.props.token})
+  }
   render() {
-    const {featuredImage, name, description, classes} = topic[0];
+    if (!this.props.data) return <></>;
+    const {featuredImage, name, description, classes} = this.props.data;
     return (
       <View style={styles.layoutContainer}>
         <StatusBar backgroundColor={"#ECD5BB"} />
@@ -52,9 +59,19 @@ export class TopicDetail extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (state) => ({
+  token: state.UserLoginReducer ? state.UserLoginReducer.token : "",
+  data: state.TopicDetailReducer,
 
-const mapDispatchToProps = {};
+});
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onFetchTopicDetail: (params) => {
+      dispatch(actions.getTopicDetailAction(params));
+    },
+  };
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(TopicDetail);
 

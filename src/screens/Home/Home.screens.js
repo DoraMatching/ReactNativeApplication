@@ -31,6 +31,9 @@ import QuestionFormEditModal from "../QuestionFormEdit/QuestionFormEdit.modals";
 
 import ProfileInfoModal from "../ProfileInfo/ProfileInfo.modals";
 
+import TopicDetailModal from "../TopicDetail/TopicDetail.modals";
+import {TopicDetail} from "../TopicDetail/TopicDetail.screens";
+
 var screen = Dimensions.get("window");
 export default class Home extends Component {
   constructor(props) {
@@ -75,6 +78,12 @@ export default class Home extends Component {
     this.setProfileInfoModalRef = (element) => {
       this.profileInfoModal = element;
     };
+
+    this.topicDetailModal = null;
+
+    this.setTopicDetailModalRef = (element) => {
+      this.topicDetailModal = element;
+    };
   }
 
   componentWillMount() {
@@ -84,7 +93,7 @@ export default class Home extends Component {
       //console.log("in componentWillMount");
       const {url} = this.state;
       this.props.onFetchData({url});
-      this.props.onFetchTopic({url : "topics?page=1&limit=20&order=DESC"});
+      this.props.onFetchTopic({url: "topics?page=1&limit=20&order=DESC"});
     }
   }
 
@@ -121,7 +130,7 @@ export default class Home extends Component {
   render() {
     const {search} = this.state;
     if (this.props.alert) {
-      alert(this.props.alert);
+      if (this.props.alert !== "success") alert(this.props.alert);
       this.optionModal.onClose();
     }
     //this.props.navigation.navigate("BlogDetail");
@@ -142,6 +151,8 @@ export default class Home extends Component {
             ref={this.setQuestionFormEditModalRef}></QuestionFormEditModal>
           <ProfileInfoModal
             ref={this.setProfileInfoModalRef}></ProfileInfoModal>
+          <TopicDetailModal
+            ref={this.setTopicDetailModalRef}></TopicDetailModal>
           <OptionModal
             ref={this.setOptionModalRef}
             onOpenBlogEditForm={
@@ -240,16 +251,19 @@ export default class Home extends Component {
                     data={item.userList}
                     renderItem={({item, index}) => {
                       return (
-                      <Pressable
-                        onPress={() => {
-                          //this.props.navigation.navigate("BlogDetail");
-                          //this.props.onOpenBlogDetail(item);
-                          //console.log("HomeScreen", this.blogDetailModal);
-                          if (this.profileInfoModal)
-                            this.profileInfoModal.showProfileInfoModal(item.id);
-                        }}>
-                        <ListItemTrainer {...item}></ListItemTrainer>
-                      </Pressable>);
+                        <Pressable
+                          onPress={() => {
+                            //this.props.navigation.navigate("BlogDetail");
+                            //this.props.onOpenBlogDetail(item);
+                            //console.log("HomeScreen", this.blogDetailModal);
+                            if (this.profileInfoModal)
+                              this.profileInfoModal.showProfileInfoModal(
+                                item.id,
+                              );
+                          }}>
+                          <ListItemTrainer {...item}></ListItemTrainer>
+                        </Pressable>
+                      );
                     }}
                     keyExtractor={(item, index) => item.hour}></FlatList>
                 );
@@ -264,7 +278,15 @@ export default class Home extends Component {
                 horizontal={true}
                 data={this.props.topic}
                 renderItem={({item, index}) => {
-                  return <ListItemTopic {...item}></ListItemTopic>;
+                  return (
+                    <Pressable
+                      onPress={() => {
+                        if (this.topicDetailModal)
+                          this.topicDetailModal.showTopicDetailModal(item.id);
+                      }}>
+                      <ListItemTopic {...item}></ListItemTopic>
+                    </Pressable>
+                  );
                 }}
                 keyExtractor={(item, index) => item.id}></FlatList>
             )}

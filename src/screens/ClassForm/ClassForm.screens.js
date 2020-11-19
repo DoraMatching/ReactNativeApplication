@@ -181,6 +181,7 @@ const ClassFormScreen = (props) => {
   console.log("ClassForm - topic : ", topic);
   const submit = (values) => {
     console.log("ClassFormScreen", values);
+    props.setNext(true);
   };
   return (
     
@@ -308,7 +309,7 @@ const ClassFormScreen = (props) => {
               component={ClassInput}
               validate={required}
             />
-
+            <View style={{flexDirection: "row", justifyContent: "flex-end"}}>
             <Button
               onPress={props.handleSubmit(submit)}
               style={[
@@ -317,11 +318,14 @@ const ClassFormScreen = (props) => {
                   fontSize: 18,
                   paddingVertical: 10,
                   marginVertical: 5,
+                  width : 60
                   //bottom: 10,
                 },
               ]}>
-              Create
+              Next
             </Button>
+            </View>
+           
             {/* </ScrollView> */}
           </View>
         </Pressable>

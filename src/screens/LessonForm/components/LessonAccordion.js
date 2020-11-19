@@ -19,9 +19,12 @@ export default class Accordion extends Component{
             UIManager.setLayoutAnimationEnabledExperimental(true);
         }
     }
-  
+  componentDidMount(){
+    if (this.props.data.action === "create") this.setState({expanded : true});
+  }
   render() {
         const {id, title, duration, action} = this.props.data;
+        
     return (
        <View>
             <TouchableOpacity ref={this.accordian} style={styles.row} onPress={()=>this.toggleExpand()}>

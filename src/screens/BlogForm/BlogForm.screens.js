@@ -18,14 +18,15 @@ import Button from "react-native-button";
 import ImagePicker from "react-native-image-picker";
 import {Image} from "react-native-elements";
 import defaultImage from "../../images/BlogFeaturedImage.png";
-import {TagSelect} from "react-native-tag-select";
+import TagSelect from "../../helpers/TagSelect";
 import _ from "lodash";
 const BlogInput = (props) => {
   const {
     meta: {touched, error, warning},
-    input: {onChange, name, ...input},
+    input: {onChange, name, value, ...input},
     label,
     styles,
+    onEndEditing,
     ...rest
   } = props;
   return (
@@ -36,6 +37,7 @@ const BlogInput = (props) => {
       <TextInput
         style={styles}
         onChangeText={onChange}
+        onEndEditing={() => (onEndEditing ? onEndEditing(value) : () => {})}
         {...input}
         {...rest}
         returnKeyType="next"
@@ -52,11 +54,13 @@ const required = (value) => {
 
 const BlogFormScreen = (props) => {
   const [avatar, setAvatar] = useState(defaultImage);
-  const [selectItems, onSelectItemsChange] = useState([]);
-  const [selectedItems, onSelectedItemsChange] = useState([]);
+  
   const [tag, setTagRef] = useState(null);
   const [tagName, setTagName] = useState("");
-  //const [isHidden, setHidden] = useState(true);
+ 
+  const [selectItems, onSelectItemsChange] = useState([]);
+
+  const [tagItems, onTagItemsChange] = useState([]);
 
   const handlePicker = () => {
     console.log("edit");
@@ -94,13 +98,31 @@ const BlogFormScreen = (props) => {
 
   useEffect(() => {
     if (tag)  tag.data = selectItems;
+    tag?.changeValue(selectItems);
   }, [selectItems]);
+
   useEffect(() => {
-    tag?.changeValue(selectedItems);
-  }, [selectedItems]);
+    if (props.predictedTags[0] === "default") return;
+    onSelectItemsChange([...props.predictedTags, ...tagItems]);
+
+    console.log("predictedTags", props.predictedTags);
+  }, [props.predictedTags]);
+
+  useEffect(() => {
+    if (props.predictedTags[0] === "default") return;
+    console.log("useEffect", [...props.predictedTags, ...tagItems]);
+    onSelectItemsChange([...props.predictedTags, ...tagItems]);
+
+    console.log("tagItems", tagItems);
+  }, [tagItems]);
   const onItemPress = () => {
     onSelectItemsChange(tag.itemsSelected);
   }
+  const onPredict = (content) => {
+    //console.log("content to predict", content);
+
+    props.onPredictTags({content});
+  };
 
   return (
     <KeyboardAvoidingView
@@ -120,7 +142,7 @@ const BlogFormScreen = (props) => {
           styles={styles.title}
         />
         <TagSelect
-              value={selectedItems}
+              value={selectItems}
               data={selectItems}
               //onRemovee={onRemove}
               onItemPress={onItemPress}
@@ -142,12 +164,8 @@ const BlogFormScreen = (props) => {
                   console.log("onPressButton", tag);
                   if (!tagName) return;
                   const newTag = {id: tagName.toLowerCase(), label: tagName};
-                  const arr = [newTag, ...tag.itemsSelected];
-                  //tag.setState({value : {[newTag.id] : newTag,...tag.state.value}});
-                  console.log("arr", arr);
-                  onSelectItemsChange(_.uniqBy(arr, "id"));
-                  onSelectedItemsChange(_.uniqBy(arr, "id"));
-
+                  const arr = [newTag];
+                  onTagItemsChange(_.uniqBy(arr, "id"));
                   setTagName("");
                 }}
                 style={[
@@ -202,6 +220,7 @@ const BlogFormScreen = (props) => {
             numberOfLines: 5,
           }}
           placeholder={"Your content is here ..."}
+          onEndEditing={onPredict}
           component={BlogInput}
           validate={required}
           styles={styles.description}

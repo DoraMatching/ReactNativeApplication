@@ -21,7 +21,8 @@ import {ProfileInfoReducer, UserBlogReducer, UserQuestionReducer} from '../scree
 import {LessonReducer} from '../screens/LessonForm/LessonForm.reducers'
 
 import {TopicFormReducer} from '../screens/TopicForm/TopicForm.reducers';
-import {TopicTopItemReducer, TopicTopReducer} from '../screens/TopicSearch/TopicSearch.reducers'
+import {TopicTopItemReducer, TopicTopReducer} from '../screens/TopicSearch/TopicSearch.reducers';
+import {TopicDetailReducer} from '../screens/TopicDetail/TopicDetail.reducers';
 
 
 import {TagPredictionReducer} from '../screens/TagPrediction/TagPrediction.reducers';
@@ -73,6 +74,8 @@ const rootReducer = combineReducers({
   TopicTopReducer,
   
   TagPredictionReducer,
+
+  TopicDetailReducer,
   form: formReducer,
 });
 

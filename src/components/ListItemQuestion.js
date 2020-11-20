@@ -16,18 +16,20 @@ export default class ListItemBlog extends Component {
   }
 
   render() {
+    const {id, title, author, createdAt, tags, content, comments} = this.props.item;
     var imgSrc = this.state.isLiked ? likedIcon : unlikedIcon;
     var paramsForOptionModal = {
       type : "question",
-      id : this.props.id,
+      id : id,
       token : this.props.token,
-      title : this.props.title,
+      title : title,
       //subTitle : this.props.subTitle,
-      content : this.props.content,
+      content : content,
       status : true,
-      tags : this.props.tags,
+      tags : tags,
   };
     //console.log("listItemQuestion: ", this.props.userID);
+    
     return (
       <View>
         <View style={{...styles.container, ...styles.verticalLayout}}>
@@ -47,7 +49,7 @@ export default class ListItemBlog extends Component {
               }}
               resizeMode="cover"
               source={{
-                uri: this.props.author.avatarUrl,
+                uri: author.avatarUrl,
               }}
             />
 
@@ -58,9 +60,9 @@ export default class ListItemBlog extends Component {
                 flex: 60,
               }}>
               <Text style={{...styles.title}} numberOfLines={2}>
-                {this.props.title}
+                {title}
               </Text>
-              <TimeAgo time={this.props.createdAt} style={{...styles.time}} />
+              <TimeAgo time={createdAt} style={{...styles.time}} />
 
               <View
                 style={{
@@ -68,7 +70,7 @@ export default class ListItemBlog extends Component {
                   marginBottom: 0,
                   flexWrap: "wrap",
                 }}>
-                {this.props.tags.map((item) => {
+                {tags.map((item) => {
                   return <TagListItem item={item} />;
                 })}
               </View>
@@ -79,7 +81,7 @@ export default class ListItemBlog extends Component {
                 resizeMode="cover"
                 source={require("../images/QuestionIcon.png")}
               />
-              {this.props.userID === this.props.author.id ? (
+              {this.props.userID === author.id ? (
                 <Pressable onPress={() => this.props.showOptionModal(paramsForOptionModal)}>
                 <MoreOptionIcon width={20} height={20} style={{marginTop: 5}} />
                 </Pressable>
@@ -90,12 +92,12 @@ export default class ListItemBlog extends Component {
           </View>
 
           <Text style={styles.descriptionText}>
-            {this.props.content.length > 200
-              ? this.props.content.substring(0, 200 - 3) + "..."
-              : this.props.content}
+            {content.length > 200
+              ? content.substring(0, 200 - 3) + "..."
+              : content}
             <Text style={{...styles.authorLabel}}> asked by </Text>
             <Text style={{fontWeight: "bold"}}>
-              {this.props.author ? this.props.author.name : "ABC"}
+              {author ? author.name : "ABC"}
             </Text>
           </Text>
           <Svg
@@ -136,7 +138,7 @@ export default class ListItemBlog extends Component {
                   alignSelf: "flex-end",
                   textAlign: "right",
                 }}>
-                {this.props.comments.length} comments
+                {comments.length} comments
               </Text>
             </View>
           </View>

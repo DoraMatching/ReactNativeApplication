@@ -27,6 +27,10 @@ import {TopicDetailReducer} from '../screens/TopicDetail/TopicDetail.reducers';
 
 import {TagPredictionReducer} from '../screens/TagPrediction/TagPrediction.reducers';
 
+import {TrainerTopItemReducer, TrainerTopReducer} from '../screens/TrainerSearch/TrainerSearch.reducers'
+
+import {TrainerRegisterReducer} from '../screens/TrainerRegister/TrainerRegister.reducers'
+
 const rootReducer = combineReducers({
   LoginReducer,
   UserLoginReducer,
@@ -76,6 +80,10 @@ const rootReducer = combineReducers({
   TagPredictionReducer,
 
   TopicDetailReducer,
+
+  TrainerTopItemReducer,
+  TrainerTopReducer,
+  TrainerRegisterReducer,
   form: formReducer,
 });
 

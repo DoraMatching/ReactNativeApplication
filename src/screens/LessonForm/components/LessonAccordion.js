@@ -1,79 +1,108 @@
-import React, {Component} from 'react';
-import { View, TouchableOpacity, Text, StyleSheet, LayoutAnimation, Platform, UIManager} from "react-native";
+import React, {Component} from "react";
+import {
+  View,
+  TouchableOpacity,
+  Text,
+  StyleSheet,
+  LayoutAnimation,
+  Platform,
+  UIManager,
+} from "react-native";
 //import { Colors } from './Colors';
-import colors from '../../../themes/color';
+import colors from "../../../themes/color";
 import Icon from "react-native-vector-icons/MaterialIcons";
-import Lesson from '../../../components/ListItemLesson';
+import Lesson from "../../../components/ListItemLesson";
 
+export default class Accordion extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: props.data,
+      expanded: false,
+    };
 
-export default class Accordion extends Component{
-
-    constructor(props) {
-        super(props);
-        this.state = { 
-          data: props.data,
-          expanded : false,
-        }
-
-        if (Platform.OS === 'android') {
-            UIManager.setLayoutAnimationEnabledExperimental(true);
-        }
+    if (Platform.OS === "android") {
+      UIManager.setLayoutAnimationEnabledExperimental(true);
     }
-  componentDidMount(){
-    if (this.props.data.action === "create") this.setState({expanded : true});
+  }
+  componentDidMount() {
+    if (this.props.data.action === "create") this.setState({expanded: true});
   }
   render() {
-        const {id, title, duration, action} = this.props.data;
-        
+    const {id, title, duration, timeStart, action} = this.props.data;
+
     return (
-       <View>
-            <TouchableOpacity ref={this.accordian} style={styles.row} onPress={()=>this.toggleExpand()}>
-                <Text style={[styles.title, styles.font]}>{!title ? "Create your lesson" : title }</Text>
-                {action === "edit" && <Icon name={this.state.expanded ? 'keyboard-arrow-up' : 'keyboard-arrow-down'} size={30} color={"white"} />}
-                {action === "create" && <Icon name={this.state.expanded ? 'add' : 'add'} size={30} color={"white"} />}
-            </TouchableOpacity>
-            <View style={styles.parentHr}/>
-            {
-                this.state.expanded &&
-                <View style={styles.child}>
-                    <Lesson action = {action} title={title} duration={duration} id={id} toggleExpand={this.toggleExpand}></Lesson>
-                </View>
-            }
-            
-       </View>
-    )
+      <View>
+        <TouchableOpacity
+          ref={this.accordian}
+          style={styles.row}
+          onPress={() => this.toggleExpand()}>
+          <Text style={[styles.title, styles.font]}>
+            {!title ? "Create your lesson" : title}
+          </Text>
+          {action === "edit" && (
+            <Icon
+              name={
+                this.state.expanded
+                  ? "keyboard-arrow-up"
+                  : "keyboard-arrow-down"
+              }
+              size={30}
+              color={"white"}
+            />
+          )}
+          {action === "create" && (
+            <Icon
+              name={this.state.expanded ? "add" : "add"}
+              size={30}
+              color={"white"}
+            />
+          )}
+        </TouchableOpacity>
+        <View style={styles.parentHr} />
+        {this.state.expanded && (
+          <View style={styles.child}>
+            <Lesson
+              action={action}
+              title={title}
+              duration={duration}
+              id={id}
+              timeStart={timeStart}
+              toggleExpand={this.toggleExpand}></Lesson>
+          </View>
+        )}
+      </View>
+    );
   }
 
-  toggleExpand=()=>{
+  toggleExpand = () => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-    this.setState({expanded : !this.state.expanded})
-  }
-
+    this.setState({expanded: !this.state.expanded});
+  };
 }
 
 const styles = StyleSheet.create({
-    title:{
-        fontSize: 14,
-        fontWeight:'bold',
-        color: "white",
-    },
-    row:{
-        flexDirection: 'row',
-        justifyContent:'space-between',
-        height:56,
-        paddingLeft:25,
-        paddingRight:18,
-        alignItems:'center',
-        backgroundColor: colors.primary,
-    },
-    parentHr:{
-        height:1,
-        color: "#ffffff",
-        width:'100%'
-    },
-    child:{
-        backgroundColor: "#D3D3D3",
-        padding:16,
-    }
-    
+  title: {
+    fontSize: 14,
+    fontWeight: "bold",
+    color: "white",
+  },
+  row: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    height: 56,
+    paddingLeft: 25,
+    paddingRight: 18,
+    alignItems: "center",
+    backgroundColor: colors.primary,
+  },
+  parentHr: {
+    height: 1,
+    color: "#ffffff",
+    width: "100%",
+  },
+  child: {
+    backgroundColor: "#D3D3D3",
+    padding: 16,
+  },
 });

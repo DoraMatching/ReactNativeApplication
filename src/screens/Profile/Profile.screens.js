@@ -21,6 +21,8 @@ import QuestionFormEditModal from "../QuestionFormEdit/QuestionFormEdit.modals";
 
 import QuestionDetailModal from "../QuestionDetail/QuestionDetail.modals";
 
+import TrainerRegisterModal from '../TrainerRegister/TrainerRegister.modals';
+
 export default class Profile extends Component {
   constructor(props) {
     super(props);
@@ -56,6 +58,12 @@ export default class Profile extends Component {
     this.setQuestionFormEditModalRef = (element) => {
       this.questionFormEditModal = element;
     };
+
+    this.trainerRegisterModal = null;
+
+    this.setTrainerRegisterModalRef = (element) => {
+      this.trainerRegisterModal = element;
+    };
   }
 
   signOut = () => {
@@ -79,32 +87,7 @@ export default class Profile extends Component {
       posts,
       questions,
     } = this.props.data;
-    const actions = [
-      {
-        text: "Accessibility",
-        //icon: require("../../images/book.svg"),
-        name: "bt_accessibility",
-        position: 2,
-      },
-      {
-        text: "Language",
-        //icon: require("../../images/book.svg"),
-        name: "bt_language",
-        position: 1,
-      },
-      {
-        text: "Location",
-        //icon: require("../../images/book.svg"),
-        name: "bt_room",
-        position: 3,
-      },
-      {
-        text: "Video",
-        //icon: require("../../images/book.svg"),
-        name: "bt_videocam",
-        position: 4,
-      },
-    ];
+  
     return (
       <SafeAreaView
         style={{
@@ -141,7 +124,7 @@ export default class Profile extends Component {
           {roles.findIndex((item) => item === "TRAINER") === -1 ? (
             <Text style={styles.offerTrainer}>
               Do you want to be a trainer?{" "}
-              <Text style={styles.signUpTrainer}>Sign up</Text>
+              <Text style={styles.signUpTrainer} onPress={() => this.trainerRegisterModal.showTrainerRegisterModal()}>Sign up</Text>
             </Text>
           ) : (
             <></>
@@ -188,6 +171,8 @@ export default class Profile extends Component {
           ref={this.setQuestionDetailModalRef}></QuestionDetailModal>
         <QuestionFormEditModal
           ref={this.setQuestionFormEditModalRef}></QuestionFormEditModal>
+          <TrainerRegisterModal
+          ref={this.setTrainerRegisterModalRef}></TrainerRegisterModal>
       </SafeAreaView>
     );
   }

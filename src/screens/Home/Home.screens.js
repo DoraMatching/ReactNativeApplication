@@ -213,7 +213,7 @@ export default class Home extends Component {
                         showOptionModal: this.optionModal
                           ? this.optionModal.showOptionModal
                           : () => {},
-                        ...item,
+                        item,
                       }}
                     />
                   </Pressable>

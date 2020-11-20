@@ -7,6 +7,8 @@ import React, {useState} from "react";
 import Home from "../screens/Home/Home.container";
 import BlogSearch from "../screens/BlogSearch/BlogSearch.container";
 import QuestionSearch from "../screens/QuestionSearch/QuestionSearch.container";
+import TrainerSearch from '../screens/TrainerSearch/TrainerSearch.screens';
+import TopicSearch from '../screens/TopicSearch/TopicSearch.screens';
 import LoginContainer from "../screens/Login/Login.container";
 import RegisterContainer from "../screens/Register/Register.container";
 
@@ -143,7 +145,9 @@ const tabRouters = () => (
       }}>
       <Tab.Screen name="Home" component={homeRouters} />
       <Tab.Screen name="Blogs" component={blogRouters} />
+      <Tab.Screen name="Trainers" component={TrainerSearch} />
       <Tab.Screen name="Schedule" component={Schedule} />
+      <Tab.Screen name="Topics" component={TopicSearch} />
       <Tab.Screen name="Questions" component={questionRouters} />
       <Tab.Screen name="Profile" component={profileRouters} />
     </Tab.Navigator>

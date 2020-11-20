@@ -11,7 +11,59 @@ import Button from "react-native-button";
 import actions from "../screens/LessonForm/LessonForm.actions";
 import colors from "../themes/color";
 import {connect} from "react-redux";
-import uuid from 'uuid-random';
+import uuid from "uuid-random";
+import DateTimePicker from "@react-native-community/datetimepicker";
+import moment from "moment";
+
+const MyDateTimePicker = (props) => {
+  const [date, setDate] = useState(new Date());
+  const [mode, setMode] = useState("date");
+  const [show, setShow] = useState(false);
+
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate || date;
+    setShow(Platform.OS === "ios");
+    setDate(currentDate);
+    console.log("currentDate", currentDate);
+    console.log("date", date);
+    props.setDateTime(currentDate);
+  };
+
+  const showMode = (currentMode) => {
+    setShow(true);
+    setMode(currentMode);
+  };
+
+  const showDatepicker = () => {
+    showMode("date");
+  };
+
+  const showTimepicker = () => {
+    showMode("time");
+  };
+
+  return (
+    <View style={[styles.dateTimePicker, props.style]}>
+      <Button style={styles.button} onPress={showDatepicker}>
+        Pick date
+      </Button>
+      <Button style={styles.button} onPress={showTimepicker}>
+        Pick time
+      </Button>
+
+      {show && (
+        <DateTimePicker
+          testID="startDateTimePicker"
+          value={date}
+          mode={mode}
+          is24Hour={true}
+          display="default"
+          onChange={onChange}
+        />
+      )}
+    </View>
+  );
+};
 
 const ListItemLesson = (props) => {
   console.log("list item lesson: ", props);
@@ -19,6 +71,7 @@ const ListItemLesson = (props) => {
   const [duration, setDuration] = useState(
     !props.duration ? "" : props.duration,
   );
+  const [date, setDate] = useState(!props.timeStart ? null : props.timeStart);
   const {action, id} = props;
   return (
     <Pressable style={styles.textInputContainer}>
@@ -49,6 +102,24 @@ const ListItemLesson = (props) => {
         value={duration}
         returnKeyType="next"
         autoCorrect={false}></TextInput>
+
+      <View style={styles.labelContainer}>
+        <Text style={styles.label}>Time start</Text>
+        {/* <Text style={{color: "red", ...styles.errorText}}>
+          {touched && error ? error : ""}
+        </Text> */}
+      </View>
+
+      <TextInput
+        style={styles.textInput}
+        editable={false}
+        onChangeText={setDate}
+        value={moment(date).format("MMM Do YYYY, h:mm:ss a")}
+        returnKeyType="next"
+        autoCorrect={false}></TextInput>
+
+        <MyDateTimePicker setDateTime={setDate}/>
+
       <View
         style={{
           flexDirection: "row",
@@ -59,8 +130,7 @@ const ListItemLesson = (props) => {
           <Button
             style={styles.button}
             onPress={() => {
-              props.onCreateLesson({id: uuid(), title, duration});
-             
+              props.onCreateLesson({id: uuid(), title, duration, timeStart : date});
             }}>
             Create
           </Button>
@@ -71,7 +141,7 @@ const ListItemLesson = (props) => {
           <Button
             style={styles.button}
             onPress={() => {
-              props.onEditLesson({id, title, duration});
+              props.onEditLesson({id, title, duration, timeStart : date});
               props.toggleExpand();
             }}>
             Change
@@ -80,10 +150,13 @@ const ListItemLesson = (props) => {
           <></>
         )}
         {action === "edit" ? (
-          <Button style={styles.button}
-          onPress={() => {
-            props.onDeleteLesson({id, title, duration});
-          }}>Delete</Button>
+          <Button
+            style={styles.button}
+            onPress={() => {
+              props.onDeleteLesson({id, title, duration, timeStart : date});
+            }}>
+            Delete
+          </Button>
         ) : (
           <></>
         )}
@@ -130,6 +203,11 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     fontSize: 16,
     marginLeft: 10,
+  },
+  dateTimePicker: {
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    marginVertical: 5,
   },
 });
 

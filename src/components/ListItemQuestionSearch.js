@@ -13,15 +13,18 @@ export default class ListItemQuestionTop extends Component {
   }
 
   render() {
+    if (!this.props.item) return <></>;
+    console.log("questions: ", this.props.item);
+    const {id, title, author, content, createdAt, tags, comments} = this.props.item;
     var paramsForOptionModal = {
       type : "question",
-      id : this.props.id,
+      id : id,
       token : this.props.token,
-      title : this.props.title,
+      title : title,
       //subTitle : this.props.subTitle,
-      content : this.props.content,
+      content : content,
       status : true,
-      tags : this.props.tags,
+      tags : tags,
   };
     return (
       <View style={{...styles.container, padding: 10}}>
@@ -30,6 +33,7 @@ export default class ListItemQuestionTop extends Component {
             ...styles.horizontalLayout,
             justifyContent: "space-between",
           }}>
+      
           <Image
             style={{
               width: 45,
@@ -41,7 +45,7 @@ export default class ListItemQuestionTop extends Component {
             }}
             resizeMode="cover"
             source={{
-              uri: this.props.author.avatarUrl,
+              uri: author.avatarUrl,
             }}
           />
           <View
@@ -51,7 +55,7 @@ export default class ListItemQuestionTop extends Component {
               flex: 60,
             }}>
             <Text style={{...styles.title}} numberOfLines={2}>
-              {this.props.title}
+              {title}
             </Text>
             <View
               style={{
@@ -60,13 +64,13 @@ export default class ListItemQuestionTop extends Component {
                 flexWrap: "wrap",
                 marginVertical: 5,
               }}>
-              {this.props.tags.map((item) => {
+              {tags.map((item) => {
                 return <TagListItem item={item} />;
               })}
             </View>
           </View>
           <View>
-            {this.props.userID === this.props.author.id ? (
+            {this.props.userID === author.id ? (
               <Pressable
                 onPress={() =>
                   this.props.showOptionModal(paramsForOptionModal)
@@ -81,15 +85,15 @@ export default class ListItemQuestionTop extends Component {
         <View style={{...styles.horizontalLayout, marginHorizontal: 0}}>
           <Text style={{...styles.descriptionText, flex: 80}}>
             <Text style={{...styles.time}}>
-              {moment(this.props.createdAt).format("MMM Do \u2022 ")}
+              {moment(createdAt).format("MMM Do \u2022 ")}
             </Text>
-            {this.props.content.length > 120
-              ? this.props.content.substring(0, 120 - 3) + "..."
-              : this.props.content}
+            {content.length > 120
+              ? content.substring(0, 120 - 3) + "..."
+              : content}
 
             <Text style={{...styles.authorLabel}}> asked by </Text>
             <Text style={{fontWeight: "bold"}}>
-              {this.props.author ? this.props.author.name : "ABC"}
+              {author ? author.name : "ABC"}
             </Text>
           </Text>
           <Image
@@ -130,7 +134,7 @@ export default class ListItemQuestionTop extends Component {
                 alignSelf: "flex-end",
                 textAlign: "right",
               }}>
-              {this.props.comments.length}
+              {comments.length}
             </Text>
           </View>
         </View>

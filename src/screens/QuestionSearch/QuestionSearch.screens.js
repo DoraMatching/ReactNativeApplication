@@ -127,7 +127,7 @@ export default class QuestionSearch extends Component {
                     showOptionModal: this.optionModal
                       ? this.optionModal.showOptionModal
                       : () => {},
-                    ...item,
+                    item,
                   }}
                 />
               </Pressable>

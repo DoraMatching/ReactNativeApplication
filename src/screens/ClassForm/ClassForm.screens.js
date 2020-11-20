@@ -1,4 +1,4 @@
-import React, {useState, Component} from "react";
+import React, {useState, Component, useEffect} from "react";
 import {
   Text,
   View,
@@ -21,6 +21,10 @@ import colors from "../../themes/color";
 import moment from "moment";
 import SearchableDropdown from "react-native-searchable-dropdown";
 import {SafeAreaProvider, SafeAreaView} from "react-native-safe-area-context";
+import actions from "./ClassForm.actions";
+import topicSearchActions from "../TopicSearch/TopicSearch.actions";
+import { connect } from 'react-redux'
+
 import { set } from "react-native-reanimated";
 
 const items = [
@@ -173,15 +177,22 @@ const ClassInput = (props) => {
 
 const ClassFormScreen = (props) => {
   console.log("props in screen", props);
+  props.onFetchTopic({url : "topics?page=1&limit=20&order=DESC"});
+ 
   const [selectedItems, onSelectedItemsChange] = useState([]);
   const [multiSelect, setMultiSelectRef] = useState(null);
-  const [topic, setTopic] = useState("");
-  const [dateStart, setDateStart] = useState(new Date());
-  const [dateEnd, setDateEnd] = useState(new Date());
+  const [topic, setTopic] = useState({name : ""});
+  const [startTime, setStartTime] = useState(new Date());
+  const [endTime, setEndTime] = useState(new Date());
+  //const [selectTopics, onSelectTopicsChange] = useState([]);
   console.log("ClassForm - topic : ", topic);
+  // useEffect(() => {
+  //   onSelectTopicsChange(props.topic.map(item => {return {id : item.id, name : item.name}}))
+  // }, [props.topic]);
   const submit = (values) => {
     console.log("ClassFormScreen", values);
-    props.setNext(true);
+    props.onCreateClass({token : props.token,topic,startTime, endTime, ...values});
+    //props.setNext(true);
   };
   return (
     
@@ -194,18 +205,18 @@ const ClassFormScreen = (props) => {
               </View>
               <SearchableDropdown
                 onItemSelect={(item) => {
-                  const items = selectedItems;
-                  setTopic(item.name);
-                  items.push(item);
-                  onSelectedItemsChange(items);
+                  //const items = selectTopics;
+                  setTopic(item);
+                  //items.push(item);
+                  //onSelectedItemsChange(selectTopics);
                 }}
-                selectedItems={selectedItems}
+                //selectedItems={props.topic}
                 containerStyle={{marginVertical: 5}}
                 onRemoveItem={(item, index) => {
-                  const items = selectedItems.filter(
-                    (sitem) => sitem.id !== item.id,
-                  );
-                  onSelectedItemsChange(items);
+                  // const items = selectedItems.filter(
+                  //   (sitem) => sitem.id !== item.id,
+                  // );
+                  // onSelectedItemsChange(items);
                 }}
                 itemStyle={{
                   padding: 10,
@@ -223,7 +234,7 @@ const ClassFormScreen = (props) => {
                   top: 45,
                   zIndex: 99,
                 }}
-                items={items}
+                items={props.topic}
                 defaultIndex={2}
                 resetValue={false}
                 textInputProps={{
@@ -237,7 +248,7 @@ const ClassFormScreen = (props) => {
                   },
                   //onTextChange: (text) => alert(text),
                   onChangeText : setTopic,
-                  value : topic
+                  value : topic.name
                 }}
                 listProps={{
                   nestedScrollEnabled: true,
@@ -247,7 +258,7 @@ const ClassFormScreen = (props) => {
 
             {/* <ScrollView> */}
             <Field
-              name={"classname"}
+              name={"name"}
               label={"Classname"}
               component={ClassInput}
               validate={required}
@@ -259,6 +270,12 @@ const ClassFormScreen = (props) => {
                 numberOfLines: 3,
               }}
               label={"Description"}
+              component={ClassInput}
+              validate={required}
+            />
+            <Field
+              name={"featuredImage"}
+              label={"Featured image"}
               component={ClassInput}
               validate={required}
             />
@@ -274,9 +291,9 @@ const ClassFormScreen = (props) => {
                     }}
                     label={"Start Time"}
                     component={ClassInput}
-                    onChange={setDateStart}
-                    value={dateStart}
-                    val={moment(dateStart).format("MMM Do YYYY, h:mm:ss a")}
+                    onChange={setStartTime}
+                    value={startTime}
+                    val={moment(startTime).format("MMM Do YYYY, h:mm:ss a")}
                     //style={{flex : 50}}
                   />
                 </View>
@@ -288,18 +305,18 @@ const ClassFormScreen = (props) => {
                     }}
                     label={"End Time"}
                     component={ClassInput}
-                    onChange={setDateEnd}
-                    value={dateEnd}
-                    val={moment(dateEnd).format("MMM Do YYYY, h:mm:ss a")}
-                    //validate={dateTimeCompare(dateStart, dateEnd)}
+                    onChange={setEndTime}
+                    value={endTime}
+                    val={moment(endTime).format("MMM Do YYYY, h:mm:ss a")}
+                    //validate={dateTimeCompare(startTime, endTime)}
                     //style={{flex : 50}}
                   />
                 </View>
               </View>
               <View
                 style={{flexDirection: "row", }}>
-                <MyDateTimePicker setDateTime={setDateStart} style={{flex : 50}}/>
-                <MyDateTimePicker setDateTime={setDateEnd} style={{flex: 50,}}/>
+                <MyDateTimePicker setDateTime={setStartTime} style={{flex : 50}}/>
+                <MyDateTimePicker setDateTime={setEndTime} style={{flex: 50,}}/>
               </View>
             </View>
 
@@ -308,6 +325,7 @@ const ClassFormScreen = (props) => {
               label={"Duration"}
               component={ClassInput}
               validate={required}
+              keyboardType={"numeric"}
             />
             <View style={{flexDirection: "row", justifyContent: "flex-end"}}>
             <Button
@@ -337,6 +355,28 @@ const ClassFormScreen = (props) => {
 export const ClassForm = reduxForm({
   form: "class",
 })(ClassFormScreen);
+
+const mapStateToProps = (state) => ({
+  topic : !state.TopicTopReducer ? [] : state.TopicTopReducer.items,
+  token : state.UserLoginReducer? state.UserLoginReducer.token : "",
+})
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onCreateClass: (params) => {
+      dispatch(actions.postClassAction(params));
+    },
+    onFetchTopic: (params) => {
+      dispatch(topicSearchActions.getTopicTopAction(params));
+    },
+    // onPredictTags: (params) => { topicSearchActions
+    //   dispatch(tagPredictionActions.postTagPredictionAction(params));
+    // },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ClassForm);
+
 
 const styles = StyleSheet.create({
   textInputContainer: {

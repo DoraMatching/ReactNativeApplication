@@ -25,6 +25,8 @@ import TagPredictionSaga from "../screens/TagPrediction/TagPrediction.sagas";
 import TopicDetailSaga from "../screens/TopicDetail/TopicDetail.sagas";
 
 import TrainerRegisterSaga from "../screens/TrainerRegister/TrainerRegister.sagas";
+
+import ClassFormSaga from "../screens/ClassForm/ClassForm.sagas";
 export default function* rootSaga() {
   yield all([
     LoginSaga(),
@@ -48,5 +50,7 @@ export default function* rootSaga() {
 
     TrainerSearchSaga(),
     TrainerRegisterSaga(),
+
+    ClassFormSaga(),
   ]);
 }

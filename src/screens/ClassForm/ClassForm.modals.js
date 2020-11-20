@@ -22,7 +22,7 @@ import CloseOutline from "../../images/close-outline.svg";
 
 
 
-import {ClassForm} from './ClassForm.screens';
+import ClassForm from './ClassForm.screens';
 
 import LessonForm from '../LessonForm/LessonForm.screens';
 

@@ -31,6 +31,8 @@ import {TrainerTopItemReducer, TrainerTopReducer} from '../screens/TrainerSearch
 
 import {TrainerRegisterReducer} from '../screens/TrainerRegister/TrainerRegister.reducers'
 
+import {ClassFormReducer} from '../screens/ClassForm/ClassForm.reducers';
+
 const rootReducer = combineReducers({
   LoginReducer,
   UserLoginReducer,
@@ -84,6 +86,8 @@ const rootReducer = combineReducers({
   TrainerTopItemReducer,
   TrainerTopReducer,
   TrainerRegisterReducer,
+
+  ClassFormReducer,
   form: formReducer,
 });
 

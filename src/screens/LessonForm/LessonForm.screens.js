@@ -10,6 +10,9 @@ class LessonForm extends Component {
     const renderItem = ({item}) => (
       <LessonAccordion data={{action: "edit", ...item}} />
     );
+    // if (props.data.success && props.data.success == false){
+    //   alert(props.data.message);
+    // }
     return (
       <View
         style={{
@@ -43,6 +46,7 @@ class LessonForm extends Component {
 }
 const mapStateToProps = (state) => ({
   lessons: state.LessonReducer,
+  
 });
 
 const mapDispatchToProps = (dispatch) => {

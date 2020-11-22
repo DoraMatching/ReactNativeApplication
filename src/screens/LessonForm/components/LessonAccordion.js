@@ -29,7 +29,7 @@ export default class Accordion extends Component {
     if (this.props.data.action === "create") this.setState({expanded: true});
   }
   render() {
-    const {id, title, duration, timeStart, action} = this.props.data;
+    const {id, name, duration, startTime, action} = this.props.data;
 
     return (
       <View>
@@ -38,7 +38,7 @@ export default class Accordion extends Component {
           style={styles.row}
           onPress={() => this.toggleExpand()}>
           <Text style={[styles.title, styles.font]}>
-            {!title ? "Create your lesson" : title}
+            {!name ? "Create your lesson" : name}
           </Text>
           {action === "edit" && (
             <Icon
@@ -64,10 +64,10 @@ export default class Accordion extends Component {
           <View style={styles.child}>
             <Lesson
               action={action}
-              title={title}
+              name={name}
               duration={duration}
               id={id}
-              timeStart={timeStart}
+              startTime={startTime}
               toggleExpand={this.toggleExpand}></Lesson>
           </View>
         )}

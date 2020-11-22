@@ -24,7 +24,7 @@ export class TopicSearch extends Component {
           isLoading: false,
         };
         
-        this.props.onFetchTop({url: this.state.url});
+       // this.props.onFetchTop({url: this.state.url});
     
       }
     
@@ -36,10 +36,14 @@ export class TopicSearch extends Component {
       };
     
       retrieveMore = () => {
+        if (!this.props.data && typeof this.props.data === 'undefined') return;
+        console.log("TrainerSearch in RetrieveMore 0", !this.props.data && typeof this.props.data === 'undefined')
         console.log("TrainerSearch in RetrieveMore", this.props.data);
         console.log("retrieveMore is called");
-        let url = this.props.data.links.next;
+        let url = this.props.data? this.props.data.links.next : "";
+        console.log("TrainerSearch url: ", url);
         if (url === "") {
+          console.log("TrainerSearch inside if block");
           return;
         }
         this.props.onFetchTop({url});
@@ -135,6 +139,9 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => ({
     topic : !state.TopicTopItemReducer ? [] : state.TopicTopItemReducer,
+    data : !state.TopicTopReducer ? null : state.TopicTopReducer,
+    userID: !state.UserLoginReducer ? "" : state.UserLoginReducer.id,
+    token: !state.UserLoginReducer ? "" : state.UserLoginReducer.token,
 });
 
 const mapDispatchToProps = (dispatch) => {

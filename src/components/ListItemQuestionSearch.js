@@ -6,7 +6,7 @@ import TagListItem from "./ListItemTag";
 import MoreOptionIcon from "../images/moreOption.svg";
 
 
-export default class ListItemQuestionTop extends Component {
+export default class ListItemQuestionSearch extends Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -64,7 +64,7 @@ export default class ListItemQuestionTop extends Component {
                 flexWrap: "wrap",
                 marginVertical: 5,
               }}>
-              {tags.map((item) => {
+              {tags && tags.map((item) => {
                 return <TagListItem item={item} />;
               })}
             </View>

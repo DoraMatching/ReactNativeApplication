@@ -15,7 +15,7 @@ const ClassFormReducer = (data = {success: null, message: null} , action) => {
 
     
     default:
-      return {success: null, message: null};
+      return data;
   }
 };
 

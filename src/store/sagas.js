@@ -27,6 +27,8 @@ import TopicDetailSaga from "../screens/TopicDetail/TopicDetail.sagas";
 import TrainerRegisterSaga from "../screens/TrainerRegister/TrainerRegister.sagas";
 
 import ClassFormSaga from "../screens/ClassForm/ClassForm.sagas";
+
+import LessonFormSaga from "../screens/LessonForm/LessonForm.sagas";
 export default function* rootSaga() {
   yield all([
     LoginSaga(),
@@ -52,5 +54,7 @@ export default function* rootSaga() {
     TrainerRegisterSaga(),
 
     ClassFormSaga(),
+
+    LessonFormSaga(),
   ]);
 }

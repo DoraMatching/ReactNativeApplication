@@ -41,7 +41,7 @@ const MyDateTimePicker = (props) => {
   const showTimepicker = () => {
     showMode("time");
   };
-
+  console.log("class in lesson form: ", props.class);
   return (
     <View style={[styles.dateTimePicker, props.style]}>
       <Button style={styles.button} onPress={showDatepicker}>
@@ -67,12 +67,16 @@ const MyDateTimePicker = (props) => {
 
 const ListItemLesson = (props) => {
   console.log("list item lesson: ", props);
-  const [title, setTitle] = useState(!props.title ? "" : props.title);
+  const [title, setTitle] = useState(!props.name ? "" : props.name);
   const [duration, setDuration] = useState(
-    !props.duration ? "" : props.duration,
+    !props.duration ? "" : props.duration.toString(),
   );
-  const [date, setDate] = useState(!props.timeStart ? null : props.timeStart);
+  const [date, setDate] = useState(!props.startTime ? null : props.startTime);
   const {action, id} = props;
+  if (props.data.success !=  null && props.data.success == false){
+    console.log("inside if block");
+    alert(props.data.message);
+  }
   return (
     <Pressable style={styles.textInputContainer}>
       <View style={styles.labelContainer}>
@@ -130,7 +134,8 @@ const ListItemLesson = (props) => {
           <Button
             style={styles.button}
             onPress={() => {
-              props.onCreateLesson({id: uuid(), title, duration, timeStart : date});
+              props.onPostLesson({name : title, duration, startTime : date, token: props.token, id : props.classID});
+              //props.onCreateLesson({id: uuid(), title, duration, timeStart : date});
             }}>
             Create
           </Button>
@@ -141,7 +146,8 @@ const ListItemLesson = (props) => {
           <Button
             style={styles.button}
             onPress={() => {
-              props.onEditLesson({id, title, duration, timeStart : date});
+              props.onPatchLesson({name : title, duration, startTime : date, token: props.token, id : props.id});
+             // props.onEditLesson({id, title, duration, timeStart : date});
               props.toggleExpand();
             }}>
             Change
@@ -153,7 +159,7 @@ const ListItemLesson = (props) => {
           <Button
             style={styles.button}
             onPress={() => {
-              props.onDeleteLesson({id, title, duration, timeStart : date});
+              props.onDeleteLesson({id, token: props.token});
             }}>
             Delete
           </Button>
@@ -211,12 +217,23 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (state) => ({
+  token : state.UserLoginReducer? state.UserLoginReducer.token : "",
+  classID : state.ClassFormReducer.success == true ? state.ClassFormReducer.message.id : "",
+  class : state.ClassFormReducer,
+  data : state.LessonFormReducer,
+});
 
 const mapDispatchToProps = (dispatch) => {
   return {
     onCreateLesson: (item) => {
       dispatch(actions.addLessonAction(item));
+    },
+    onPostLesson: (params) => {
+      dispatch(actions.postLessonAction(params));
+    },
+    onPatchLesson: (params) => {
+      dispatch(actions.patchLessonAction(params));
     },
     onEditLesson: (item) => {
       dispatch(actions.editLessonAction(item));

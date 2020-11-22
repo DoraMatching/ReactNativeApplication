@@ -18,7 +18,7 @@ import {ProfileReducer, PersonalBlogReducer, PersonalQuestionReducer, OptionModa
 import {ProfileEditReducer} from '../screens/ProfileEdit/ProfileEdit.reducers';
 import {ProfileInfoReducer, UserBlogReducer, UserQuestionReducer} from '../screens/ProfileInfo/ProfileInfo.reducers'
 
-import {LessonReducer} from '../screens/LessonForm/LessonForm.reducers'
+import {LessonReducer, LessonFormReducer} from '../screens/LessonForm/LessonForm.reducers'
 
 import {TopicFormReducer} from '../screens/TopicForm/TopicForm.reducers';
 import {TopicTopItemReducer, TopicTopReducer} from '../screens/TopicSearch/TopicSearch.reducers';
@@ -69,6 +69,7 @@ const rootReducer = combineReducers({
   OptionModal,
 
   LessonReducer,
+  LessonFormReducer,
 
   ProfileInfoReducer,
 

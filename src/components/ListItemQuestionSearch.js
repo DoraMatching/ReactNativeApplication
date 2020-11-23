@@ -5,7 +5,6 @@ import FastImage from "react-native-fast-image";
 import TagListItem from "./ListItemTag";
 import MoreOptionIcon from "../images/moreOption.svg";
 
-
 export default class ListItemQuestionSearch extends Component {
   constructor(props) {
     super(props);
@@ -15,17 +14,25 @@ export default class ListItemQuestionSearch extends Component {
   render() {
     if (!this.props.item) return <></>;
     console.log("questions: ", this.props.item);
-    const {id, title, author, content, createdAt, tags, comments} = this.props.item;
+    const {
+      id,
+      title,
+      author,
+      content,
+      createdAt,
+      tags,
+      comments,
+    } = this.props.item;
     var paramsForOptionModal = {
-      type : "question",
-      id : id,
-      token : this.props.token,
-      title : title,
+      type: "question",
+      id: id,
+      token: this.props.token,
+      title: title,
       //subTitle : this.props.subTitle,
-      content : content,
-      status : true,
-      tags : tags,
-  };
+      content: content,
+      status: true,
+      tags: tags,
+    };
     return (
       <View style={{...styles.container, padding: 10}}>
         <View
@@ -33,21 +40,23 @@ export default class ListItemQuestionSearch extends Component {
             ...styles.horizontalLayout,
             justifyContent: "space-between",
           }}>
-      
-          <Image
-            style={{
-              width: 45,
-              height: 45,
-              borderRadius: 1000,
-              marginRight: 10,
-              borderColor: "#c4c4c4",
-              borderWidth: 0.5,
-            }}
-            resizeMode="cover"
-            source={{
-              uri: author.avatarUrl,
-            }}
-          />
+          {author && (
+            <Image
+              style={{
+                width: 45,
+                height: 45,
+                borderRadius: 1000,
+                marginRight: 10,
+                borderColor: "#c4c4c4",
+                borderWidth: 0.5,
+              }}
+              resizeMode="cover"
+              source={{
+                uri: author.avatarUrl,
+              }}
+            />
+          )}
+
           <View
             style={{
               ...styles.verticalLayout,
@@ -64,9 +73,10 @@ export default class ListItemQuestionSearch extends Component {
                 flexWrap: "wrap",
                 marginVertical: 5,
               }}>
-              {tags && tags.map((item) => {
-                return <TagListItem item={item} />;
-              })}
+              {tags &&
+                tags.map((item) => {
+                  return <TagListItem item={item} />;
+                })}
             </View>
           </View>
           <View>

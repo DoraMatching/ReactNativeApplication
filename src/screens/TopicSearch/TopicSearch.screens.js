@@ -37,13 +37,13 @@ export class TopicSearch extends Component {
     
       retrieveMore = () => {
         if (!this.props.data && typeof this.props.data === 'undefined') return;
-        console.log("TrainerSearch in RetrieveMore 0", !this.props.data && typeof this.props.data === 'undefined')
-        console.log("TrainerSearch in RetrieveMore", this.props.data);
+        console.log("TopicSearch in RetrieveMore 0", !this.props.data && typeof this.props.data === 'undefined')
+        console.log("TopicSearch in RetrieveMore", this.props.data);
         console.log("retrieveMore is called");
         let url = this.props.data? this.props.data.links.next : "";
-        console.log("TrainerSearch url: ", url);
+        console.log("TopicSearch url: ", url);
         if (url === "") {
-          console.log("TrainerSearch inside if block");
+          console.log("TopicSearch inside if block");
           return;
         }
         this.props.onFetchTop({url});

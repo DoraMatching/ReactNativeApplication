@@ -32,6 +32,10 @@ import PersonCircleOutlineIcon from "../images/person-circle-outline.svg";
 import PersonCircleIcon from "../images/person-circle.svg";
 import CalendarOutlineIcon from "../images/calendar-outline.svg";
 import CalendarIcon from "../images/calendar.svg";
+import TrainerOutlineIcon from "../images/trainer-outline.svg";
+import TrainerIcon from "../images/trainer.svg";
+import TopicOutlineIcon from "../images/topic-outline.svg";
+import TopicIcon from "../images/topic.svg";
 
 import colors from "../themes/color";
 // import {FloatingAction} from "react-native-floating-action";
@@ -135,6 +139,18 @@ const tabRouters = () => (
                 <PersonCircleIcon width={size} height={size} fill={color} />
               ) : (
                 <PersonCircleOutlineIcon width={size} height={size} />
+              );
+              case "Trainers":
+              return focused ? (
+                <TrainerIcon width={size} height={size} fill={color} />
+              ) : (
+                <TrainerOutlineIcon width={size} height={size} />
+              );
+            case "Topics":
+              return focused ? (
+                <TopicOutlineIcon width={size} height={size} fill={color} />
+              ) : (
+                <TopicIcon width={size} height={size} fill={color}/>
               );
           }
         },

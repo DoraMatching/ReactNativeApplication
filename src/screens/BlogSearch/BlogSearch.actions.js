@@ -2,15 +2,15 @@ const Actions = {
   //GET_BLOG_TAG: "GET_BLOG_TAG",
   GET_BLOG_TOP: "GET_BLOG_TOP",
   DELETE_BLOG: "DELETE_BLOG",
-  REFRESH_DATA:"REFRESH_DATA",
+  REFRESH_DATA_BLOG:"REFRESH_DATA_BLOG",
   // GET_BLOG_TAG_SUCCEEDED: "GET_BLOG_TAG_SUCCEEDED",
   // GET_BLOG_TAG_FAILED: "GET_BLOG_TAG_FAILED",
   GET_BLOG_TOP_SUCCEEDED: "GET_BLOG_TOP_SUCCEEDED",
   GET_BLOG_TOP_FAILED: "GET_BLOG_TOP_FAILED",
   DELETE_BLOG_SUCCEEDED: "DELETE_BLOG_SUCCEEDED",
   DELETE_BLOG_FAILED: "DELETE_BLOG_FAILED",
-  REFRESH_DATA_SUCCEEDED: "GET_REFRESH_DATA_SUCCEEDED",
-  REFRESH_DATA_FAILED: "GET_REFRESH_DATA_FAILED",
+  REFRESH_DATA_BLOG_SUCCEEDED: "GET_REFRESH_DATA_BLOG_SUCCEEDED",
+  REFRESH_DATA_BLOG_FAILED: "GET_REFRESH_DATA_BLOG_FAILED",
 
   // getBlogTagAction: (params) => {
   //   return {
@@ -27,7 +27,7 @@ const Actions = {
 
   getRefreshDataAction: (params) => {
     return {
-      type: Actions.REFRESH_DATA,
+      type: Actions.REFRESH_DATA_BLOG,
       params,
     };
   },
@@ -83,14 +83,14 @@ const Actions = {
 
   getRefreshDataSuccessAction: (data) => {
     return {
-      type: Actions.REFRESH_DATA_SUCCEEDED,
+      type: Actions.REFRESH_DATA_BLOG_SUCCEEDED,
       data,
     };
   },
 
   getRefreshDataFailedAction: (error) => {
     return {
-      type: Actions.REFRESH_DATA_FAILED,
+      type: Actions.REFRESH_DATA_BLOG_FAILED,
       error,
     };
   },

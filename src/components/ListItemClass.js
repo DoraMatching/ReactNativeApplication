@@ -9,7 +9,7 @@ export default class ListItemClass extends Component {
       duration,
       trainer,
       topic,
-    } = topicc[0].classes[0];
+    } = this.props.item;
     return (
         <ImageBackground
         source={{uri: featuredImage}}
@@ -18,11 +18,13 @@ export default class ListItemClass extends Component {
       <View style={styles.layoutContainer}>
         <View style={styles.contentContainer}>
           <View style={styles.classNameContainer}>
-            <Text style={styles.classname} numberOfLines={1}>{name}</Text>
+            <Text style={styles.classname} numberOfLines={1}>{name.length > 30
+              ? name.substring(0, 30 - 3) + "..."
+              : name}</Text>
             <View>
-              {topic.map((item) => (
-                <Text style={styles.topic}>{item.name}</Text>
-              ))}
+              
+                <Text style={styles.topic}>{topic.name}</Text>
+              
             </View>
           </View>
           <Text style={styles.duration}>On-going: {duration} hours</Text>
@@ -33,10 +35,10 @@ export default class ListItemClass extends Component {
               style={styles.avatar}
               resizeMode="cover"
               source={{
-                uri: trainer.avatarUrl,
+                uri: trainer.user.avatarUrl,
               }}
             />
-            <Text style={styles.trainerName}>{trainer.username}</Text>
+            <Text style={styles.trainerName}>{trainer.user.username}</Text>
           
         </View>
       </View>

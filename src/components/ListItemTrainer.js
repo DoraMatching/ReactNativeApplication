@@ -25,7 +25,7 @@ export default class ListItemTrainer extends Component {
         <View style={{...styles.border}}>
         <View style={{...styles.textContainer}}>
           <Text style={{...styles.trainerText}}>{this.props.name}</Text>
-          <Text style={{...styles.topicText}}>C#, Ruby on Rails</Text>
+          {/* <Text style={{...styles.topicText}}>C#, Ruby on Rails</Text> */}
         </View>
         </View>
       </View>
@@ -86,6 +86,6 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     width: width,
-    
+    marginBottom: 10,
   },
 });

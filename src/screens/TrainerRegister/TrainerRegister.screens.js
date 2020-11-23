@@ -67,7 +67,10 @@ const TrainerRegisterScreen = (props) => {
       alert(props.data.message);
     } 
   return (
-    <View style={{alignItems: "stretch"}}>
+    <View style={{alignItems: "stretch", margin : 10}}>
+      <Text style={{fontWeight : 'bold', color: colors.primary, fontSize: 18}}>
+          Register
+      </Text>
       <Field
         name={"trainerProfile"}
         props={{}}
@@ -80,9 +83,9 @@ const TrainerRegisterScreen = (props) => {
         onPress={props.handleSubmit(submit)}
         style={[
           styles.button,
-          {fontSize: 18, paddingVertical: 10, marginVertical: 5},
+          {fontSize: 18, paddingVertical: 10, marginVertical: 5, width : 100},
         ]}>
-        Create
+        Sign up
       </Button>
     </View>
   );

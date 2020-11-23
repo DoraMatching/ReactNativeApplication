@@ -6,6 +6,7 @@ import {
   Dimensions,
   StatusBar,
   ScrollView,
+  Pressable,
 } from "react-native";
 import {connect} from "react-redux";
 import ScaledImage from "../../components/ScaledImage";
@@ -15,12 +16,23 @@ import colors from "../../themes/color";
 
 import ListItemClass from "../../components/ListItemClass";
 
+import ClassDetailModal from '../ClassDetail/ClassDetail.modals'
 import actions from "./TopicDetail.actions";
 var screen = Dimensions.get("window");
 export class TopicDetail extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
-    this.props.onFetchTopicDetail({id : this.props.id, token : this.props.token})
+    this.props.onFetchTopicDetail({id: this.props.id, token: this.props.token});
+    this.props.onFetchTopicClass({
+      url: `topic/${this.props.id}/classes?page=1&limit=20&order=DESC`,
+      token: this.props.token,
+    });
+
+    this.classDetailModal = null;
+
+    this.setClassDetailModalRef = (element) => {
+      this.classDetailModal = element;
+    };
   }
   render() {
     if (!this.props.data) return <></>;
@@ -39,8 +51,9 @@ export class TopicDetail extends Component {
               }}
             />
           </View>
-          <Text style={styles.topicName} adjustsFontSizeToFit
-              numberOfLines={2}>{name}</Text>
+          <Text style={styles.topicName} adjustsFontSizeToFit numberOfLines={2}>
+            {name}
+          </Text>
         </View>
         <View style={styles.contentContainer}>
           <ScrollView>
@@ -48,12 +61,24 @@ export class TopicDetail extends Component {
               <Text style={styles.label}>About this topic</Text>
               <Text style={styles.description}>{description}</Text>
               <Text style={styles.label}>Classes</Text>
+              {
+                this.props.classList?.items.map((item) => (
+                  <Pressable onPress={() => {
+                    if (this.classDetailModal)
+                      this.classDetailModal.showClassDetailModal(item.id);
+                  }}>
+                    <ListItemClass item={item} />
+                  </Pressable>
+                ))
+                //console.log(this.props.classList)
+              }
+              {/* <ListItemClass></ListItemClass>
               <ListItemClass></ListItemClass>
-              <ListItemClass></ListItemClass>
-              <ListItemClass></ListItemClass>
+              <ListItemClass></ListItemClass> */}
             </>
           </ScrollView>
         </View>
+        <ClassDetailModal ref={this.setClassDetailModalRef}></ClassDetailModal>
       </View>
     );
   }
@@ -62,13 +87,16 @@ export class TopicDetail extends Component {
 const mapStateToProps = (state) => ({
   token: state.UserLoginReducer ? state.UserLoginReducer.token : "",
   data: state.TopicDetailReducer,
-
+  classList: state.TopicClassReducer,
 });
 
 const mapDispatchToProps = (dispatch) => {
   return {
     onFetchTopicDetail: (params) => {
       dispatch(actions.getTopicDetailAction(params));
+    },
+    onFetchTopicClass: (params) => {
+      dispatch(actions.getTopicClassAction(params));
     },
   };
 };

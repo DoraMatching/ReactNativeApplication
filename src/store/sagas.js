@@ -28,6 +28,8 @@ import TrainerRegisterSaga from "../screens/TrainerRegister/TrainerRegister.saga
 
 import ClassFormSaga from "../screens/ClassForm/ClassForm.sagas";
 
+import ClassDetailSaga from "../screens/ClassDetail/ClassDetail.sagas";
+
 import LessonFormSaga from "../screens/LessonForm/LessonForm.sagas";
 export default function* rootSaga() {
   yield all([
@@ -54,6 +56,7 @@ export default function* rootSaga() {
     TrainerRegisterSaga(),
 
     ClassFormSaga(),
+    ClassDetailSaga(),
 
     LessonFormSaga(),
   ]);

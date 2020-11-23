@@ -20,11 +20,11 @@ import _ from "lodash";
 const BlogTopReducer = (data = null, action) => {
   switch (action.type) {
     case Actions.GET_BLOG_TOP_SUCCEEDED:
-    case Actions.REFRESH_DATA_SUCCEEDED:
+    case Actions.REFRESH_DATA_BLOG_SUCCEEDED:
       return action.data;
 
     case Actions.GET_BLOG_TOP_FAILED:
-    case Actions.REFRESH_DATA_FAILED:
+    case Actions.REFRESH_DATA_BLOG_FAILED:
       return data;
 
     default:
@@ -40,7 +40,7 @@ const BlogTopItemReducer = (dataItem = [], action) => {
     case Actions.DELETE_BLOG_SUCCEEDED:
       return dataItem.filter((item) => item.id !== action.id);
 
-    case Actions.REFRESH_DATA_SUCCEEDED:
+    case Actions.REFRESH_DATA_BLOG_SUCCEEDED:
       return action.data.items;
 
     case BlogFormActions.POST_BLOG_SUCCEEDED:
@@ -49,7 +49,7 @@ const BlogTopItemReducer = (dataItem = [], action) => {
 
     case Actions.GET_BLOG_TOP_FAILED:
     case Actions.DELETE_BLOG_FAILED:
-    case Actions.REFRESH_DATA_FAILED:
+    case Actions.REFRESH_DATA_BLOG_FAILED:
       return dataItem;
 
     case BlogFormEditActions.UPDATE_BLOG_SUCCEEDED:

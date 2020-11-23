@@ -41,8 +41,10 @@ export default class ClassDetailModal extends Component {
     //this.props.navigation.setOptions({tabBarVisible : false});
   }
   
+  id;
 
-  showClassDetailModal = () => {
+  showClassDetailModal = (id) => {
+    this.id = id;
     //console.log("blog detail modal", item);
     
     //this.blogDetailModal.open();
@@ -75,7 +77,7 @@ export default class ClassDetailModal extends Component {
         isOpen={this.state.isOpen}>
           <SafeAreaView style={{flex: 1, justifyContent: "flex-end"}}>
           <View style={{flexDirection: "column", flex: 1,marginBottom: 5}}>
-          <ClassDetail onClose={this.onClose}></ClassDetail>
+          <ClassDetail onClose={this.onClose} id={this.id}></ClassDetail>
           <View
               style={{
                 flexDirection: "row",

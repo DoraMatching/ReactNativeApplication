@@ -28,8 +28,8 @@ const TrainerTopItemReducer = (dataItem = [], action) => {
     case Actions.DELETE_TRAINER_SUCCEEDED:
       return dataItem.filter((item) => item.id !== action.id);
 
-    // case Actions.REFRESH_DATA_SUCCEEDED:
-    //   return action.data.items;
+    case Actions.REFRESH_DATA_TRAINER_SUCCEEDED:
+      return action.data.items;
 
     // case TrainerFormActions.POST_TRAINER_SUCCEEDED:
     //   console.log("post Trainer search: ", [...dataItem, action.data]);

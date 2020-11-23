@@ -38,12 +38,12 @@ function* refreshData(action) {
 
     if (res.status === 200) {
       //console.log("home.saga.js: data", res.data);
-      yield put({type: actions.REFRESH_DATA_SUCCEEDED, data: res.data});
+      yield put({type: actions.REFRESH_DATA_BLOG_SUCCEEDED, data: res.data});
     } else {
-      yield put({type: actions.REFRESH_DATA_FAILED, error: res.message});
+      yield put({type: actions.REFRESH_DATA_BLOG_FAILED, error: res.message});
     }
   } catch (error) {
-    yield put({type: actions.REFRESH_DATA_FAILED, error});
+    yield put({type: actions.REFRESH_DATA_BLOG_FAILED, error});
   }
 }
 
@@ -80,7 +80,7 @@ function* watchDeleteBlog() {
 
 function* watchRefreshData() {
   //console.log("blogSearch.saga.js: data", "watchFetchData");
-  yield takeLatest(actions.REFRESH_DATA, refreshData);
+  yield takeLatest(actions.REFRESH_DATA_BLOG, refreshData);
 }
 
 export default function* rootSaga() {

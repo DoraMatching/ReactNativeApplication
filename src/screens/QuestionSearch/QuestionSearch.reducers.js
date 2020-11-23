@@ -37,7 +37,7 @@ const QuestionTopItemReducer = (dataItem = [], action) => {
     case Actions.DELETE_QUESTION_SUCCEEDED:
       return dataItem.filter((item) => item.id !== action.id);
 
-    case Actions.REFRESH_DATA_SUCCEEDED:
+    case Actions.REFRESH_DATA_QUESTION_SUCCEEDED:
       return action.data.items;
 
     case QuestionFormActions.POST_QUESTION_SUCCEEDED:
@@ -46,7 +46,7 @@ const QuestionTopItemReducer = (dataItem = [], action) => {
 
     case Actions.GET_QUESTION_TOP_FAILED:
     case Actions.DELETE_QUESTION_FAILED:
-    case Actions.REFRESH_DATA_FAILED:
+    case Actions.REFRESH_DATA_QUESTION_FAILED:
       return dataItem;
 
     case QuestionFormEditActions.UPDATE_QUESTION_SUCCEEDED:

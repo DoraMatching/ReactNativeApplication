@@ -36,7 +36,8 @@ const styles = StyleSheet.create({
   imageStyle: {
     resizeMode: "cover",
     borderRadius: 5,
-    
+    borderWidth: 0.25,
+    borderColor: "rgba(0,0,0,.5)",
     
   },
   content: {

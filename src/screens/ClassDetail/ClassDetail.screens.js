@@ -6,6 +6,7 @@ import {
   Image,
   Dimensions,
   ScrollView,
+  Alert
 } from "react-native";
 
 import ScaledImage from "../../components/ScaledImage";
@@ -15,18 +16,54 @@ import {connect} from "react-redux";
 import colors from "../../themes/color";
 
 import Accordion from "../../helpers/Accordion";
+
+import actions from "./ClassDetail.actions";
+
+import Button from "react-native-button";
+
+import moment from "moment";
 var screen = Dimensions.get("window");
 export class ClassDetail extends Component {
+  componentWillMount() {
+    this.props.onFetchClassDetail({id: this.props.id, token: this.props.token});
+  }
+  onLeaveClass() {
+    Alert.alert(
+      "",
+      "Are you SURE you want to LEAVE the class?",
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel",
+        },
+        {
+          text: "OK",
+          onPress: () =>
+          this.props.onFetchClassDeregister({
+            id: this.props.id,
+            token: this.props.token,
+          })
+        },
+      ],
+      {cancelable: false},
+    );
+  }
   render() {
+    console.log("class detail", this.props.data);
+    if (!this.props.data) return <></>;
     const {
       name,
       featuredImage,
       duration,
       trainer,
       topic,
-      trainee,
-      lesson,
-    } = topicc[0].classes[0];
+      members,
+      lessons,
+      description,
+      startTime,
+      endTime,
+    } = this.props.data;
     return (
       <ScrollView>
         <View style={styles.container}>
@@ -42,12 +79,12 @@ export class ClassDetail extends Component {
             }}
             resizeMode="cover"
             source={{
-              uri: trainer.avatarUrl,
+              uri: trainer.user.avatarUrl,
             }}
           />
-          <Text style={styles.topic}>{topic[0].name}</Text>
+          <Text style={styles.topic}>{topic.name}</Text>
           <Text style={styles.className}>{name}</Text>
-          <Text style={styles.authorName}>by {trainer.username}</Text>
+          <Text style={styles.authorName}>by {trainer.user.username}</Text>
           <View style={styles.featuredImage}>
             <ScaledImage
               {...{
@@ -58,13 +95,49 @@ export class ClassDetail extends Component {
             />
           </View>
           <Text style={styles.label}>About this class</Text>
+          <Text>{description}</Text>
+          <Text>
+            <Text style={styles.title}>Duration: </Text>
+            {duration} hours
+          </Text>
+          <Text>
+            <Text style={styles.title}>Start time: </Text>
+            {moment(startTime).format("MMMM Do YYYY, h:mm:ss a")}
+          </Text>
+          <Text style={{marginBottom: 5}}>
+            <Text style={styles.title}>End time: </Text>
+            {moment(endTime).format("MMMM Do YYYY, h:mm:ss a")}
+          </Text>
+          {members.map((item) => item.user.id).indexOf(this.props.userID) ===
+          -1 ? (
+            <Button
+              style={styles.buttonContent}
+              containerStyle={[styles.button]}
+              onPress={() =>
+                this.props.onFetchClassRegister({
+                  id: this.props.id,
+                  token: this.props.token,
+                })
+              }>
+              JOIN NOW
+            </Button>
+          ) : (
+            <Button
+              style={styles.buttonContent}
+              containerStyle={styles.button}
+              onPress={() =>
+                this.onLeaveClass()
+              }>
+              LEAVE THE CLASS
+            </Button>
+          )}
           <Text style={styles.label}>Members</Text>
           <View style={styles.member}>
-            {trainee.map((item) => (
+            {members?.map((item) => (
               <Image
                 style={{
-                  width: 30,
-                  height: 30,
+                  width: 40,
+                  height: 40,
                   borderRadius: 1000,
                   margin: 5,
                   borderColor: "#c4c4c4",
@@ -73,15 +146,15 @@ export class ClassDetail extends Component {
                 }}
                 resizeMode="cover"
                 source={{
-                  uri: item.avatarUrl,
+                  uri: item.user.avatarUrl,
                 }}
               />
             ))}
           </View>
           <Text style={styles.label}>Lessons</Text>
           <View style={styles.lesson}>
-            {lesson.map((item) => (
-              <Accordion title={item.name} data={item.content} />
+            {lessons.map((item) => (
+              <Accordion title={item.name} data={item} />
             ))}
           </View>
         </View>
@@ -94,6 +167,7 @@ const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 10,
     paddingVertical: 20,
+    marginTop: 35,
   },
   avatar: {},
   topic: {
@@ -109,7 +183,10 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
   },
-  featuredImage: {},
+  featuredImage: {
+    borderRadius: 5,
+    marginVertical: 5,
+  },
   label: {
     fontSize: 18,
     fontWeight: "bold",
@@ -122,9 +199,43 @@ const styles = StyleSheet.create({
   lesson: {
     flexDirection: "column",
   },
+  title: {
+    fontWeight: "bold",
+    color: "#606770",
+  },
+  button: {
+    backgroundColor: colors.primary,
+    borderRadius: 5,
+    marginVertical: 5,
+    //width: "auto",
+  },
+  buttonContent: {
+    color: "white",
+    padding: 5,
+  },
 });
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (state) => ({
+  data: state.ClassDetailReducer,
+  registerResponse: state.ClassRegisterReducer,
+  token: state.UserLoginReducer ? state.UserLoginReducer.token : "",
+  userID: state.UserLoginReducer ? state.UserLoginReducer.id : "",
+});
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onFetchClassDetail: (params) => {
+      dispatch(actions.getClassDetailAction(params));
+    },
+    onFetchClassRegister: (params) => {
+      dispatch(actions.getClassRegisterAction(params));
+    },
+    onFetchClassDeregister: (params) => {
+      dispatch(actions.getClassDeregisterAction(params));
+    },
+    // onFetchTopicClass: (params) => {
+    //   dispatch(actions.getTopicClassAction(params));
+    // },
+  };
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(ClassDetail);

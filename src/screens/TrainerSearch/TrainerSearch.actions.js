@@ -9,9 +9,9 @@ const Actions = {
     DELETE_TRAINER_SUCCEEDED: "DELETE_TRAINER_SUCCEEDED",
     DELETE_TRAINER_FAILED: "DELETE_TRAINER_FAILED",
   
-    REFRESH_DATA:"REFRESH_DATA",
-    REFRESH_DATA_SUCCEEDED: "GET_REFRESH_DATA_SUCCEEDED",
-    REFRESH_DATA_FAILED: "GET_REFRESH_DATA_FAILED",
+    REFRESH_DATA_TRAINER:"REFRESH_DATA_TRAINER",
+    REFRESH_DATA_TRAINER_SUCCEEDED: "GET_REFRESH_DATA_TRAINER_SUCCEEDED",
+    REFRESH_DATA_TRAINER_FAILED: "GET_REFRESH_DATA_TRAINER_FAILED",
   
    
     getTrainerTopAction: (params) => {
@@ -22,7 +22,7 @@ const Actions = {
     },
     getRefreshDataAction: (params) => {
       return {
-        type: Actions.REFRESH_DATA,
+        type: Actions.REFRESH_DATA_TRAINER,
         params,
       };
     },
@@ -69,14 +69,14 @@ const Actions = {
   
     getRefreshDataSuccessAction: (data) => {
       return {
-        type: Actions.REFRESH_DATA_SUCCEEDED,
+        type: Actions.REFRESH_DATA_TRAINER_SUCCEEDED,
         data,
       };
     },
   
     getRefreshDataFailedAction: (error) => {
       return {
-        type: Actions.REFRESH_DATA_FAILED,
+        type: Actions.REFRESH_DATA_TRAINER_FAILED,
         error,
       };
     },

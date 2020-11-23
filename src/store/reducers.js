@@ -22,7 +22,7 @@ import {LessonReducer, LessonFormReducer} from '../screens/LessonForm/LessonForm
 
 import {TopicFormReducer} from '../screens/TopicForm/TopicForm.reducers';
 import {TopicTopItemReducer, TopicTopReducer} from '../screens/TopicSearch/TopicSearch.reducers';
-import {TopicDetailReducer} from '../screens/TopicDetail/TopicDetail.reducers';
+import {TopicDetailReducer, TopicClassReducer} from '../screens/TopicDetail/TopicDetail.reducers';
 
 
 import {TagPredictionReducer} from '../screens/TagPrediction/TagPrediction.reducers';
@@ -32,6 +32,8 @@ import {TrainerTopItemReducer, TrainerTopReducer} from '../screens/TrainerSearch
 import {TrainerRegisterReducer} from '../screens/TrainerRegister/TrainerRegister.reducers'
 
 import {ClassFormReducer} from '../screens/ClassForm/ClassForm.reducers';
+
+import {ClassDetailReducer, ClassRegisterReducer, ClassDeregisterReducer} from '../screens/ClassDetail/ClassDetail.reducers';
 
 const rootReducer = combineReducers({
   LoginReducer,
@@ -79,6 +81,7 @@ const rootReducer = combineReducers({
   TopicFormReducer,
   TopicTopItemReducer,
   TopicTopReducer,
+  TopicClassReducer,
   
   TagPredictionReducer,
 
@@ -89,6 +92,9 @@ const rootReducer = combineReducers({
   TrainerRegisterReducer,
 
   ClassFormReducer,
+  ClassDetailReducer,
+  ClassRegisterReducer,
+  ClassDeregisterReducer,
   form: formReducer,
 });
 

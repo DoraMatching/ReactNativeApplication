@@ -93,7 +93,7 @@ export default class Home extends Component {
       //console.log("in componentWillMount");
       const {url} = this.state;
       this.props.onFetchData({url});
-     this.props.onFetchTopic({url: "topics?page=1&limit=20&order=DESC"});
+      this.props.onFetchTopic({url: "topics?page=1&limit=20&order=DESC"});
     }
   }
 

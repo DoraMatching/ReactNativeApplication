@@ -1,5 +1,12 @@
 import React, {Component} from "react";
-import {View, Text, FlatList, StyleSheet, TextInput, Pressable} from "react-native";
+import {
+  View,
+  Text,
+  FlatList,
+  StyleSheet,
+  TextInput,
+  Pressable,
+} from "react-native";
 
 import {connect} from "react-redux";
 import actions from "./TrainerSearch.actions";
@@ -7,62 +14,70 @@ import colors from "../../themes/color";
 import ListItemTrainer from "../../components/ListItemTrainerSearch";
 import FinderIcon from "../../images/finder.svg";
 import FloatingButtonAction from "../../helpers/FloatingActionButton";
+import ProfileInfoModal from "../ProfileInfo/ProfileInfo.modals";
 const item = {
   username: "christian",
   email: "christian@enclave.vn",
   avatarUrl: "https://www.w3schools.com/w3images/avatar6.png",
 };
 export class TrainerSearch extends Component {
-    constructor(props) {
-        super(props);
-        console.log("QuestionSearch constructor is called");
-        this.state = {
-          search: "",
-          url: "trainers?page=1&limit=4&order=DESC",
-          isLoading: false,
-        };
-        //this.props.onFetchTag({url: "tag-question?page=1&limit=20&order=DESC"});
-        this.props.onFetchTop({url: this.state.url});
-    
-        // this.questionDetailModal = null;
-    
-        // this.setQuestionDetailModalRef = (element) => {
-        //   this.questionDetailModal = element;
-        // };
-    
-        // this.optionModal = null;
-    
-        // this.setOptionModalRef = (element) => {
-        //   this.optionModal = element;
-        // };
-    
-        // this.questionFormEditModal = null;
-    
-        // this.setQuestionFormEditModalRef = (element) => {
-        //   this.questionFormEditModal = element;
-        // };
-      }
-    
-      refreshData = () => {
-        this.setState({isLoading: true});
-        const {url} = this.state;
-        this.props.onRefreshData({url});
-        this.setState({isLoading: false});
-      };
-    
-      retrieveMore = () => {
-        console.log("TrainerSearch in RetrieveMore", this.props.data);
-        console.log("retrieveMore is called");
-        let url = this.props.data.links.next;
-        if (url === "") {
-          return;
-        }
-        this.props.onFetchTop({url});
-      };
+  constructor(props) {
+    super(props);
+    console.log("QuestionSearch constructor is called");
+    this.state = {
+      search: "",
+      url: "trainers?page=1&limit=4&order=DESC",
+      isLoading: false,
+    };
+    //this.props.onFetchTag({url: "tag-question?page=1&limit=20&order=DESC"});
+    this.props.onFetchTop({url: this.state.url});
+
+    // this.questionDetailModal = null;
+
+    // this.setQuestionDetailModalRef = (element) => {
+    //   this.questionDetailModal = element;
+    // };
+
+    // this.optionModal = null;
+
+    // this.setOptionModalRef = (element) => {
+    //   this.optionModal = element;
+    // };
+
+    // this.questionFormEditModal = null;
+
+    // this.setQuestionFormEditModalRef = (element) => {
+    //   this.questionFormEditModal = element;
+    // };
+
+    this.profileInfoModal = null;
+
+    this.setProfileInfoModalRef = (element) => {
+      this.profileInfoModal = element;
+    };
+  }
+
+  refreshData = () => {
+    this.setState({isLoading: true});
+    const {url} = this.state;
+    this.props.onRefreshData({url});
+    this.setState({isLoading: false});
+  };
+
+  retrieveMore = () => {
+    console.log("TrainerSearch in RetrieveMore", this.props.data);
+    console.log("retrieveMore is called");
+    let url = this.props.data.links.next;
+    if (url === "") {
+      return;
+    }
+    this.props.onFetchTop({url});
+  };
   render() {
     if (!this.props.data) return <></>;
     return (
       <View style={{flex: 1}}>
+        <ProfileInfoModal ref={this.setProfileInfoModalRef}></ProfileInfoModal>
         <View style={styles.searchContainer}>
           <View style={styles.searchInput}>
             <View style={styles.searchIcon}>
@@ -88,15 +103,19 @@ export class TrainerSearch extends Component {
           data={this.props.tops ? this.props.tops : []}
           keyExtractor={(item) => item.id}
           renderItem={({item, index}) => {
-           // if (!this.optionModal) this.refreshData();
+            // if (!this.optionModal) this.refreshData();
             const userID = this.props.userID;
             const token = this.props.token;
             return (
               <Pressable
                 onPress={() => {
-                //   this.props.onOpenQuestionDetail(item);
-                //   if (this.questionDetailModal)
-                //     this.questionDetailModal.showQuestionDetailModal(item);
+                  //   this.props.onOpenQuestionDetail(item);
+                  //   if (this.questionDetailModal)
+                  //     this.questionDetailModal.showQuestionDetailModal(item);
+                  if (this.profileInfoModal)
+                              this.profileInfoModal.showProfileInfoModal(
+                                item.id,
+                              );
                 }}>
                 <ListItemTrainer
                   {...{

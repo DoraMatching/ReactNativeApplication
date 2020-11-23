@@ -26,4 +26,19 @@ const deleteDataFromAPI = ({id, token}) => {
     });
 };
 
-export {getDataFromAPI, deleteDataFromAPI};
+const getTrainerFromAPI = ({id, token}) => {
+  return request
+    .get(`trainer?userId=${id}`,{
+      headers: {
+        'Authorization': `Bearer ${token}` 
+      }
+    })
+    .then((res) => {
+      return res;
+    })
+    .catch((error) => {
+      return error.response.data;
+    });
+}
+
+export {getDataFromAPI, deleteDataFromAPI, getTrainerFromAPI};

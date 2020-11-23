@@ -13,6 +13,19 @@ const ProfileInfoReducer = (data = null, action) => {
   }
 };
 
+const ProfileInfoClassroomReducer = (data = null, action) => {
+  switch (action.type) {
+    case Actions.GET_PROFILE_INFO_CLASSROOM_SUCCEEDED:
+      return action.data;
+
+    case Actions.GET_PROFILE_INFO_CLASSROOM_FAILED:
+      return data;
+
+    default:
+      return data;
+  }
+};
+
 const UserBlogReducer = (data = [], action) => {
   switch (action.type) {
     case Actions.GET_PROFILE_INFO_SUCCEEDED:
@@ -35,6 +48,7 @@ const UserQuestionReducer = (data = [], action) => {
 
 export {
   ProfileInfoReducer,
+  ProfileInfoClassroomReducer,
   UserBlogReducer,
   UserQuestionReducer,
 };

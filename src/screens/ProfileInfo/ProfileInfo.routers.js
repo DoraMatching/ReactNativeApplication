@@ -5,6 +5,7 @@ import {NavigationContainer} from "@react-navigation/native";
 import PersonalBlog from './components/PersonalBlog.components';
 import PersonalQuestion from './components/PersonalQuestion.components';
 import PersonalClass from './components/PersonalClass.components';
+import PersonalClassroom from './components/PersonalClassroom.components';
 import colors from '../../themes/color';
 const Tab = createMaterialTopTabNavigator();
 
@@ -33,6 +34,11 @@ function TabView() {
           name="MyClass"
           component={PersonalClass}
           options={{tabBarLabel: "Classes"}}
+        />
+        <Tab.Screen
+          name="MyClassroom"
+          component={PersonalClassroom}
+          options={{tabBarLabel: "Classrooms"}}
         />
       </Tab.Navigator>
     //</NavigationContainer>

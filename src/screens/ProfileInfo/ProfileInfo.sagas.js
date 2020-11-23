@@ -1,6 +1,8 @@
 import {all, fork, put, takeLatest} from "redux-saga/effects";
 import {getUserFromAPI} from "../../services/Profile";
 import actions from "./ProfileInfo.actions";
+import {getTrainerFromAPI} from "../../services/TrainerSearch";
+import {getUserClassroomFromAPI} from "../../services/ProfileInfo";
 
 function* fetchUser(action) {
   try {
@@ -23,6 +25,43 @@ function* watchFetchUser() {
   yield takeLatest(actions.GET_PROFILE_INFO, fetchUser);
 }
 
+function* fetchUserClassroom(action) {
+  try {
+    console.log("fetchUserClassroom", action.params);
+    const res = yield getTrainerFromAPI(action.params);
+    console.log("getTrainerFromAPI ", res);
+    if (res.status === 200) {
+      console.log("1", res);
+      const res2 = yield getUserClassroomFromAPI({id : res.data.id, token : action.params.token});
+      console.log("getUserClassroomFromAPI: ", res);
+      if (res2.status === 200) {
+        //console.log("Profile.saga.js: ", res.data);
+        yield put({
+          type: actions.GET_PROFILE_INFO_CLASSROOM_SUCCEEDED,
+          data: res2.data,
+        });
+      } else {
+        yield put({
+          type: actions.GET_PROFILE_INFO_CLASSROOM_FAILED,
+          error: res2.message,
+        });
+      }
+    } else {
+      yield put({
+        type: actions.GET_PROFILE_INFO_CLASSROOM_FAILED,
+        error: res.message,
+      });
+    }
+  } catch (error) {
+    yield put({type: actions.GET_PROFILE_INFO_CLASSROOM_FAILED, error});
+  }
+}
+
+function* watchFetchUserClassroom() {
+  //console.log("Profile.saga.js: watchFetchUser");
+  yield takeLatest(actions.GET_PROFILE_INFO_CLASSROOM, fetchUserClassroom);
+}
+
 export default function* rootSaga() {
-  yield all([fork(watchFetchUser)]);
+  yield all([fork(watchFetchUser), fork(watchFetchUserClassroom)]);
 }

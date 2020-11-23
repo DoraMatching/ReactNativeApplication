@@ -114,7 +114,7 @@ export class TrainerSearch extends Component {
                   //     this.questionDetailModal.showQuestionDetailModal(item);
                   if (this.profileInfoModal)
                               this.profileInfoModal.showProfileInfoModal(
-                                item.id,
+                                item.user.id,
                               );
                 }}>
                 <ListItemTrainer

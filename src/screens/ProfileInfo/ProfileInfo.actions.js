@@ -4,6 +4,10 @@ const Actions = {
   GET_PROFILE_INFO_SUCCEEDED: "GET_PROFILE_INFO_SUCCEEDED",
   GET_PROFILE_INFO_FAILED: "GET_PROFILE_INFO_FAILED",
 
+  GET_PROFILE_INFO_CLASSROOM : "GET_PROFILE_INFO_CLASSROOM",
+  GET_PROFILE_INFO_CLASSROOM_SUCCEEDED : "GET_PROFILE_INFO_CLASSROOM_SUCCEEDED",
+  GET_PROFILE_INFO_CLASSROOM_FAILED : "GET_PROFILE_INFO_CLASSROOM_FAILED",
+
   getProfileAction: (params) => {
     return {
       type: Actions.GET_PROFILE_INFO,
@@ -22,6 +26,27 @@ const Actions = {
   getProfileFailedAction: (error) => {
     return {
       type: Actions.GET_PROFILE_INFO_FAILED,
+      error,
+    };
+  },
+
+  getProfileClassroomAction: (params) => {
+    return {
+      type: Actions.GET_PROFILE_INFO_CLASSROOM,
+      params,
+    };
+  },
+
+  getProfileClassroomSuccessAction: (data) => {
+    return {
+      type: Actions.GET_PROFILE_INFO_CLASSROOM_SUCCEEDED,
+      data,
+    };
+  },
+
+  getProfileClassroomFailedAction: (error) => {
+    return {
+      type: Actions.GET_PROFILE_INFO_CLASSROOM_FAILED,
       error,
     };
   },

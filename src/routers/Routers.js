@@ -43,7 +43,7 @@ import colors from "../themes/color";
 
 import LessonForm from '../screens/LessonForm/LessonForm.screens';
 
-import Schedule from '../screens/Schedule/Schedule.screens'
+import Schedule from '../screens/Schedule/Schedule.containers'
 
 import {SafeAreaProvider, SafeAreaView} from "react-native-safe-area-context";
 

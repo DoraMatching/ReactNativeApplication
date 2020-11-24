@@ -35,6 +35,8 @@ import {ClassFormReducer} from '../screens/ClassForm/ClassForm.reducers';
 
 import {ClassDetailReducer, ClassRegisterReducer, ClassDeregisterReducer} from '../screens/ClassDetail/ClassDetail.reducers';
 
+import { PersonalScheduleReducer } from "../screens/Schedule/Schedule.reducers";
+
 const rootReducer = combineReducers({
   LoginReducer,
   UserLoginReducer,
@@ -96,6 +98,9 @@ const rootReducer = combineReducers({
   ClassDetailReducer,
   ClassRegisterReducer,
   ClassDeregisterReducer,
+
+  PersonalScheduleReducer,
+  
   form: formReducer,
 });
 

@@ -31,6 +31,8 @@ import ClassFormSaga from "../screens/ClassForm/ClassForm.sagas";
 import ClassDetailSaga from "../screens/ClassDetail/ClassDetail.sagas";
 
 import LessonFormSaga from "../screens/LessonForm/LessonForm.sagas";
+
+import ScheduleSaga from '../screens/Schedule/Schedule.sagas'
 export default function* rootSaga() {
   yield all([
     LoginSaga(),
@@ -59,5 +61,6 @@ export default function* rootSaga() {
     ClassDetailSaga(),
 
     LessonFormSaga(),
+    ScheduleSaga(),
   ]);
 }

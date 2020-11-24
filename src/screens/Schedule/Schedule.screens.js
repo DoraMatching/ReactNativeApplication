@@ -90,14 +90,32 @@ const EVENTS = [
 ];
 
 export default class Schedule extends Component {
-  state = {
-    currentDate: '2020-11-19'
+  constructor(props){
+    super(props);
   }
-  
+  state = {
+    currentDate: Date(),
+  }
+  events = [];
+  componentWillUpdate(){
+    this.events = this.props.schedule.map(item => {
+      return {
+        start : moment(item.startTime).format("YYYY-MM-DD hh:mm:ss"),
+        end : moment(item.startTime).add(item.duration, "minutes").format("YYYY-MM-DD hh:mm:ss"),
+        title : item.name,
+        summary : `Duration : ${item.duration}`,
+      }
+    })
+  }
   onDateChanged = (date) => {
     // console.warn('ExpandableCalendarScreen onDateChanged: ', date, updateSource);
     // fetch and set data for date + week ahead
     this.setState({currentDate: date});
+    //console.log("Date")
+    const startTime = moment(`${this.state.currentDate} 00:00:00`).format();
+    const endTime = moment(`${this.state.currentDate} 23:59:59`).format();
+    console.log("currentDate in moment",startTime, endTime);
+    this.props.onFetchPersonalSchedule({id : this.props.userID, token : this.props.token, startTime, endTime});
   };
 
   onMonthChange = (/* month, updateSource */) => {
@@ -176,6 +194,8 @@ export default class Schedule extends Component {
   };
 
   render() {
+     console.log("schedule", this.events);
+    // console.log("props in schedule", this.props);
     return (
       <CalendarProvider
       // date={ITEMS[0].title}
@@ -206,7 +226,7 @@ export default class Schedule extends Component {
         <Timeline
           format24h={true}
           eventTapped={e => e}
-          events={EVENTS.filter(event => moment(event.start).isSame(this.state.currentDate, 'day'))}
+          events={this.props.schedule.filter(event => moment(event.start).isSame(this.state.currentDate, 'day'))}
           // scrollToFirst={true}
           // start={0}
           // end={24}

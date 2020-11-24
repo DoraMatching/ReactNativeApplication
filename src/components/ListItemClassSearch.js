@@ -3,7 +3,7 @@ import {View, Text, StyleSheet, Image, Pressable} from "react-native";
 import TagListItem from "./ListItemTag";
 import MoreOptionIcon from "../images/moreOption.svg";
 
-export default class ListItemTopicTop extends Component {
+export default class ListItemClassSearch extends Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -11,7 +11,7 @@ export default class ListItemTopicTop extends Component {
 
   render() {
     console.log("List item question top: ", this.props);
-    const {id, name, description, featuredImage, classes} = this.props.item;
+    const {id, name, description, featuredImage, members} = this.props.item;
  
     return (
       <View

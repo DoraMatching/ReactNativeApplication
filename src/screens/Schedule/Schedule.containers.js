@@ -7,8 +7,8 @@ const colors = ['#e6add8','#ade6d8','#d8ade6','#e6bcad'];
 const mapStateToProps = (state) => ({
     schedule : state.PersonalScheduleReducer.map(item => {
         return {
-          start : moment(item.startTime).format("YYYY-MM-DD hh:mm:ss"),
-          end : moment(item.startTime).add(item.duration, "minutes").format("YYYY-MM-DD hh:mm:ss"),
+          start : moment(item.startTime).format("YYYY-MM-DD HH:mm:ss"),
+          end : moment(item.startTime).add(item.duration, "minutes").format("YYYY-MM-DD HH:mm:ss"),
           title : item.name,
           summary : `Duration : ${item.duration}`,
           color : colors[Math.floor(Math.random() * colors.length)]

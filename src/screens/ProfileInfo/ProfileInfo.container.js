@@ -7,7 +7,9 @@ const mapDispatchToProps = (dispatch) => {
     onFetchUser: (params) => {
       dispatch(actions.getProfileAction(params));
     },
-   
+    onOpenClassDetail : (params) => {
+      dispatch(actions.getClassDetailModalAction(params))
+    }
   };
 };
 

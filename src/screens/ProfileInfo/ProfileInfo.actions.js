@@ -8,6 +8,14 @@ const Actions = {
   GET_PROFILE_INFO_CLASSROOM_SUCCEEDED : "GET_PROFILE_INFO_CLASSROOM_SUCCEEDED",
   GET_PROFILE_INFO_CLASSROOM_FAILED : "GET_PROFILE_INFO_CLASSROOM_FAILED",
 
+  GET_CLASS_DETAIL_MODAL : "GET_CLASS_DETAIL_MODAL",
+  getClassDetailModalAction: (params) => {
+    return {
+      type : Actions.GET_CLASS_DETAIL_MODAL,
+      params,
+    }
+  },
+
   getProfileAction: (params) => {
     return {
       type: Actions.GET_PROFILE_INFO,

@@ -3,6 +3,7 @@ import {View, Text, StyleSheet, Image, Pressable} from "react-native";
 import TagListItem from "./ListItemTag";
 import MoreOptionIcon from "../images/moreOption.svg";
 
+
 export default class ListItemClassSearch extends Component {
   constructor(props) {
     super(props);
@@ -11,7 +12,7 @@ export default class ListItemClassSearch extends Component {
 
   render() {
     console.log("List item question top: ", this.props);
-    const {id, name, description, featuredImage, members} = this.props.item;
+    const {id, name, description, featuredImage, duration, startTime, topic} = this.props.item;
  
     return (
       <View
@@ -25,7 +26,7 @@ export default class ListItemClassSearch extends Component {
           borderTopRightRadius: 5,
           borderBottomRightRadius: 5,
           backgroundColor: "#ffffff",
-          height : 110,
+          height : 126,
         }}>
         <Image
           style={{flex: 25,  ...styles.border}}
@@ -43,7 +44,12 @@ export default class ListItemClassSearch extends Component {
             numberOfLines={1}>
             {name}
           </Text>
-          <Text style={styles.description} numberOfLines={4}>{description}</Text>
+          <View style={{flexDirection: "row"}}>
+          <TagListItem item={topic} />
+          </View>
+          <Text style={styles.description} numberOfLines={2}>{description}</Text>
+          <Text><Text style={styles.description}>Duration:</Text> {duration}</Text>
+          
         </View>
 
         <View>

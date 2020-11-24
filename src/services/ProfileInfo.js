@@ -1,6 +1,6 @@
 import request from "../helpers/request";
 const getUserClassroomFromAPI = ({id, token}) => {
-    console.log("getUserClassroomFromAPI", id, token);
+    //console.log("getUserClassroomFromAPI", id, token);
     return request
       .get(`trainer/${id}/classes?page=1&limit=20&order=DESC`,{
         headers: {

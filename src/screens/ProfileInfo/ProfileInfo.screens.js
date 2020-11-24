@@ -8,7 +8,6 @@ import colors from "../../themes/color";
 import {storage} from "../../helpers/asyncStorage";
 import TabView from "./ProfileInfo.routers";
 
-
 import BlogDetailModal from "../BlogDetail/BlogDetail.modals";
 
 import BlogFormEditModal from "../BlogFormEdit/BlogFormEdit.modals";
@@ -19,7 +18,7 @@ import QuestionFormEditModal from "../QuestionFormEdit/QuestionFormEdit.modals";
 
 import QuestionDetailModal from "../QuestionDetail/QuestionDetail.modals";
 
-
+import ClassDetailModal from "../ClassDetail/ClassDetail.modals";
 
 export default class Profile extends Component {
   constructor(props) {
@@ -57,22 +56,23 @@ export default class Profile extends Component {
       this.questionFormEditModal = element;
     };
 
-    
+    this.classDetailModal = null;
+
+    this.setClassDetailModalRef = (element) => {
+      console.log("class detail", element);
+      this.classDetailModal = element;
+    };
   }
 
-  signOut = () => {
-    //await storage.removeData((error) => {});
-    this.props.navigation.navigate("Login");
-  };
-
+ 
   render() {
-    console.log("profile screen");
+    //console.log("profile screen");
     if (!this.props.data) return <></>;
-
+   
     // this.props.onGetOptionModal(
     //   this.optionModal ? this.optionModal.showOptionModal : () => {},
     // );
-    console.log("profilescreen", this.props.data);
+    //console.log("profilescreen", this.props.data);
     const {
       username,
       email,
@@ -118,7 +118,6 @@ export default class Profile extends Component {
 
         <TabView style={{marginVertical: 5}}></TabView>
 
-        
         <BlogDetailModal ref={this.setBlogDetailModalRef}></BlogDetailModal>
         <BlogFormEditModal
           ref={this.setBlogFormEditModalRef}></BlogFormEditModal>
@@ -138,6 +137,12 @@ export default class Profile extends Component {
           ref={this.setQuestionDetailModalRef}></QuestionDetailModal>
         <QuestionFormEditModal
           ref={this.setQuestionFormEditModalRef}></QuestionFormEditModal>
+        <ClassDetailModal ref={this.setClassDetailModalRef}></ClassDetailModal>
+        {
+            this.classDetailModal ?
+            
+            this.props.onOpenClassDetail(this.classDetailModal.showClassDetailModal) : () => {}
+        }
       </SafeAreaView>
     );
   }

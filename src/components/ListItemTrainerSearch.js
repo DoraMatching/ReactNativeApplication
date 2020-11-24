@@ -3,7 +3,7 @@ import {Text, View, StyleSheet, Image} from "react-native";
 
 export default class ListItemTrainerSearch extends Component {
   render() {
-    console.log("ListItemTrainer",this.props);
+    //console.log("ListItemTrainer",this.props);
     if (!this.props.item) return <></>;
     
     const {username, email, avatarUrl, classes} = this.props.item.user;

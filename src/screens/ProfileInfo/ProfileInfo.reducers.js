@@ -46,9 +46,21 @@ const UserQuestionReducer = (data = [], action) => {
   }
 };
 
+const ClassDetailModal = (showClassDetailModal = () => {}, action) => {
+  switch (action.type) {
+    case Actions.GET_CLASS_DETAIL_MODAL:
+      console.log("get user success", action.params);
+      return action.params;
+
+    default:
+      return showClassDetailModal;
+  }
+};
+
 export {
   ProfileInfoReducer,
   ProfileInfoClassroomReducer,
   UserBlogReducer,
   UserQuestionReducer,
+  ClassDetailModal,
 };

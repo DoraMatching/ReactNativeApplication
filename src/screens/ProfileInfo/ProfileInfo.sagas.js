@@ -6,7 +6,7 @@ import {getUserClassroomFromAPI} from "../../services/ProfileInfo";
 
 function* fetchUser(action) {
   try {
-    console.log("profile nfo params", action.params);
+    //console.log("profile nfo params", action.params);
     const res = yield getUserFromAPI(action.params);
 
     if (res.status === 200) {
@@ -27,13 +27,13 @@ function* watchFetchUser() {
 
 function* fetchUserClassroom(action) {
   try {
-    console.log("fetchUserClassroom", action.params);
+    //console.log("fetchUserClassroom", action.params);
     const res = yield getTrainerFromAPI(action.params);
-    console.log("getTrainerFromAPI ", res);
+    //console.log("getTrainerFromAPI ", res);
     if (res.status === 200) {
-      console.log("1", res);
+      //console.log("1", res);
       const res2 = yield getUserClassroomFromAPI({id : res.data.id, token : action.params.token});
-      console.log("getUserClassroomFromAPI: ", res);
+      //console.log("getUserClassroomFromAPI: ", res);
       if (res2.status === 200) {
         //console.log("Profile.saga.js: ", res.data);
         yield put({

@@ -6,7 +6,7 @@ import {
   View,
   Text,
   TouchableOpacity,
-  Button
+  Button, Alert
 } from 'react-native';
 import {
   ExpandableCalendar,
@@ -14,7 +14,7 @@ import {
   CalendarProvider
 } from 'react-native-calendars';
 import moment from 'moment';
-
+import colors from '../../themes/color';
 const EVENTS = [
   {
     start: '2020-11-20 22:30:00',
@@ -89,23 +89,37 @@ const EVENTS = [
   }
 ];
 
+const alert = ({name, duration, startTime, endTime}) =>
+Alert.alert(
+  name,
+  `Duration : ${duration} \n `,
+  [
+    // {
+    //   text: "Cancel",
+    //   onPress: () => console.log("Cancel Pressed"),
+    //   style: "cancel"
+    // },
+    { text: "OK", onPress: () => console.log("OK Pressed") }
+  ],
+  { cancelable: false }
+);
+
 export default class Schedule extends Component {
   constructor(props){
     super(props);
+    this.state = {
+      currentDate: moment().format("YYYY-MM-DD"),
+    };
+    
   }
-  state = {
-    currentDate: Date(),
-  }
-  events = [];
-  componentWillUpdate(){
-    this.events = this.props.schedule.map(item => {
-      return {
-        start : moment(item.startTime).format("YYYY-MM-DD hh:mm:ss"),
-        end : moment(item.startTime).add(item.duration, "minutes").format("YYYY-MM-DD hh:mm:ss"),
-        title : item.name,
-        summary : `Duration : ${item.duration}`,
-      }
-    })
+  
+  // events = [];
+  componentDidMount(){
+    console.log(this.state.currentDate);
+    const startTime = moment(`${this.state.currentDate} 00:00:00`).format();
+    const endTime = moment(`${this.state.currentDate} 23:59:59`).format();
+    console.log("currentDate in moment in constructor",startTime, endTime);
+    this.props.onFetchPersonalSchedule({id : this.props.userID, token : this.props.token, startTime, endTime});
   }
   onDateChanged = (date) => {
     // console.warn('ExpandableCalendarScreen onDateChanged: ', date, updateSource);
@@ -137,7 +151,7 @@ export default class Schedule extends Component {
 
     return (
       <TouchableOpacity
-        style={styles.item}>
+        style={styles.item} onPress={() => {const {title, duration} = item;alert({title, duration})}}>
         <View>
           <Text style={styles.itemHourText}>{item.hour}</Text>
           <Text style={styles.itemDurationText}>{item.duration}</Text>

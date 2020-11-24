@@ -16,7 +16,7 @@ import {QuestionFormEditReducer, QuestionEditReducer} from '../screens/QuestionF
 
 import {ProfileReducer, PersonalBlogReducer, PersonalQuestionReducer, OptionModal} from '../screens/Profile/Profile.reducers';
 import {ProfileEditReducer} from '../screens/ProfileEdit/ProfileEdit.reducers';
-import {ProfileInfoReducer, UserBlogReducer, UserQuestionReducer, ProfileInfoClassroomReducer} from '../screens/ProfileInfo/ProfileInfo.reducers'
+import {ProfileInfoReducer, UserBlogReducer, UserQuestionReducer, ProfileInfoClassroomReducer, ClassDetailModal} from '../screens/ProfileInfo/ProfileInfo.reducers'
 
 import {LessonReducer, LessonFormReducer} from '../screens/LessonForm/LessonForm.reducers'
 
@@ -77,6 +77,7 @@ const rootReducer = combineReducers({
 
   ProfileInfoReducer,
   ProfileInfoClassroomReducer,
+  ClassDetailModal,
 
   UserBlogReducer,
   UserQuestionReducer,

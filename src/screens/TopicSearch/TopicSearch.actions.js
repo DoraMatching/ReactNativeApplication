@@ -8,9 +8,9 @@ const Actions = {
   DELETE_TOPIC_SUCCEEDED: "DELETE_TOPIC_SUCCEEDED",
   DELETE_TOPIC_FAILED: "DELETE_TOPIC_FAILED",
 
-  REFRESH_DATA: "REFRESH_DATA",
-  REFRESH_DATA_SUCCEEDED: "GET_REFRESH_DATA_SUCCEEDED",
-  REFRESH_DATA_FAILED: "GET_REFRESH_DATA_FAILED",
+  REFRESH_DATA_TOPIC: "REFRESH_DATA_TOPIC",
+  REFRESH_DATA_TOPIC_SUCCEEDED: "GET_REFRESH_DATA_TOPIC_SUCCEEDED",
+  REFRESH_DATA_TOPIC_FAILED: "GET_REFRESH_DATA_TOPIC_FAILED",
 
   getTopicTopAction: (params) => {
     return {
@@ -20,7 +20,7 @@ const Actions = {
   },
   getRefreshDataAction: (params) => {
     return {
-      type: Actions.REFRESH_DATA,
+      type: Actions.REFRESH_DATA_TOPIC,
       params,
     };
   },
@@ -63,14 +63,14 @@ const Actions = {
 
   getRefreshDataSuccessAction: (data) => {
     return {
-      type: Actions.REFRESH_DATA_SUCCEEDED,
+      type: Actions.REFRESH_DATA_TOPIC_SUCCEEDED,
       data,
     };
   },
 
   getRefreshDataFailedAction: (error) => {
     return {
-      type: Actions.REFRESH_DATA_FAILED,
+      type: Actions.REFRESH_DATA_TOPIC_FAILED,
       error,
     };
   },

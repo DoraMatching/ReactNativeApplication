@@ -92,7 +92,7 @@ export default class Home extends Component {
     if (!this.props.data) {
       //console.log("in componentWillMount");
       const {url} = this.state;
-      this.props.onFetchData({url});
+      this.props.onFetchData({url , token : this.props.token});
      this.props.onFetchTopic({url: "topics?page=1&limit=20&order=DESC"});
     }
   }
@@ -101,19 +101,12 @@ export default class Home extends Component {
     this.setState({search});
   };
 
-  // navigateToDetail = (item, nestedNavigator, screen) => {
-  //   console.log("navigateToDetail is called");
-  //   this.props.navigation.navigate(
-  //     nestedNavigator,
-  //     {screen: screen ,
-  //      params : item
-  //     });
-  // }
+
 
   refreshData = () => {
     this.setState({isLoading: true});
     const {url} = this.state;
-    this.props.onRefreshData({url});
+    this.props.onRefreshData({url, token : this.props.token});
     this.setState({isLoading: false});
   };
 
@@ -124,7 +117,7 @@ export default class Home extends Component {
     if (url === "") {
       return;
     }
-    this.props.onFetchData({url});
+    this.props.onFetchData({url, token : this.props.token});
   };
 
   render() {
@@ -250,6 +243,7 @@ export default class Home extends Component {
                     horizontal={true}
                     data={item.userList}
                     renderItem={({item, index}) => {
+                      if (item.roles.indexOf("TRAINER") != -1)
                       return (
                         <Pressable
                           onPress={() => {

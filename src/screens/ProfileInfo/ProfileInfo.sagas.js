@@ -1,8 +1,8 @@
-import {all, fork, put, takeLatest} from "redux-saga/effects";
-import {getUserFromAPI} from "../../services/Profile";
+import { all, fork, put, takeLatest } from "redux-saga/effects";
+import { getUserFromAPI } from "../../services/Profile";
+import { getUserClassroomFromAPI } from "../../services/ProfileInfo";
+import { getTrainerFromAPI } from "../../services/TrainerSearch";
 import actions from "./ProfileInfo.actions";
-import {getTrainerFromAPI} from "../../services/TrainerSearch";
-import {getUserClassroomFromAPI} from "../../services/ProfileInfo";
 
 function* fetchUser(action) {
   try {

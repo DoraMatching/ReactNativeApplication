@@ -43,7 +43,9 @@ import colors from "../themes/color";
 
 import LessonForm from '../screens/LessonForm/LessonForm.screens';
 
-import Schedule from '../screens/Schedule/Schedule.containers'
+import Schedule from '../screens/Schedule/Schedule.containers';
+
+import PostRouter from './PostRouters'
 
 import {SafeAreaProvider, SafeAreaView} from "react-native-safe-area-context";
 
@@ -62,11 +64,12 @@ const homeRouters = () => (
 );
 const blogRouters = ({params}) => (
   <Stack.Navigator
-    initialRouteName="BlogSearch"
+    initialRouteName="PostRouter"
     screenOptions={{
       headerShown: false,
     }}>
     {/* <Stack.Screen name="BlogForm" component={BlogForm} /> */}
+    <Stack.Screen name="PostRouter" component={PostRouter} />
     <Stack.Screen name="BlogSearch" component={BlogSearch} />
   </Stack.Navigator>
 );
@@ -142,9 +145,9 @@ const tabRouters = () => (
               );
               case "Trainers":
               return focused ? (
-                <TrainerIcon width={size} height={size} fill={color} />
+                <TrainerOutlineIcon width={size} height={size} fill={color} />
               ) : (
-                <TrainerOutlineIcon width={size} height={size} />
+                <TrainerIcon width={size} height={size} fill={color}/>
               );
             case "Topics":
               return focused ? (
@@ -158,6 +161,7 @@ const tabRouters = () => (
       tabBarOptions={{
         activeTintColor: colors.primary,
         inactiveTintColor: "dimgray",
+        showLabel: true,
       }}>
       <Tab.Screen name="Home" component={homeRouters} />
       <Tab.Screen name="Blogs" component={blogRouters} />

@@ -25,7 +25,7 @@ const TopicTopItemReducer = (dataItem = [], action) => {
     case Actions.DELETE_TOPIC_SUCCEEDED:
       return dataItem.filter((item) => item.id !== action.id);
 
-    //case Actions.REFRESH_DATA_SUCCEEDED:
+    //case Actions.REFRESH_DATA_TOPIC_SUCCEEDED:
     //  return action.data.items;
 
     case TopicFormActions.POST_TOPIC_SUCCEEDED:
@@ -34,7 +34,7 @@ const TopicTopItemReducer = (dataItem = [], action) => {
 
     case Actions.GET_TOPIC_TOP_FAILED:
     case Actions.DELETE_TOPIC_FAILED:
-    case Actions.REFRESH_DATA_FAILED:
+    case Actions.REFRESH_DATA_TOPIC_FAILED:
       return dataItem;
 
     // case TopicFormEditActions.UPDATE_TOPIC_SUCCEEDED:

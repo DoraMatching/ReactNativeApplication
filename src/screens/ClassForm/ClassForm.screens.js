@@ -266,7 +266,7 @@ const ClassFormScreen = (props) => {
           {/* <ScrollView> */}
           <Field
             name={"name"}
-            label={"Classname"}
+            label={"Class name"}
             component={ClassInput}
             validate={required}
           />
@@ -296,7 +296,7 @@ const ClassFormScreen = (props) => {
                   props={{
                     editable: false,
                   }}
-                  label={"Start Time"}
+                  label={"Start time"}
                   component={ClassInput}
                   onChange={setStartTime}
                   value={startTime}
@@ -310,7 +310,7 @@ const ClassFormScreen = (props) => {
                   props={{
                     editable: false,
                   }}
-                  label={"End Time"}
+                  label={"End time"}
                   component={ClassInput}
                   onChange={setEndTime}
                   value={endTime}
@@ -411,7 +411,7 @@ const styles = StyleSheet.create({
     borderColor: "lightgray",
     borderWidth: 1,
     color: "black",
-    textAlignVertical: "top",
+    //textAlignVertical: "top",
   },
   topic: {
     // borderColor: "black",

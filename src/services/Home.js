@@ -1,8 +1,12 @@
 import request from "../helpers/request";
 
-const getDataFromAPI = ({url}) => {
+const getDataFromAPI = ({url, token}) => {
   return request
-    .get(url)
+    .get(url,{
+      headers: {
+        'Authorization': `Bearer ${token}` 
+      }
+    })
     .then((res) => {
       return res;
     })

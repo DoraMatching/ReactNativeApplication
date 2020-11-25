@@ -5,6 +5,7 @@ import {connect} from "react-redux";
 import colors from "../../themes/color";
 import actions from "./TopicSearch.actions";
 
+import TopicDetailModal from "../TopicDetail/TopicDetail.modals";
 import ListItemTopicSearch from "../../components/ListItemTopicSearch";
 const item = {
   id: 1,
@@ -25,7 +26,11 @@ export class TopicSearch extends Component {
         };
         
        // this.props.onFetchTop({url: this.state.url});
-    
+       this.topicDetailModal = null;
+
+       this.setTopicDetailModalRef = (element) => {
+         this.topicDetailModal = element;
+       };
       }
     
       refreshData = () => {
@@ -82,9 +87,8 @@ export class TopicSearch extends Component {
             return (
               <Pressable
                 onPress={() => {
-                //   this.props.onOpenQuestionDetail(item);
-                //   if (this.questionDetailModal)
-                //     this.questionDetailModal.showQuestionDetailModal(item);
+                  if (this.topicDetailModal)
+                  this.topicDetailModal.showTopicDetailModal(item.id);
                 }}>
                 <ListItemTopicSearch
                   {...{
@@ -101,6 +105,8 @@ export class TopicSearch extends Component {
           }}
           onEndReached={this.retrieveMore}
         />
+        <TopicDetailModal
+            ref={this.setTopicDetailModalRef}></TopicDetailModal>
       </View>
     );
   }

@@ -19,10 +19,11 @@ function* fetchData(action) {
 
 function* refreshData(action) {
   try {
+    console.log("refresh data", action.params);
     const res = yield getDataFromAPI(action.params);
 
     if (res.status === 200) {
-      //console.log("home.saga.js: data", res.data);
+      console.log("refreshData: data", res.data);
       yield put({type: actions.REFRESH_DATA_SUCCEEDED, data: res.data});
     } else {
       yield put({type: actions.REFRESH_DATA_FAILED, error: res.message});

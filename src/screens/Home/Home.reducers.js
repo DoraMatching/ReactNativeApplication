@@ -35,6 +35,7 @@ const HomeItemReducer = (dataItem = [], action) => {
       return dataItem;
 
     case Actions.REFRESH_DATA_SUCCEEDED:
+      console.log("HomeItemReducer: ", action);
       return action.data.items;
 
     case BlogDetailActions.POST_BLOG_COMMENT_SUCCEEDED:

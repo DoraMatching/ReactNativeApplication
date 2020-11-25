@@ -19,6 +19,7 @@ function TabView() {
           labelStyle: {fontSize: 12, fontWeight: "bold"},
           //style: {backgroundColor: "powderblue"},
           indicatorStyle: {backgroundColor: colors.primary},
+          scrollEnabled : true,
         }}>
         <Tab.Screen
           name="MyBlog"

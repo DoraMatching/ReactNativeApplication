@@ -215,7 +215,7 @@ const QuestionFormEditScreen = (props) => {
               name={"title"}
               label={"Title"}
               component={QuestionInput}
-              validate={required}
+              //validate={required}
               onChange={setEditingTitle}
               val={editingTitle}
             />
@@ -227,7 +227,7 @@ const QuestionFormEditScreen = (props) => {
               }}
               label={"Body"}
               component={QuestionInput}
-              validate={required}
+              //validate={required}
               onChange={setEditingContent}
               val={editingContent}
             />

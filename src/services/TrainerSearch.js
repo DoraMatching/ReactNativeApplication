@@ -26,9 +26,9 @@ const deleteDataFromAPI = ({id, token}) => {
     });
 };
 
-const getTrainerFromAPI = ({id, token}) => {
+const getIDFromAPI = ({id, token, role}) => {
   return request
-    .get(`trainer?userId=${id}`,{
+    .get(`${role}?userId=${id}`,{
       headers: {
         'Authorization': `Bearer ${token}` 
       }
@@ -41,4 +41,6 @@ const getTrainerFromAPI = ({id, token}) => {
     });
 }
 
-export {getDataFromAPI, deleteDataFromAPI, getTrainerFromAPI};
+
+
+export {getDataFromAPI, deleteDataFromAPI, getIDFromAPI};

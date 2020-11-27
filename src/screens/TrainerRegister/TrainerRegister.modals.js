@@ -62,6 +62,7 @@ export default class TrainerRegisterModal extends Component {
         style={{
           height: 170,
           width: 350,
+          borderRadius : 5,
         }}
         ref={this.setTrainerRegisterModalRef}
         position={"center"}

@@ -23,7 +23,9 @@ import ClassDetailModal from "../ClassDetail/ClassDetail.modals";
 export default class Profile extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      classDetailModal : null,
+    };
     this.props.onFetchUser({id: this.props.id, token: this.props.token});
 
     this.blogDetailModal = null;
@@ -56,11 +58,12 @@ export default class Profile extends Component {
       this.questionFormEditModal = element;
     };
 
-    this.classDetailModal = null;
+    //this.classDetailModal = null;
 
     this.setClassDetailModalRef = (element) => {
-      console.log("class detail", element);
-      this.classDetailModal = element;
+      //console.log("class detail", element);
+      //this.classDetailModal = element;
+      this.setState({classDetailModal : element})
     };
   }
 
@@ -139,9 +142,12 @@ export default class Profile extends Component {
           ref={this.setQuestionFormEditModalRef}></QuestionFormEditModal>
         <ClassDetailModal ref={this.setClassDetailModalRef}></ClassDetailModal>
         {
-            this.classDetailModal ?
+          console.log("this.state.classDetailModal: ", this.state.classDetailModal)
+        }
+        {
+            this.state.classDetailModal ?
             
-            this.props.onOpenClassDetail(this.classDetailModal.showClassDetailModal) : () => {}
+            this.props.onOpenClassDetail(this.state.classDetailModal.showClassDetailModal) : () => {}
         }
       </SafeAreaView>
     );

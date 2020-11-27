@@ -86,13 +86,15 @@ export default class BlogSearch extends Component {
 
   render() {
     if (!this.props.tops) return <></>;
+    console.log("BlogSearch: ", this.props);
+    
     return (
-      <SafeAreaView
-        style={{
-          flex: 1,
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}>
+      // <SafeAreaView
+      //   style={{
+      //     flex: 1,
+      //     justifyContent: "space-between",
+      //     alignItems: "center",
+      //   }}>
         <View style={{flex: 1}}>
           <BlogDetailModal ref={this.setBlogDetailModalRef}></BlogDetailModal>
           <BlogFormEditModal
@@ -109,7 +111,7 @@ export default class BlogSearch extends Component {
                 ? this.questionFormEditModal.showQuestionFormEditModal
                 : () => {}
             }></OptionModal>
-          <View style={styles.searchContainer}>
+          {/* <View style={styles.searchContainer}>
             <View style={styles.searchInput}>
               <View style={styles.searchIcon}>
                 <FinderIcon width={22} height={22} />
@@ -126,7 +128,7 @@ export default class BlogSearch extends Component {
                 }}
               />
             </View>
-          </View>
+          </View> */}
           {/* <Text style={{...styles.label, marginTop: 10}}>Tags</Text>
         <View
           style={{
@@ -139,7 +141,7 @@ export default class BlogSearch extends Component {
             return <TagListItem item={item} />;
           }) : <></>}
         </View> */}
-          <Text style={{...styles.label}}>Top Blogs</Text>
+          {/* <Text style={{...styles.label}}>Top Blogs</Text> */}
           <FlatList
             style={{}}
             onRefresh={this.refreshData}
@@ -154,15 +156,13 @@ export default class BlogSearch extends Component {
               <Pressable
                 onPress={() => {
                   this.props.onOpenBlogDetail(item);
-                  if (this.blogDetailModal)
-                    this.blogDetailModal.showBlogDetailModal(item);
+                  //if (this.blogDetailModal)
+                    this.props.showBlogDetailModal(item);
                 }}>
                 <ListItemBlogSearch {...{
                     token,
                     userID,
-                    showOptionModal: this.optionModal
-                      ? this.optionModal.showOptionModal
-                      : () => {},
+                    showOptionModal: this.props.showOptionModal,
                     ...item,
                   }} />
               </Pressable>
@@ -176,9 +176,9 @@ export default class BlogSearch extends Component {
             }}
           />
           <BlogFormModal ref={this.setBlogFormModalRef}></BlogFormModal> */}
-          <FloatingButtonAction />
+          {/* <FloatingButtonAction /> */}
         </View>
-      </SafeAreaView>
+      // </SafeAreaView>
     );
   }
 }

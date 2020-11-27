@@ -11,7 +11,7 @@ export default class ListItemClassSearch extends Component {
   }
 
   render() {
-    console.log("List item question top: ", this.props);
+    //console.log("List item question top: ", this.props);
     const {id, name, description, featuredImage, duration, startTime, topic} = this.props.item;
  
     return (

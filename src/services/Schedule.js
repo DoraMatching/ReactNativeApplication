@@ -1,10 +1,10 @@
 import request from "../helpers/request";
 
-const getDataFromAPI = ({id, token, startTime, endTime}) => {
+const getDataFromAPI = ({id, token, startTime, endTime, role}) => {
   const params = {startTime, endTime};
  // console.log("getDataFromAPI: ", params);
   return request
-    .get(`trainer/${id}/lessons`, {
+    .get(`${role}/${id}/lessons`, {
       params,
       headers: {
         Authorization: `Bearer ${token}`,

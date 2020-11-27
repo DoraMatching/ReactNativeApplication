@@ -21,9 +21,9 @@ const TrainerTopReducer = (data = null, action) => {
 const TrainerTopItemReducer = (dataItem = [], action) => {
   switch (action.type) {
     case Actions.GET_TRAINER_TOP_SUCCEEDED:
-      console.log("in trainerTopItem");
+      //console.log("in trainerTopItem");
       
-      return _.uniq([...dataItem, ...action.data.items], "id");
+      return _.uniqBy([...dataItem, ...action.data.items], "id");
 
     case Actions.DELETE_TRAINER_SUCCEEDED:
       return dataItem.filter((item) => item.id !== action.id);

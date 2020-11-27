@@ -45,7 +45,8 @@ import LessonForm from '../screens/LessonForm/LessonForm.screens';
 
 import Schedule from '../screens/Schedule/Schedule.containers';
 
-import PostRouter from './PostRouters'
+import PostsSearch from '../screens/PostsSearch/PostsSearch.routers';
+import TrainingSearch from '../screens/TrainingSearch/TrainingSearch.routers';
 
 import {SafeAreaProvider, SafeAreaView} from "react-native-safe-area-context";
 
@@ -69,7 +70,7 @@ const blogRouters = ({params}) => (
       headerShown: false,
     }}>
     {/* <Stack.Screen name="BlogForm" component={BlogForm} /> */}
-    <Stack.Screen name="PostRouter" component={PostRouter} />
+    <Stack.Screen name="PostRouter" component={PostsSearch} />
     <Stack.Screen name="BlogSearch" component={BlogSearch} />
   </Stack.Navigator>
 );
@@ -119,7 +120,7 @@ const tabRouters = () => (
               ) : (
                 <HomeOutlineIcon width={size} height={size} />
               );
-            case "Blogs":
+            case "Posting":
               return focused ? (
                 <BookIcon width={size} height={size} fill={color} />
               ) : (
@@ -143,7 +144,7 @@ const tabRouters = () => (
               ) : (
                 <PersonCircleOutlineIcon width={size} height={size} />
               );
-              case "Trainers":
+              case "Training":
               return focused ? (
                 <TrainerOutlineIcon width={size} height={size} fill={color} />
               ) : (
@@ -164,11 +165,11 @@ const tabRouters = () => (
         showLabel: true,
       }}>
       <Tab.Screen name="Home" component={homeRouters} />
-      <Tab.Screen name="Blogs" component={blogRouters} />
-      <Tab.Screen name="Trainers" component={TrainerSearch} />
+      <Tab.Screen name="Posting" component={blogRouters} />
+      {/* <Tab.Screen name="Trainers" component={TrainerSearch} /> */}
       <Tab.Screen name="Schedule" component={Schedule} />
-      <Tab.Screen name="Topics" component={TopicSearch} />
-      <Tab.Screen name="Questions" component={questionRouters} />
+      <Tab.Screen name="Training" component={TrainingSearch} />
+      {/* <Tab.Screen name="Questions" component={questionRouters} /> */}
       <Tab.Screen name="Profile" component={profileRouters} />
     </Tab.Navigator>
     {/* <FloatingButton></FloatingButton> */}

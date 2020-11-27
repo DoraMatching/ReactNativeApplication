@@ -11,7 +11,8 @@ const Tab = createMaterialTopTabNavigator();
 
 function TabView() {
   return (
-    //<NavigationContainer>
+    <NavigationContainer independent={true}>
+   
       <Tab.Navigator
         initialRouteName="MyBlog"
         tabBarOptions={{
@@ -42,8 +43,19 @@ function TabView() {
           options={{tabBarLabel: "Classrooms"}}
         />
       </Tab.Navigator>
-    //</NavigationContainer>
+      
+    </NavigationContainer>
   );
+}
+
+function AnotherTabView(){
+  return (
+    <Tab.Screen
+    name="MyClassroom"
+    component={TabView}
+    options={{tabBarLabel: "Classrooms"}}
+  />
+  )
 }
 
 export default TabView;

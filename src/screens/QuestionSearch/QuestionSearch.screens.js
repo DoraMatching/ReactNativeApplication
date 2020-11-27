@@ -83,7 +83,7 @@ export default class QuestionSearch extends Component {
               ? this.questionFormEditModal.showQuestionFormEditModal
               : () => {}
           }></OptionModal>
-        <View style={styles.searchContainer}>
+        {/* <View style={styles.searchContainer}>
           <View style={styles.searchInput}>
             <View style={styles.searchIcon}>
               <FinderIcon width={22} height={22} />
@@ -100,9 +100,9 @@ export default class QuestionSearch extends Component {
               }}
             />
           </View>
-        </View>
+        </View> */}
 
-        <Text style={{...styles.label}}>Top Questions</Text>
+        {/* <Text style={{...styles.label}}>Top Questions</Text> */}
         <FlatList
           style={{}}
           onRefresh={this.refreshData}
@@ -117,16 +117,14 @@ export default class QuestionSearch extends Component {
               <Pressable
                 onPress={() => {
                   this.props.onOpenQuestionDetail(item);
-                  if (this.questionDetailModal)
-                    this.questionDetailModal.showQuestionDetailModal(item);
+                  //if (this.questionDetailModal)
+                    this.props.showQuestionDetailModal(item);
                 }}>
                 <ListItemQuestionSearch
                   {...{
                     token,
                     userID,
-                    showOptionModal: this.optionModal
-                      ? this.optionModal.showOptionModal
-                      : () => {},
+                    showOptionModal: this.props.showOptionModal,
                     item,
                   }}
                 />

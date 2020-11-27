@@ -6,6 +6,7 @@ import colors from "../../themes/color";
 import actions from "./TopicSearch.actions";
 
 import TopicDetailModal from "../TopicDetail/TopicDetail.modals";
+
 import ListItemTopicSearch from "../../components/ListItemTopicSearch";
 const item = {
   id: 1,
@@ -56,7 +57,7 @@ export class TopicSearch extends Component {
   render() {
     return (
       <View style={{flex: 1}}>
-        <View style={styles.searchContainer}>
+        {/* <View style={styles.searchContainer}>
           <View style={styles.searchInput}>
             <View style={styles.searchIcon}>
               <FinderIcon width={22} height={22} />
@@ -73,7 +74,7 @@ export class TopicSearch extends Component {
               }}
             />
           </View>
-        </View>
+        </View> */}
         <FlatList
           style={{}}
           onRefresh={this.refreshData}
@@ -87,8 +88,8 @@ export class TopicSearch extends Component {
             return (
               <Pressable
                 onPress={() => {
-                  if (this.topicDetailModal)
-                  this.topicDetailModal.showTopicDetailModal(item.id);
+                  //if (this.topicDetailModal)
+                  this.props.showTopicDetailModal(item.id);
                 }}>
                 <ListItemTopicSearch
                   {...{

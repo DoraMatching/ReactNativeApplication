@@ -32,7 +32,7 @@ const QuestionTopReducer = (data = null, action) => {
 const QuestionTopItemReducer = (dataItem = [], action) => {
   switch (action.type) {
     case Actions.GET_QUESTION_TOP_SUCCEEDED:
-      return _.uniq([...dataItem, ...action.data.items], "id");
+      return _.uniqBy([...dataItem, ...action.data.items], "id");
 
     case Actions.DELETE_QUESTION_SUCCEEDED:
       return dataItem.filter((item) => item.id !== action.id);

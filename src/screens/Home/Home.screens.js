@@ -233,34 +233,34 @@ export default class Home extends Component {
                     />
                   </Pressable>
                 );
-              if (item.type == "user-list")
-                return (
-                  <FlatList
-                    style={{
-                      marginVertical: 5,
-                      backgroundColor: "white",
-                    }}
-                    horizontal={true}
-                    data={item.userList}
-                    renderItem={({item, index}) => {
-                      if (item.roles.indexOf("TRAINER") != -1)
-                      return (
-                        <Pressable
-                          onPress={() => {
-                            //this.props.navigation.navigate("BlogDetail");
-                            //this.props.onOpenBlogDetail(item);
-                            //console.log("HomeScreen", this.blogDetailModal);
-                            if (this.profileInfoModal)
-                              this.profileInfoModal.showProfileInfoModal(
-                                item.id,
-                              );
-                          }}>
-                          <ListItemTrainer {...item}></ListItemTrainer>
-                        </Pressable>
-                      );
-                    }}
-                    keyExtractor={(item, index) => item.hour}></FlatList>
-                );
+              // if (item.type == "user-list")
+              //   return (
+              //     <FlatList
+              //       style={{
+              //         marginVertical: 5,
+              //         backgroundColor: "white",
+              //       }}
+              //       horizontal={true}
+              //       data={item.userList}
+              //       renderItem={({item, index}) => {
+              //         if (item.roles.indexOf("TRAINER") != -1)
+              //         return (
+              //           <Pressable
+              //             onPress={() => {
+              //               //this.props.navigation.navigate("BlogDetail");
+              //               //this.props.onOpenBlogDetail(item);
+              //               //console.log("HomeScreen", this.blogDetailModal);
+              //               if (this.profileInfoModal)
+              //                 this.profileInfoModal.showProfileInfoModal(
+              //                   item.id,
+              //                 );
+              //             }}>
+              //             <ListItemTrainer {...item}></ListItemTrainer>
+              //           </Pressable>
+              //         );
+              //       }}
+              //       keyExtractor={(item, index) => item.hour}></FlatList>
+              //   );
             }}
             onEndReached={this.retrieveMore}
             ListHeaderComponent={() => (

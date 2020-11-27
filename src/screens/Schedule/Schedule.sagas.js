@@ -1,7 +1,7 @@
 import {all, fork, put, takeLatest} from "redux-saga/effects";
 import {getDataFromAPI} from "../../services/Schedule";
 import actions from "./Schedule.actions";
-import {getTrainerFromAPI} from "../../services/TrainerSearch";
+import {getIDFromAPI} from "../../services/TrainerSearch";
 
 // function* fetchPersonalSchedule(action) {
 //   try {
@@ -20,13 +20,14 @@ import {getTrainerFromAPI} from "../../services/TrainerSearch";
 
 function* fetchPersonalSchedule(action) {
     try {
+        const role = action.params.roles.indexOf("TRAINER") != -1 ? "trainer" : "trainee";
         //console.log("fetchUserClassroom", action.params);
-        const res = yield getTrainerFromAPI(action.params);
+        const res = yield getIDFromAPI({role, ...action.params});
        // console.log("getTrainerFromAPI ", res);
         if (res.status === 200) {
         // console.log("1", res);
          const {token ,startTime, endTime} = action.params;
-          const res2 = yield getDataFromAPI({id : res.data.id, token, startTime, endTime});
+          const res2 = yield getDataFromAPI({id : res.data.id, token, startTime, endTime, role});
          // console.log("getUserClassroomFromAPI: ", res);
           if (res2.status === 200) {
             //console.log("Profile.saga.js: ", res.data);

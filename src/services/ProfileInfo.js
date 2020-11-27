@@ -16,6 +16,23 @@ const getUserClassroomFromAPI = ({id, token}) => {
       });
   };
 
+  const getMoreUserClassroomFromAPI = ({url, token}) => {
+    //console.log("getUserClassroomFromAPI", id, token);
+    return request
+      .get(url,{
+        headers: {
+          'Authorization': `Bearer ${token}` 
+        }
+      })
+      .then((res) => {
+        //console.log("ProfileAPI.js: ", res.data);
+        return res;
+      })
+      .catch((error) => {
+        return error.response.data;
+      });
+  };
+
   const patchBlogCommentFromAPI = ({blogID, commentID, content, token}) => {
     return request
       .patch(`post/${blogID}/comment/${commentID}`, {
@@ -33,4 +50,4 @@ const getUserClassroomFromAPI = ({id, token}) => {
       });
   };
 
-  export {getUserClassroomFromAPI};
+  export {getUserClassroomFromAPI, getMoreUserClassroomFromAPI};

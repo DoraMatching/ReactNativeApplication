@@ -10,7 +10,7 @@ export default class ListItemQuestionTop extends Component {
   }
   
   render() {
-    console.log("List item question top: ", this.props);
+    //console.log("List item question top: ", this.props);
     var paramsForOptionModal = {
       type : "question",
       id : this.props.id,

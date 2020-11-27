@@ -23,7 +23,7 @@ const item = {
 export class TrainerSearch extends Component {
   constructor(props) {
     super(props);
-    console.log("QuestionSearch constructor is called");
+    //console.log("QuestionSearch constructor is called");
     this.state = {
       search: "",
       url: "trainers?page=1&limit=4&order=DESC",
@@ -65,8 +65,8 @@ export class TrainerSearch extends Component {
   };
 
   retrieveMore = () => {
-    console.log("TrainerSearch in RetrieveMore", this.props.data);
-    console.log("retrieveMore is called");
+    //console.log("TrainerSearch in RetrieveMore", this.props.data);
+    //console.log("retrieveMore is called");
     let url = this.props.data.links.next;
     if (url === "") {
       return;
@@ -78,7 +78,7 @@ export class TrainerSearch extends Component {
     return (
       <View style={{flex: 1}}>
         <ProfileInfoModal ref={this.setProfileInfoModalRef}></ProfileInfoModal>
-        <View style={styles.searchContainer}>
+        {/* <View style={styles.searchContainer}>
           <View style={styles.searchInput}>
             <View style={styles.searchIcon}>
               <FinderIcon width={22} height={22} />
@@ -95,7 +95,7 @@ export class TrainerSearch extends Component {
               }}
             />
           </View>
-        </View>
+        </View> */}
         <FlatList
           style={{}}
           onRefresh={this.refreshData}
@@ -112,8 +112,8 @@ export class TrainerSearch extends Component {
                   //   this.props.onOpenQuestionDetail(item);
                   //   if (this.questionDetailModal)
                   //     this.questionDetailModal.showQuestionDetailModal(item);
-                  if (this.profileInfoModal)
-                              this.profileInfoModal.showProfileInfoModal(
+                  //if (this.profileInfoModal)
+                              this.props.showProfileInfoModal(
                                 item.user.id,
                               );
                 }}>
@@ -133,7 +133,7 @@ export class TrainerSearch extends Component {
           onEndReached={this.retrieveMore}
         />
         {/* <ListItemTrainer item={item}></ListItemTrainer> */}
-        <FloatingButtonAction />
+        {/* <FloatingButtonAction /> */}
       </View>
     );
   }

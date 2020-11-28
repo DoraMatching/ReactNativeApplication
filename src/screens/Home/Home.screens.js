@@ -84,6 +84,7 @@ export default class Home extends Component {
     this.setTopicDetailModalRef = (element) => {
       this.topicDetailModal = element;
     };
+
   }
 
   componentWillMount() {
@@ -171,6 +172,7 @@ export default class Home extends Component {
                 placeholderTextColor={"#999"}
                 underlineColorAndroid={"#fff"}
                 autoCorrect={false}
+                onFocus={() => {this.props.navigation.navigate("SearchScreen")}}
                 ref={(inputSearch) => {
                   this.inputSearch = inputSearch;
                 }}

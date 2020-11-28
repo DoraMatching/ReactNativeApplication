@@ -34,7 +34,7 @@ var screen = Dimensions.get("window");
 export default class BlogSearch extends Component {
   constructor(props) {
     super(props);
-    //console.log("BlogSearch constructor is called");
+    console.log("BlogSearch constructor is called");
     //this.props.onFetchTag({url: "tag-post?page=1&limit=20&order=DESC"});
     this.state = {
       search: "",
@@ -86,7 +86,7 @@ export default class BlogSearch extends Component {
 
   render() {
     if (!this.props.tops) return <></>;
-    console.log("BlogSearch: ", this.props);
+    console.log("BlogSearch render ");
     
     return (
       // <SafeAreaView

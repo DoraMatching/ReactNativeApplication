@@ -44,6 +44,8 @@ export default class QuestionDetail extends Component {
     this.setCommentTextInputRef = (element) => {
       this.commentTextInput = element;
     };
+
+    this.props.onFetchQuestionDetail({id : this.props.id , token : this.props.token});
   }
   updateComment = (comment) => {
     this.setState({comment});
@@ -76,6 +78,7 @@ export default class QuestionDetail extends Component {
     var imgSrc = this.state.isLiked ? likedIcon : unlikedIcon;
 
     console.log("questiondetail", this.props.question);
+    if (!this.props.question) return <></>;
     const {
       id,
       author,

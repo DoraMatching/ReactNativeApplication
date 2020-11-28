@@ -47,13 +47,13 @@ class option extends Component {
     const {id, token, type, title, subTitle, content} = this.props.params;
 
     if (type === "blog") {
-      this.props.onEditBlog(this.props.params);
-      this.props.onOpenBlogEditForm();
+      //this.props.onEditBlog(this.props.params);
+      this.props.onOpenBlogEditForm({id, token});
       this.props.onClose();
       return;
     }
-    this.props.onEditQuestion(this.props.params);
-    this.props.onOpenQuestionEditForm();
+    //this.props.onEditQuestion(this.props.params);
+    this.props.onOpenQuestionEditForm({id, token});
     this.props.onClose();
   };
 
@@ -87,9 +87,9 @@ const mapDispatchToProps = (dispatch) => {
     onDeleteQuestion: (params) => {
       dispatch(QuestionSearchActions.deleteQuestionAction(params));
     },
-    onEditBlog: (params) => {
-      dispatch(BlogFormEditActions.editBlogAction(params));
-    },
+    // onEditBlog: (params) => {
+    //   dispatch(BlogFormEditActions.editBlogAction(params));
+    // },
     onEditQuestion: (params) => {
       dispatch(QuestionFormEditActions.editQuestionAction(params));
     },

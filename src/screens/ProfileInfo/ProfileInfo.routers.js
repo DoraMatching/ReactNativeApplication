@@ -6,10 +6,12 @@ import PersonalBlog from './components/PersonalBlog.components';
 import PersonalQuestion from './components/PersonalQuestion.components';
 import PersonalClass from './components/PersonalClass.components';
 import PersonalClassroom from './components/PersonalClassroom.components';
+import {connect} from "react-redux";
 import colors from '../../themes/color';
 const Tab = createMaterialTopTabNavigator();
 
-function TabView() {
+function TabView(props) {
+  const {showBlogDetailModal, showQuestionDetailModal} = props;
   return (
     <NavigationContainer independent={true}>
    
@@ -24,12 +26,12 @@ function TabView() {
         }}>
         <Tab.Screen
           name="MyBlog"
-          component={PersonalBlog}
+          component={connect(()=>({showBlogDetailModal}))(PersonalBlog)}
           options={{tabBarLabel: "Blogs"}}
         />
         <Tab.Screen
           name="MyQuestion"
-          component={PersonalQuestion}
+          component={connect(()=>({showQuestionDetailModal}))(PersonalQuestion)}
           options={{tabBarLabel: "Questions"}}
         />
         <Tab.Screen

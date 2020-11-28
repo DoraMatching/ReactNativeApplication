@@ -66,14 +66,29 @@ const required = (value) => {
   //console.log("validate username", value);
   return value ? undefined : "The field is required";
 };
+const isEmpty = (field) => field && field.trim() == "";
+const validate = (values) => {
+  const errors = {};
+  if ( isEmpty(values.title) ) {
+    errors.title = "The field must not be blank";
+  }
+  if ( isEmpty(values.content) ) {
+    errors.content = "The field must not be blank";
+  }
+  
 
-let inn = false;
-let count = 0;
+  return errors;
+};
+
+
 
 const QuestionFormEditScreen = (props) => {
   //console.log("1. QuestionFormEdit props: ", props);
   //if (!props.edit) return (<></>);
-  const {id, token, title, content, tags} = props.params;
+  const {token} = props;
+  props.onFetchQuestionDetail({id : props.id, token});
+  if (!props.params) return <></>;
+  const {id, title, content, tags} = props.params;
 
   const tagRender = () => {
     return (
@@ -97,31 +112,33 @@ const QuestionFormEditScreen = (props) => {
   const [tagName, setTagName] = useState("");
 
   const submit = (values) => {
+    console.log("submit question edit: ", values);
+   
     const tags = tag.itemsSelected.map((item) => {
       return {name: item.label};
     });
     props.onEditQuestion({id, token, isDraft: true, tags, ...values});
   };
 
-  const onRemoveButton = async () => {
-    //console.log("remove", tag.itemsSelected.map(item => item.id));
-    onSelectItemsChange(
-      selectItems.filter((item) => {
-        return (
-          tag.itemsSelected.length != 0 &&
-          tag.itemsSelected.map((item) => item.id).indexOf(item.id) == -1
-        );
-      }),
-    );
-    onSelectedItemsChange([]);
+  // const onRemoveButton = async () => {
+  //   //console.log("remove", tag.itemsSelected.map(item => item.id));
+  //   onSelectItemsChange(
+  //     selectItems.filter((item) => {
+  //       return (
+  //         tag.itemsSelected.length != 0 &&
+  //         tag.itemsSelected.map((item) => item.id).indexOf(item.id) == -1
+  //       );
+  //     }),
+  //   );
+  //   onSelectedItemsChange([]);
 
-    //console.log("tag in removeButton", tag);
-  };
+  //   //console.log("tag in removeButton", tag);
+  // };
 
-  const onRemove = (item) => {
-      onSelectedItemsChange(selectedItems.filter((i) => i.id != item.id));
-      onSelectItemsChange(selectItems.filter((i) => i.id != item.id));
-  };
+  // const onRemove = (item) => {
+  //     onSelectedItemsChange(selectedItems.filter((i) => i.id != item.id));
+  //     onSelectItemsChange(selectItems.filter((i) => i.id != item.id));
+  // };
 
   if (props.data && props.data.success === true) {
     alert("Your Question Has Been Successfully Updated.");
@@ -254,6 +271,7 @@ const QuestionFormEditScreen = (props) => {
 
 export const QuestionFormEdit = reduxForm({
   form: "questionEdit",
+  validate,
 })(QuestionFormEditScreen);
 
 const styles = StyleSheet.create({

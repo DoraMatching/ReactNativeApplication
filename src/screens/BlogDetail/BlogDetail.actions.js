@@ -6,6 +6,29 @@ const Actions = {
     PATCH_BLOG_COMMENT_SUCCEEDED: "PATCH_BLOG_COMMENT_SUCCEEDED",
     PATCH_BLOG_COMMENT_FAILED: "PATCH_BLOG_COMMENT_FAILED",
 
+    GET_BLOG_DETAIL : "GET_BLOG_DETAIL",
+    GET_BLOG_DETAIL_SUCCEEDED : "GET_BLOG_DETAIL_SUCCEEDED",
+    GET_BLOG_DETAIL_FAILED : "GET_BLOG_DETAIL_FAILED",
+
+    getBlogDetailAction: (params) => {
+      return {
+        type : Actions.GET_BLOG_DETAIL,
+        params,
+      }
+    },
+    getBlogDetailSuccessAction: (data) => {
+      return {
+        type : Actions.GET_BLOG_DETAIL_SUCCEEDED,
+        data,
+      }
+    },
+    getBlogDetailFailedAction: (error) => {
+      return {
+        type : Actions.GET_BLOG_DETAIL_FAILED,
+        error,
+      }
+    },
+
     postBlogCommentAction: (params) => {
       return {
         type: Actions.POST_BLOG_COMMENT,

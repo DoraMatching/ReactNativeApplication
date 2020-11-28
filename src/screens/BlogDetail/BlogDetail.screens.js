@@ -46,7 +46,9 @@ export default class BlogDetail extends Component {
       isCreated: true,
       commentID: "",
     };
-    console.log("navigation Modal", this.props.navigation);
+    console.log("Blog Detail constructor");
+
+    this.props.onFetchBlogDetail({id : this.props.id, token : this.props.token});
     this.commentTextInput = null;
 
     this.setCommentTextInputRef = (element) => {
@@ -84,6 +86,7 @@ export default class BlogDetail extends Component {
     });
   };
   render() {
+    if (!this.props.blog) return <></>;
     var BContent = (
       <View style={[styles.btn, styles.btnModal]}>
         <Button
@@ -108,7 +111,7 @@ export default class BlogDetail extends Component {
       title,
       updatedAt,
     } = this.props.blog;
-    console.log("BlogDetailScreen: ", this.props.blog);
+    //console.log("BlogDetailScreen: ", this.props.blog);
 
     return (
       <>
@@ -198,10 +201,10 @@ export default class BlogDetail extends Component {
               </Text>
             </TouchableOpacity>
             <Text style={{fontWeight: "bold", fontSize: 20, marginVertical: 5}}>
-              Comments ({this.props.comments.length})
+              Comments ({comments.length})
             </Text>
             <View>
-              {this.props.comments.map((item) => (
+              {comments.map((item) => (
                 <Comment
                   {...{
                     ...item,

@@ -2,8 +2,8 @@ import React, {Component} from "react";
 
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
-import {View, Text, FlatList} from "react-native";
-import BlogItem from "../../../components/ListItemQuestionTop";
+import {View, Text, FlatList, Pressable} from "react-native";
+import QuestionItem from "../../../components/ListItemQuestionTop";
 
 export class PersonalQuestion extends Component {
   static propTypes = {
@@ -28,12 +28,19 @@ export class PersonalQuestion extends Component {
           renderItem={({item, index}) => {
             const userID = this.props.userID;
             const token = this.props.token;
-            return <BlogItem {...{
-              token,
-              userID,
-              //showOptionModal: this.props.showOptionModal,
-              ...item,
-            }}></BlogItem>;
+            return(
+            <Pressable
+            onPress={() => {
+              this.props.showQuestionDetailModal(item);
+            }}>
+              <QuestionItem
+                {...{
+                  token,
+                  userID,
+                  //showOptionModal: this.props.showOptionModal,
+                  ...item,
+                }}></QuestionItem>
+            </Pressable>);
           }}
           keyExtractor={(item, index) => item.name}></FlatList>
       </View>

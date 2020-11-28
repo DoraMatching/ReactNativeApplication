@@ -55,7 +55,9 @@ const required = (value) => {
 };
 
 const BlogFormScreen = (props) => {
-  const {id, token, title, subTitle, content, tags, featuredImage} = props.params;
+  props.onFetchBlogDetail({id : props.id, token : props.token});
+  if (!props.params) return <></>;
+  const {id, title, subTitle, content, tags, featuredImage} = props.params;
   const defaultImage = {
     uri: featuredImage,
   };

@@ -44,11 +44,9 @@ export default class QuestionDetailModal extends Component {
     //this.props.navigation.setOptions({tabBarVisible : false});
   }
  
-
+  id;
   showQuestionDetailModal = (item) => {
-    //console.log("blog detail modal", item);
-    //this.setData(item);
-    //this.blogDetailModal.open();
+    this.id = item.id;
     this.setState({isOpen: true});
     //console.log("blog detail modal tags", this.tags);
   };
@@ -77,7 +75,7 @@ export default class QuestionDetailModal extends Component {
         onOpened={this.onOpen}
         isOpen={this.state.isOpen}>
           <View style={{flexDirection: "column", flex: 1, marginBottom: 5}}>
-          <QuestionDetail></QuestionDetail>
+          <QuestionDetail id={this.id}></QuestionDetail>
           <View
               style={{
                 flexDirection: "row",

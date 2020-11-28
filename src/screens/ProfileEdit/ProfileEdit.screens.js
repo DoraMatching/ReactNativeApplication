@@ -7,6 +7,7 @@ import {
   TextInput,
   Pressable,
   Keyboard,
+  KeyboardAvoidingView,
 } from "react-native";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
@@ -23,6 +24,7 @@ const ProfileEditInput = (props) => {
     input: {onChange, name, ...input},
     label,
     styles,
+    val,
     ...rest
   } = props;
   return (
@@ -34,6 +36,7 @@ const ProfileEditInput = (props) => {
         style={styles}
         onChangeText={onChange}
         {...input}
+        {...(val && {value: val})}
         {...rest}
         returnKeyType="next"
         autoCorrect={false}></TextInput>
@@ -41,13 +44,65 @@ const ProfileEditInput = (props) => {
   );
 };
 
+const ProfileInfoEdit = (props) => {
+  if (!props.data) return <></>;
+  const {username, name, email, roles, avatarUrl} = props.data;
+  const [nameEdit, setNameEdit] = useState(name);
+  const submit = (values) => {
+    const {id, token} = props.data;
+    props.onEditProfile({id, token, ...values});
+
+    //console.log("BlogFormScreen", values);
+  };
+  return (
+  <>
+    <Field
+      name={"name"}
+      onChange={setNameEdit}
+      props={{
+        //secureTextEntry: true,
+        returnKeyType: "next",
+        // multiline: true,
+        // numberOfLines: 5,
+      }}
+      placeholder={"Name"}
+      component={ProfileEditInput}
+      val={nameEdit}
+      //validate={required}
+      styles={styles.input}
+    />
+    <Field
+      name={"phoneNumber"}
+      props={{
+        //secureTextEntry: true,
+        returnKeyType: "next",
+        // multiline: true,
+        // numberOfLines: 5,
+      }}
+      placeholder={"Phone number"}
+      component={ProfileEditInput}
+      //validate={required}
+      styles={styles.input}
+    />
+    <Button style={styles.saveButton} onPress={props.handleSubmit(submit)}>
+      Save
+    </Button>
+  </>
+);}
+
+const ProfileInfoEditForm = reduxForm({
+  form: "profileInfo",
+})(ProfileInfoEdit);
+const ProfileInfoForm = connect(mapStateToProps, mapDispatchToProps)(ProfileInfoEditForm);
+
 const ProfileEdit = (props) => {
   if (!props.data) return <></>;
-  const {username, email, roles, avatarUrl} = props.data;
+  const {username, name, email, roles, avatarUrl} = props.data;
   const defaultImage = {
     uri: avatarUrl,
   };
   const [avatar, setAvatar] = useState(defaultImage);
+  const [nameEdit, setNameEdit] = useState(name);
   const handlePicker = () => {
     console.log("edit");
     ImagePicker.showImagePicker({}, (response) => {
@@ -69,7 +124,7 @@ const ProfileEdit = (props) => {
   const submit = (values) => {
     const {id, token} = props.data;
     props.onEditProfile({id, token, ...values});
-    
+
     //console.log("BlogFormScreen", values);
   };
   console.log("props in profile edit", props);
@@ -82,72 +137,79 @@ const ProfileEdit = (props) => {
   }
 
   return (
-    <Pressable
-      style={{flex: 1, justifyContent: "flex-start"}}
-      onPress={Keyboard.dismiss}>
-      <View style={styles.infoLayout}>
-        <View>
-          <Image
-            source={avatar}
-            PlaceholderContent={<ActivityIndicator />}
-            style={styles.avatar}
-          />
-          <Pressable style={styles.camera} onPress={handlePicker}>
-            <Icon name="camera" size={25} color="#606770" />
-          </Pressable>
+    <KeyboardAvoidingView style={{flex: 1}}>
+      <Pressable
+        style={{flex: 1, justifyContent: "flex-end"}}
+        onPress={Keyboard.dismiss}>
+        <View style={styles.infoLayout}>
+          <View>
+            <Image
+              source={avatar}
+              PlaceholderContent={<ActivityIndicator />}
+              style={styles.avatar}
+            />
+            <Pressable style={styles.camera} onPress={handlePicker}>
+              <Icon name="camera" size={25} color="#606770" />
+            </Pressable>
+          </View>
+          <Text style={styles.username}>{username}</Text>
+          <Text style={styles.role}>{roles.join(" - ")}</Text>
+          <Text>{email}</Text>
         </View>
-        <Text style={styles.username}>{username}</Text>
-        <Text style={styles.role}>{roles.join(" - ")}</Text>
-        <Text>{email}</Text>
-      </View>
-      <View style={styles.inputContainer}>
-        <Text style={styles.label}>Change password</Text>
-        <Field
-          name={"oldPassword"}
-          props={{
-            secureTextEntry: true,
-            returnKeyType: "next",
-            // multiline: true,
-            // numberOfLines: 5,
-          }}
-          placeholder={"Old password"}
-          component={ProfileEditInput}
-          //validate={required}
-          styles={styles.input}
-        />
-        <Field
-          name={"password"}
-          props={{
-            secureTextEntry: true,
-            returnKeyType: "next",
-            // multiline: true,
-            // numberOfLines: 5,
-          }}
-          placeholder={"New password"}
-          component={ProfileEditInput}
-          //validate={required}
-          styles={styles.input}
-        />
-        <Field
-          name={"confirmPassword"}
-          props={{
-            secureTextEntry: true,
-            //returnKeyType: "next",
-            // multiline: true,
-            // numberOfLines: 5,
-          }}
-          placeholder={"Confirm new password"}
-          component={ProfileEditInput}
-          //validate={required}
-          styles={styles.input}
-        />
-        <Button style={styles.saveButton} onPress={props.handleSubmit(submit)}>
-          Save
-        </Button>
-      </View>
-    </Pressable>
+        <View style={styles.inputContainer}>
+          <ProfileInfoEdit/>
+          <Text style={styles.label}>Change password</Text>
+          <Field
+            name={"oldPassword"}
+            props={{
+              secureTextEntry: true,
+              returnKeyType: "next",
+              // multiline: true,
+              // numberOfLines: 5,
+            }}
+            placeholder={"Old password"}
+            component={ProfileEditInput}
+            //validate={required}
+            styles={styles.input}
+          />
+          <Field
+            name={"password"}
+            props={{
+              secureTextEntry: true,
+              returnKeyType: "next",
+              // multiline: true,
+              // numberOfLines: 5,
+            }}
+            placeholder={"New password"}
+            component={ProfileEditInput}
+            //validate={required}
+            styles={styles.input}
+          />
+          <Field
+            name={"confirmPassword"}
+            props={{
+              secureTextEntry: true,
+              //returnKeyType: "next",
+              // multiline: true,
+              // numberOfLines: 5,
+            }}
+            placeholder={"Confirm new password"}
+            component={ProfileEditInput}
+            //validate={required}
+            styles={styles.input}
+          />
+          <Button
+            style={styles.saveButton}
+            onPress={props.handleSubmit(submit)}>
+            Save
+          </Button>
+        </View>
+      </Pressable>
+    </KeyboardAvoidingView>
   );
 };
+
+
 
 const styles = StyleSheet.create({
   avatar: {
@@ -177,6 +239,7 @@ const styles = StyleSheet.create({
   label: {
     fontWeight: "bold",
     fontSize: 14,
+    marginTop: 5,
   },
   saveButton: {
     backgroundColor: colors.primary,
@@ -234,6 +297,8 @@ const ProfileEditForm = reduxForm({
   form: "profile",
   validate,
 })(ProfileEdit);
+
+
 
 const mapStateToProps = (state) => ({
   data: state.UserLoginReducer,

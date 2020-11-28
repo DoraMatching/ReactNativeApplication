@@ -24,7 +24,7 @@ export default class Profile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      classDetailModal : null,
+      classDetailModal: null,
     };
     this.props.onFetchUser({id: this.props.id, token: this.props.token});
 
@@ -63,15 +63,14 @@ export default class Profile extends Component {
     this.setClassDetailModalRef = (element) => {
       //console.log("class detail", element);
       //this.classDetailModal = element;
-      this.setState({classDetailModal : element})
+      this.setState({classDetailModal: element});
     };
   }
 
- 
   render() {
     //console.log("profile screen");
     if (!this.props.data) return <></>;
-   
+
     // this.props.onGetOptionModal(
     //   this.optionModal ? this.optionModal.showOptionModal : () => {},
     // );
@@ -119,7 +118,12 @@ export default class Profile extends Component {
           <Text style={styles.role}>{roles.join(" - ")}</Text>
         </View>
 
-        <TabView style={{marginVertical: 5}}></TabView>
+        <TabView
+          style={{marginVertical: 5}}
+          showBlogDetailModal={this.blogDetailModal?.showBlogDetailModal}
+          showQuestionDetailModal={
+            this.questionDetailModal?.showQuestionDetailModal
+          }></TabView>
 
         <BlogDetailModal ref={this.setBlogDetailModalRef}></BlogDetailModal>
         <BlogFormEditModal
@@ -141,14 +145,15 @@ export default class Profile extends Component {
         <QuestionFormEditModal
           ref={this.setQuestionFormEditModalRef}></QuestionFormEditModal>
         <ClassDetailModal ref={this.setClassDetailModalRef}></ClassDetailModal>
-        {
-          console.log("this.state.classDetailModal: ", this.state.classDetailModal)
-        }
-        {
-            this.state.classDetailModal ?
-            
-            this.props.onOpenClassDetail(this.state.classDetailModal.showClassDetailModal) : () => {}
-        }
+        {console.log(
+          "this.state.classDetailModal: ",
+          this.state.classDetailModal,
+        )}
+        {this.state.classDetailModal
+          ? this.props.onOpenClassDetail(
+              this.state.classDetailModal.showClassDetailModal,
+            )
+          : () => {}}
       </SafeAreaView>
     );
   }

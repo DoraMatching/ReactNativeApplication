@@ -6,6 +6,10 @@ const Actions = {
     PATCH_QUESTION_COMMENT_SUCCEEDED: "PATCH_QUESTION_COMMENT_SUCCEEDED",
     PATCH_QUESTION_COMMENT_FAILED: "PATCH_QUESTION_COMMENT_FAILED",
 
+    GET_QUESTION_DETAIL : "GET_QUESTION_DETAIL",
+    GET_QUESTION_DETAIL_SUCCEEDED : "GET_QUESTION_DETAIL_SUCCEEDED",
+    GET_QUESTION_DETAIL_FAILED : "GET_QUESTION_DETAIL_FAILED",
+
     postQuestionCommentAction: (params) => {
       return {
         type: Actions.POST_QUESTION_COMMENT,
@@ -48,6 +52,28 @@ const Actions = {
         error,
       };
     },
+
+    getQuestionDetailAction : (params) => {
+      return {
+        type : Actions.GET_QUESTION_DETAIL,
+        params,
+      }
+    },
+
+    getQuestionDetailSuccessAction : (data) => {
+      return {
+        type : Actions.GET_QUESTION_DETAIL_SUCCEEDED,
+        data,
+      }
+    },
+
+    getQuestionDetailFailedAction : (error) => {
+      return {
+        type : Actions.GET_QUESTION_DETAIL_FAILED,
+        error,
+        
+      }
+    }
 
   };
   

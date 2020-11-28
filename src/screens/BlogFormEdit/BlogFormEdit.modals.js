@@ -39,10 +39,12 @@ export default class BlogFormEditModal extends Component {
     //this.props.navigation.setOptions({tabBarVisible : false});
   }
   
-
-  showBlogFormEditModal = () => {
+  id;
+  token;
+  showBlogFormEditModal = ({id, token}) => {
     //console.log("blog detail modal", item);
-    
+    this.id = id;
+    this.token = token;
     //this.blogDetailModal.open();
     this.setState({isOpen: true});
     //console.log("blog detail modal tags", this.tags);
@@ -73,7 +75,7 @@ export default class BlogFormEditModal extends Component {
         isOpen={this.state.isOpen}>
           <View style={{flexDirection: "column", flex: 1,marginBottom: 5}}>
             {/* <Text>Hello world</Text> */}
-          <BlogFormEdit onClose={this.onClose} onOpen={this.onOpen}></BlogFormEdit>
+          <BlogFormEdit onClose={this.onClose} onOpen={this.onOpen} id={this.id} token = {this.token}></BlogFormEdit>
           <View
               style={{
                 flexDirection: "row",

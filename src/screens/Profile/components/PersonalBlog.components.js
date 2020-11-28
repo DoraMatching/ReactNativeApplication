@@ -1,11 +1,10 @@
 import React, {Component} from "react";
-import {View, Text, FlatList} from "react-native";
+import {View, Text, FlatList, Pressable} from "react-native";
 import BlogItem from "../../../components/ListItemBlogTop";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
 
-
-import ProfileAction from '../Profile.actions';
+import ProfileAction from "../Profile.actions";
 
 class PersonalBlog extends Component {
   constructor(props) {
@@ -14,19 +13,17 @@ class PersonalBlog extends Component {
     this.state = {
       isLoading: false,
     };
-
-   
   }
 
   refreshData = () => {
     this.setState({isLoading: true});
     const {url} = this.state;
-    this.props.onFetchUser({id : this.props.userID, token : this.props.token});
+    this.props.onFetchUser({id: this.props.userID, token: this.props.token});
     this.setState({isLoading: false});
   };
 
   render() {
-    //console.log("myblog: ", this.props.blogs);
+    //console.log("myblog: ", this.props);
     if (this.props.blogs.length == 0)
       return (
         <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
@@ -47,22 +44,21 @@ class PersonalBlog extends Component {
             //if (!this.optionModal) this.refreshData();
             const userID = this.props.userID;
             const token = this.props.token;
-
+//this.props.showBlogDetailModal? this.props.showBlogDetailModal(item) : () => {}
             return (
-              <BlogItem
-                {...{
-                  token,
-                  userID,
-                  author : {id : userID},
-                  showOptionModal: this.props.showOptionModal
-                    ,
-                  ...item,
-                }}></BlogItem>
+              <Pressable onPress={() => {this.props.showBlogDetailModal(item)}}>
+                <BlogItem
+                  {...{
+                    token,
+                    userID,
+                    author: {id: userID},
+                    showOptionModal: this.props.showOptionModal,
+                    ...item,
+                  }}></BlogItem>
+              </Pressable>
             );
           }}
           keyExtractor={(item, index) => item.name}></FlatList>
-
-        
       </View>
     );
   }
@@ -76,11 +72,11 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => {
-    return {
-      onFetchUser: (params) => {
-        dispatch(ProfileAction.getProfileAction(params));
-      },
-    };
-}
+  return {
+    onFetchUser: (params) => {
+      dispatch(ProfileAction.getProfileAction(params));
+    },
+  };
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(PersonalBlog);

@@ -13,25 +13,25 @@ const FloatingButton = (props) => {
   const actions = [
     {
       text: "Create your question",
-      //icon: require("../../images/book.svg"),
+      icon: require("../images/create_question.png"),
       name: "bt_create_question",
       position: 1,
     },
     {
       text: "Create your blog",
-      //icon: require("../../images/book.svg"),
+      icon: require("../images/create_blog.png"),
       name: "bt_create_blog",
       position: 2,
     },
     {
-      text: "Create your classroom",
-      //icon: require("../../images/book.svg"),
+      text: "Create your class",
+      icon: require("../images/create_class.png"),
       name: "bt_create_classroom",
       position: 3,
     },
     {
       text: "Create your topic",
-      //icon: require("../../images/book.svg"),
+      icon: require("../images/create_topic.png"),
       name: "bt_create_topic",
       position: 4,
     },
@@ -39,13 +39,13 @@ const FloatingButton = (props) => {
   const actionsTrainee = [
     {
       text: "Create your question",
-      //icon: require("../../images/book.svg"),
+      icon: require("../images/create_question.png"),
       name: "bt_create_question",
       position: 1,
     },
     {
       text: "Create your blog",
-      //icon: require("../../images/book.svg"),
+      icon: require("../images/create_blog.png"),
       name: "bt_create_blog",
       position: 2,
     },

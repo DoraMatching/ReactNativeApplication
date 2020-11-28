@@ -33,4 +33,19 @@ const postQuestionCommentFromAPI = ({id, content, token}) => {
       });
   };
 
-  export {postQuestionCommentFromAPI, patchQuestionCommentFromAPI};
+  const getQuestionDetailFromAPI = ({id, token}) => {
+    return request
+      .get(`question/${id}`,{
+        headers: {
+          'Authorization': `Bearer ${token}` 
+        }
+      })
+      .then((res) => {
+        return res;
+      })
+      .catch((error) => {
+        return error.response.data;
+      });
+  };
+
+  export {getQuestionDetailFromAPI, postQuestionCommentFromAPI, patchQuestionCommentFromAPI};

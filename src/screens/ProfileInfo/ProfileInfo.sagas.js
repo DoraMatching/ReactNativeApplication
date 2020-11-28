@@ -1,7 +1,7 @@
 import { all, fork, put, takeLatest } from "redux-saga/effects";
 import { getUserFromAPI } from "../../services/Profile";
 import { getUserClassroomFromAPI, getMoreUserClassroomFromAPI } from "../../services/ProfileInfo";
-import { getTrainerFromAPI } from "../../services/TrainerSearch";
+import { getIDFromAPI } from "../../services/TrainerSearch";
 import actions from "./ProfileInfo.actions";
 
 function* fetchUser(action) {
@@ -28,7 +28,7 @@ function* watchFetchUser() {
 function* fetchUserClassroom(action) {
   try {
     //console.log("fetchUserClassroom", action.params);
-    const res = yield getTrainerFromAPI(action.params);
+    const res = yield getIDFromAPI({role : "trainer", ...action.params});
     //console.log("getTrainerFromAPI ", res);
     if (res.status === 200) {
       //console.log("1", res);

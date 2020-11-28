@@ -13,7 +13,7 @@ export default class ListItemQuestionSearch extends Component {
 
   render() {
     if (!this.props.item) return <></>;
-    console.log("questions: ", this.props.item);
+    //console.log("questions: ", this.props.item);
     const {
       id,
       title,

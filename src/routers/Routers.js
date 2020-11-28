@@ -7,20 +7,13 @@ import React, {useState} from "react";
 import Home from "../screens/Home/Home.container";
 import BlogSearch from "../screens/BlogSearch/BlogSearch.container";
 import QuestionSearch from "../screens/QuestionSearch/QuestionSearch.container";
-import TrainerSearch from '../screens/TrainerSearch/TrainerSearch.screens';
-import TopicSearch from '../screens/TopicSearch/TopicSearch.screens';
 import LoginContainer from "../screens/Login/Login.container";
 import RegisterContainer from "../screens/Register/Register.container";
 
-//import BlogForm from "../screens/BlogForm/BlogForm.screens";
 
 import ProfileContainer from "../screens/Profile/Profile.container";
-import TopicDetail from "../screens/TopicDetail/TopicDetail.screens";
-import ClassDetail from "../screens/ClassDetail/ClassDetail.screens";
-import ProfileEdit from "../screens/ProfileEdit/ProfileEdit.screens";
 
-//import {ClassForm} from "../screens/ClassForm/ClassForm.screens";
-import QuestionForm from "../screens/QuestionForm/QuestionForm.screens";
+import ProfileEdit from "../screens/ProfileEdit/ProfileEdit.screens";
 
 import HomeOutlineIcon from "../images/home-outline.svg";
 import HomeIcon from "../images/home.svg";
@@ -38,15 +31,15 @@ import TopicOutlineIcon from "../images/topic-outline.svg";
 import TopicIcon from "../images/topic.svg";
 
 import colors from "../themes/color";
-// import {FloatingAction} from "react-native-floating-action";
-// import BlogFormModal from "../screens/BlogForm/BlogForm.modals";
 
-import LessonForm from '../screens/LessonForm/LessonForm.screens';
 
 import Schedule from '../screens/Schedule/Schedule.containers';
 
 import PostsSearch from '../screens/PostsSearch/PostsSearch.routers';
 import TrainingSearch from '../screens/TrainingSearch/TrainingSearch.routers';
+
+import Search from '../screens/Search/Search.screens';
+
 
 import {SafeAreaProvider, SafeAreaView} from "react-native-safe-area-context";
 
@@ -61,6 +54,7 @@ const homeRouters = () => (
     }}>
     {/* <Stack.Screen name="BlogDetail" component={BlogDetail} /> */}
     <Stack.Screen name="HomeScreen" component={Home} />
+    <Stack.Screen name="SearchScreen" component={Search} />
   </Stack.Navigator>
 );
 const blogRouters = ({params}) => (

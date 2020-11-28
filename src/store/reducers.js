@@ -37,6 +37,8 @@ import {ClassDetailReducer, ClassRegisterReducer, ClassDeregisterReducer} from '
 
 import { PersonalScheduleReducer } from "../screens/Schedule/Schedule.reducers";
 
+import { SearchReducer } from "../screens/Search/Search.reducers";
+
 const rootReducer = combineReducers({
   LoginReducer,
   UserLoginReducer,
@@ -102,6 +104,8 @@ const rootReducer = combineReducers({
   ClassDeregisterReducer,
 
   PersonalScheduleReducer,
+
+  SearchReducer,
   
   form: formReducer,
 });

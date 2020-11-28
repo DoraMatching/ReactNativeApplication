@@ -5,6 +5,7 @@ import actions from "./BlogDetail.actions";
 const mapStateToProps = (state) => {
   //console.log("Blog tag reducer", state.BlogTagReducer);
   return {
+    //id : state.BlogDetailReducer,
     blog : state.BlogDetailReducer,
     token : state.UserLoginReducer? state.UserLoginReducer.token : "",
     userID: !state.UserLoginReducer ? "" : state.UserLoginReducer.id,
@@ -18,6 +19,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     onEditBlogComment : (params) => {
       dispatch(actions.patchBlogCommentAction(params));
+    },
+    onFetchBlogDetail: (params) => {
+      dispatch(actions.getBlogDetailAction(params));
     }
   };
 };

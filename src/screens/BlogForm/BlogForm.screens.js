@@ -214,6 +214,17 @@ const BlogFormScreen = (props) => {
           </Pressable>
         </Pressable>
         <Field
+          name={"featuredImage"}
+          props={{
+            multiline: true,
+            numberOfLines: 2,
+          }}
+          placeholder={"Your featured image link is here ..."}
+          component={BlogInput}
+          validate={required}
+          styles={styles.description}
+        />
+        <Field
           name={"content"}
           props={{
             multiline: true,

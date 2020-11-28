@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {View, Text, FlatList} from "react-native";
+import {View, Text, FlatList, Pressable} from "react-native";
 import BlogItem from "../../../components/ListItemBlogTop";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
@@ -49,6 +49,7 @@ class PersonalBlog extends Component {
             const token = this.props.token;
 
             return (
+              <Pressable onPress={() => {this.props.showBlogDetailModal(item)}}>
               <BlogItem
                 {...{
                   token,
@@ -57,6 +58,7 @@ class PersonalBlog extends Component {
                    // ,
                   ...item,
                 }}></BlogItem>
+                </Pressable>
             );
           }}
           keyExtractor={(item, index) => item.name}></FlatList>

@@ -33,4 +33,19 @@ const postBlogCommentFromAPI = ({id, content, token}) => {
       });
   };
 
-  export {postBlogCommentFromAPI, patchBlogCommentFromAPI};
+  const getBlogDetailFromAPI = ({id, token}) => {
+    return request
+      .get(`post/${id}`,{
+        headers: {
+          'Authorization': `Bearer ${token}` 
+        }
+      })
+      .then((res) => {
+        return res;
+      })
+      .catch((error) => {
+        return error.response.data;
+      });
+  };
+
+  export {postBlogCommentFromAPI, patchBlogCommentFromAPI, getBlogDetailFromAPI};

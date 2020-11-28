@@ -18,6 +18,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     onEditQuestionComment : (params) => {
       dispatch(actions.patchQuestionCommentAction(params));
+    },
+    onFetchQuestionDetail : (params) => {
+      dispatch(actions.getQuestionDetailAction(params));
     }
   };
 };

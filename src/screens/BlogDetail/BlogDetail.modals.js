@@ -98,7 +98,7 @@ export default class BlogDetailModal extends Component {
         onOpened={this.onOpen}
         isOpen={this.state.isOpen}>
           <View style={{flexDirection: "column", flex: 1,marginBottom: 5}}>
-          <BlogDetail></BlogDetail>
+          <BlogDetail id ={this.id}></BlogDetail>
           <View
               style={{
                 flexDirection: "row",

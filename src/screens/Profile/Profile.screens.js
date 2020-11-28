@@ -21,7 +21,7 @@ import QuestionFormEditModal from "../QuestionFormEdit/QuestionFormEdit.modals";
 
 import QuestionDetailModal from "../QuestionDetail/QuestionDetail.modals";
 
-import TrainerRegisterModal from '../TrainerRegister/TrainerRegister.modals';
+import TrainerRegisterModal from "../TrainerRegister/TrainerRegister.modals";
 
 export default class Profile extends Component {
   constructor(props) {
@@ -72,13 +72,13 @@ export default class Profile extends Component {
   };
 
   render() {
-    console.log("profile screen");
+    //console.log("profile screen");
     if (!this.props.data) return <></>;
 
     this.props.onGetOptionModal(
       this.optionModal ? this.optionModal.showOptionModal : () => {},
     );
-    console.log("profilescreen", this.props.data);
+    //console.log("profilescreen", this.props.data);
     const {
       username,
       email,
@@ -87,7 +87,7 @@ export default class Profile extends Component {
       posts,
       questions,
     } = this.props.data;
-  
+
     return (
       <SafeAreaView
         style={{
@@ -97,7 +97,6 @@ export default class Profile extends Component {
           padding: 20,
         }}>
         <View style={{alignSelf: "flex-start"}}>
-          
           <View
             style={{
               ...styles.horizontalLayout,
@@ -124,7 +123,13 @@ export default class Profile extends Component {
           {roles.findIndex((item) => item === "TRAINER") === -1 ? (
             <Text style={styles.offerTrainer}>
               Do you want to be a trainer?{" "}
-              <Text style={styles.signUpTrainer} onPress={() => this.trainerRegisterModal.showTrainerRegisterModal()}>Sign up</Text>
+              <Text
+                style={styles.signUpTrainer}
+                onPress={() =>
+                  this.trainerRegisterModal.showTrainerRegisterModal()
+                }>
+                Sign up
+              </Text>
             </Text>
           ) : (
             <></>
@@ -143,14 +148,13 @@ export default class Profile extends Component {
           </View>
         </View>
 
-        <TabView style={{marginVertical: 5}}></TabView>
-        {/* <FloatingAction
-          actions={actions}
-          onPressItem={(name) => {
-            console.log(`selected button: ${name}`);
-          }}
-          style={{zIndex : 5}}
-        /> */}
+        <TabView
+          style={{marginVertical: 5}}
+          showBlogDetailModal={this.blogDetailModal?.showBlogDetailModal}
+          showQuestionDetailModal={
+            this.questionDetailModal?.showQuestionDetailModal
+          }></TabView>
+
         <FloatingButtonAction />
         <BlogDetailModal ref={this.setBlogDetailModalRef}></BlogDetailModal>
         <BlogFormEditModal
@@ -171,7 +175,7 @@ export default class Profile extends Component {
           ref={this.setQuestionDetailModalRef}></QuestionDetailModal>
         <QuestionFormEditModal
           ref={this.setQuestionFormEditModalRef}></QuestionFormEditModal>
-          <TrainerRegisterModal
+        <TrainerRegisterModal
           ref={this.setTrainerRegisterModalRef}></TrainerRegisterModal>
       </SafeAreaView>
     );

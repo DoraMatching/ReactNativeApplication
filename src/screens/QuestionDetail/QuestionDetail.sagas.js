@@ -3,6 +3,7 @@ import actions from "./QuestionDetail.actions";
 import {
   postQuestionCommentFromAPI,
   patchQuestionCommentFromAPI,
+  getQuestionDetailFromAPI,
 } from "../../services/QuestionDetail";
 
 function* createQuestionComment(action) {
@@ -55,6 +56,30 @@ function* editQuestionComment(action) {
   }
 }
 
+function* fetchQuestionDetail(action) {
+  try {
+    //console.log("patchQuestionCommentFromAPI.saga,js params: ", action.params);
+    const res = yield getQuestionDetailFromAPI(action.params);
+    //console.log("patchQuestionCommentFromAPI.saga,js res: ", res);
+    if (res.status === 200) {
+      yield put({
+        type: actions.GET_QUESTION_DETAIL_SUCCEEDED,
+        data: res.data,
+      });
+    } else {
+      yield put({
+        type: actions.GET_QUESTION_DETAIL_FAILED,
+        error: res.message,
+      });
+    }
+  } catch (error) {
+    yield put({
+      type: actions.GET_QUESTION_DETAIL_FAILED,
+      error: "Please try again!",
+    });
+  }
+}
+
 function* watchCreateQuestionComment() {
   yield takeLatest(actions.POST_QUESTION_COMMENT, createQuestionComment);
 }
@@ -63,6 +88,14 @@ function* watchEditQuestionComment() {
   yield takeLatest(actions.PATCH_QUESTION_COMMENT, editQuestionComment);
 }
 
+function* watchFetchQuestionDetail() {
+  yield takeLatest(actions.GET_QUESTION_DETAIL, fetchQuestionDetail);
+}
+
 export default function* rootSaga() {
-  yield all([fork(watchCreateQuestionComment), fork(watchEditQuestionComment)]);
+  yield all([
+    fork(watchCreateQuestionComment),
+    fork(watchEditQuestionComment),
+    fork(watchFetchQuestionDetail),
+  ]);
 }

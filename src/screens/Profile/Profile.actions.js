@@ -7,15 +7,11 @@ const Actions = {
     GET_PROFILE_SUCCEEDED: "GET_PROFILE_SUCCEEDED",
     GET_PROFILE_FAILED: "GET_PROFILE_FAILED",
     GET_OPTION_MODAL : "GET_OPTION_MODAL",
-    // DELETE_BLOG_SUCCEEDED: "DELETE_BLOG_SUCCEEDED",
-    // DELETE_BLOG_FAILED: "DELETE_BLOG_FAILED",
-  
-    // getBlogTagAction: (params) => {
-    //   return {
-    //     type: Actions.GET_BLOG_TAG,
-    //     params,
-    //   };
-    // },
+
+    GET_PROFILE_CLASSES : "GET_PROFILE_CLASSES",
+    GET_PROFILE_CLASSES_SUCCEEDED: "GET_PROFILE_CLASSES_SUCCEEDED",
+    GET_PROFILE_CLASSES_FAILED: "GET_PROFILE_CLASSES_FAILED",
+    
     getProfileAction: (params) => {
       return {
         type: Actions.GET_PROFILE,
@@ -29,8 +25,6 @@ const Actions = {
         params,
       }
     },
-  
-    
   
     getProfileSuccessAction: (data, id) => {
       return {
@@ -46,20 +40,25 @@ const Actions = {
         error,
       };
     },
-    // getBlogTagSuccessAction: (data) => {
-    //   return {
-    //     type: Actions.GET_BLOG_TAG_SUCCEEDED,
-    //     data,
-    //   };
-    // },
-  
-    // getBlogTagFailedAction: (error) => {
-    //   return {
-    //     type: Actions.GET_BLOG_TAG_FAILED,
-    //     error,
-    //   };
-    // },
-  
+   
+    getProfileClassesAction : (params) => {
+      return {
+        type : Actions.GET_PROFILE_CLASSES,
+        params,
+      }
+    },
+    getProfileClassesSuccessAction : (data) => {
+      return {
+        type : Actions.GET_PROFILE_CLASSES_SUCCEEDED,
+        data,
+      }
+    },
+    getProfileClassesFailedAction: (error) => {
+      return {
+        type: Actions.GET_PROFILE_CLASSES_FAILED,
+        error,
+      };
+    },
    
   };
   

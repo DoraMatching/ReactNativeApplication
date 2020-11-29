@@ -11,7 +11,7 @@ const Tab = createMaterialTopTabNavigator();
 
 function TabView(props) {
   console.log("Profile.routers.js", props);
-  const {showBlogDetailModal, showQuestionDetailModal} = props;
+  const {showBlogDetailModal, showQuestionDetailModal, showClassDetailModal} = props;
   return (
     //<NavigationContainer>
       <Tab.Navigator
@@ -34,7 +34,7 @@ function TabView(props) {
         />
         <Tab.Screen
           name="MyClass"
-          component={connect()(PersonalClass)}
+          component={connect(()=>({showClassDetailModal}))(PersonalClass)}
           options={{tabBarLabel: "Classes"}}
         />
       </Tab.Navigator>

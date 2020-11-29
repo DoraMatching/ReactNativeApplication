@@ -1,10 +1,17 @@
 import request from "../helpers/request";
 
 const getDataFromAPI = ({token, key, scope}) => {
-  const params = {key, scope};
- // console.log("getDataFromAPI: ", params);
+ 
+  const params = {key, scope : JSON.stringify(scope)};
+  console.log("scope: ", scope);
+  console.log("getDataFromAPI: ", params);
   return request
-    .get(`search?key=${key}&&scope=%5B%22USER%22%2C%22POST%22%2C%22QUESTION%22%5D`)
+    .get(`search`, {
+      params,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
     .then((res) => {
       return res;
     })

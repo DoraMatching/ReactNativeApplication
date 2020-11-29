@@ -6,6 +6,7 @@ import {
   Dimensions,
   TextInput,
   ScrollView,
+  Pressable
 } from "react-native";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
@@ -17,16 +18,19 @@ import actions from "./Search.actions";
 import ListItemUser from "../../components/ListItemUser";
 import ListItemQuestionSearch from "../../components/ListItemQuestionSearch";
 import ListItemBlogSearch from "../../components/ListItemBlogSearch";
+
+import Icon from "react-native-vector-icons/Ionicons";
 var screen = Dimensions.get("window");
 class Search extends Component {
   constructor(props) {
     super(props);
     this.search = this.search.bind(this);
+    
   }
 
   search(key) {
     const scope = ["USER", "POST", "QUESTION"];
-    if (!key) return;
+    if (!(key.trim())) return;
     this.props.onFetchSearch({key, scope, token: this.props.token});
   }
 
@@ -42,9 +46,9 @@ class Search extends Component {
         <ScrollView>
           <View style={styles.searchContainer}>
             <View style={styles.searchInput}>
-              <View style={styles.searchIcon}>
-                <FinderIcon width={22} height={22} />
-              </View>
+              <Pressable style={styles.searchIcon} onPress={() => this.props.navigation.goBack()}>
+                <Icon name="arrow-back" size={22} color="#606770" />
+              </Pressable>
 
               <TextInput
                 style={styles.inputText}
@@ -59,6 +63,7 @@ class Search extends Component {
               />
             </View>
           </View>
+
           <View style={{marginTop: 5}}>
             {this.props.data &&
               this.props.data.users &&
@@ -90,7 +95,7 @@ class Search extends Component {
                   }}
                 />
               ))}
-              {this.props.data &&
+            {this.props.data &&
               this.props.data.questions &&
               this.props.data.questions.length != 0 && (
                 <Text style={styles.label}>Results for questions</Text>

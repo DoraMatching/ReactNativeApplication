@@ -3,20 +3,7 @@ import {getDataFromAPI} from "../../services/Schedule";
 import actions from "./Schedule.actions";
 import {getIDFromAPI} from "../../services/TrainerSearch";
 
-// function* fetchPersonalSchedule(action) {
-//   try {
-//     const res = yield getDataFromAPI(action.params);
 
-//     if (res.status === 200) {
-//       //console.log("blogSearch.saga.js: top", res.data);
-//       yield put({type: actions.GET_PERSONAL_SCHEDULE_SUCCEEDED, data: res.data});
-//     } else {
-//       yield put({type: actions.GET_PERSONAL_SCHEDULE_FAILED, error: res.message});
-//     }
-//   } catch (error) {
-//     yield put({type: actions.GET_PERSONAL_SCHEDULE_FAILED, error});
-//   }
-// }
 
 function* fetchPersonalSchedule(action) {
     try {

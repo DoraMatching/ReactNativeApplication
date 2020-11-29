@@ -5,6 +5,8 @@ import BlogFormEditActions from "../BlogFormEdit/BlogFormEdit.actions";
 import QuestionFormEditActions from "../QuestionFormEdit/QuestionFormEdit.actions";
 import QuestionDetailActions from "../QuestionDetail/QuestionDetail.actions";
 import BlogDetailActions from "../BlogDetail/BlogDetail.actions";
+
+import ClassDetailActions from '../ClassDetail/ClassDetail.actions';
 // const BlogTagReducer = (data = null , action) => {
 //   switch (action.type) {
 //     case Actions.GET_BLOG_TAG_SUCCEEDED:
@@ -131,6 +133,26 @@ const PersonalQuestionReducer = (data = [], action) => {
   }
 };
 
+const PersonalClassReducer = (data = [], action) => {
+  switch (action.type) {
+    case Actions.GET_PROFILE_CLASSES_SUCCEEDED:
+      return action.data.classes;
+
+    case ClassDetailActions.GET_CLASS_REGISTER_SUCCEEDED:
+      return [action.data, ...data];
+      
+    case ClassDetailActions.GET_CLASS_DEREGISTER_SUCCEEDED:
+      //console.log("PersonalClassReducer: ", action);
+      return data.filter(item => item.id != action.data.id);
+
+    case Actions.GET_PROFILE_CLASSES_FAILED:
+      return data;
+
+    default:
+      return data;
+  }
+};
+
 const OptionModal = (showOptionModal = () => {}, action) => {
   switch (action.type) {
     case Actions.GET_OPTION_MODAL:
@@ -146,5 +168,6 @@ export {
   ProfileReducer,
   PersonalBlogReducer,
   PersonalQuestionReducer,
+  PersonalClassReducer,
   OptionModal,
 };

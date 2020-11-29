@@ -22,7 +22,7 @@ function TabView(props) {
           labelStyle: {fontSize: 12, fontWeight: "bold"},
           //style: {backgroundColor: "powderblue"},
           indicatorStyle: {backgroundColor: colors.primary},
-          scrollEnabled : true,
+          //scrollEnabled : true,
         }}>
         <Tab.Screen
           name="MyBlog"
@@ -34,11 +34,11 @@ function TabView(props) {
           component={connect(()=>({showQuestionDetailModal}))(PersonalQuestion)}
           options={{tabBarLabel: "Questions"}}
         />
-        <Tab.Screen
+        {/* <Tab.Screen
           name="MyClass"
           component={PersonalClass}
           options={{tabBarLabel: "Classes"}}
-        />
+        /> */}
         <Tab.Screen
           name="MyClassroom"
           component={PersonalClassroom}

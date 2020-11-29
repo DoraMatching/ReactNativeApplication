@@ -23,6 +23,8 @@ import QuestionDetailModal from "../QuestionDetail/QuestionDetail.modals";
 
 import TrainerRegisterModal from "../TrainerRegister/TrainerRegister.modals";
 
+import ClassDetailModal from '../ClassDetail/ClassDetail.modals'
+
 export default class Profile extends Component {
   constructor(props) {
     super(props);
@@ -63,6 +65,12 @@ export default class Profile extends Component {
 
     this.setTrainerRegisterModalRef = (element) => {
       this.trainerRegisterModal = element;
+    };
+
+    this.classDetailModal = null;
+
+    this.setClassDetailModalRef = (element) => {
+      this.classDetailModal = element;
     };
   }
 
@@ -153,7 +161,9 @@ export default class Profile extends Component {
           showBlogDetailModal={this.blogDetailModal?.showBlogDetailModal}
           showQuestionDetailModal={
             this.questionDetailModal?.showQuestionDetailModal
-          }></TabView>
+          }
+          showClassDetailModal={this.classDetailModal?.showClassDetailModal}
+          ></TabView>
 
         <FloatingButtonAction />
         <BlogDetailModal ref={this.setBlogDetailModalRef}></BlogDetailModal>
@@ -177,6 +187,7 @@ export default class Profile extends Component {
           ref={this.setQuestionFormEditModalRef}></QuestionFormEditModal>
         <TrainerRegisterModal
           ref={this.setTrainerRegisterModalRef}></TrainerRegisterModal>
+          <ClassDetailModal ref={this.setClassDetailModalRef}></ClassDetailModal>
       </SafeAreaView>
     );
   }

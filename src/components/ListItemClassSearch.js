@@ -45,14 +45,14 @@ export default class ListItemClassSearch extends Component {
             {name}
           </Text>
           <View style={{flexDirection: "row"}}>
-          <TagListItem item={topic} />
+          {topic && <TagListItem item={topic} />}
           </View>
           <Text style={styles.description} numberOfLines={2}>{description}</Text>
           <Text><Text style={styles.description}>Duration:</Text> {duration}</Text>
           
         </View>
 
-        <View>
+        {/* <View>
           {this.props.author && this.props.userID === this.props.author.id ? (
             <Pressable
               onPress={() => this.props.showOptionModal(paramsForOptionModal)}>
@@ -61,7 +61,7 @@ export default class ListItemClassSearch extends Component {
           ) : (
             <></>
           )}
-        </View>
+        </View> */}
       </View>
     );
   }

@@ -5,7 +5,7 @@ const Actions = {
     GET_SEARCH_SUCCEEDED: "GET_SEARCH_SUCCEEDED",
     GET_SEARCH_FAILED: "GET_SEARCH_FAILED",
   
-  
+    GET_NO_RESULT: "GET_NO_RESULT",
  
     getSearchAction: (params) => {
       return {
@@ -14,7 +14,11 @@ const Actions = {
       };
     },
   
-   
+    getNoResultAction : () => {
+      return {
+        type: Actions.GET_NO_RESULT,
+      }
+    },
   
     getSearchSuccessAction: (data) => {
       return {

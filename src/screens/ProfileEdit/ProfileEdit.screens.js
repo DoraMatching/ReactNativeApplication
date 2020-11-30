@@ -44,65 +44,70 @@ const ProfileEditInput = (props) => {
   );
 };
 
-const ProfileInfoEdit = (props) => {
-  if (!props.data) return <></>;
-  const {username, name, email, roles, avatarUrl} = props.data;
-  const [nameEdit, setNameEdit] = useState(name);
-  const submit = (values) => {
-    const {id, token} = props.data;
-    props.onEditProfile({id, token, ...values});
+// const ProfileInfoEdit = (props) => {
+//   if (!props.data) return <></>;
+//   const {username, name, email, roles, avatarUrl} = props.data;
+//   const [nameEdit, setNameEdit] = useState(name);
+//   const submit = (values) => {
+//     const {id, token} = props.data;
+//     props.onEditProfile({id, token, ...values});
 
-    //console.log("BlogFormScreen", values);
-  };
-  return (
-  <>
-    <Field
-      name={"name"}
-      onChange={setNameEdit}
-      props={{
-        //secureTextEntry: true,
-        returnKeyType: "next",
-        // multiline: true,
-        // numberOfLines: 5,
-      }}
-      placeholder={"Name"}
-      component={ProfileEditInput}
-      val={nameEdit}
-      //validate={required}
-      styles={styles.input}
-    />
-    <Field
-      name={"phoneNumber"}
-      props={{
-        //secureTextEntry: true,
-        returnKeyType: "next",
-        // multiline: true,
-        // numberOfLines: 5,
-      }}
-      placeholder={"Phone number"}
-      component={ProfileEditInput}
-      //validate={required}
-      styles={styles.input}
-    />
-    <Button style={styles.saveButton} onPress={props.handleSubmit(submit)}>
-      Save
-    </Button>
-  </>
-);}
+//     //console.log("BlogFormScreen", values);
+//   };
+//   return (
+//     <>
+//       <Field
+//         name={"name"}
+//         onChange={setNameEdit}
+//         props={{
+//           //secureTextEntry: true,
+//           returnKeyType: "next",
+//           // multiline: true,
+//           // numberOfLines: 5,
+//         }}
+//         placeholder={"Name"}
+//         component={ProfileEditInput}
+//         val={nameEdit}
+//         //validate={required}
+//         styles={styles.input}
+//       />
+//       <Field
+//         name={"phoneNumber"}
+//         props={{
+//           //secureTextEntry: true,
+//           returnKeyType: "next",
+//           // multiline: true,
+//           // numberOfLines: 5,
+//         }}
+//         placeholder={"Phone number"}
+//         component={ProfileEditInput}
+//         //validate={required}
+//         styles={styles.input}
+//       />
+//       <Button style={styles.saveButton} onPress={props.handleSubmit(submit)}>
+//         Save
+//       </Button>
+//     </>
+//   );
+// };
 
-const ProfileInfoEditForm = reduxForm({
-  form: "profileInfo",
-})(ProfileInfoEdit);
-const ProfileInfoForm = connect(mapStateToProps, mapDispatchToProps)(ProfileInfoEditForm);
+// const ProfileInfoEditForm = reduxForm({
+//   form: "profileInfo",
+// })(ProfileInfoEdit);
+// const ProfileInfoForm = connect(
+//   mapStateToProps,
+//   mapDispatchToProps,
+// )(ProfileInfoEditForm);
 
 const ProfileEdit = (props) => {
   if (!props.data) return <></>;
-  const {username, name, email, roles, avatarUrl} = props.data;
+  const {username, name, email, roles, avatarUrl, phoneNumber} = props.data;
   const defaultImage = {
     uri: avatarUrl,
   };
   const [avatar, setAvatar] = useState(defaultImage);
   const [nameEdit, setNameEdit] = useState(name);
+  const [phoneNumberEdit, setPhoneNumberEdit] = useState(phoneNumber);
   const handlePicker = () => {
     console.log("edit");
     ImagePicker.showImagePicker({}, (response) => {
@@ -157,7 +162,42 @@ const ProfileEdit = (props) => {
           <Text>{email}</Text>
         </View>
         <View style={styles.inputContainer}>
-          <ProfileInfoEdit/>
+          <Field
+            name={"name"}
+            onChange={setNameEdit}
+            props={{
+              //secureTextEntry: true,
+              returnKeyType: "next",
+              // multiline: true,
+              // numberOfLines: 5,
+            }}
+            placeholder={"Name"}
+            component={ProfileEditInput}
+            val={nameEdit}
+            //validate={required}
+            styles={styles.input}
+          />
+          <Field
+            name={"phoneNumber"}
+            onChange={setPhoneNumberEdit}
+            props={{
+              //secureTextEntry: true,
+              returnKeyType: "next",
+              // multiline: true,
+              // numberOfLines: 5,
+            }}
+            placeholder={"Phone number"}
+            val={phoneNumberEdit}
+            component={ProfileEditInput}
+            //validate={required}
+            styles={styles.input}
+          />
+          <Button
+            containerStyle={styles.containerButton}
+            style={styles.saveButton}
+            onPress={props.handleSubmit(submit)}>
+            Save
+          </Button>
           <Text style={styles.label}>Change password</Text>
           <Field
             name={"oldPassword"}
@@ -199,6 +239,7 @@ const ProfileEdit = (props) => {
             styles={styles.input}
           />
           <Button
+            containerStyle={styles.containerButton}
             style={styles.saveButton}
             onPress={props.handleSubmit(submit)}>
             Save
@@ -208,8 +249,6 @@ const ProfileEdit = (props) => {
     </KeyboardAvoidingView>
   );
 };
-
-
 
 const styles = StyleSheet.create({
   avatar: {
@@ -250,6 +289,9 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginVertical: 5,
     // marginHorizontal: 10,
+    
+  },
+  containerButton: {
     alignSelf: "flex-end",
   },
   username: {
@@ -278,15 +320,22 @@ const styles = StyleSheet.create({
 
 const validate = (values) => {
   const errors = {};
-  if (!values.oldPassword) {
-    errors.oldPassword = "The field is required";
+  //if (value.name)
+  // if (!values.oldPassword) {
+  //   errors.oldPassword = "The field is required";
+  // }
+  // if (!values.password) {
+  //   errors.password = "The field is required";
+  // }
+  // if (!values.confirmPassword) {
+  //   errors.confirmPassword = "The field is required";
+  // } else 
+  console.log("old password: ", values.oldPassword);
+  if ((!values.oldPassword || typeof values.oldPassword === "undefined") && values.password){
+      console.log("inside if block");
+      errors.password = "The Old Password field must not be blank";
   }
-  if (!values.password) {
-    errors.password = "The field is required";
-  }
-  if (!values.confirmPassword) {
-    errors.confirmPassword = "The field is required";
-  } else if (values.confirmPassword !== values.password) {
+  if (values.confirmPassword !== values.password) {
     errors.confirmPassword = "Password mismatched";
   }
 
@@ -297,8 +346,6 @@ const ProfileEditForm = reduxForm({
   form: "profile",
   validate,
 })(ProfileEdit);
-
-
 
 const mapStateToProps = (state) => ({
   data: state.UserLoginReducer,

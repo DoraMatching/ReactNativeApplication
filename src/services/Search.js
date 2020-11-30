@@ -3,8 +3,8 @@ import request from "../helpers/request";
 const getDataFromAPI = ({token, key, scope}) => {
  
   const params = {key, scope : JSON.stringify(scope)};
-  console.log("scope: ", scope);
-  console.log("getDataFromAPI: ", params);
+  //console.log("scope: ", scope);
+  //console.log("getDataFromAPI: ", params);
   return request
     .get(`search`, {
       params,

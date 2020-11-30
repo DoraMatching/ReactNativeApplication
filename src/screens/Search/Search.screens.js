@@ -6,7 +6,7 @@ import {
   Dimensions,
   TextInput,
   ScrollView,
-  Pressable
+  Pressable,
 } from "react-native";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
@@ -20,17 +20,41 @@ import ListItemQuestionSearch from "../../components/ListItemQuestionSearch";
 import ListItemBlogSearch from "../../components/ListItemBlogSearch";
 
 import Icon from "react-native-vector-icons/Ionicons";
+
+import QuestionDetailModal from "../QuestionDetail/QuestionDetail.modals";
+import BlogDetailModal from "../BlogDetail/BlogDetail.modals";
+import ProfileInfoModal from "../ProfileInfo/ProfileInfo.modals";
 var screen = Dimensions.get("window");
 class Search extends Component {
   constructor(props) {
     super(props);
     this.search = this.search.bind(this);
-    
+
+    this.blogDetailModal = null;
+
+    this.setBlogDetailModalRef = (element) => {
+      this.blogDetailModal = element;
+    };
+
+    this.questionDetailModal = null;
+
+    this.setQuestionDetailModalRef = (element) => {
+      this.questionDetailModal = element;
+    };
+
+    this.profileInfoModal = null;
+
+    this.setProfileInfoModalRef = (element) => {
+      this.profileInfoModal = element;
+    };
   }
 
   search(key) {
     const scope = ["USER", "POST", "QUESTION"];
-    if (!(key.trim())) return;
+    if (!key.trim()) {
+      this.props.onFetchNoResult();
+      return;
+    }
     this.props.onFetchSearch({key, scope, token: this.props.token});
   }
 
@@ -46,7 +70,9 @@ class Search extends Component {
         <ScrollView>
           <View style={styles.searchContainer}>
             <View style={styles.searchInput}>
-              <Pressable style={styles.searchIcon} onPress={() => this.props.navigation.goBack()}>
+              <Pressable
+                style={styles.searchIcon}
+                onPress={() => this.props.navigation.goBack()}>
                 <Icon name="arrow-back" size={22} color="#606770" />
               </Pressable>
 
@@ -55,6 +81,7 @@ class Search extends Component {
                 placeholder={"I'm looking for..."}
                 placeholderTextColor={"#999"}
                 underlineColorAndroid={"#fff"}
+                autoFocus={true}
                 autoCorrect={false}
                 ref={(inputSearch) => {
                   this.inputSearch = inputSearch;
@@ -72,13 +99,20 @@ class Search extends Component {
               )}
             {this.props.data &&
               this.props.data?.users?.map((item) => (
-                <ListItemUser
-                  {...{
-                    token: this.props.token,
-                    userID: this.props.userID,
-                    item,
-                  }}
-                />
+                <Pressable
+                  onPress={() => {
+                    this.profileInfoModal.showProfileInfoModal(
+                      item.id,
+                    );;
+                  }}>
+                  <ListItemUser
+                    {...{
+                      token: this.props.token,
+                      userID: this.props.userID,
+                      item,
+                    }}
+                  />
+                </Pressable>
               ))}
             {this.props.data &&
               this.props.data.posts &&
@@ -87,13 +121,18 @@ class Search extends Component {
               )}
             {this.props.data &&
               this.props.data?.posts?.map((item) => (
-                <ListItemBlogSearch
-                  {...{
-                    token: this.props.token,
-                    userID: this.props.userID,
-                    ...item,
-                  }}
-                />
+                <Pressable
+                  onPress={() => {
+                    this.blogDetailModal.showBlogDetailModal(item);
+                  }}>
+                  <ListItemBlogSearch
+                    {...{
+                      token: this.props.token,
+                      userID: this.props.userID,
+                      ...item,
+                    }}
+                  />
+                </Pressable>
               ))}
             {this.props.data &&
               this.props.data.questions &&
@@ -102,16 +141,25 @@ class Search extends Component {
               )}
             {this.props.data &&
               this.props.data?.questions?.map((item) => (
-                <ListItemQuestionSearch
-                  {...{
-                    token: this.props.token,
-                    userID: this.props.userID,
-                    item,
-                  }}
-                />
+                <Pressable
+                  onPress={() => {
+                    this.questionDetailModal.showQuestionDetailModal(item);
+                  }}>
+                  <ListItemQuestionSearch
+                    {...{
+                      token: this.props.token,
+                      userID: this.props.userID,
+                      item,
+                    }}
+                  />
+                </Pressable>
               ))}
           </View>
         </ScrollView>
+        <QuestionDetailModal
+          ref={this.setQuestionDetailModalRef}></QuestionDetailModal>
+        <BlogDetailModal ref={this.setBlogDetailModalRef}></BlogDetailModal>
+        <ProfileInfoModal ref={this.setProfileInfoModalRef}></ProfileInfoModal>
       </SafeAreaView>
     );
   }
@@ -127,6 +175,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onFetchSearch: (params) => {
       dispatch(actions.getSearchAction(params));
+    },
+    onFetchNoResult: () => {
+      dispatch(actions.getNoResultAction());
     },
   };
 };

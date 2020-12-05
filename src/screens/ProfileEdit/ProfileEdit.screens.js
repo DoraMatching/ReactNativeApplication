@@ -107,6 +107,7 @@ const ProfileEdit = (props) => {
   };
   const [avatar, setAvatar] = useState(defaultImage);
   const [nameEdit, setNameEdit] = useState(name);
+  const [avatarEdit, setAvatarEdit] = useState(avatarUrl);
   const [phoneNumberEdit, setPhoneNumberEdit] = useState(phoneNumber);
   const handlePicker = () => {
     console.log("edit");
@@ -162,6 +163,21 @@ const ProfileEdit = (props) => {
           <Text>{email}</Text>
         </View>
         <View style={styles.inputContainer}>
+        <Field
+            name={"avatarUrl"}
+            onChange={setAvatarEdit}
+            props={{
+              //secureTextEntry: true,
+              returnKeyType: "next",
+              // multiline: true,
+              // numberOfLines: 5,
+            }}
+            placeholder={"Avatar"}
+            component={ProfileEditInput}
+            val={avatarEdit}
+            //validate={required}
+            styles={styles.input}
+          />
           <Field
             name={"name"}
             onChange={setNameEdit}

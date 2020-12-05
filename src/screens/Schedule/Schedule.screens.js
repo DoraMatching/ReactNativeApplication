@@ -17,10 +17,10 @@ import moment from 'moment';
 import colors from '../../themes/color';
 
 
-const alert = ({name, duration, startTime, endTime}) =>
+const alert = ({title, summary, start, end}) =>
 Alert.alert(
-  name,
-  `Duration : ${duration} \n `,
+  title,
+  `Start time : ${moment(start).format("MMM Do YYYY, h:mm:ss a")} \nEnd time : ${moment(end).format("MMM Do YYYY, h:mm:ss a")} \n${summary} \n `,
   [
     // {
     //   text: "Cancel",
@@ -38,7 +38,11 @@ export default class Schedule extends Component {
     this.state = {
       currentDate: moment().format("YYYY-MM-DD"),
     };
-    
+    this.timeLine = null;
+
+    this.setTimeLineRef = (element) => {
+      this.timeLine = element;
+    };
   }
   
   // events = [];
@@ -167,12 +171,18 @@ export default class Schedule extends Component {
         />
         <Timeline
           format24h={true}
-          eventTapped={e => e}
+          eventTapped={e => alert(e)
+          }
           events={this.props.schedule.filter(event => moment(event.start).isSame(this.state.currentDate, 'day'))}
           // scrollToFirst={true}
           // start={0}
           // end={24}
+          ref={this.setTimeLineRef}
         />
+        {
+          console.log("calendar", this.timeLine)
+          
+        }
       </CalendarProvider>
     );
   }

@@ -20,7 +20,7 @@ import colors from '../../themes/color';
 const alert = ({title, summary, start, end}) =>
 Alert.alert(
   title,
-  `Start time : ${moment(start).format("MMM Do YYYY, h:mm:ss a")} \nEnd time : ${moment(end).format("MMM Do YYYY, h:mm:ss a")} \n${summary} \n `,
+  `Start time : ${moment(start).format("MMM Do YYYY, h:mm:ss a")} \nEnd time : ${moment(end).format("MMM Do YYYY, h:mm:ss a")} \n${summary} minutes \n `,
   [
     // {
     //   text: "Cancel",

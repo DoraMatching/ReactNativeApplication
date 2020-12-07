@@ -19,13 +19,13 @@ const item = {
 export class TopicSearch extends Component {
     constructor(props) {
         super(props);
-        console.log("TopicSearch constructor is called");
+        //console.log("TopicSearch constructor is called");
         this.state = {
           search: "",
           url: "topics?page=1&limit=20&order=DESC",
           isLoading: false,
         };
-        
+
        // this.props.onFetchTop({url: this.state.url});
        this.topicDetailModal = null;
 
@@ -33,23 +33,23 @@ export class TopicSearch extends Component {
          this.topicDetailModal = element;
        };
       }
-    
+
       refreshData = () => {
         this.setState({isLoading: true});
         const {url} = this.state;
         this.props.onRefreshData({url});
         this.setState({isLoading: false});
       };
-    
+
       retrieveMore = () => {
         if (!this.props.data && typeof this.props.data === 'undefined') return;
-        console.log("TopicSearch in RetrieveMore 0", !this.props.data && typeof this.props.data === 'undefined')
-        console.log("TopicSearch in RetrieveMore", this.props.data);
-        console.log("retrieveMore is called");
+        // console.log("TopicSearch in RetrieveMore 0", !this.props.data && typeof this.props.data === 'undefined')
+        // console.log("TopicSearch in RetrieveMore", this.props.data);
+        // console.log("retrieveMore is called");
         let url = this.props.data? this.props.data.links.next : "";
-        console.log("TopicSearch url: ", url);
+        // console.log("TopicSearch url: ", url);
         if (url === "") {
-          console.log("TopicSearch inside if block");
+          // console.log("TopicSearch inside if block");
           return;
         }
         this.props.onFetchTop({url});

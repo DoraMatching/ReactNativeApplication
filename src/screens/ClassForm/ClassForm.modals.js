@@ -78,7 +78,7 @@ export default class ClassFormModal extends Component {
           <SafeAreaView style={{flex: 1, justifyContent: "flex-end"}}>
           <View style={{flexDirection: "column", flex: 1,marginBottom: 5}}>
           {!this.state.next && <ClassForm onClose={this.onClose} setNext={(next) => this.setState({next})}></ClassForm>}
-          {this.state.next && <LessonForm setNext={(next) => this.setState({next})} ></LessonForm>}
+          {this.state.next && <LessonForm setNext={(next) => this.setState({next}) } onClose={this.onClose}></LessonForm>}
           <View
               style={{
                 flexDirection: "row",

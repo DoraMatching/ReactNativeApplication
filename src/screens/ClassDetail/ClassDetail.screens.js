@@ -6,7 +6,8 @@ import {
   Image,
   Dimensions,
   ScrollView,
-  Alert
+  Alert,
+  Pressable
 } from "react-native";
 
 import ScaledImage from "../../components/ScaledImage";
@@ -27,6 +28,20 @@ export class ClassDetail extends Component {
   componentWillMount() {
     this.props.onFetchClassDetail({id: this.props.id, token: this.props.token});
   }
+  alert = ({user}) =>
+    Alert.alert(
+      user.name,
+      `Email : ${user.email} \nPhone number : ${user.phoneNumber} \n`,
+      [
+        // {
+        //   text: "Cancel",
+        //   onPress: () => console.log("Cancel Pressed"),
+        //   style: "cancel"
+        // },
+        {text: "OK", onPress: () => console.log("OK Pressed")},
+      ],
+      {cancelable: false},
+    );
   onLeaveClass() {
     Alert.alert(
       "",
@@ -40,10 +55,10 @@ export class ClassDetail extends Component {
         {
           text: "OK",
           onPress: () =>
-          this.props.onFetchClassDeregister({
-            id: this.props.id,
-            token: this.props.token,
-          })
+            this.props.onFetchClassDeregister({
+              id: this.props.id,
+              token: this.props.token,
+            }),
         },
       ],
       {cancelable: false},
@@ -67,6 +82,7 @@ export class ClassDetail extends Component {
     return (
       <ScrollView>
         <View style={styles.container}>
+          <Pressable onPress={() => this.alert(trainer)}>
           <Image
             style={{
               width: 60,
@@ -82,6 +98,7 @@ export class ClassDetail extends Component {
               uri: trainer.user.avatarUrl,
             }}
           />
+          </Pressable>
           <Text style={styles.topic}>{topic.name}</Text>
           <Text style={styles.className}>{name}</Text>
           <Text style={styles.authorName}>by {trainer.user.username}</Text>
@@ -125,15 +142,14 @@ export class ClassDetail extends Component {
             <Button
               style={styles.buttonContent}
               containerStyle={styles.button}
-              onPress={() =>
-                this.onLeaveClass()
-              }>
+              onPress={() => this.onLeaveClass()}>
               LEAVE THE CLASS
             </Button>
           )}
           <Text style={styles.label}>Members</Text>
           <View style={styles.member}>
             {members?.map((item) => (
+              <Pressable onPress={() => this.alert(item)}>
               <Image
                 style={{
                   width: 40,
@@ -149,6 +165,7 @@ export class ClassDetail extends Component {
                   uri: item.user.avatarUrl,
                 }}
               />
+              </Pressable>
             ))}
           </View>
           <Text style={styles.label}>Lessons</Text>

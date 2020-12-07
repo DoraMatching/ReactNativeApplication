@@ -12,14 +12,29 @@ export class PersonalClassroom extends Component {
     this.state = {
       isLoading: false,
     };
-  }
-  componentWillMount() {
-    //console.log("componentWillMount is called");
-    this.props.onFetchUserClassroom({
-      id: this.props.userID,
+    this.props.onFetchNewUserClassroom({
+      id: this.props.UserID,
       token: this.props.token,
     });
+    console.log("l19", this.props.profile);
+    
   }
+  // componentWillMount() {
+  //   //console.log("componentWillMount is called");
+  //   this.props.onFetchNewUserClassroom({
+  //     id: this.props.userID,
+  //     token: this.props.token,
+  //   });
+  // }
+  // componentWillReceiveProps(nextProps) {
+  //   console.log("l28", nextProps);
+    
+  //   if (this.props.userID != nextProps.userID)
+  //     this.props.onFetchNewUserClassroom({
+  //       id: this.props.userID,
+  //       token: this.props.token,
+  //     });
+  // }
   refreshData = () => {
     this.setState({isLoading: true});
     const {url} = this.state;
@@ -37,7 +52,7 @@ export class PersonalClassroom extends Component {
     this.props.onFetchMoreUserClassroom({url, token: this.props.token});
   };
   render() {
-    console.log("render", this.props.dataItem);
+    //console.log("render", this.props.dataItem);
     if (!this.props.classDetailModal) return <></>;
     if (!this.props.data || this.props.data.items.length == 0)
       return (
@@ -56,7 +71,6 @@ export class PersonalClassroom extends Component {
           refreshing={this.state.isLoading}
           data={this.props.dataItem}
           renderItem={({item, index}) => {
-            
             const userID = this.props.userID;
             const token = this.props.token;
             //console.log("flatlist", item);
@@ -82,12 +96,11 @@ export class PersonalClassroom extends Component {
 
 const mapStateToProps = (state) => ({
   data: state.ProfileInfoClassroomReducer,
-  dataItem :  state.ProfileInfoClassroomItemReducer,
+  dataItem: state.ProfileInfoClassroomItemReducer,
   token: !state.UserLoginReducer ? "" : state.UserLoginReducer.token,
-  userID: state.ProfileInfoReducer.user
-    ? state.ProfileInfoReducer.user.id
-    : state.ProfileInfoReducer.id,
+ 
   classDetailModal: state.ClassDetailModal,
+  profile : state.ProfileInfoReducer,
 });
 
 const mapDispatchToProps = (dispatch) => {
@@ -95,10 +108,13 @@ const mapDispatchToProps = (dispatch) => {
     onFetchUserClassroom: (params) => {
       dispatch(actions.getProfileClassroomAction(params));
     },
+    onFetchNewUserClassroom: (params) => {
+      dispatch(actions.getProfileClassroomNewAction(params));
+    },
     onFetchMoreUserClassroom: (params) => {
       dispatch(actions.getMoreProfileClassroomAction(params));
     },
-    onRefreshData : (params) => {
+    onRefreshData: (params) => {
       dispatch(actions.getRefreshDataAction(params));
     },
   };

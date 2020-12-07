@@ -82,6 +82,7 @@ export default class Profile extends Component {
       roles,
       posts,
       questions,
+      id,
     } = this.props.data;
 
     return (
@@ -123,7 +124,8 @@ export default class Profile extends Component {
           showBlogDetailModal={this.blogDetailModal?.showBlogDetailModal}
           showQuestionDetailModal={
             this.questionDetailModal?.showQuestionDetailModal
-          }></TabView>
+          }
+          UserID = {id}></TabView>
 
         <BlogDetailModal ref={this.setBlogDetailModalRef}></BlogDetailModal>
         <BlogFormEditModal
@@ -145,10 +147,10 @@ export default class Profile extends Component {
         <QuestionFormEditModal
           ref={this.setQuestionFormEditModalRef}></QuestionFormEditModal>
         <ClassDetailModal ref={this.setClassDetailModalRef}></ClassDetailModal>
-        {console.log(
+        {/* {console.log(
           "this.state.classDetailModal: ",
           this.state.classDetailModal,
-        )}
+        )} */}
         {this.state.classDetailModal
           ? this.props.onOpenClassDetail(
               this.state.classDetailModal.showClassDetailModal,

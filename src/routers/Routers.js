@@ -57,7 +57,7 @@ const homeRouters = () => (
     <Stack.Screen name="SearchScreen" component={Search} />
   </Stack.Navigator>
 );
-const blogRouters = ({params}) => (
+const postRouters = ({params}) => (
   <Stack.Navigator
     initialRouteName="PostRouter"
     screenOptions={{
@@ -65,17 +65,18 @@ const blogRouters = ({params}) => (
     }}>
     {/* <Stack.Screen name="BlogForm" component={BlogForm} /> */}
     <Stack.Screen name="PostRouter" component={PostsSearch} />
-    <Stack.Screen name="BlogSearch" component={BlogSearch} />
+    <Stack.Screen name="SearchScreen" component={Search} />
   </Stack.Navigator>
 );
-const questionRouters = ({params}) => (
+const trainRouters = ({params}) => (
   <Stack.Navigator
-    initialRouteName="QuestionSearch"
+    initialRouteName="TrainingSearch"
     screenOptions={{
       headerShown: false,
     }}>
     {/* <Stack.Screen name="BlogDetail" component={BlogDetail} /> */}
-    <Stack.Screen name="QuestionSearch" component={QuestionSearch} />
+    <Stack.Screen name="TrainingSearch" component={TrainingSearch} />
+    <Stack.Screen name="SearchScreen" component={Search} />
   </Stack.Navigator>
 );
 
@@ -159,10 +160,10 @@ const tabRouters = () => (
         showLabel: true,
       }}>
       <Tab.Screen name="Home" component={homeRouters} />
-      <Tab.Screen name="Posting" component={blogRouters} />
+      <Tab.Screen name="Posting" component={postRouters} />
       {/* <Tab.Screen name="Trainers" component={TrainerSearch} /> */}
       <Tab.Screen name="Schedule" component={Schedule} />
-      <Tab.Screen name="Training" component={TrainingSearch} />
+      <Tab.Screen name="Training" component={trainRouters} />
       {/* <Tab.Screen name="Questions" component={questionRouters} /> */}
       <Tab.Screen name="Profile" component={profileRouters} />
     </Tab.Navigator>

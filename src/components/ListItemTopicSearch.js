@@ -10,7 +10,7 @@ export default class ListItemTopicTop extends Component {
   }
 
   render() {
-    console.log("List item question top: ", this.props);
+    // console.log("List item question top: ", this.props);
     const {id, name, description, featuredImage, classes} = this.props.item;
  
     return (

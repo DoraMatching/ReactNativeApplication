@@ -38,7 +38,7 @@ class LessonForm extends Component {
         
         <View style={{flexDirection: "row", justifyContent:"flex-end"}}>
           <Button style={styles.button} onPress={() => this.props.setNext(false)}>Back</Button>
-          <Button style={styles.button}>Finish</Button>
+          <Button style={styles.button} onPress={() => this.props.onClose()}>Finish</Button>
         </View>
       </View>
     );

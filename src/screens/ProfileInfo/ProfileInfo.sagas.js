@@ -62,6 +62,43 @@ function* watchFetchUserClassroom() {
   yield takeLatest(actions.GET_PROFILE_INFO_CLASSROOM, fetchUserClassroom);
 }
 
+function* fetchNewUserClassroom(action) {
+  try {
+    //console.log("fetchUserClassroom", action.params);
+    const res = yield getIDFromAPI({role : "trainer", ...action.params});
+    //console.log("getTrainerFromAPI ", res);
+    if (res.status === 200) {
+      //console.log("1", res);
+      const res2 = yield getUserClassroomFromAPI({id : res.data.id, token : action.params.token});
+      //console.log("getUserClassroomFromAPI: ", res);
+      if (res2.status === 200) {
+        //console.log("Profile.saga.js: ", res.data);
+        yield put({
+          type: actions.GET_PROFILE_INFO_CLASSROOM_NEW_SUCCEEDED,
+          data: res2.data,
+        });
+      } else {
+        yield put({
+          type: actions.GET_PROFILE_INFO_CLASSROOM_NEW_FAILED,
+          error: res2.message,
+        });
+      }
+    } else {
+      yield put({
+        type: actions.GET_PROFILE_INFO_CLASSROOM_NEW_FAILED,
+        error: res.message,
+      });
+    }
+  } catch (error) {
+    yield put({type: actions.GET_PROFILE_INFO_CLASSROOM_NEW_FAILED, error});
+  }
+}
+
+function* watchFetchNewUserClassroom() {
+  //console.log("Profile.saga.js: watchFetchUser");
+  yield takeLatest(actions.GET_PROFILE_INFO_CLASSROOM_NEW, fetchNewUserClassroom);
+}
+
 function* refreshData(action) {
   try {
     //console.log("fetchUserClassroom", action.params);
@@ -119,5 +156,5 @@ function* watchFetchMoreUserClassroom() {
 }
 
 export default function* rootSaga() {
-  yield all([fork(watchFetchUser), fork(watchFetchUserClassroom), fork(watchRefreshData), fork(watchFetchMoreUserClassroom)]);
+  yield all([fork(watchFetchUser), fork(watchFetchUserClassroom), fork(watchRefreshData), fork(watchFetchMoreUserClassroom), fork(watchFetchNewUserClassroom)]);
 }

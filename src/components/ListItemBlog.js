@@ -1,10 +1,20 @@
 import React, {Component} from "react";
-import {Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  Pressable,
+} from "react-native";
 import Svg, {Line} from "react-native-svg";
 import TimeAgo from "react-native-timeago";
 import likedIcon from "../images/LikedIcon.png";
 import unlikedIcon from "../images/UnlikedIcon.png";
 import TagListItem from "./ListItemTag";
+import MoreOptionIcon from "../images/moreOption.svg";
+import FastImage from "react-native-fast-image";
+
 
 export default class ListItemBlog extends Component {
   constructor(props) {
@@ -16,23 +26,66 @@ export default class ListItemBlog extends Component {
 
   render() {
     var imgSrc = this.state.isLiked ? likedIcon : unlikedIcon;
-
+    var paramsForOptionModal = {
+        type : "blog",
+        id : this.props.id,
+        token : this.props.token,
+        title : this.props.title,
+        subTitle : this.props.subTitle,
+        content : this.props.content,
+        tags : this.props.tags,
+        featuredImage: this.props.featuredImage,
+        status : true,
+    };
     return (
       <View>
         <View style={{...styles.container, ...styles.verticalLayout}}>
-          <View style={{...styles.horizontalLayout}}>
+          <View
+            style={{
+              ...styles.horizontalLayout,
+              justifyContent: "space-between",
+            }}>
             <Image
-              style={{width: 34, height: 30}}
-              source={require("../images/BlogIcon.png")}
+              style={{
+                width: 45,
+                height: 45,
+                borderRadius: 1000,
+                marginRight: 10,
+                borderColor: "#c4c4c4",
+                borderWidth: 0.5,
+              }}
+              resizeMode="cover"
+              source={{
+                uri: this.props.author.avatarUrl,
+              }}
             />
+            {/* <FastImage
+              style={{
+                width: 45,
+                height: 45,
+                borderRadius: 1000,
+                marginRight: 10,
+                borderColor: "#c4c4c4",
+                borderWidth: 0.5,
+              }}
+              source={{
+                uri: this.props.featuredImage,//this.props.author.avatarUrl,
+                //headers: {Authorization: "someAuthToken"},
+                //priority: FastImage.priority.high,
+              }}
+              resizeMode={FastImage.resizeMode.cover}
+            /> */}
+
             <View
               style={{
                 ...styles.verticalLayout,
-                paddingStart: 10,
-                paddingEnd: 10,
+                paddingRight: 10,
+                flex: 60,
               }}>
-              <Text style={{...styles.title}}>{this.props.title}</Text>
-              <TimeAgo time={this.props.updatedAt} style={{...styles.time}} />
+              <Text style={{...styles.title}} numberOfLines={2}>
+                {this.props.title}
+              </Text>
+              <TimeAgo time={this.props.createdAt} style={{...styles.time}} />
 
               <View
                 style={{
@@ -45,14 +98,41 @@ export default class ListItemBlog extends Component {
                 })}
               </View>
             </View>
+            <View>
+              <Image
+                style={{width: 20, height: 20}}
+                resizeMode="cover"
+                source={require("../images/BlogIcon.png")}
+              />
+              {this.props.userID === this.props.author.id ? (
+                <Pressable onPress={() => this.props.showOptionModal(paramsForOptionModal)}>
+                  <MoreOptionIcon
+                    width={20}
+                    height={20}
+                    style={{marginTop: 5}}
+                  />
+                </Pressable>
+              ) : (
+                <></>
+              )}
+            </View>
           </View>
-          <Image
-            style={{width: "100%", marginTop: 10, height: 200}}
+          <FastImage
+            style={{width: "100%", marginTop: 5, height: 200}}
+            source={{
+              uri: this.props.featuredImage,
+              //headers: {Authorization: "someAuthToken"},
+              priority: FastImage.priority.normal,
+            }}
+            resizeMode={FastImage.resizeMode.cover}
+          />
+          {/* <Image
+            style={{width: "100%", marginTop: 5, height: 200}}
             resizeMode="cover"
             source={{
               uri: this.props.featuredImage,
             }}
-          />
+          /> */}
           <Text style={styles.descriptionText}>
             {this.props.subTitle.length > 120
               ? this.props.subTitle.substring(0, 120 - 3) + "..."
@@ -101,7 +181,7 @@ export default class ListItemBlog extends Component {
                   alignSelf: "flex-end",
                   textAlign: "right",
                 }}>
-                25 comments
+                {this.props.comments.length} comments
               </Text>
             </View>
           </View>
@@ -129,13 +209,13 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 14,
     color: "#000",
-    marginRight: 10,
   },
   time: {
-    fontSize: 11,
-    fontWeight: "300",
+    fontSize: 12,
+
     paddingEnd: 5,
     marginBottom: 5,
+    color: "#3d3d4e",
   },
   background: {
     flex: 1,

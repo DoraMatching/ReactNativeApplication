@@ -22,9 +22,11 @@ export default class ListItemTrainer extends Component {
             }}
           /> */}
         <CustomImage imgUrl={this.props.avatarUrl} />
+        <View style={{...styles.border}}>
         <View style={{...styles.textContainer}}>
           <Text style={{...styles.trainerText}}>{this.props.name}</Text>
-          <Text style={{...styles.topicText}}>C#, Ruby on Rails</Text>
+          {/* <Text style={{...styles.topicText}}>C#, Ruby on Rails</Text> */}
+        </View>
         </View>
       </View>
     );
@@ -73,20 +75,17 @@ const styles = StyleSheet.create({
     marginBottom: 6,
   },
   border: {
-    borderTopLeftRadius: 5,
-    borderTopRightRadius: 5,
-    borderColor: "rgba(0, 0, 0, .5)",
-    borderWidth: 0.75,
+    borderLeftColor: "rgba(0, 0, 0, .5)",
+    borderLeftWidth: 0.5,
+    borderRightColor: "rgba(0, 0, 0, .5)",
+    borderRightWidth: 0.5,
+    borderBottomColor: "rgba(0, 0, 0, .5)",
+    borderBottomWidth: 0.5,
+    borderBottomLeftRadius: 5,
+    borderBottomRightRadius: 5,
   },
   textContainer: {
     width: width,
-    borderLeftColor: "rgba(0, 0, 0, .5)",
-    borderLeftWidth: 0.75,
-    borderRightColor: "rgba(0, 0, 0, .5)",
-    borderRightWidth: 0.75,
-    borderBottomColor: "rgba(0, 0, 0, .5)",
-    borderBottomWidth: 0.75,
-    borderBottomLeftRadius: 5,
-    borderBottomRightRadius: 5,
+    marginBottom: 10,
   },
 });

@@ -20,6 +20,18 @@ target 'react_native_app' do
 
   pod 'RNSVG', :path => '../node_modules/react-native-svg'
 
+  pod 'RNSearchBar', :path => '../node_modules/react-native-search-bar'
+
+
+
+  pod 'RNDateTimePicker', :path => '../node_modules/@react-native-community/datetimepicker'
+
+  pod 'ReactNativeAutogrowTextinput', :path => '../node_modules/react-native-autogrow-textinput'
+
+  pod 'RNFastImage', :path => '../node_modules/react-native-fast-image'
+
+  pod 'react-native-image-picker', :path => '../node_modules/react-native-image-picker'
+
   target 'react_native_appTests' do
     inherit! :complete
     # Pods for testing

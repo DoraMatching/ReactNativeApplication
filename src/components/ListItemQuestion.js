@@ -1,10 +1,11 @@
 import React, {Component} from "react";
-import {Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {Image, StyleSheet, Text, TouchableOpacity, View, Pressable} from "react-native";
 import Svg, {Line} from "react-native-svg";
 import TimeAgo from "react-native-timeago";
 import likedIcon from "../images/LikedIcon.png";
 import unlikedIcon from "../images/UnlikedIcon.png";
 import TagListItem from "./ListItemTag";
+import MoreOptionIcon from "../images/moreOption.svg";
 
 export default class ListItemBlog extends Component {
   constructor(props) {
@@ -15,24 +16,53 @@ export default class ListItemBlog extends Component {
   }
 
   render() {
+    const {id, title, author, createdAt, tags, content, comments} = this.props.item;
     var imgSrc = this.state.isLiked ? likedIcon : unlikedIcon;
-
+    var paramsForOptionModal = {
+      type : "question",
+      id : id,
+      token : this.props.token,
+      title : title,
+      //subTitle : this.props.subTitle,
+      content : content,
+      status : true,
+      tags : tags,
+  };
+    //console.log("listItemQuestion: ", this.props.userID);
+    
     return (
       <View>
         <View style={{...styles.container, ...styles.verticalLayout}}>
-          <View style={{...styles.horizontalLayout}}>
+          <View
+            style={{
+              ...styles.horizontalLayout,
+              justifyContent: "space-between",
+            }}>
             <Image
-              style={{width: 34, height: 34}}
-              source={require("../images/QuestionIcon.png")}
+              style={{
+                width: 45,
+                height: 45,
+                borderRadius: 1000,
+                marginRight: 10,
+                borderColor: "#c4c4c4",
+                borderWidth: 0.5,
+              }}
+              resizeMode="cover"
+              source={{
+                uri: author.avatarUrl,
+              }}
             />
+
             <View
               style={{
                 ...styles.verticalLayout,
-                paddingStart: 10,
-                paddingEnd: 10,
+                paddingRight: 10,
+                flex: 60,
               }}>
-              <Text style={{...styles.title}}>{this.props.title}</Text>
-              <TimeAgo time={this.props.updatedAt} style={{...styles.time}} />
+              <Text style={{...styles.title}} numberOfLines={2}>
+                {title}
+              </Text>
+              <TimeAgo time={createdAt} style={{...styles.time}} />
 
               <View
                 style={{
@@ -40,20 +70,34 @@ export default class ListItemBlog extends Component {
                   marginBottom: 0,
                   flexWrap: "wrap",
                 }}>
-                {this.props.tags.map((item) => {
+                {tags.map((item) => {
                   return <TagListItem item={item} />;
                 })}
               </View>
             </View>
+            <View>
+              <Image
+                style={{width: 18, height: 20}}
+                resizeMode="cover"
+                source={require("../images/QuestionIcon.png")}
+              />
+              {this.props.userID === author.id ? (
+                <Pressable onPress={() => this.props.showOptionModal(paramsForOptionModal)}>
+                <MoreOptionIcon width={20} height={20} style={{marginTop: 5}} />
+                </Pressable>
+              ) : (
+                <></>
+              )}
+            </View>
           </View>
 
           <Text style={styles.descriptionText}>
-            {this.props.content.length > 200
-              ? this.props.content.substring(0, 200 - 3) + "..."
-              : this.props.content}
+            {content.length > 200
+              ? content.substring(0, 200 - 3) + "..."
+              : content}
             <Text style={{...styles.authorLabel}}> asked by </Text>
             <Text style={{fontWeight: "bold"}}>
-              {this.props.author ? this.props.author.name : "ABC"}
+              {author ? author.name : "ABC"}
             </Text>
           </Text>
           <Svg
@@ -94,7 +138,7 @@ export default class ListItemBlog extends Component {
                   alignSelf: "flex-end",
                   textAlign: "right",
                 }}>
-                25 comments
+                {comments.length} comments
               </Text>
             </View>
           </View>
@@ -122,13 +166,14 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 14,
     color: "#000",
-    marginRight: 10,
+    marginRight: 0,
   },
   time: {
-    fontSize: 11,
-    fontWeight: "300",
+    fontSize: 12,
+
     paddingEnd: 5,
     marginBottom: 5,
+    color: "#3d3d4e",
   },
   background: {
     flex: 1,

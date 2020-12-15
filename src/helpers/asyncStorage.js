@@ -19,7 +19,19 @@ function* getData() {
   }
 }
 
+function* removeData(catchCallBack) {
+  try {
+    const value = yield AsyncStorage.removeItem("USER_TOKEN",catchCallBack);
+    if (value !== null) {
+      return value;
+    }
+  } catch (e) {
+    // error reading value
+  }
+}
+
 export const storage = {
   storeData,
   getData,
+  removeData
 };

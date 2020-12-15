@@ -22,6 +22,10 @@ import MyRouters from "./src/routers/Routers";
 import rootReducer from "./src/store/reducers";
 import saga from "./src/store/sagas";
 
+import { enableScreens } from 'react-native-screens';
+
+enableScreens();
+
 const sagaMiddleware = createSagaMiddleware();
 const store = createStore(rootReducer, applyMiddleware(sagaMiddleware));
 sagaMiddleware.run(saga);

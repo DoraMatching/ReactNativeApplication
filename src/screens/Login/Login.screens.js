@@ -13,11 +13,13 @@ import {GitHubSocialButton} from "react-native-social-buttons";
 import Svg, {Line} from "react-native-svg";
 import {Field} from "redux-form";
 import EditText from "../../components/EditText";
+import colors from '../../themes/color';
 
 export const LoginScreen = (props) => {
   const [toggleCheckBox, setToggleCheckBox] = useState(false);
   const {navigation} = props;
   const submit = (values) => {
+    console.log("submit value: ", values);
     const {usernameOrEmail, password} = values;
     if (/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(usernameOrEmail)) {
       props.onSubmitForm({
@@ -37,7 +39,10 @@ export const LoginScreen = (props) => {
   };
   const {handleSubmit} = props;
   if (props.user && props.user.success === true) {
-    navigation.navigate("Home");
+    props.reset();
+    navigation.navigate(
+      "Nav");
+      
   } else if (props.user.success === false) {
     alert(props.user.message);
   }
@@ -74,7 +79,7 @@ export const LoginScreen = (props) => {
             style={{
               alignItems: "center",
               justifyContent: "center",
-              backgroundColor: "blueviolet",
+              backgroundColor: colors.primary,
               height: 45,
               borderRadius: 5,
               marginTop: 30,
@@ -150,7 +155,7 @@ const styles = StyleSheet.create({
     fontSize: 36,
     marginBottom: 100,
     marginTop: 40,
-    color: "blueviolet",
+    color: colors.primary,
   },
   forgotPasswordText: {
     textAlign: "right",
@@ -162,6 +167,6 @@ const styles = StyleSheet.create({
     color: "white",
   },
   signUpText: {
-    color: "blueviolet",
+    color: colors.primary,
   },
 });

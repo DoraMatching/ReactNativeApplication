@@ -10,7 +10,10 @@ export default class ListItemTag extends Component {
   render() {
     return (
       <View style={styles.container}>
+        <View style={styles.inside}>
         <Text style={styles.tagText}> {this.props.item.name} </Text>
+        </View>
+        
       </View>
     );
   }
@@ -18,15 +21,26 @@ export default class ListItemTag extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 3,
+    
+    backgroundColor: "#f4f4f4",
     marginEnd: 5,
-
-    backgroundColor: "#F0F2F5",
-    borderRadius: 4,
+    marginBottom: 5,
+    borderRadius: 5,
+    
+  },
+  inside : {
+    paddingHorizontal: 6,
+    paddingVertical: 3,
+    
+    
+    borderColor: "#bcbcc5",
+    borderWidth: 1,
+    borderRadius: 5,
   },
   tagText: {
-    color: "black",
-    fontSize: 12,
+    color: "#3d4560",
+    fontSize: 13,
+    fontWeight: "600",
   },
   background: {
     flex: 1,

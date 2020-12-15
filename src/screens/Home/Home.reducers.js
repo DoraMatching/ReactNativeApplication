@@ -95,7 +95,7 @@ const HomeItemReducer = (dataItem = [], action) => {
 };
 
 const AlertReducer = (alert = null, action) => {
-  console.log("alert in Home.reducer: ", action);
+  console.log("action: ", action);
   switch (action.type) {
     case BlogSearchActions.DELETE_BLOG_SUCCEEDED:
     case QuestionSearchActions.DELETE_QUESTION_SUCCEEDED:

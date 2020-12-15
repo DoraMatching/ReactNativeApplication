@@ -15,8 +15,8 @@ const config = {
 };
 
 const loginFromAPI = ({username, email, password}) => {
-  console.log("username in api", username);
-  console.log("password in api", password);
+  //console.log("username in api", username);
+  //console.log("password in api", password);
   return request
     .post("login", {
       username,

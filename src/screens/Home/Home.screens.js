@@ -172,7 +172,7 @@ export default class Home extends Component {
                 placeholderTextColor={"#999"}
                 underlineColorAndroid={"#fff"}
                 autoCorrect={false}
-                onFocus={() => {this.props.navigation.navigate("SearchScreen")}}
+                onFocus={() => {this.props.navigation.navigate("SearchScreen",{scope : ["USER", "POST", "QUESTION"]})}}
                 ref={(inputSearch) => {
                   this.inputSearch = inputSearch;
                 }}

@@ -2,12 +2,12 @@ import Actions from "./Search.actions";
 
 
 
-const SearchReducer = (data = [], action) => {
+const SearchReducer = (data = null, action) => {
   switch (action.type) {
     case Actions.GET_SEARCH_SUCCEEDED:
       return action.data;
     case Actions.GET_NO_RESULT:
-      return [];
+      return null;
     default:
       return data;
   }

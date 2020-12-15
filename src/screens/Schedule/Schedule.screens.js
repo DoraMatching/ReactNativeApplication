@@ -47,10 +47,10 @@ export default class Schedule extends Component {
   
   // events = [];
   componentDidMount(){
-    console.log(this.state.currentDate);
+    //console.log(this.state.currentDate);
     const startTime = moment(`${this.state.currentDate} 00:00:00`).format();
     const endTime = moment(`${this.state.currentDate} 23:59:59`).format();
-    console.log("currentDate in moment in constructor",startTime, endTime);
+    //console.log("currentDate in moment in constructor",startTime, endTime);
     this.props.onFetchPersonalSchedule({id : this.props.userID, token : this.props.token, roles : this.props.roles, startTime, endTime});
   }
   onDateChanged = (date) => {
@@ -140,7 +140,7 @@ export default class Schedule extends Component {
   };
 
   render() {
-     console.log("schedule", this.events);
+     //console.log("schedule", this.events);
     // console.log("props in schedule", this.props);
     return (
       <CalendarProvider
@@ -179,10 +179,10 @@ export default class Schedule extends Component {
           // end={24}
           ref={this.setTimeLineRef}
         />
-        {
+        {/* {
           console.log("calendar", this.timeLine)
           
-        }
+        } */}
       </CalendarProvider>
     );
   }

@@ -19,7 +19,7 @@ export const LoginScreen = (props) => {
   const [toggleCheckBox, setToggleCheckBox] = useState(false);
   const {navigation} = props;
   const submit = (values) => {
-    console.log("submit value: ", values);
+    //console.log("submit value: ", values);
     const {usernameOrEmail, password} = values;
     if (/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(usernameOrEmail)) {
       props.onSubmitForm({

@@ -16,6 +16,7 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = (state) => {
   return {
     id: !state.UserLoginReducer ? "" : state.UserLoginReducer.id,
+    roles: !state.UserLoginReducer ? [] : state.UserLoginReducer.roles,
     token: !state.UserLoginReducer ? "" : state.UserLoginReducer.token,
     data : state.ProfileReducer,
   };

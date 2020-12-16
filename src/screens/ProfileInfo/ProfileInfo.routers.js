@@ -11,7 +11,7 @@ import colors from '../../themes/color';
 const Tab = createMaterialTopTabNavigator();
 
 function TabView(props) {
-  const {showBlogDetailModal, showQuestionDetailModal, UserID} = props;
+  const {showBlogDetailModal, showQuestionDetailModal, UserID, showClassDetailModal} = props;
   return (
     <NavigationContainer independent={true}>
    
@@ -41,7 +41,7 @@ function TabView(props) {
         /> */}
         <Tab.Screen
           name="MyClassroom"
-          component={connect(() => ({UserID}))(PersonalClassroom)}
+          component={connect(() => ({UserID, showClassDetailModal}))(PersonalClassroom)}
           options={{tabBarLabel: "Classrooms"}}
         />
       </Tab.Navigator>

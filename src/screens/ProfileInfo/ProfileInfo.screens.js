@@ -28,47 +28,47 @@ export default class Profile extends Component {
     };
     this.props.onFetchUser({id: this.props.id, token: this.props.token});
 
-    this.blogDetailModal = null;
+    // this.blogDetailModal = null;
 
-    this.setBlogDetailModalRef = (element) => {
-      this.blogDetailModal = element;
-    };
+    // this.setBlogDetailModalRef = (element) => {
+    //   this.blogDetailModal = element;
+    // };
 
-    this.questionDetailModal = null;
+    // this.questionDetailModal = null;
 
-    this.setQuestionDetailModalRef = (element) => {
-      this.questionDetailModal = element;
-    };
+    // this.setQuestionDetailModalRef = (element) => {
+    //   this.questionDetailModal = element;
+    // };
 
-    this.blogFormEditModal = null;
+    // this.blogFormEditModal = null;
 
-    this.setBlogFormEditModalRef = (element) => {
-      this.blogFormEditModal = element;
-    };
+    // this.setBlogFormEditModalRef = (element) => {
+    //   this.blogFormEditModal = element;
+    // };
 
-    this.optionModal = null;
+    // this.optionModal = null;
 
-    this.setOptionModalRef = (element) => {
-      this.optionModal = element;
-    };
+    // this.setOptionModalRef = (element) => {
+    //   this.optionModal = element;
+    // };
 
-    this.questionFormEditModal = null;
+    // this.questionFormEditModal = null;
 
-    this.setQuestionFormEditModalRef = (element) => {
-      this.questionFormEditModal = element;
-    };
+    // this.setQuestionFormEditModalRef = (element) => {
+    //   this.questionFormEditModal = element;
+    // };
 
-    //this.classDetailModal = null;
+    // //this.classDetailModal = null;
 
-    this.setClassDetailModalRef = (element) => {
-      //console.log("class detail", element);
-      //this.classDetailModal = element;
-      this.setState({classDetailModal: element});
-    };
+    // this.setClassDetailModalRef = (element) => {
+    //   //console.log("class detail", element);
+    //   //this.classDetailModal = element;
+    //   this.setState({classDetailModal: element});
+    // };
   }
 
   render() {
-    //console.log("profile screen");
+    console.log("profile screen", this.props);
     if (!this.props.data) return <></>;
 
     // this.props.onGetOptionModal(
@@ -121,13 +121,16 @@ export default class Profile extends Component {
 
         <TabView
           style={{marginVertical: 5}}
-          showBlogDetailModal={this.blogDetailModal?.showBlogDetailModal}
+          showBlogDetailModal={this.props.showBlogDetailModal}
           showQuestionDetailModal={
-            this.questionDetailModal?.showQuestionDetailModal
+            this.props.showQuestionDetailModal
+          }
+          showClassDetailModal={
+            this.props.showClassDetailModal
           }
           UserID = {id}></TabView>
 
-        <BlogDetailModal ref={this.setBlogDetailModalRef}></BlogDetailModal>
+        {/* <BlogDetailModal ref={this.setBlogDetailModalRef}></BlogDetailModal>
         <BlogFormEditModal
           ref={this.setBlogFormEditModalRef}></BlogFormEditModal>
         <OptionModal
@@ -146,14 +149,14 @@ export default class Profile extends Component {
           ref={this.setQuestionDetailModalRef}></QuestionDetailModal>
         <QuestionFormEditModal
           ref={this.setQuestionFormEditModalRef}></QuestionFormEditModal>
-        <ClassDetailModal ref={this.setClassDetailModalRef}></ClassDetailModal>
+        <ClassDetailModal ref={this.setClassDetailModalRef}></ClassDetailModal> */}
         {/* {console.log(
           "this.state.classDetailModal: ",
           this.state.classDetailModal,
         )} */}
         {this.state.classDetailModal
           ? this.props.onOpenClassDetail(
-              this.state.classDetailModal.showClassDetailModal,
+              this.props.showClassDetailModal,
             )
           : () => {}}
       </SafeAreaView>

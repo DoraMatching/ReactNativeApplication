@@ -6,8 +6,20 @@ import CloseOutline from "../../images/close-outline.svg";
 
 import ProfileInfo from "./ProfileInfo.container";
 
+import BlogDetailModal from "../BlogDetail/BlogDetail.modals";
+
+import BlogFormEditModal from "../BlogFormEdit/BlogFormEdit.modals";
+
+import OptionModal from "../../helpers/optionModal";
+
+import QuestionFormEditModal from "../QuestionFormEdit/QuestionFormEdit.modals";
+
+import QuestionDetailModal from "../QuestionDetail/QuestionDetail.modals";
+
+import ClassDetailModal from "../ClassDetail/ClassDetail.modals";
+
 var screen = Dimensions.get("window");
-export default class BlogDetailModal extends Component {
+export default class ProfileInfoModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -17,6 +29,44 @@ export default class BlogDetailModal extends Component {
 
     this.setProfileInfoModalRef = (element) => {
       this.profileInfoModal = element;
+    };
+
+    this.blogDetailModal = null;
+
+    this.setBlogDetailModalRef = (element) => {
+      this.blogDetailModal = element;
+    };
+
+    this.questionDetailModal = null;
+
+    this.setQuestionDetailModalRef = (element) => {
+      this.questionDetailModal = element;
+    };
+
+    this.blogFormEditModal = null;
+
+    this.setBlogFormEditModalRef = (element) => {
+      this.blogFormEditModal = element;
+    };
+
+    this.optionModal = null;
+
+    this.setOptionModalRef = (element) => {
+      this.optionModal = element;
+    };
+
+    this.questionFormEditModal = null;
+
+    this.setQuestionFormEditModalRef = (element) => {
+      this.questionFormEditModal = element;
+    };
+
+    //this.classDetailModal = null;
+
+    this.setClassDetailModalRef = (element) => {
+      //console.log("class detail", element);
+      //this.classDetailModal = element;
+      this.setState({classDetailModal: element});
     };
   }
   id;
@@ -42,7 +92,31 @@ export default class BlogDetailModal extends Component {
         onOpened={this.onOpen}
         isOpen={this.state.isOpen}>
         <View style={{flexDirection: "column", flex: 1, marginBottom: 5}}>
-          <ProfileInfo id={this.id}></ProfileInfo>
+        <BlogDetailModal ref={this.setBlogDetailModalRef}></BlogDetailModal>
+        <BlogFormEditModal
+          ref={this.setBlogFormEditModalRef}></BlogFormEditModal>
+        <OptionModal
+          ref={this.setOptionModalRef}
+          onOpenBlogEditForm={
+            this.blogFormEditModal
+              ? this.blogFormEditModal.showBlogFormEditModal
+              : () => {}
+          }
+          onOpenQuestionEditForm={
+            this.questionFormEditModal
+              ? this.questionFormEditModal.showQuestionFormEditModal
+              : () => {}
+          }></OptionModal>
+        <QuestionDetailModal
+          ref={this.setQuestionDetailModalRef}></QuestionDetailModal>
+        <QuestionFormEditModal
+          ref={this.setQuestionFormEditModalRef}></QuestionFormEditModal>
+        <ClassDetailModal ref={this.setClassDetailModalRef}></ClassDetailModal>
+          <ProfileInfo id={this.id}
+          showQuestionDetailModal = {this.questionDetailModal?.showQuestionDetailModal}
+          showBlogDetailModal={this.blogDetailModal?.showBlogDetailModal}
+          showClassDetailModal={this.state.classDetailModal?.showClassDetailModal}
+          ></ProfileInfo>
           <View
             style={{
               flexDirection: "row",

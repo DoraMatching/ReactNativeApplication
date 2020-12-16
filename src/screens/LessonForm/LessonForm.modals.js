@@ -22,37 +22,31 @@ import CloseOutline from "../../images/close-outline.svg";
 
 
 
-import ClassDetail from './ClassDetail.screens';
-import LessonFormModal from "../LessonForm/LessonForm.modals";
+
+
+import LessonForm from './LessonForm.screens';
 
 var screen = Dimensions.get("window");
-export default class ClassDetailModal extends Component {
+export default class LessonFormModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLiked: false,
+      next: false,
       isOpen: false,
     };
-    this.ClassDetailModal = null;
-
-    this.setClassDetailModalRef = (element) => {
-      this.ClassDetailModal = element;
-    };
-    
-    this.lessonFormModal = null;
+    this.LessonFormModal = null;
 
     this.setLessonFormModalRef = (element) => {
-      this.lessonFormModal = element;
+      this.LessonFormModal = element;
     };
+    
     //this.props.navigation.setOptions({tabBarVisible : false});
   }
   
-  id;
-
-  showClassDetailModal = (id) => {
-    this.id = id;
+  classID;
+  showLessonFormModal = (classID) => {
     //console.log("blog detail modal", item);
-    
+    this.classID = classID;
     //this.blogDetailModal.open();
     this.setState({isOpen: true});
     //console.log("blog detail modal tags", this.tags);
@@ -75,7 +69,7 @@ export default class ClassDetailModal extends Component {
     return (
       
       <Modal
-        ref={this.setClassDetailModalRef}
+        ref={this.setLessonFormModalRef}
         swipeToClose={false}
         backButtonClose={true}
         onClosed={this.onClose}
@@ -83,8 +77,8 @@ export default class ClassDetailModal extends Component {
         isOpen={this.state.isOpen}>
           <SafeAreaView style={{flex: 1, justifyContent: "flex-end"}}>
           <View style={{flexDirection: "column", flex: 1,marginBottom: 5}}>
-          <LessonFormModal ref={this.setLessonFormModalRef}></LessonFormModal>
-          <ClassDetail onClose={this.onClose} id={this.id} showLessonFormModal={this.lessonFormModal?.showLessonFormModal}></ClassDetail>
+        
+        <LessonForm setNext={null} onClose={null} classID={this.classID}></LessonForm>
           <View
               style={{
                 flexDirection: "row",

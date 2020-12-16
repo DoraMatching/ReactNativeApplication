@@ -59,4 +59,19 @@ const deleteLessonFromAPI = ({id, token}) => {
     });
 }
 
-export {postLessonFromAPI, patchLessonFromAPI, deleteLessonFromAPI};
+const getLessonFromAPI = ({id, token, query}) => {
+  return request
+    .get(`classe/${id}/lessons?${query}`,{
+      headers: {
+        'Authorization': `Bearer ${token}` 
+      }
+    })
+    .then((res) => {
+      return res;
+    })
+    .catch((error) => {
+      return error.response.data;
+    });
+}
+
+export {postLessonFromAPI, patchLessonFromAPI, deleteLessonFromAPI, getLessonFromAPI};

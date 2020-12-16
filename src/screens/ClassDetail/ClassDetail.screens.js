@@ -7,7 +7,7 @@ import {
   Dimensions,
   ScrollView,
   Alert,
-  Pressable
+  Pressable,
 } from "react-native";
 
 import ScaledImage from "../../components/ScaledImage";
@@ -23,8 +23,14 @@ import actions from "./ClassDetail.actions";
 import Button from "react-native-button";
 
 import moment from "moment";
+
+
 var screen = Dimensions.get("window");
 export class ClassDetail extends Component {
+  constructor(props){
+    super(props);
+   
+  }
   componentWillMount() {
     this.props.onFetchClassDetail({id: this.props.id, token: this.props.token});
   }
@@ -65,9 +71,15 @@ export class ClassDetail extends Component {
     );
   }
   render() {
+    if (this.props.isEdited && this.props.isEdited.success){
+      console.log("l75", "ok");
+      
+      this.props.onFetchClassDetail({id: this.props.id, token: this.props.token});
+    } 
     console.log("class detail", this.props.data);
     if (!this.props.data) return <></>;
     const {
+      id,
       name,
       featuredImage,
       duration,
@@ -82,22 +94,23 @@ export class ClassDetail extends Component {
     return (
       <ScrollView>
         <View style={styles.container}>
+        
           <Pressable onPress={() => this.alert(trainer)}>
-          <Image
-            style={{
-              width: 60,
-              height: 60,
-              borderRadius: 1000,
+            <Image
+              style={{
+                width: 60,
+                height: 60,
+                borderRadius: 1000,
 
-              borderColor: "#c4c4c4",
-              borderWidth: 0.5,
-              alignSelf: "flex-end",
-            }}
-            resizeMode="cover"
-            source={{
-              uri: trainer.user.avatarUrl,
-            }}
-          />
+                borderColor: "#c4c4c4",
+                borderWidth: 0.5,
+                alignSelf: "flex-end",
+              }}
+              resizeMode="cover"
+              source={{
+                uri: trainer.user.avatarUrl,
+              }}
+            />
           </Pressable>
           <Text style={styles.topic}>{topic.name}</Text>
           <Text style={styles.className}>{name}</Text>
@@ -125,46 +138,55 @@ export class ClassDetail extends Component {
             <Text style={styles.title}>End time: </Text>
             {moment(endTime).format("MMMM Do YYYY, h:mm:ss a")}
           </Text>
-          {members.map((item) => item.user.id).indexOf(this.props.userID) ===
-          -1 ? (
-            <Button
-              style={styles.buttonContent}
-              containerStyle={[styles.button]}
-              onPress={() =>
-                this.props.onFetchClassRegister({
-                  id: this.props.id,
-                  token: this.props.token,
-                })
-              }>
-              JOIN NOW
-            </Button>
-          ) : (
+          {trainer.user.id != this.props.userID &&
+            (members.map((item) => item.user.id).indexOf(this.props.userID) ===
+            -1 ? (
+              <Button
+                style={styles.buttonContent}
+                containerStyle={[styles.button]}
+                onPress={() =>
+                  this.props.onFetchClassRegister({
+                    id: this.props.id,
+                    token: this.props.token,
+                  })
+                }>
+                JOIN NOW
+              </Button>
+            ) : (
+              <Button
+                style={styles.buttonContent}
+                containerStyle={styles.button}
+                onPress={() => this.onLeaveClass()}>
+                LEAVE THE CLASS
+              </Button>
+            ))}
+          {trainer.user.id === this.props.userID && (
             <Button
               style={styles.buttonContent}
               containerStyle={styles.button}
-              onPress={() => this.onLeaveClass()}>
-              LEAVE THE CLASS
+              onPress={() => this.props.showLessonFormModal(id)}>
+              DESIGN YOUR LESSONS
             </Button>
           )}
           <Text style={styles.label}>Members</Text>
           <View style={styles.member}>
             {members?.map((item) => (
               <Pressable onPress={() => this.alert(item)}>
-              <Image
-                style={{
-                  width: 40,
-                  height: 40,
-                  borderRadius: 1000,
-                  margin: 5,
-                  borderColor: "#c4c4c4",
-                  borderWidth: 0.5,
-                  //alignSelf: "flex-end",
-                }}
-                resizeMode="cover"
-                source={{
-                  uri: item.user.avatarUrl,
-                }}
-              />
+                <Image
+                  style={{
+                    width: 40,
+                    height: 40,
+                    borderRadius: 1000,
+                    margin: 5,
+                    borderColor: "#c4c4c4",
+                    borderWidth: 0.5,
+                    //alignSelf: "flex-end",
+                  }}
+                  resizeMode="cover"
+                  source={{
+                    uri: item.user.avatarUrl,
+                  }}
+                />
               </Pressable>
             ))}
           </View>
@@ -236,6 +258,7 @@ const mapStateToProps = (state) => ({
   registerResponse: state.ClassRegisterReducer,
   token: state.UserLoginReducer ? state.UserLoginReducer.token : "",
   userID: state.UserLoginReducer ? state.UserLoginReducer.id : "",
+  isEdited: state.LessonFormReducer,
 });
 
 const mapDispatchToProps = (dispatch) => {

@@ -1,6 +1,6 @@
 import {takeLatest, put, fork, all} from "redux-saga/effects";
 import actions from "./LessonForm.actions";
-import {postLessonFromAPI, patchLessonFromAPI, deleteLessonFromAPI} from '../../services/LessonForm';
+import {postLessonFromAPI, patchLessonFromAPI, deleteLessonFromAPI, getLessonFromAPI} from '../../services/LessonForm';
 
 function* createLesson(action) {
     try {
@@ -46,6 +46,20 @@ function* deleteLesson(action) {
   }
 }
 
+function* fetchLesson(action) {
+  try {
+    const res = yield getLessonFromAPI(action.params);
+    console.log('getLesson.saga,js res: ', res);
+    if (res.status === 200) {
+      yield put({type: actions.GET_LESSON_SUCCEEDED, data: res.data});
+    } else {
+      yield put({type: actions.GET_LESSON_FAILED, error: res.message});
+    }
+  } catch (error) {
+    yield put({type: actions.GET_LESSON_FAILED, error: "Please try again!"});
+  }
+}
+
 function* watchCreateLesson() {
     yield takeLatest(actions.POST_LESSON, createLesson);
 }
@@ -58,6 +72,9 @@ function* watchDeleteLesson() {
   yield takeLatest(actions.DELETE_LESSON, deleteLesson);
 }
 
+function* watchFetchLesson() {
+  yield takeLatest(actions.GET_LESSON, fetchLesson);
+}
 export default function* rootSaga() {
-    yield all([fork(watchCreateLesson), fork(watcheEditLesson), fork(watchDeleteLesson)]);
+    yield all([fork(watchCreateLesson), fork(watcheEditLesson), fork(watchDeleteLesson), fork(watchFetchLesson)]);
   }

@@ -15,6 +15,10 @@ const Actions = {
   DELETE_LESSON_SUCCEEDED: "DELETE_LESSON_SUCCEEDED",
   DELETE_LESSON_FAILED: "DELETE_LESSON_FAILED",
 
+  GET_LESSON: "GET_LESSON",
+  GET_LESSON_SUCCEEDED: "GET_LESSON_SUCCEEDED",
+  GET_LESSON_FAILED: "GET_LESSON_FAILED",
+
   addLessonAction: (item) => {
     return {
       type: Actions.ADD_LESSON,
@@ -87,6 +91,26 @@ const Actions = {
   patchLessonFailedAction: (error) => {
     return {
       type: Actions.PATCH_LESSON_FAILED,
+      error,
+    };
+  },
+
+  getLessonAction: (params) => {
+    return {
+      type: Actions.GET_LESSON,
+      params,
+    };
+  },
+  getLessonSuccessAction: (data) => {
+    return {
+      type: Actions.GET_LESSON_SUCCEEDED,
+      data,
+    };
+  },
+
+  getLessonFailedAction: (error) => {
+    return {
+      type: Actions.GET_LESSON_FAILED,
       error,
     };
   },

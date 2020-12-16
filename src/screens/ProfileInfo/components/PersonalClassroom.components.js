@@ -16,7 +16,7 @@ export class PersonalClassroom extends Component {
       id: this.props.UserID,
       token: this.props.token,
     });
-    console.log("l19", this.props.profile);
+    console.log("l19", this.props);
     
   }
   // componentWillMount() {
@@ -53,7 +53,7 @@ export class PersonalClassroom extends Component {
   };
   render() {
     //console.log("render", this.props.dataItem);
-    if (!this.props.classDetailModal) return <></>;
+    //if (!this.props.classDetailModal) return <></>;
     if (!this.props.data || this.props.data.items.length == 0)
       return (
         <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
@@ -61,7 +61,9 @@ export class PersonalClassroom extends Component {
         </View>
       );
     return (
+      
       <View style={{flex: 1}}>
+        
         <FlatList
           style={{
             marginVertical: 5,
@@ -75,7 +77,7 @@ export class PersonalClassroom extends Component {
             const token = this.props.token;
             //console.log("flatlist", item);
             return (
-              <Pressable onPress={() => this.props.classDetailModal(item.id)}>
+              <Pressable onPress={() => this.props.showClassDetailModal(item.id)}>
                 <ListItemClassSearch
                   {...{
                     token,

@@ -94,6 +94,7 @@ export default class Profile extends Component {
       roles,
       posts,
       questions,
+      id,
     } = this.props.data;
 
     return (
@@ -163,6 +164,8 @@ export default class Profile extends Component {
             this.questionDetailModal?.showQuestionDetailModal
           }
           showClassDetailModal={this.classDetailModal?.showClassDetailModal}
+          UserRoles={this.props.roles}
+          UserID = {id}
           ></TabView>
 
         <FloatingButtonAction />

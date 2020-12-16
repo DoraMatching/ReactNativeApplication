@@ -1,86 +1,123 @@
-// import React, {Component} from "react";
-// import {View, Text, FlatList} from "react-native";
-// import BlogItem from "../../../components/ListItemBlogTop";
-// import PropTypes from "prop-types";
-// import {connect} from "react-redux";
+import React, {Component} from "react";
+import {View, Text, FlatList, Pressable} from "react-native";
+import PropTypes from "prop-types";
+import {connect} from "react-redux";
+import actions from "../../ProfileInfo/ProfileInfo.actions";
+import ListItemClassSearch from "../../../components/ListItemClassSearch";
 
+export class PersonalClassroom extends Component {
+  constructor(props) {
+    super(props);
 
-// import ProfileAction from '../Profile.actions';
+    this.state = {
+      isLoading: false,
+    };
+    this.props.onFetchNewUserClassroom({
+      id: this.props.UserID,
+      token: this.props.token,
+    });
+    console.log("l19", this.props);
+    
+  }
+  // componentWillMount() {
+  //   //console.log("componentWillMount is called");
+  //   this.props.onFetchNewUserClassroom({
+  //     id: this.props.userID,
+  //     token: this.props.token,
+  //   });
+  // }
+  // componentWillReceiveProps(nextProps) {
+  //   console.log("l28", nextProps);
+    
+  //   if (this.props.userID != nextProps.userID)
+  //     this.props.onFetchNewUserClassroom({
+  //       id: this.props.userID,
+  //       token: this.props.token,
+  //     });
+  // }
+  refreshData = () => {
+    this.setState({isLoading: true});
+    const {url} = this.state;
+    this.props.onRefreshData({url});
+    this.setState({isLoading: false});
+  };
 
-// class PersonalBlog extends Component {
-//   constructor(props) {
-//     super(props);
+  retrieveMore = () => {
+    // console.log("QuestionSearch in RetrieveMore", this.props.data);
+    // console.log("retrieveMore is called");
+    let url = this.props.data.links.next;
+    if (url === "") {
+      return;
+    }
+    this.props.onFetchMoreUserClassroom({url, token: this.props.token});
+  };
+  render() {
+    //console.log("render", this.props.dataItem);
+   if (!this.props.showClassDetailModal) return <></>;
+    if (!this.props.data || this.props.data.items.length == 0)
+      return (
+        <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
+          <Text> No classroom </Text>
+        </View>
+      );
+    return (
+      <View style={{flex: 1}}>
+        <FlatList
+          style={{
+            marginVertical: 5,
+            //backgroundColor: "white",
+          }}
+          onRefresh={this.refreshData}
+          refreshing={this.state.isLoading}
+          data={this.props.dataItem}
+          renderItem={({item, index}) => {
+            const userID = this.props.userID;
+            const token = this.props.token;
+            //console.log("flatlist", item);
+            return (
+              <Pressable onPress={() => this.props.showClassDetailModal(item.id)}>
+                <ListItemClassSearch
+                  {...{
+                    token,
+                    userID,
+                    //showOptionModal: this.props.showOptionModal
+                    // ,
+                    item,
+                  }}></ListItemClassSearch>
+              </Pressable>
+            );
+          }}
+          keyExtractor={(item, index) => item.id}
+          onEndReached={this.retrieveMore}></FlatList>
+      </View>
+    );
+  }
+}
 
-//     this.state = {
-//       isLoading: false,
-//     };
+const mapStateToProps = (state) => ({
+  data: state.ProfileInfoClassroomReducer,
+  dataItem: state.ProfileInfoClassroomItemReducer,
+  token: !state.UserLoginReducer ? "" : state.UserLoginReducer.token,
+ 
+  //classDetailModal: state.ClassDetailModal,
+  profile : state.ProfileInfoReducer,
+});
 
-   
-//   }
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onFetchUserClassroom: (params) => {
+      dispatch(actions.getProfileClassroomAction(params));
+    },
+    onFetchNewUserClassroom: (params) => {
+      dispatch(actions.getProfileClassroomNewAction(params));
+    },
+    onFetchMoreUserClassroom: (params) => {
+      dispatch(actions.getMoreProfileClassroomAction(params));
+    },
+    onRefreshData: (params) => {
+      dispatch(actions.getRefreshDataAction(params));
+    },
+  };
+};
 
-//   refreshData = () => {
-//     this.setState({isLoading: true});
-//     const {url} = this.state;
-//     this.props.onFetchUser({id : this.props.userID, token : this.props.token});
-//     this.setState({isLoading: false});
-//   };
-
-//   render() {
-//     //console.log("myblog: ", this.props.blogs);
-//     if (this.props.blogs.length == 0)
-//       return (
-//         <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
-//           <Text> No blog </Text>
-//         </View>
-//       );
-//     return (
-//       <View style={{flex: 1}}>
-//         <FlatList
-//           style={{
-//             marginVertical: 5,
-//             //backgroundColor: "white",
-//           }}
-//           onRefresh={this.refreshData}
-//           refreshing={this.state.isLoading}
-//           data={this.props.blogs}
-//           renderItem={({item, index}) => {
-//             //if (!this.optionModal) this.refreshData();
-//             const userID = this.props.userID;
-//             const token = this.props.token;
-
-//             return (
-//               <BlogItem
-//                 {...{
-//                   token,
-//                   userID,
-//                   author : {id : userID},
-//                   showOptionModal: this.props.showOptionModal
-//                     ,
-//                   ...item,
-//                 }}></BlogItem>
-//             );
-//           }}
-//           keyExtractor={(item, index) => item.name}></FlatList>
-
-        
-//       </View>
-//     );
-//   }
-// }
-
-// const mapStateToProps = (state) => ({
-//   blogs: state.PersonalBlogReducer,
-//   userID: !state.UserLoginReducer ? "" : state.UserLoginReducer.id,
-//   token: !state.UserLoginReducer ? "" : state.UserLoginReducer.token,
-//   showOptionModal: state.OptionModal,
-// });
-
-// const mapDispatchToProps = (dispatch) => {
-//     return {
-//       onFetchUser: (params) => {
-//         dispatch(ProfileAction.getProfileAction(params));
-//       },
-//     };
-// }
-
-// export default connect(mapStateToProps, mapDispatchToProps)(PersonalBlog);
+export default connect(mapStateToProps, mapDispatchToProps)(PersonalClassroom);

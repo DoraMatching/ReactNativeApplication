@@ -17,6 +17,9 @@ const LessonReducer = (data = [], action) => {
     case Actions.DELETE_LESSON_SUCCEEDED:
       return data.filter((item) => item.id !== action.id);
 
+    case Actions.GET_LESSON_SUCCEEDED:
+      return action.data.items;
+
     default:
       return data;
   }

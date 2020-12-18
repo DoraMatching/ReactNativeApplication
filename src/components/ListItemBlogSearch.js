@@ -130,7 +130,7 @@ export default class ListItemBlogSearch extends Component {
               style={{width: 20, height: 20, marginEnd: 2}}
               source={require("../images/UnlikedIcon.png")}
             />
-            <Text style={{fontSize: 13, paddingTop: 5}}>250000</Text>
+            <Text style={{fontSize: 13, paddingTop: 5}}>0</Text>
           </View>
           <View style={{...styles.horizontalLayout, marginTop: 5, flex: 50}}>
             <Image

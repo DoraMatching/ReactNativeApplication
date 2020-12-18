@@ -48,7 +48,7 @@ export default class ListItemClassSearch extends Component {
           {topic && <TagListItem item={topic} />}
           </View>
           <Text style={styles.description} numberOfLines={2}>{description}</Text>
-          <Text><Text style={styles.description}>Duration:</Text> {duration}</Text>
+          <Text><Text style={styles.description}>Duration:</Text> {duration} hours</Text>
           
         </View>
 

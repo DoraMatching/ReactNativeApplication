@@ -82,7 +82,7 @@ export default class ListItemQuestionTop extends Component {
             </View>
           </View>
 
-          <View
+          {/* <View
             style={{
               ...styles.horizontalLayout,
               justifyContent: "space-between",
@@ -110,7 +110,8 @@ export default class ListItemQuestionTop extends Component {
                 2500
               </Text>
             </View>
-          </View>
+          </View> */}
+
         </View>
        
         <View>

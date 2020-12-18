@@ -125,7 +125,7 @@ export default class ListItemBlog extends Component {
                 style={{width: 25, height: 25, marginEnd: 2}}
                 source={imgSrc}
               />
-              <Text style={{fontSize: 13, paddingTop: 5}}>25 likes</Text>
+              <Text style={{fontSize: 13, paddingTop: 5}}>0 likes</Text>
             </TouchableOpacity>
             <View style={{...styles.horizontalLayout, marginTop: 5}}>
               <Image

@@ -76,7 +76,7 @@ export default class ListItemBlogTop extends Component {
             </View>
           </View>
 
-          <View
+          {/* <View
             style={{
               ...styles.horizontalLayout,
               justifyContent: "space-between",
@@ -104,7 +104,7 @@ export default class ListItemBlogTop extends Component {
                 2500
               </Text>
             </View>
-          </View>
+          </View> */}
         </View>
         <View>
             { this.props.author && this.props.userID === this.props.author.id ? (

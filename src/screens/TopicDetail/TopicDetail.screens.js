@@ -37,6 +37,8 @@ export class TopicDetail extends Component {
   render() {
     if (!this.props.data) return <></>;
     const {featuredImage, name, description, classes} = this.props.data;
+    console.log("l40: ", featuredImage);
+    
     return (
       <View style={styles.layoutContainer}>
         <StatusBar backgroundColor={"#ECD5BB"} />
@@ -45,8 +47,7 @@ export class TopicDetail extends Component {
             <ScaledImage
               {...{
                 uri: featuredImage,
-                width:
-                  screen.width - styles.titleContainer.paddingHorizontal * 2,
+                width: screen.width - styles.titleContainer.paddingHorizontal * 2,
                 ...styles.featuredImage,
               }}
             />

@@ -19,6 +19,7 @@ function TabView(props) {
     UserID,
     UserRoles,
   } = props;
+  const canScroll = UserRoles.indexOf("TRAINER") !== -1;
   return (
     //<NavigationContainer>
     <Tab.Navigator
@@ -28,7 +29,7 @@ function TabView(props) {
         labelStyle: {fontSize: 12, fontWeight: "bold"},
         //style: {backgroundColor: "powderblue"},
         indicatorStyle: {backgroundColor: colors.primary},
-        scrollEnabled: true,
+        scrollEnabled: canScroll,
       }}>
       <Tab.Screen
         name="MyBlog"

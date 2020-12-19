@@ -29,6 +29,8 @@ const BlogInput = (props) => {
     onEndEditing,
     ...rest
   } = props;
+  console.log("l32", rest);
+  
   return (
     <>
       <Text style={{color: "red", ...styles.errorText}}>
@@ -40,6 +42,7 @@ const BlogInput = (props) => {
         onEndEditing={() => (onEndEditing ? onEndEditing(value) : () => {})}
         {...input}
         {...rest}
+       
         returnKeyType="next"
         autoCorrect={false}></TextInput>
     </>

@@ -132,11 +132,11 @@ export class ClassDetail extends Component {
           </Text>
           <Text>
             <Text style={styles.title}>Start time: </Text>
-            {moment(startTime).format("MMMM Do YYYY, h:mm:ss a")}
+            {moment(startTime).format("MMMM Do YYYY, hh:mm a")}
           </Text>
           <Text style={{marginBottom: 5}}>
             <Text style={styles.title}>End time: </Text>
-            {moment(endTime).format("MMMM Do YYYY, h:mm:ss a")}
+            {moment(endTime).format("MMMM Do YYYY, hh:mm a")}
           </Text>
           {trainer.user.id != this.props.userID &&
             (members.map((item) => item.user.id).indexOf(this.props.userID) ===

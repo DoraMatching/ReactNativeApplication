@@ -29,7 +29,7 @@ export default class Accordion extends Component {
     if (this.props.data.action === "create") this.setState({expanded: true});
   }
   render() {
-    const {id, name, duration, startTime, action} = this.props.data;
+    const {id, name, duration, startTime, action, ClassID} = this.props.data;
 
     return (
       <View>
@@ -68,6 +68,7 @@ export default class Accordion extends Component {
               duration={duration}
               id={id}
               startTime={startTime}
+              ClassID={ClassID}
               toggleExpand={this.toggleExpand}></Lesson>
           </View>
         )}

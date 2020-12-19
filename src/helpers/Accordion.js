@@ -51,7 +51,7 @@ export default class Accordion extends Component {
             </Text>
             <Text>
               <Text style={styles.label}>Start time : </Text>
-              {moment(this.props.data.startTime).format('MMMM Do YYYY, h:mm:ss a')}
+              {moment(this.props.data.startTime).format('MMMM Do YYYY, hh:mm a')}
             </Text>
           </View>
         )}

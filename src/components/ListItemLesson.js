@@ -44,7 +44,7 @@ const MyDateTimePicker = (props) => {
   console.log("class in lesson form: ", props.class);
   return (
     <View style={[styles.dateTimePicker, props.style]}>
-      <Button style={styles.button} onPress={showDatepicker}>
+      <Button style={[styles.button, {marginLeft: 0}]} onPress={showDatepicker}>
         Pick date
       </Button>
       <Button style={styles.button} onPress={showTimepicker}>
@@ -73,9 +73,12 @@ const ListItemLesson = (props) => {
   );
   const [date, setDate] = useState(!props.startTime ? null : props.startTime);
   const {action, id} = props;
-  if (props.data.success !=  null && props.data.success == false){
+  console.log("l76", props.data);
+  
+  if (props.data.success != null && props.data.success == false) {
     console.log("inside if block");
     alert(props.data.message);
+    props.onDeleteErrorMessage();
   }
   return (
     <Pressable style={styles.textInputContainer}>
@@ -118,11 +121,11 @@ const ListItemLesson = (props) => {
         style={styles.textInput}
         editable={false}
         onChangeText={setDate}
-        value={moment(date).format("MMM Do YYYY, h:mm:ss a")}
+        value={moment(date).format("MMM Do YYYY, hh:mm a")}
         returnKeyType="next"
         autoCorrect={false}></TextInput>
 
-        <MyDateTimePicker setDateTime={setDate}/>
+      <MyDateTimePicker setDateTime={setDate} />
 
       <View
         style={{
@@ -134,7 +137,13 @@ const ListItemLesson = (props) => {
           <Button
             style={styles.button}
             onPress={() => {
-              props.onPostLesson({name : title, duration, startTime : date, token: props.token, id : props.classID});
+              props.onPostLesson({
+                name: title,
+                duration,
+                startTime: date,
+                token: props.token,
+                id: props.classID ? props.classID : props.ClassID,
+              });
               //props.onCreateLesson({id: uuid(), title, duration, timeStart : date});
             }}>
             Create
@@ -146,8 +155,14 @@ const ListItemLesson = (props) => {
           <Button
             style={styles.button}
             onPress={() => {
-              props.onPatchLesson({name : title, duration, startTime : date, token: props.token, id : props.id});
-             // props.onEditLesson({id, title, duration, timeStart : date});
+              props.onPatchLesson({
+                name: title,
+                duration,
+                startTime: date,
+                token: props.token,
+                id: props.id,
+              });
+              // props.onEditLesson({id, title, duration, timeStart : date});
               props.toggleExpand();
             }}>
             Change
@@ -218,10 +233,13 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = (state) => ({
-  token : state.UserLoginReducer? state.UserLoginReducer.token : "",
-  classID : state.ClassFormReducer.success == true ? state.ClassFormReducer.message.id : "",
-  class : state.ClassFormReducer,
-  data : state.LessonFormReducer,
+  token: state.UserLoginReducer ? state.UserLoginReducer.token : "",
+  classID:
+    state.ClassFormReducer.success == true
+      ? state.ClassFormReducer.message.id
+      : "",
+  class: state.ClassFormReducer,
+  data: state.LessonFormReducer,
 });
 
 const mapDispatchToProps = (dispatch) => {
@@ -240,6 +258,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     onDeleteLesson: (item) => {
       dispatch(actions.deleteLessonAction(item));
+    },
+    onDeleteErrorMessage: () => {
+      dispatch(actions.deleteErrorMessage());
     },
   };
 };

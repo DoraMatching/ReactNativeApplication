@@ -19,6 +19,14 @@ const Actions = {
   GET_LESSON_SUCCEEDED: "GET_LESSON_SUCCEEDED",
   GET_LESSON_FAILED: "GET_LESSON_FAILED",
 
+  DELETE_ERROR_MESSAGE: "DELETE_ERROR_MESSAGE",
+
+  deleteErrorMessage: () => {
+    return {
+      type : Actions.DELETE_ERROR_MESSAGE,
+    }
+  },
+
   addLessonAction: (item) => {
     return {
       type: Actions.ADD_LESSON,

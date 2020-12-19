@@ -40,6 +40,7 @@ class LessonForm extends Component {
             <LessonAccordion
               data={{
                 //title: "create",
+                ClassID : this.props.classID,
                 action: "create",
               }}></LessonAccordion>
           )}

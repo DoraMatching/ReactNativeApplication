@@ -1,10 +1,12 @@
 import {authorize} from "react-native-app-auth";
 import request from "../helpers/request";
+import Config from "react-native-config";
+console.log("l4", Config);
 
 const config = {
   redirectUrl: "com.myapp://oauthredirect",
-  clientId: "7ec60ee9b1e0e9fee1a2",
-  clientSecret: "6b91ea3f7286b575adb5491f5c1a721ed418a4ac",
+  clientId: Config.GITHUB_CLIENT_ID,
+  clientSecret: Config.GITHUB_CLIENT_SECRET,
   scopes: ["user", "repo"],
   serviceConfiguration: {
     authorizationEndpoint: "https://github.com/login/oauth/authorize",

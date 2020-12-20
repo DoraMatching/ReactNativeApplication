@@ -143,7 +143,7 @@ export default class Schedule extends Component {
   render() {
     //console.log("schedule", this.events);
     // console.log("props in schedule", this.props);
-    const alert = ({id, title, summary, start, end}) =>{
+    const alert = ({id, title, summary, start, end, role}) =>{
       this.props.onFetchLessonDetail({id, token : this.props.token});
       //console.log("l149", this.props.lesson);
       //while (!this.props.lesson) {};
@@ -152,7 +152,8 @@ export default class Schedule extends Component {
       
       Alert.alert(
         title,
-        `Start time : ${moment(start).format(
+        `Your lesson to ${role == "trainer" ? "teach" : "learn"}:
+        \nStart time : ${moment(start).format(
           "MMM Do YYYY, hh:mm a",
         )} \nEnd time : ${moment(end).format(
           "MMM Do YYYY, hh:mm a",

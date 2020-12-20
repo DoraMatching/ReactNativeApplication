@@ -41,4 +41,16 @@ const LessonFormReducer = (data = {success: null, message: null}, action) => {
   }
 };
 
-export {LessonReducer, LessonFormReducer};
+const LessonDetailReducer = (data = {}, action) => {
+  switch (action.type) {
+    
+
+    case Actions.FETCH_LESSON_DETAIL_SUCCEEDED:
+      return action.data;
+
+    default:
+      return data;
+  }
+};
+
+export {LessonReducer, LessonFormReducer, LessonDetailReducer};

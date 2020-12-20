@@ -21,6 +21,10 @@ const Actions = {
 
   DELETE_ERROR_MESSAGE: "DELETE_ERROR_MESSAGE",
 
+  FETCH_LESSON_DETAIL : "FETCH_LESSON_DETAIL",
+  FETCH_LESSON_DETAIL_SUCCEEDED : "FETCH_LESSON_DETAIL_SUCCEEDED",
+  FETCH_LESSON_DETAIL_FAILED : "FETCH_LESSON_DETAIL_FAILED",
+
   deleteErrorMessage: () => {
     return {
       type : Actions.DELETE_ERROR_MESSAGE,
@@ -119,6 +123,26 @@ const Actions = {
   getLessonFailedAction: (error) => {
     return {
       type: Actions.GET_LESSON_FAILED,
+      error,
+    };
+  },
+
+  getLessonDetailAction: (params) => {
+    return {
+      type: Actions.FETCH_LESSON_DETAIL,
+      params,
+    };
+  },
+  getLessonDetailSuccessAction: (data) => {
+    return {
+      type: Actions.FETCH_LESSON_DETAIL_SUCCEEDED,
+      data,
+    };
+  },
+
+  getLessonDetailFailedAction: (error) => {
+    return {
+      type: Actions.FETCH_LESSON_DETAIL_FAILED,
       error,
     };
   },

@@ -46,10 +46,10 @@ const patchLessonFromAPI = ({id, token, duration, ...params}) => {
 
 const deleteLessonFromAPI = ({id, token}) => {
   return request
-    .delete(`lesson/${id}`,{
+    .delete(`lesson/${id}`, {
       headers: {
-        'Authorization': `Bearer ${token}` 
-      }
+        Authorization: `Bearer ${token}`,
+      },
     })
     .then((res) => {
       return res;
@@ -57,14 +57,14 @@ const deleteLessonFromAPI = ({id, token}) => {
     .catch((error) => {
       return error.response.data;
     });
-}
+};
 
 const getLessonFromAPI = ({id, token, query}) => {
   return request
-    .get(`classe/${id}/lessons?${query}`,{
+    .get(`classe/${id}/lessons?${query}`, {
       headers: {
-        'Authorization': `Bearer ${token}` 
-      }
+        Authorization: `Bearer ${token}`,
+      },
     })
     .then((res) => {
       return res;
@@ -72,6 +72,27 @@ const getLessonFromAPI = ({id, token, query}) => {
     .catch((error) => {
       return error.response.data;
     });
-}
+};
 
-export {postLessonFromAPI, patchLessonFromAPI, deleteLessonFromAPI, getLessonFromAPI};
+const getLessonDetailFromAPI = ({id, token}) => {
+  return request
+    .get(`lesson/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .then((res) => {
+      return res;
+    })
+    .catch((error) => {
+      return error.response.data;
+    });
+};
+
+export {
+  postLessonFromAPI,
+  patchLessonFromAPI,
+  deleteLessonFromAPI,
+  getLessonFromAPI,
+  getLessonDetailFromAPI,
+};

@@ -1,39 +1,24 @@
-import _ from 'lodash';
-import React, {Component} from 'react';
+import _ from "lodash";
+import React, {Component} from "react";
 import {
   Platform,
   StyleSheet,
   View,
   Text,
   TouchableOpacity,
-  Button, Alert
-} from 'react-native';
+  Button,
+  Alert,
+} from "react-native";
 import {
   ExpandableCalendar,
   Timeline,
-  CalendarProvider
-} from 'react-native-calendars';
-import moment from 'moment';
-import colors from '../../themes/color';
-
-
-const alert = ({title, summary, start, end}) =>
-Alert.alert(
-  title,
-  `Start time : ${moment(start).format("MMM Do YYYY, hh:mm a")} \nEnd time : ${moment(end).format("MMM Do YYYY, hh:mm a")} \n${summary} minutes \n `,
-  [
-    // {
-    //   text: "Cancel",
-    //   onPress: () => console.log("Cancel Pressed"),
-    //   style: "cancel"
-    // },
-    { text: "OK", onPress: () => console.log("OK Pressed") }
-  ],
-  { cancelable: false }
-);
+  CalendarProvider,
+} from "react-native-calendars";
+import moment from "moment";
+import colors from "../../themes/color";
 
 export default class Schedule extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       currentDate: moment().format("YYYY-MM-DD"),
@@ -44,14 +29,20 @@ export default class Schedule extends Component {
       this.timeLine = element;
     };
   }
-  
+
   // events = [];
-  componentDidMount(){
+  componentDidMount() {
     //console.log(this.state.currentDate);
     const startTime = moment(`${this.state.currentDate} 00:00:00`).format();
     const endTime = moment(`${this.state.currentDate} 23:59:59`).format();
     //console.log("currentDate in moment in constructor",startTime, endTime);
-    this.props.onFetchPersonalSchedule({id : this.props.userID, token : this.props.token, roles : this.props.roles, startTime, endTime});
+    this.props.onFetchPersonalSchedule({
+      id: this.props.userID,
+      token: this.props.token,
+      roles: this.props.roles,
+      startTime,
+      endTime,
+    });
   }
   onDateChanged = (date) => {
     // console.warn('ExpandableCalendarScreen onDateChanged: ', date, updateSource);
@@ -60,8 +51,14 @@ export default class Schedule extends Component {
     //console.log("Date")
     const startTime = moment(`${this.state.currentDate} 00:00:00`).format();
     const endTime = moment(`${this.state.currentDate} 23:59:59`).format();
-    console.log("currentDate in moment",startTime, endTime);
-    this.props.onFetchPersonalSchedule({id : this.props.userID, token : this.props.token, roles : this.props.roles, startTime, endTime});
+    console.log("currentDate in moment", startTime, endTime);
+    this.props.onFetchPersonalSchedule({
+      id: this.props.userID,
+      token: this.props.token,
+      roles: this.props.roles,
+      startTime,
+      endTime,
+    });
   };
 
   onMonthChange = (/* month, updateSource */) => {
@@ -83,25 +80,29 @@ export default class Schedule extends Component {
 
     return (
       <TouchableOpacity
-        style={styles.item} onPress={() => {const {title, duration} = item;alert({title, duration})}}>
+        style={styles.item}
+        onPress={() => {
+          const {title, duration} = item;
+          alert({title, duration});
+        }}>
         <View>
           <Text style={styles.itemHourText}>{item.hour}</Text>
           <Text style={styles.itemDurationText}>{item.duration}</Text>
         </View>
         <Text style={styles.itemTitleText}>{item.title}</Text>
         <View style={styles.itemButtonContainer}>
-          <Button title={'Info'}/>
+          <Button title={"Info"} />
         </View>
       </TouchableOpacity>
     );
   };
 
   getTheme = () => {
-    const themeColor = '#0059ff';
-    const lightThemeColor = '#e6efff';
-    const disabledColor = '#a6acb1';
-    const black = '#20303c';
-    const white = '#ffffff';
+    const themeColor = "#0059ff";
+    const lightThemeColor = "#e6efff";
+    const disabledColor = "#a6acb1";
+    const black = "#20303c";
+    const white = "#ffffff";
 
     return {
       // arrows
@@ -110,22 +111,22 @@ export default class Schedule extends Component {
       // month
       monthTextColor: black,
       textMonthFontSize: 16,
-      textMonthFontFamily: 'HelveticaNeue',
-      textMonthFontWeight: 'bold',
+      textMonthFontFamily: "HelveticaNeue",
+      textMonthFontWeight: "bold",
       // day names
       textSectionTitleColor: black,
       textDayHeaderFontSize: 12,
-      textDayHeaderFontFamily: 'HelveticaNeue',
-      textDayHeaderFontWeight: 'normal',
+      textDayHeaderFontFamily: "HelveticaNeue",
+      textDayHeaderFontWeight: "normal",
       // today
       todayBackgroundColor: lightThemeColor,
       todayTextColor: themeColor,
       // dates
       dayTextColor: themeColor,
       textDayFontSize: 18,
-      textDayFontFamily: 'HelveticaNeue',
-      textDayFontWeight: '500',
-      textDayStyle: {marginTop: Platform.OS === 'android' ? 2 : 4},
+      textDayFontFamily: "HelveticaNeue",
+      textDayFontWeight: "500",
+      textDayStyle: {marginTop: Platform.OS === "android" ? 2 : 4},
       // selected date
       selectedDayBackgroundColor: themeColor,
       selectedDayTextColor: white,
@@ -135,20 +136,45 @@ export default class Schedule extends Component {
       dotColor: themeColor,
       selectedDotColor: white,
       disabledDotColor: disabledColor,
-      dotStyle: {marginTop: -2}
+      dotStyle: {marginTop: -2},
     };
   };
 
   render() {
-     //console.log("schedule", this.events);
+    //console.log("schedule", this.events);
     // console.log("props in schedule", this.props);
+    const alert = ({id, title, summary, start, end}) =>{
+      this.props.onFetchLessonDetail({id, token : this.props.token});
+      //console.log("l149", this.props.lesson);
+      //while (!this.props.lesson) {};
+      const {name} = this.props.lesson;
+      console.log("l151", name);
+      
+      Alert.alert(
+        title,
+        `Start time : ${moment(start).format(
+          "MMM Do YYYY, hh:mm a",
+        )} \nEnd time : ${moment(end).format(
+          "MMM Do YYYY, hh:mm a",
+        )} \n${summary} minutes \n `,
+        [
+          // {
+          //   text: "Cancel",
+          //   onPress: () => console.log("Cancel Pressed"),
+          //   style: "cancel"
+          // },
+          {text: "OK", onPress: () => console.log("OK Pressed")},
+        ],
+        {cancelable: false},
+      );
+    }
     return (
       <CalendarProvider
-      // date={ITEMS[0].title}
+        // date={ITEMS[0].title}
         date={this.state.currentDate}
         onDateChanged={this.onDateChanged}
         onMonthChange={this.onMonthChange}
-        theme={{todayButtonTextColor: '#0059ff'}}
+        theme={{todayButtonTextColor: "#0059ff"}}
         showTodayButton
         disabledOpacity={0.6}
         // todayBottomMargin={16}
@@ -171,18 +197,16 @@ export default class Schedule extends Component {
         />
         <Timeline
           format24h={true}
-          eventTapped={e => alert(e)
-          }
-          events={this.props.schedule.filter(event => moment(event.start).isSame(this.state.currentDate, 'day'))}
+          eventTapped={(e) => alert(e)}
+          events={this.props.schedule.filter((event) =>
+            moment(event.start).isSame(this.state.currentDate, "day"),
+          )}
           // scrollToFirst={true}
           // start={0}
           // end={24}
           ref={this.setTimeLineRef}
         />
-        {/* {
-          console.log("calendar", this.timeLine)
-          
-        } */}
+        {console.log("calendar", this.timeLine)}
       </CalendarProvider>
     );
   }
@@ -191,47 +215,47 @@ export default class Schedule extends Component {
 const styles = StyleSheet.create({
   calendar: {
     paddingLeft: 20,
-    paddingRight: 20
+    paddingRight: 20,
   },
   section: {
-    backgroundColor: '#f0f4f7',
-    color: '#79838a'
+    backgroundColor: "#f0f4f7",
+    color: "#79838a",
   },
   item: {
     padding: 20,
-    backgroundColor: 'white',
+    backgroundColor: "white",
     borderBottomWidth: 1,
-    borderBottomColor: '#e8ecf0',
-    flexDirection: 'row'
+    borderBottomColor: "#e8ecf0",
+    flexDirection: "row",
   },
   itemHourText: {
-    color: 'black'
+    color: "black",
   },
   itemDurationText: {
-    color: 'grey',
+    color: "grey",
     fontSize: 12,
     marginTop: 4,
-    marginLeft: 4
+    marginLeft: 4,
   },
   itemTitleText: {
-    color: 'black',
+    color: "black",
     marginLeft: 16,
-    fontWeight: 'bold',
-    fontSize: 16
+    fontWeight: "bold",
+    fontSize: 16,
   },
   itemButtonContainer: {
     flex: 1,
-    alignItems: 'flex-end'
+    alignItems: "flex-end",
   },
   emptyItem: {
     paddingLeft: 20,
     height: 52,
-    justifyContent: 'center',
+    justifyContent: "center",
     borderBottomWidth: 1,
-    borderBottomColor: '#e8ecf0'
+    borderBottomColor: "#e8ecf0",
   },
   emptyItemText: {
-    color: '#79838a',
-    fontSize: 14
-  }
+    color: "#79838a",
+    fontSize: 14,
+  },
 });

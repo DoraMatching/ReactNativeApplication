@@ -8,6 +8,7 @@ import {
   Pressable,
   TextInput,
   Alert,
+  ScrollView,
 } from "react-native";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
@@ -127,86 +128,88 @@ const QuestionFormScreen = (props) => {
   return (
     <SafeAreaView style={{flex: 1, justifyContent: "center"}}>
       <KeyboardAvoidingView behavior="padding" style={{flex: 1}}>
-        <Pressable onPress={Keyboard.dismiss} style={styles.layout}>
-          <View style={styles.layout}>
-            {/* {console.log("selectedItems", selectedItems)} */}
-            {tag && console.log("tag.itemsSelected", tag)}
+        <ScrollView>
+          <Pressable onPress={Keyboard.dismiss} style={styles.layout}>
+            <View style={styles.layout}>
+              {/* {console.log("selectedItems", selectedItems)} */}
+              {tag && console.log("tag.itemsSelected", tag)}
 
-            <View style={styles.labelContainer}>
-              <Text style={styles.label}>Tag</Text>
-            </View>
-            <TagSelect
-              value={selectItems}
-              data={selectItems}
-              //onRemovee={onRemove}
-              onItemPress={onItemPress}
-              //max={3}
-              ref={setTagRef}
-            />
-            <View style={{flexDirection: "row", ...styles.textInput}}>
-              <TextInput
-                style={{flex: 30, ...styles.tagInput}}
-                onChangeText={setTagName}
-                //{...input}
-                value={tagName}
-                //{...rest}
-                returnKeyType="next"
-                autoCorrect={false}></TextInput>
-              <Button
-                onPress={() => {
-                  console.log("onPressButton", tag);
-                  if (!tagName) return;
-                  const newTag = {id: tagName.toLowerCase(), label: tagName};
-                  const arr = [newTag];
-                  onTagItemsChange(_.uniqBy(arr, "id"));
-                  setTagName("");
+              <View style={styles.labelContainer}>
+                <Text style={styles.label}>Tag</Text>
+              </View>
+              <TagSelect
+                value={selectItems}
+                data={selectItems}
+                //onRemovee={onRemove}
+                onItemPress={onItemPress}
+                //max={3}
+                ref={setTagRef}
+              />
+              <View style={{flexDirection: "row", ...styles.textInput}}>
+                <TextInput
+                  style={{flex: 30, ...styles.tagInput}}
+                  onChangeText={setTagName}
+                  //{...input}
+                  value={tagName}
+                  //{...rest}
+                  returnKeyType="next"
+                  autoCorrect={false}></TextInput>
+                <Button
+                  onPress={() => {
+                    console.log("onPressButton", tag);
+                    if (!tagName) return;
+                    const newTag = {id: tagName.toLowerCase(), label: tagName};
+                    const arr = [newTag];
+                    onTagItemsChange(_.uniqBy(arr, "id"));
+                    setTagName("");
+                  }}
+                  style={[
+                    styles.button,
+                    {
+                      fontSize: 15,
+                      paddingVertical: 15,
+                      paddingHorizontal: 20,
+                    },
+                  ]}>
+                  Add
+                </Button>
+              </View>
+
+              <Field
+                name={"title"}
+                label={"Title"}
+                component={QuestionInput}
+                validate={required}
+              />
+              <Field
+                name={"content"}
+                props={{
+                  multiline: true,
+                  numberOfLines: 5,
                 }}
+                onEndEditing={onPredict}
+                label={"Body"}
+                component={QuestionInput}
+                validate={required}
+              />
+
+              <Button
+                onPress={props.handleSubmit(submit)}
                 style={[
                   styles.button,
                   {
-                    fontSize: 15,
-                    paddingVertical: 15,
-                    paddingHorizontal: 20,
+                    fontSize: 18,
+                    paddingVertical: 10,
+                    marginVertical: 5,
+                    //bottom: 10,
                   },
                 ]}>
-                Add
+                Create
               </Button>
+              {/* </ScrollView> */}
             </View>
-
-            <Field
-              name={"title"}
-              label={"Title"}
-              component={QuestionInput}
-              validate={required}
-            />
-            <Field
-              name={"content"}
-              props={{
-                multiline: true,
-                numberOfLines: 5,
-              }}
-              onEndEditing={onPredict}
-              label={"Body"}
-              component={QuestionInput}
-              validate={required}
-            />
-
-            <Button
-              onPress={props.handleSubmit(submit)}
-              style={[
-                styles.button,
-                {
-                  fontSize: 18,
-                  paddingVertical: 10,
-                  marginVertical: 5,
-                  //bottom: 10,
-                },
-              ]}>
-              Create
-            </Button>
-            {/* </ScrollView> */}
-          </View>
-        </Pressable>
+          </Pressable>
+        </ScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );

@@ -205,7 +205,7 @@ const ClassFormScreen = (props) => {
     props.onClose();
   }
   else if (props.data && props.data.success == false){
-    alert("Something wrong!");
+    alert(props.data.message);
   }
   return (
     <KeyboardAvoidingView behavior="padding" style={{flex: 1}}>
@@ -338,7 +338,7 @@ const ClassFormScreen = (props) => {
             label={"Duration"}
             component={ClassInput}
             validate={required}
-            keyboardType={"numeric"}
+            //keyboardType={"numeric"}
           />
           <View style={{flexDirection: "row", justifyContent: "flex-end"}}>
             <Button

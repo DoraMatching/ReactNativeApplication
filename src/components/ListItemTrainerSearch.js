@@ -6,7 +6,7 @@ export default class ListItemTrainerSearch extends Component {
     //console.log("ListItemTrainer",this.props);
     if (!this.props.item) return <></>;
     
-    const {username, email, avatarUrl, classes} = this.props.item.user;
+    const {user : {username, email, avatarUrl}, classes} = this.props.item;
     return (
       <View style={styles.container}>
         <View style={styles.identityContainter}>

@@ -8,6 +8,7 @@ import moment from 'moment';
 const mapStateToProps = (state) => ({
     schedule : state.PersonalScheduleReducer.map(item => {
         return {
+          classe: item.classe,
           role: item.role,
           id: item.id,
           start : moment(item.startTime).format("YYYY-MM-DD HH:mm:ss"),

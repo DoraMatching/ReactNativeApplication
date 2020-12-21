@@ -79,7 +79,7 @@ class TabView extends Component {
               placeholderTextColor={"#999"}
               underlineColorAndroid={"#fff"}
               autoCorrect={false}
-              onFocus={() => {this.props.navigation.navigate("SearchScreen")}}
+              onFocus={() => {this.props.navigation.navigate("ClassSearchScreen")}}
               ref={(inputSearch) => {
                 this.inputSearch = inputSearch;
               }}

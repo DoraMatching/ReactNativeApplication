@@ -39,6 +39,7 @@ import PostsSearch from '../screens/PostsSearch/PostsSearch.routers';
 import TrainingSearch from '../screens/TrainingSearch/TrainingSearch.routers';
 
 import Search from '../screens/Search/Search.screens';
+import ClassSearch from '../screens/ClassSearch/ClassSearch.screens';
 
 
 import {SafeAreaProvider, SafeAreaView} from "react-native-safe-area-context";
@@ -76,7 +77,7 @@ const trainRouters = ({params}) => (
     }}>
     {/* <Stack.Screen name="BlogDetail" component={BlogDetail} /> */}
     <Stack.Screen name="TrainingSearch" component={TrainingSearch} />
-    <Stack.Screen name="SearchScreen" component={Search} />
+    <Stack.Screen name="ClassSearchScreen" component={ClassSearch} />
   </Stack.Navigator>
 );
 

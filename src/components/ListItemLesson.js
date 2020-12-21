@@ -14,6 +14,7 @@ import {connect} from "react-redux";
 import uuid from "uuid-random";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import moment from "moment";
+import { act } from "react-test-renderer";
 
 const MyDateTimePicker = (props) => {
   const [date, setDate] = useState(new Date());
@@ -67,6 +68,7 @@ const MyDateTimePicker = (props) => {
 
 const ListItemLesson = (props) => {
   console.log("list item lesson: ", props);
+  //props.onGetClassID();
   const [title, setTitle] = useState(!props.name ? "" : props.name);
   const [duration, setDuration] = useState(
     !props.duration ? "" : props.duration.toString(),
@@ -262,6 +264,9 @@ const mapDispatchToProps = (dispatch) => {
     onDeleteErrorMessage: () => {
       dispatch(actions.deleteErrorMessage());
     },
+    onGetClassID: () => {
+      dispatch(actions.getClassID())
+    }
   };
 };
 

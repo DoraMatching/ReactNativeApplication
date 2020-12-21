@@ -66,6 +66,8 @@ export default class ClassFormModal extends Component {
     // const flexTop = 95;
     // const flexBottom = 5;
     // console.log("BlogDetail: ", this.props.blog);
+    console.log("l69", this.state.next);
+    
     return (
       
       <Modal
@@ -78,7 +80,7 @@ export default class ClassFormModal extends Component {
           <SafeAreaView style={{flex: 1, justifyContent: "flex-end"}}>
           <View style={{flexDirection: "column", flex: 1,marginBottom: 5}}>
           {!this.state.next && <ClassForm onClose={this.onClose} setNext={(next) => this.setState({next})}></ClassForm>}
-          {this.state.next && <LessonForm setNext={(next) => this.setState({next}) } onClose={this.onClose}></LessonForm>}
+          {/* {this.state.next && <LessonForm setNext={(next) => this.setState({next}) } onClose={this.onClose}></LessonForm>} */}
           <View
               style={{
                 flexDirection: "row",

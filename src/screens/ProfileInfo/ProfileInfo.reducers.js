@@ -1,4 +1,5 @@
 import Actions from "./ProfileInfo.actions";
+import ClassFormActions from "../ClassForm/ClassForm.actions";
 import _ from "lodash";
 const ProfileInfoReducer = (data = null, action) => {
   switch (action.type) {
@@ -35,8 +36,12 @@ const ProfileInfoClassroomItemReducer = (dataItem = [], action) => {
     case Actions.GET_PROFILE_INFO_CLASSROOM_SUCCEEDED:
       //console.log("ProfileInfoClassroomItem: ",action);
       return _.uniqBy([...dataItem, ...action.data.items], "id");
-      case Actions.REFRESH_PROFILE_INFO_CLASSROOM_SUCCEEDED:
+    case Actions.REFRESH_PROFILE_INFO_CLASSROOM_SUCCEEDED:
         return action.data.items;
+    case ClassFormActions.POST_CLASS_SUCCEEDED:
+      console.log("l42", action);
+      
+      return _.uniqBy([action.data,...dataItem ], "id");
 
     case Actions.GET_PROFILE_INFO_CLASSROOM_FAILED:
       return dataItem;

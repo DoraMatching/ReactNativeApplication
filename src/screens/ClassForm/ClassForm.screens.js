@@ -9,8 +9,9 @@ import {
   TouchableWithoutFeedback,
   Platform,
   TouchableOpacity,
-  ScrollView,
+  
   Pressable,
+  ScrollView
 } from "react-native";
 import MultiSelect from "react-native-multiple-select";
 import DateTimePicker from "@react-native-community/datetimepicker";
@@ -200,11 +201,17 @@ const ClassFormScreen = (props) => {
   };
   if (props.data && props.data.success == true) {
     console.log("ClassForm", props.data);
-    props.setNext(true);
+    alert("Your class created successfully!");
+    props.onClose();
+  }
+  else if (props.data && props.data.success == false){
+    alert("Something wrong!");
   }
   return (
     <KeyboardAvoidingView behavior="padding" style={{flex: 1}}>
+      
       <Pressable onPress={Keyboard.dismiss} style={styles.layout}>
+      
         <View style={styles.layout}>
           <View>
             <View style={styles.labelContainer}>
@@ -263,7 +270,7 @@ const ClassFormScreen = (props) => {
             />
           </View>
 
-          {/* <ScrollView> */}
+          <ScrollView>
           <Field
             name={"name"}
             label={"Class name"}
@@ -342,17 +349,19 @@ const ClassFormScreen = (props) => {
                   fontSize: 18,
                   paddingVertical: 10,
                   marginVertical: 5,
-                  width: 60,
+                  width: 100,
                   //bottom: 10,
                 },
               ]}>
-              Next
+              Submit
             </Button>
           </View>
-
-          {/* </ScrollView> */}
+          </ScrollView>
+         
         </View>
+        
       </Pressable>
+     
     </KeyboardAvoidingView>
   );
 };

@@ -151,7 +151,7 @@ export default class Schedule extends Component {
       //console.log("l151", name);
       
       Alert.alert(
-        classe.name,
+        `Class: ${classe.name}`,
         `Your lesson to ${role == "trainer" ? "teach" : "learn"}: ${title}
         \nStart time : ${moment(start).format(
           "MMM Do YYYY, hh:mm a",

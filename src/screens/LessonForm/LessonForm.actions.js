@@ -25,6 +25,14 @@ const Actions = {
   FETCH_LESSON_DETAIL_SUCCEEDED : "FETCH_LESSON_DETAIL_SUCCEEDED",
   FETCH_LESSON_DETAIL_FAILED : "FETCH_LESSON_DETAIL_FAILED",
 
+  GET_CLASS_ID: "GET_CLASS_ID",
+
+  getClassID: () => {
+    return {
+      type : Actions.GET_CLASS_ID,
+    }
+  },
+
   deleteErrorMessage: () => {
     return {
       type : Actions.DELETE_ERROR_MESSAGE,

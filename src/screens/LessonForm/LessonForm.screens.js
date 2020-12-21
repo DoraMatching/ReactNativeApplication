@@ -13,6 +13,8 @@ class LessonForm extends Component {
       query: "page=1&limit=4&order=DESC",
       isLoading: false,
     };
+    console.log("l16 in lessonForm", this.props.classID);
+    
     this.props.onFetchLesson({id : this.props.classID,token: this.props.token, query: this.state.query})
   }
   render() {
@@ -47,12 +49,12 @@ class LessonForm extends Component {
         />
         { this.props.setNext && this.props.onClose &&
           <View style={{flexDirection: "row", justifyContent: "flex-end"}}>
-            <Button
+            {/* <Button
               style={styles.button}
               onPress={() => this.props.setNext(false)}>
               Back
-            </Button>
-            <Button style={styles.button} onPress={() => this.props.onClose()}>
+            </Button> */}
+            <Button style={styles.button} onPress={() => {this.props.setNext(false);this.props.onClose();}}>
               Finish
             </Button>
           </View>
